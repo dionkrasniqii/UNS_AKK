@@ -1,10 +1,13 @@
-import logo from "./logo.svg";
-import "./App.css";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import { AppRoutes } from "./routes/routes";
+import Sidebar from "./components/home/Sidebar";
+import Footer from "./components/home/Footer";
+import Navbar from "./components/home/Navbar";
+import PrivateRoutes from "./routes/privateroutes";
 
 function App() {
   const dispatch = useDispatch();
@@ -14,10 +17,15 @@ function App() {
     isAuthenticated: false,
     token: null,
   });
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (!authState.isAuthenticated) {
+      navigate("/login");
+    }
+  }, []);
 
+  const navigate = useNavigate();
   return (
-    <div className='App'>
+    <>
       <ToastContainer
         position='top-right'
         autoClose={1000}
@@ -31,12 +39,21 @@ function App() {
         theme='light'
         style={{ fontSize: "14px" }}
       />
-      {/* <AppRoutes
-        loginFunction={handleLogin}
-        isAuth={authState}
-        isComponentToConfirm={isComponentToConfirm}
-      /> */}
-    </div>
+      {!authState.isAuthenticated ? (
+        <PrivateRoutes setAuthState={setAuthState} />
+      ) : (
+        <>
+          <Navbar />
+          <Sidebar />
+          <div className='content-page'>
+            <div className='content'>
+              <AppRoutes />
+              <Footer />
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 }
 

@@ -158,79 +158,6 @@ async function deleteItemById(controller, itemId) {
     handleRequestError(error);
   }
 }
-async function getMagazinesPrice(formId, magazineId, facultyId) {
-  try {
-    let token = localStorage.getItem("zktok");
-
-    const response = await axios.get(
-      `${API_BASE_URL}/RevistaShumaAPI/GetRevistaShuma/${formId}/${magazineId}/${facultyId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    handleRequestError(error);
-  }
-}
-async function getProfessorApplications(FormulariId, ProfesorId) {
-  try {
-    let token = localStorage.getItem("zktok");
-
-    const response = await axios.get(
-      `${API_BASE_URL}/AplikimiAPI/GetAplikimetProfesori/${FormulariId}/${ProfesorId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    handleRequestError(error);
-  }
-}
-async function getApplicantList(facultyId, formId) {
-  try {
-    let token = localStorage.getItem("zktok");
-
-    const response = await axios.get(
-      `${API_BASE_URL}/AplikimiShqyrtimiAPI/GetAplikimet/${facultyId}/${formId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data.result;
-  } catch (error) {
-    handleRequestError(error);
-  }
-}
-
-async function getApplicantFinalList(facultyId, formId) {
-  try {
-    let token = localStorage.getItem("zktok");
-
-    const response = await axios.get(
-      `${API_BASE_URL}/AplikimiShqyrtimiAPI/GetAplikimetFinal/${facultyId}/${formId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data.result;
-  } catch (error) {
-    handleRequestError(error);
-  }
-}
 async function getReportRDLC(methodRoute, id, reportName) {
   // let token = localStorage.getItem("zktok");
   try {
@@ -310,16 +237,10 @@ export default {
   getAll,
   getItemById,
   createItem,
-  updateItem,
-  getMagazinesPrice,
-  deleteItemById,
   createItemWithFile,
+  deleteItemById,
+  updateItem,
   updateItemWithFile,
   documentPath,
   getReportRDLC,
-  checkSEMS,
-  getProfessorApplications,
-  getApplicantList,
-  getApplicantFinalList,
-  transferBudget,
 };
