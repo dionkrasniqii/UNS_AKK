@@ -32,7 +32,7 @@ export default function Home() {
                   <label className='d-flex align-items-center'>
                     Sort
                     <select className='form-select form-select-sm d-inline-block ms-2'>
-                      <option>Date</option>
+                      <option>DateTesting</option>
                       <option>Name</option>
                       <option>End date</option>
                       <option>Start Date</option>
