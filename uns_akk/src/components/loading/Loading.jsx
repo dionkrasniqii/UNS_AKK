@@ -6,7 +6,7 @@ export default function Loading() {
     <div className='container'>
       <div className='col-xxl-12 col-lg-12 col-md-10 col-sm-12 d-flex justify-content-center align-items-center  mt--100 mb--100'>
         <FallingLines
-          color='red'
+          color='blue'
           width='250'
           visible={true}
           ariaLabel='falling-lines-loading'
