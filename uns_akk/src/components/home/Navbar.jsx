@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-export default function Navbar() {
+import { Link, useNavigate } from "react-router-dom";
+export default function Navbar(props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const bodyDiv = document.getElementById("body");
     isSidebarOpen
@@ -14,344 +14,68 @@ export default function Navbar() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  function logout() {
+    localStorage.removeItem("akktoken");
+    props.setAuthState(false);
+  }
+
   return (
-    <div className="navbar-custom">
-      <ul className="list-unstyled topnav-menu float-end mb-0">
-        <li className="d-none d-lg-block">
-          <form className="app-search">
-            <div className="app-search-box">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search..."
-                  id="top-search"
-                />
-                <button className="btn input-group-text" type="submit">
-                  <i className="fe-search" />
-                </button>
-              </div>
-              <div className="dropdown-menu dropdown-lg" id="search-dropdown">
-                {/* item*/}
-                <div className="dropdown-header noti-title">
-                  <h5 className="text-overflow mb-2">Found 22 results</h5>
-                </div>
-                {/* item*/}
-                <a href="" className="dropdown-item notify-item">
-                  <i className="fe-home me-1" />
-                  <span>Analytics Report</span>
-                </a>
-                {/* item*/}
-                <a href="" className="dropdown-item notify-item">
-                  <i className="fe-aperture me-1" />
-                  <span>How can I help you?</span>
-                </a>
-                {/* item*/}
-                <a href="" className="dropdown-item notify-item">
-                  <i className="fe-settings me-1" />
-                  <span>User profile settings</span>
-                </a>
-                {/* item*/}
-                <div className="dropdown-header noti-title">
-                  <h6 className="text-overflow mb-2 text-uppercase">Users</h6>
-                </div>
-                <div className="notification-list">
-                  {/* item*/}
-                  <a href="" className="dropdown-item notify-item">
-                    <div className="d-flex align-items-start">
-                      <img
-                        className="d-flex me-2 rounded-circle"
-                        src="assets/images/users/user-2.jpg"
-                        alt="Generic placeholder image"
-                        height={32}
-                      />
-                      <div className="w-100">
-                        <h5 className="m-0 font-14">Erwin E. Brown</h5>
-                        <span className="font-12 mb-0">UI Designer</span>
-                      </div>
-                    </div>
-                  </a>
-                  {/* item*/}
-                  <a href="" className="dropdown-item notify-item">
-                    <div className="d-flex align-items-start">
-                      <img
-                        className="d-flex me-2 rounded-circle"
-                        src="assets/images/users/user-5.jpg"
-                        alt="Generic placeholder image"
-                        height={32}
-                      />
-                      <div className="w-100">
-                        <h5 className="m-0 font-14">Jacob Deo</h5>
-                        <span className="font-12 mb-0">Developer</span>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </form>
-        </li>
-        <li className="dropdown d-inline-block d-lg-none">
+    <div className='navbar-custom'>
+      <ul className='list-unstyled topnav-menu float-end mb-0'>
+        <li className='dropdown notification-list'>
           <a
-            className="nav-link dropdown-toggle arrow-none waves-effect waves-light"
-            data-bs-toggle="dropdown"
-            href="#"
-            role="button"
-            aria-haspopup="false"
-            aria-expanded="false"
+            onClick={logout}
+            className='nav-link right-bar-toggle waves-effect waves-light'
           >
-            <i className="fe-search noti-icon" />
-          </a>
-          <div className="dropdown-menu dropdown-lg dropdown-menu-end p-0">
-            <form className="p-3">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search ..."
-                aria-label="Recipient's username"
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width={16}
+              height={16}
+              fill='currentColor'
+              className='bi bi-box-arrow-right'
+              viewBox='0 0 16 16'
+            >
+              <path
+                fillRule='evenodd'
+                d='M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z'
               />
-            </form>
-          </div>
-        </li>
-        <li className="dropdown notification-list topbar-dropdown">
-          <a
-            className="nav-link dropdown-toggle waves-effect waves-light"
-            data-bs-toggle="dropdown"
-            href="#"
-            role="button"
-            aria-haspopup="false"
-            aria-expanded="false"
-          >
-            <i className="fe-bell noti-icon" />
-            <span className="badge bg-danger rounded-circle noti-icon-badge">
-              9
-            </span>
-          </a>
-          <div className="dropdown-menu dropdown-menu-end dropdown-lg">
-            {/* item*/}
-            <div className="dropdown-item noti-title">
-              <h5 className="m-0">
-                <span className="float-end">
-                  <a href="" className="text-dark">
-                    <small>Clear All</small>
-                  </a>
-                </span>
-                Notification
-              </h5>
-            </div>
-            <div className="noti-scroll" data-simplebar="init">
-              <div className="simplebar-wrapper" style={{ margin: 0 }}>
-                <div className="simplebar-height-auto-observer-wrapper">
-                  <div className="simplebar-height-auto-observer" />
-                </div>
-                <div className="simplebar-mask">
-                  <div
-                    className="simplebar-offset"
-                    style={{ right: 0, bottom: 0 }}
-                  >
-                    <div
-                      className="simplebar-content-wrapper"
-                      tabIndex={0}
-                      role="region"
-                      aria-label="scrollable content"
-                      style={{ height: "auto", overflow: "hidden" }}
-                    >
-                      <div className="simplebar-content" style={{ padding: 0 }}>
-                        {/* item*/}
-                        <a href="" className="dropdown-item notify-item active">
-                          <div className="notify-icon">
-                            <img
-                              src="assets/images/users/user-1.jpg"
-                              className="img-fluid rounded-circle"
-                              alt=""
-                            />{" "}
-                          </div>
-                          <p className="notify-details">Cristina Pride</p>
-                          <p className="text-muted mb-0 user-msg">
-                            <small>
-                              Hi, How are you? What about our next meeting
-                            </small>
-                          </p>
-                        </a>
-                        {/* item*/}
-                        <a href="" className="dropdown-item notify-item">
-                          <div className="notify-icon bg-primary">
-                            <i className="mdi mdi-comment-account-outline" />
-                          </div>
-                          <p className="notify-details">
-                            Caleb Flakelar commented on Admin
-                            <small className="text-muted">1 min ago</small>
-                          </p>
-                        </a>
-                        {/* item*/}
-                        <a href="" className="dropdown-item notify-item">
-                          <div className="notify-icon">
-                            <img
-                              src="assets/images/users/user-4.jpg"
-                              className="img-fluid rounded-circle"
-                              alt=""
-                            />{" "}
-                          </div>
-                          <p className="notify-details">Karen Robinson</p>
-                          <p className="text-muted mb-0 user-msg">
-                            <small>
-                              Wow ! this admin looks good and awesome design
-                            </small>
-                          </p>
-                        </a>
-                        {/* item*/}
-                        <a href="" className="dropdown-item notify-item">
-                          <div className="notify-icon bg-warning">
-                            <i className="mdi mdi-account-plus" />
-                          </div>
-                          <p className="notify-details">
-                            New user registered.
-                            <small className="text-muted">5 hours ago</small>
-                          </p>
-                        </a>
-                        {/* item*/}
-                        <a href="" className="dropdown-item notify-item">
-                          <div className="notify-icon bg-info">
-                            <i className="mdi mdi-comment-account-outline" />
-                          </div>
-                          <p className="notify-details">
-                            Caleb Flakelar commented on Admin
-                            <small className="text-muted">4 days ago</small>
-                          </p>
-                        </a>
-                        {/* item*/}
-                        <a href="" className="dropdown-item notify-item">
-                          <div className="notify-icon bg-secondary">
-                            <i className="mdi mdi-heart" />
-                          </div>
-                          <p className="notify-details">
-                            Carlos Crouch liked
-                            <b>Admin</b>
-                            <small className="text-muted">13 days ago</small>
-                          </p>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="simplebar-placeholder"
-                  style={{ width: 0, height: 0 }}
-                />
-              </div>
-              <div
-                className="simplebar-track simplebar-horizontal"
-                style={{ visibility: "hidden" }}
-              >
-                <div
-                  className="simplebar-scrollbar"
-                  style={{ width: 0, display: "none" }}
-                />
-              </div>
-              <div
-                className="simplebar-track simplebar-vertical"
-                style={{ visibility: "hidden" }}
-              >
-                <div
-                  className="simplebar-scrollbar"
-                  style={{ height: 0, display: "none" }}
-                />
-              </div>
-            </div>
-            {/* All*/}
-            <a
-              href=""
-              className="dropdown-item text-center text-primary notify-item notify-all"
-            >
-              View all
-              <i className="fe-arrow-right" />
-            </a>
-          </div>
-        </li>
-        <li className="dropdown notification-list topbar-dropdown">
-          <a
-            className="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"
-            data-bs-toggle="dropdown"
-            href="#"
-            role="button"
-            aria-haspopup="false"
-            aria-expanded="false"
-          >
-            <img
-              src="assets/images/users/user-1.jpg"
-              alt="user-image"
-              className="rounded-circle"
-            />
-            <span className="pro-user-name ms-1">
-              Nowak <i className="mdi mdi-chevron-down" />
-            </span>
-          </a>
-          <div className="dropdown-menu dropdown-menu-end profile-dropdown ">
-            {/* item*/}
-            <div className="dropdown-header noti-title">
-              <h6 className="text-overflow m-0">Welcome !</h6>
-            </div>
-            {/* item*/}
-            <a
-              href="contacts-profile.html"
-              className="dropdown-item notify-item"
-            >
-              <i className="fe-user" />
-              <span>My Account</span>
-            </a>
-            {/* item*/}
-            <a
-              href="auth-lock-screen.html"
-              className="dropdown-item notify-item"
-            >
-              <i className="fe-lock" />
-              <span>Lock Screen</span>
-            </a>
-            <div className="dropdown-divider" />
-            {/* item*/}
-            <a href="auth-logout.html" className="dropdown-item notify-item">
-              <i className="fe-log-out" />
-              <span>Logout</span>
-            </a>
-          </div>
-        </li>
-        <li className="dropdown notification-list">
-          <a
-            href=""
-            className="nav-link right-bar-toggle waves-effect waves-light"
-          >
-            <i className="fe-settings noti-icon" />
+              <path
+                fillRule='evenodd'
+                d='M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z'
+              />
+            </svg>
+            Dilni
           </a>
         </li>
       </ul>
       {/* LOGO */}
-      <div className="logo-box">
-        <Link to="/" className="logo logo-dark text-center">
-          <span className="logo-lg">
-            <img src="assets/images/logo_akk.jpg" alt="" height={50} />
+      <div className='logo-box'>
+        <Link to='/' className='logo logo-dark text-center'>
+          <span className='logo-lg'>
+            <img src='assets/images/logo_akk.jpg' alt='' height={50} />
           </span>
-          <span className="logo-sm">
-            <img src="assets/images/sm.jpg" alt="" height={30} />
+          <span className='logo-sm'>
+            <img src='assets/images/sm.jpg' alt='' height={30} />
           </span>
         </Link>
       </div>
 
-      <ul className="list-unstyled topnav-menu topnav-menu-left mb-0">
+      <ul className='list-unstyled topnav-menu topnav-menu-left mb-0'>
         <li>
           <button
-            className="button-menu-mobile disable-btn waves-effect"
+            className='button-menu-mobile disable-btn waves-effect'
             onClick={(e) => openSide()}
-            id="openSidebar"
+            id='openSidebar'
           >
-            <i className="fe-menu" />
+            <i className='fe-menu' />
           </button>
         </li>
         <li>
-          <h4 className="page-title-main">Dashboard</h4>
+          <h4 className='page-title-main'>Ballina</h4>
         </li>
       </ul>
 
-      <div className="clearfix" />
+      <div className='clearfix' />
     </div>
   );
 }

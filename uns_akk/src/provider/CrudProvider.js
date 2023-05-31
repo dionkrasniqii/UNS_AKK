@@ -8,11 +8,11 @@ const API_BASE_URL_DOC = process.env.REACT_APP_API_BASE_URL_LOCAL_DOCS;
 //const API_BASE_URL_DOC = process.env.REACT_APP_API_BASE_URL_STAGING_DOCS;
 // const API_BASE_URL_DOC = process.env.REACT_APP_API_BASE_URL_PRODUCTION_DOCS;
 
-async function login(login) {
-  const loginDTO = JSON.stringify(login);
+async function login(controller, model) {
+  const loginDTO = JSON.stringify(model);
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/LoginAPI/login`,
+      `${API_BASE_URL}/${controller}`,
 
       loginDTO,
       {
