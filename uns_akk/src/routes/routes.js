@@ -1,10 +1,14 @@
 import { Route, Routes } from "react-router";
 import Home from "../components/home/Home";
 import Login from "../components/login/Login";
+import PrivateRoute from "../auth/PrivateRoute";
+import Agencies from "../components/agencies/Agencies";
+import CreateAgencies from "../components/agencies/CreateAgencies";
 
 export const AppRoutes = () => {
   const ROLES = {
-    ADMIN: "1",
+    ADMIN: "Admin",
+    USER: "User"
   };
 
   return (
@@ -29,6 +33,25 @@ export const AppRoutes = () => {
            }
         /> 
         */}
+
+        <Route
+          path='/agencies'
+          element={
+            <PrivateRoute
+              allowedRoles={[ROLES.ADMIN]}
+              component={Agencies}
+            />
+           }
+        /> 
+        <Route
+          path='/createagencies'
+          element={
+            <PrivateRoute
+              allowedRoles={[ROLES.ADMIN]}
+              component={CreateAgencies}
+            />
+           }
+        /> 
     </Routes>
   );
 };

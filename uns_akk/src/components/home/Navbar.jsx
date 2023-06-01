@@ -71,7 +71,7 @@ export default function Navbar(props) {
           </button>
         </li>
         <li>
-          <h4 className='page-title-main'>Ballina</h4>
+          {/* <h4 className='page-title-main'>Ballina</h4> */}
         </li>
       </ul>
 
