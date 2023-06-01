@@ -9,6 +9,7 @@ import MultiRoles from "./MultiRoles";
 
 export default function Login(props) {
   const navigate = useNavigate();
+  const [load, setLoad] = useState(false);
   const [model, setModel] = useState({
     Username: "",
     Password: "",
@@ -17,6 +18,7 @@ export default function Login(props) {
   const [showMultiRolesModal, setShowMultiRolesModal] = useState(false);
   const [roles, setRoles] = useState([]);
   async function loginFunction() {
+    setLoad(true);
     await CrudProvider.login("AccountController/login", model).then((res) => {
       if (res) {
         if (res.code === 200) {
@@ -34,6 +36,7 @@ export default function Login(props) {
         if (res.code === 404) {
           toast.error("Te dhena te pasakta");
         }
+        setLoad(false);
       }
     });
   }
@@ -138,9 +141,18 @@ export default function Login(props) {
                     </div>
                   </div>
                   <div className='mb-3 d-grid text-center'>
-                    <button className='btn btn-primary' type='submit'>
-                      Log In
-                    </button>
+                    {!load ? (
+                      <button className='btn btn-primary' type='submit'>
+                        Log In
+                      </button>
+                    ) : (
+                      <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                        <div
+                          className='spinner-border text-primary m-2 text-center'
+                          role='status'
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>{" "}
                 {/* end card-body */}

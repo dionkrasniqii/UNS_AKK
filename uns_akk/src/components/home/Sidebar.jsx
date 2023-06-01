@@ -8,7 +8,6 @@ export default function Sidebar() {
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const role = decodedToken?.role;
-  console.log(role);
   const SidebarItems = [
     //ZKPS
     {
