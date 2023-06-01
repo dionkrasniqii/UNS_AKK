@@ -14,6 +14,7 @@ export default function Sidebar() {
     {
       label: "Agjensionet",
       roles: ["Admin"],
+      path: '/agencies',
       hasMenu: false,
       icon: "mdi mdi-calendar-blank-outline",
     },
