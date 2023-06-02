@@ -15,6 +15,7 @@ function App() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const path = useLocation();
+  const navigate = useNavigate();
   const [authState, setAuthState] = useState(false);
   const token = localStorage.getItem("akktoken");
 
@@ -33,7 +34,6 @@ function App() {
       setAuthState(false);
     }
   }, []);
-  const navigate = useNavigate();
   return (
     <>
       <ToastContainer
@@ -56,7 +56,7 @@ function App() {
           <Navbar setAuthState={setAuthState} />
           <Sidebar />
           <div className='content-page'>
-            <div className='content'>
+            <div className='content mt-2 '>
               <AppRoutes />
               <Footer />
             </div>
