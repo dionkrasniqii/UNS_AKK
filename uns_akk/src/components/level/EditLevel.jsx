@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { EditLevelSchema } from "../schemas/EditLevelSchema";
 
 export default function EditLevel() {
   const [model, setModel] = useState({
@@ -31,7 +30,7 @@ export default function EditLevel() {
       Competencies: model.Competencies,
       LevelIndicators: model.LevelIndicators,
     },
-    validationSchema: EditLevelSchema,
+    // validationSchema: EditLevelSchema,
     onSubmit: () => SubmitForm(),
   });
 
