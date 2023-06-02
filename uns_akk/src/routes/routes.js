@@ -4,16 +4,19 @@ import Login from "../components/login/Login";
 import PrivateRoute from "../auth/PrivateRoute";
 import Agencies from "../components/agencies/Agencies";
 import CreateAgencies from "../components/agencies/CreateAgencies";
+import Level from "../components/level/Level";
+import CreateLevel from "../components/level/CreateLevel";
+import EditLevel from "../components/level/EditLevel";
 
 export const AppRoutes = () => {
   const ROLES = {
     ADMIN: "Admin",
-    USER: "User"
+    USER: "User",
   };
 
   return (
     <Routes>
-      <Route path='/' element={<Home />} />
+      <Route path="/" element={<Home />} />
       {/* 
      // PUBLIC ROUTE
        <Route
@@ -34,24 +37,44 @@ export const AppRoutes = () => {
         /> 
         */}
 
-        <Route
-          path='/agencies'
-          element={
-            <PrivateRoute
-              allowedRoles={[ROLES.ADMIN]}
-              component={Agencies}
-            />
-           }
-        /> 
-        <Route
-          path='/createagencies'
-          element={
-            <PrivateRoute
-              allowedRoles={[ROLES.ADMIN]}
-              component={CreateAgencies}
-            />
-           }
-        /> 
+      <Route
+        path="/agencies"
+        element={
+          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={Agencies} />
+        }
+      />
+
+      <Route
+        path="/createagencies"
+        element={
+          <PrivateRoute
+            allowedRoles={[ROLES.ADMIN]}
+            component={CreateAgencies}
+          />
+        }
+      />
+
+      {/* Levels */}
+      <Route
+        path="/level"
+        element={
+          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={Level} />
+        }
+      />
+
+      <Route
+        path="/createlevel"
+        element={
+          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={CreateLevel} />
+        }
+      />
+
+      <Route
+        path="/editlevel"
+        element={
+          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={EditLevel} />
+        }
+      />
     </Routes>
   );
 };
