@@ -30,13 +30,17 @@ async function login(controller, model) {
 // Get all items
 async function getAll(controller) {
   try {
-    let token = localStorage.getItem("zktok");
-    const response = await axios.get(`${API_BASE_URL}/${controller}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    let token = localStorage.getItem("akktok");
+    let langId = localStorage.getItem("i18nextLng");
+    const response = await axios.get(
+      `${API_BASE_URL}/${controller}/${langId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     handleRequestError(error);
@@ -45,10 +49,10 @@ async function getAll(controller) {
 // Get a single item by ID
 async function getItemById(controller, itemId) {
   try {
-    let token = localStorage.getItem("zktok");
-
+    let langId = localStorage.getItem("i18nextLng");
+    let token = localStorage.getItem("akktok");
     const response = await axios.get(
-      `${API_BASE_URL}/${controller}/${itemId}`,
+      `${API_BASE_URL}/${controller}/${langId}/${itemId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,11 +69,11 @@ async function getItemById(controller, itemId) {
 // Create a new item
 async function createItem(controller, itemData) {
   try {
-    let token = localStorage.getItem("zktok");
+    let token = localStorage.getItem("akktok");
 
     const response = await axios.post(
       `${API_BASE_URL}/${controller}`,
-      itemData,
+      JSON.stringify(itemData),
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -85,11 +89,36 @@ async function createItem(controller, itemData) {
 // CREATE OBJECT WITH FORM FILE
 async function createItemWithFile(controller, itemData) {
   try {
-    let token = localStorage.getItem("zktok");
+    let token = localStorage.getItem("akktok");
+    const formData = new FormData();
+    Object.keys(itemData).forEach((key) => {
+      if (itemData[key] !== null && typeof itemData[key] === "object") {
+        if (Array.isArray(itemData[key])) {
+          itemData[key].forEach((value) => {
+            formData.append(key, value.toString());
+          });
+        } else {
+          Object.keys(itemData[key]).forEach((subKey) => {
+            if (Array.isArray(itemData[key][subKey])) {
+              itemData[key][subKey].forEach((value) => {
+                formData.append(`${key}.${subKey}[]`, value.toString());
+              });
+            } else {
+              formData.append(`${key}.${subKey}`, itemData[key][subKey]);
+            }
+          });
+        }
+      } else {
+        formData.append(key, itemData[key]);
+      }
+    });
 
+    // for (let i of formData.entries()) {
+    //   console.log(i[0] + i[1]);
+    // }
     const response = await axios.post(
       `${API_BASE_URL}/${controller}`,
-      itemData,
+      formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -105,10 +134,11 @@ async function createItemWithFile(controller, itemData) {
 // Update an existing item
 async function updateItem(controller, itemData) {
   try {
-    let token = localStorage.getItem("zktok");
+    let langId = localStorage.getItem("i18nextLng");
+    let token = localStorage.getItem("akktok");
     const response = await axios.put(
-      `${API_BASE_URL}/${controller}`,
-      itemData,
+      `${API_BASE_URL}/${controller}/${langId}`,
+      JSON.stringify(itemData),
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -124,10 +154,34 @@ async function updateItem(controller, itemData) {
 
 async function updateItemWithFile(controller, itemData) {
   try {
-    let token = localStorage.getItem("zktok");
+    let token = localStorage.getItem("akktok");
+    let langId = localStorage.getItem("i18nextLng");
+    const formData = new FormData();
+    Object.keys(itemData).forEach((key) => {
+      if (itemData[key] !== null && typeof itemData[key] === "object") {
+        if (Array.isArray(itemData[key])) {
+          itemData[key].forEach((value) => {
+            formData.append(key, value.toString());
+          });
+        } else {
+          Object.keys(itemData[key]).forEach((subKey) => {
+            if (Array.isArray(itemData[key][subKey])) {
+              itemData[key][subKey].forEach((value) => {
+                formData.append(`${key}.${subKey}[]`, value.toString());
+              });
+            } else {
+              formData.append(`${key}.${subKey}`, itemData[key][subKey]);
+            }
+          });
+        }
+      } else {
+        formData.append(key, itemData[key]);
+      }
+    });
+
     const response = await axios.put(
-      `${API_BASE_URL}/${controller}`,
-      itemData,
+      `${API_BASE_URL}/${controller}/${langId}`,
+      formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -143,8 +197,7 @@ async function updateItemWithFile(controller, itemData) {
 
 async function deleteItemById(controller, itemId) {
   try {
-    let token = localStorage.getItem("zktok");
-
+    let token = localStorage.getItem("akktok");
     const response = await axios.delete(
       `${API_BASE_URL}/${controller}/${itemId}`,
       {
@@ -159,10 +212,11 @@ async function deleteItemById(controller, itemId) {
   }
 }
 async function getReportRDLC(methodRoute, id, reportName) {
-  // let token = localStorage.getItem("zktok");
+  // let token = localStorage.getItem("akktok");
   try {
+    let langId = localStorage.getItem("i18nextLng");
     const response = await axios.get(
-      `${API_BASE_URL}/ReportAPIController/${methodRoute}/${id}`,
+      `${API_BASE_URL}/ReportAPIController/${methodRoute}/${langId}/${id}`,
       {
         // headers: {
         //   Authorization: `Bearer ${token}`,
@@ -173,44 +227,8 @@ async function getReportRDLC(methodRoute, id, reportName) {
     const url = URL.createObjectURL(response.data);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${reportName}.pdf`;
+    // link.download = `${reportName}.pdf`;
     link.click();
-  } catch (error) {
-    handleRequestError(error);
-  }
-}
-async function checkSEMS() {
-  try {
-    const response = await axios.get(
-      `${API_BASE_URL}/GeneralAPIController/CheckSEMS`,
-      {
-        headers: {
-          // Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    handleRequestError(error);
-    return false;
-  }
-}
-
-async function transferBudget(firstBudget, secondBuget, price) {
-  try {
-    let token = localStorage.getItem("zktok");
-
-    const response = await axios.put(
-      `${API_BASE_URL}/BuxhetiAPI/TransferoBuxhetin/${firstBudget}/${secondBuget}/${price}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
   } catch (error) {
     handleRequestError(error);
   }

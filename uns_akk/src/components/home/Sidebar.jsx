@@ -1,5 +1,5 @@
 import jwtDecode from "jwt-decode";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -8,12 +8,13 @@ export default function Sidebar() {
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const role = decodedToken?.role;
+
   const SidebarItems = [
     //ZKPS
     {
       label: "Agjensionet",
       roles: ["Admin"],
-      path: '/agencies',
+      path: "/agencies",
       hasMenu: false,
       icon: "mdi mdi-calendar-blank-outline",
     },
@@ -48,7 +49,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className='left-side-menu menuitem-active'>
+    <div className='left-side-menu menuitem-active '>
       <div className='h-100 show' data-simplebar='init'>
         <div className='simplebar-wrapper' style={{ margin: 0 }}>
           <div className='simplebar-height-auto-observer-wrapper'>
@@ -71,6 +72,7 @@ export default function Sidebar() {
                   style={{ padding: 0 }}
                 >
                   {/*- Sidemenu */}
+
                   <div id='sidebar-menu'>
                     <ul id='side-menu'>
                       {SidebarItems.map((item, index) => {

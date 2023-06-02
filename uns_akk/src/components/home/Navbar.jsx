@@ -3,6 +3,32 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Navbar(props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  //  const [prevScrollPos, setPrevScrollPos] = useState(0);
+
+  //  useEffect(() => {
+  //    const handleScroll = () => {
+  //      const currentScrollPos = window.pageYOffset;
+
+  //      if (prevScrollPos > currentScrollPos) {
+  //        // Scrolling up
+  //        document
+  //          .querySelector(".navbar-custom")
+  //          .classList.remove("navbar-hidden");
+  //      } else {
+  //        // Scrolling down
+  //        document.querySelector(".navbar-custom").classList.add("navbar-hidden");
+  //      }
+
+  //      setPrevScrollPos(currentScrollPos);
+  //    };
+
+  //    window.addEventListener("scroll", handleScroll);
+
+  //    return () => {
+  //      window.removeEventListener("scroll", handleScroll);
+  //    };
+  //  }, [prevScrollPos]);
+
   useEffect(() => {
     const bodyDiv = document.getElementById("body");
     isSidebarOpen
@@ -20,7 +46,8 @@ export default function Navbar(props) {
   }
 
   return (
-    <div className='navbar-custom'>
+    // <div className='navbar-custom navbar-hidden bg-white border'>
+    <div className='navbar-custom bg-white border'>
       <ul className='list-unstyled topnav-menu float-end mb-0'>
         <li className='dropdown notification-list'>
           <a
@@ -70,9 +97,7 @@ export default function Navbar(props) {
             <i className='fe-menu' />
           </button>
         </li>
-        <li>
-          {/* <h4 className='page-title-main'>Ballina</h4> */}
-        </li>
+        <li>{/* <h4 className='page-title-main'>Ballina</h4> */}</li>
       </ul>
 
       <div className='clearfix' />
