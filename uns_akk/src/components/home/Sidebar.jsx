@@ -17,6 +17,13 @@ export default function Sidebar() {
       hasMenu: false,
       icon: "mdi mdi-calendar-blank-outline",
     },
+    {
+      label: "Level",
+      roles: ["Admin"],
+      path: '/level',
+      hasMenu: false,
+      icon: "mdi mdi-share-variant",
+    },
 
     // {
     //   label: "Buxheti",
