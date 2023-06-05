@@ -24609,3 +24609,43 @@ body[data-layout-color=dark] .datepicker tfoot tr th:hover {
   filter: drop-shadow(1px 1px 2px #71b6f9);
 }
 /*# sourceMappingURL=app.min.css.map */
+.custom-select .ant-select-selector {
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background-color: #f5f5f5;
+  color: #333333;
+}
+
+.custom-select .ant-select-selection-placeholder {
+  color: #999999;
+}
+
+.custom-select .ant-select-arrow {
+  color: #999999;
+}
+
+.custom-select .ant-select-selection-item {
+  color: #333333;
+}
+
+.custom-select .ant-select-dropdown {
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.custom-select .ant-select-dropdown-menu-item {
+  color: #333333;
+}
+
+.custom-select .ant-select-dropdown-menu-item-active,
+.custom-select .ant-select-dropdown-menu-item-selected {
+  background-color: #f5f5f5;
+  color: #333333;
+}
+
+.custom-select .ant-select-dropdown-menu-item-disabled {
+  color: #999999;
+  cursor: not-allowed;
+}

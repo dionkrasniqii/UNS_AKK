@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Table, Input, Alert, Row, Col } from "antd";
-import DataTable from "../datatable/DataTable";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
+import DataTable from "../custom/DataTable";
 
 export default function Institutions() {
   const [load, setLoad] = useState(false);
