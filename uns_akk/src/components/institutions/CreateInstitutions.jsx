@@ -5,7 +5,8 @@ import { CreateAgenciesSchema } from "../schemas/CreateAgenciesSchema";
 import { object } from "yup";
 import { red } from "@mui/material/colors";
 import CrudProvider from "../../provider/CrudProvider";
-import ProgressBar from "../progressBar/ProgressBar";
+import ProgressBar from "../custom/ProgressBar";
+import CustomSelect from "../custom/CustomSelect";
 
 export default function CreateInstitutions() {
   const navigate = useNavigate();
@@ -39,6 +40,20 @@ export default function CreateInstitutions() {
     validationSchema: CreateAgenciesSchema,
     onSubmit: () => SubmitForm(),
   });
+
+function changeCity(e){
+  setModel({
+    ...model,
+    City:e
+  })
+}
+
+const cityList = [{
+  value:1,label:"Malisheve"
+},{
+  value:2,label:"Prishtine"
+}]
+
 
   return (
     <div className="col-xl-12">
@@ -106,17 +121,7 @@ export default function CreateInstitutions() {
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">City</label>
                         <div className="col-md-9">
-                          <input
-                            type="text"
-                            onChange={(e) => {
-                              setModel({
-                                ...model,
-                                City: e.target.value,
-                              });
-                              formik.setFieldValue("City", e.target.value);
-                            }}
-                            className="form-control"
-                          />
+                         <CustomSelect onChangeFunction={changeCity} optionsList={cityList} isMulti={false} />
                           {formik.errors.City && (
                             <span className="text-danger">
                               {" "}
