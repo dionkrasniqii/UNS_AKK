@@ -8,6 +8,7 @@ import Level from "../components/level/Level";
 import CreateLevel from "../components/level/CreateLevel";
 import EditLevel from "../components/level/EditLevel";
 
+
 export const AppRoutes = () => {
   const ROLES = {
     ADMIN: "Admin",

@@ -63,7 +63,7 @@ const cityList = [{
           <form onSubmit={formik.handleSubmit}>
             <div id="progressbarwizard">
               <div className="tab-content b-0 mb-0 pt-0">
-               <ProgressBar model={model}/>
+                <ProgressBar model={model} />
                 <div className="tab-pane active" id="account-2">
                   <div className="row">
                     <div className="col-12">
@@ -253,9 +253,7 @@ const cityList = [{
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">
-                          Logo
-                        </label>
+                        <label className="col-md-3 col-form-label">Logo</label>
                         <div className="col-md-9">
                           <input
                             type="file"

@@ -11,7 +11,7 @@ export const CreateLevelSchema = Yup.object().shape({
   
   TheDescriptor: Yup.string().required("Ju lutem shkruani Emrin e plotë të përshkruarit"),
   
-  Knowledge: Yup.string().required("Ju lutem shkruani diturin"),
+  Knowledge: Yup.string().required("Ju lutem shkruani njohurit"),
   
   Skills: Yup.string().required("Ju lutem shkruani aftësitë"),
   

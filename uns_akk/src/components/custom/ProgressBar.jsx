@@ -37,8 +37,6 @@ export default function ProgressBar(props){
         setProgressBarWidth(`${progress}%`);
         setProgressColor(progressColor);
       }, [props.model]);
-      
-      
     return(
         <div id="bar" className="progress mb-3" style={{ height: 7 }}>
         <div
