@@ -24605,5 +24605,7 @@ body[data-layout-color=dark] .datepicker tfoot tr th:hover {
     border-radius: 3px;
     font-weight: 500
 }
-
+.table-div .inputDiv, .table-container{
+  filter: drop-shadow(1px 1px 2px #71b6f9);
+}
 /*# sourceMappingURL=app.min.css.map */

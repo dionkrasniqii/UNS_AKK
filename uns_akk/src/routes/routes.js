@@ -2,11 +2,11 @@ import { Route, Routes } from "react-router";
 import Home from "../components/home/Home";
 import Login from "../components/login/Login";
 import PrivateRoute from "../auth/PrivateRoute";
-import Agencies from "../components/agencies/Agencies";
-import CreateAgencies from "../components/agencies/CreateAgencies";
+import Agencies from "../components/agencies/Institutions";
+import CreateAgencies from "../components/agencies/CreateInstitutions";
+import Level from "../components/level/Level";
 import CreateLevel from "../components/level/CreateLevel";
 import EditLevel from "../components/level/EditLevel";
-import Level from "../components/level/Level";
 
 
 export const AppRoutes = () => {

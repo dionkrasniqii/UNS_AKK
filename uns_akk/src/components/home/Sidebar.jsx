@@ -12,7 +12,7 @@ export default function Sidebar() {
   const SidebarItems = [
     //ZKPS
     {
-      label: "Agjensionet",
+      label: "Institucionet",
       roles: ["Admin"],
       path: "/agencies",
       hasMenu: false,
