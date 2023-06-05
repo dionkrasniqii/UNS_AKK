@@ -4,9 +4,10 @@ import Login from "../components/login/Login";
 import PrivateRoute from "../auth/PrivateRoute";
 import Agencies from "../components/agencies/Agencies";
 import CreateAgencies from "../components/agencies/CreateAgencies";
-import Level from "../components/level/Level";
 import CreateLevel from "../components/level/CreateLevel";
 import EditLevel from "../components/level/EditLevel";
+import Level from "../components/level/Level";
+
 
 export const AppRoutes = () => {
   const ROLES = {
