@@ -5,7 +5,7 @@ import CrudProvider from "../../provider/CrudProvider";
 import { CreateLevelSchema } from "../schemas/CreateLevelSchema";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import ProgressBar from "../progressBar/ProgressBar";
+import ProgressBar from "../custom/ProgressBar";
 
 export default function CreateLevel() {
   const [model, setModel] = useState({
