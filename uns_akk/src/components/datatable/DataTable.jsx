@@ -16,7 +16,6 @@ export default function DataTable(props) {
   useEffect(() => {
     setData(filteredData);
   }, [searchInput]);
-
   const handleChange = (e) => {
     setLoad(true);
     const value = e.target.value;
@@ -50,7 +49,7 @@ export default function DataTable(props) {
 
         {!load ? (
           <div className="table-container">
-            <Table columns={props.columns} dataSource={data} />
+            <Table columns={props.columns}   rowKey='id' dataSource={data} />
           </div>
         ) : (
           <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
