@@ -1,46 +1,39 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CreateAgenciesSchema } from "../schemas/CreateAgenciesSchema";
 import { object } from "yup";
 import { red } from "@mui/material/colors";
+import CrudProvider from "../../provider/CrudProvider";
+import ProgressBar from "../progressBar/ProgressBar";
 
-export default function CreateAgencies() {
+export default function CreateInstitutions() {
+  const navigate = useNavigate();
   const [model, setModel] = useState({
-    Name: "",
+    InstitutionName: "",
     UniqueNumber: "",
     City: "",
     Address: "",
     PostalCode: "",
     PhoneNumber: "",
+    MunicipalityId: "1",
     Email: "",
     Web: "",
-    Documents: "",
+    Document: "",
   });
-  const [progessBarWidth, setProgressBarWidth] = useState(0);
-  const [progressColor, setProgressColor] = useState("");
 
-  useEffect(() => {
-    const percentage = 100;
-    const totalKeys = Object.keys(model).length;
-    const nullValuesCount = Object.values(model).filter(
-      (value) => !value
-    ).length;
-    const progress =
-      nullValuesCount === 0
-        ? percentage
-        : (percentage / totalKeys) * (totalKeys - nullValuesCount);
-    const progressColor =
-      progress <= 50
-        ? "bar progress-bar progress-bar-striped progress-bar-animated bg-danger"
-        : progress > 50 && progress < 75
-        ? "bar progress-bar progress-bar-striped progress-bar-animated bg-warning"
-        : "bar progress-bar progress-bar-striped progress-bar-animated bg-success";
-    setProgressBarWidth(`${progress}%`);
-    setProgressColor(progressColor);
-  }, [model]);
-
-  async function SubmitForm() {}
+  async function SubmitForm() {
+    await CrudProvider.createItemWithFile(
+      "InstitutionAPI/CreateInstitution",
+      model
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          navigate("/agencies");
+        }
+      }
+    });
+  }
   const formik = useFormik({
     initialValues: {},
     validationSchema: CreateAgenciesSchema,
@@ -51,16 +44,11 @@ export default function CreateAgencies() {
     <div className="col-xl-12">
       <div className="card">
         <div className="card-body">
-          <h3 className=" mb-3">Krijo Agjencion</h3>
+          <h3 className=" mb-3">Regjistro Institucionin</h3>
           <form onSubmit={formik.handleSubmit}>
             <div id="progressbarwizard">
               <div className="tab-content b-0 mb-0 pt-0">
-                <div id="bar" className="progress mb-3" style={{ height: 7 }}>
-                  <div
-                    className={progressColor}
-                    style={{ width: progessBarWidth }}
-                  />
-                </div>
+               <ProgressBar model={model}/>
                 <div className="tab-pane active" id="account-2">
                   <div className="row">
                     <div className="col-12">
@@ -75,7 +63,7 @@ export default function CreateAgencies() {
                             onChange={(e) => {
                               setModel({
                                 ...model,
-                                Name: e.target.value,
+                                InstitutionName: e.target.value,
                               });
                               formik.setFieldValue("Name", e.target.value);
                             }}
@@ -100,7 +88,10 @@ export default function CreateAgencies() {
                                 ...model,
                                 UniqueNumber: e.target.value,
                               });
-                              formik.setFieldValue("UniqueNumber", e.target.value);
+                              formik.setFieldValue(
+                                "UniqueNumber",
+                                e.target.value
+                              );
                             }}
                             className="form-control"
                           />
@@ -171,7 +162,10 @@ export default function CreateAgencies() {
                                 ...model,
                                 PostalCode: e.target.value,
                               });
-                              formik.setFieldValue("PostalCode", e.target.value);
+                              formik.setFieldValue(
+                                "PostalCode",
+                                e.target.value
+                              );
                             }}
                           />
                           {formik.errors.PostalCode && (
@@ -195,7 +189,10 @@ export default function CreateAgencies() {
                                 ...model,
                                 PhoneNumber: e.target.value,
                               });
-                              formik.setFieldValue("PhoneNumber", e.target.value);
+                              formik.setFieldValue(
+                                "PhoneNumber",
+                                e.target.value
+                              );
                             }}
                           />
                           {formik.errors.PhoneNumber && (
@@ -252,15 +249,15 @@ export default function CreateAgencies() {
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Documents
+                          Logo
                         </label>
                         <div className="col-md-9">
                           <input
-                            type="text"
+                            type="file"
                             onChange={(e) => {
                               setModel({
                                 ...model,
-                                Documents: e.target.value,
+                                Document: e.target.files[0],
                               });
                               formik.setFieldValue("Documents", e.target.value);
                             }}

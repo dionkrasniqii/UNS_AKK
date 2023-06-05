@@ -87,50 +87,66 @@ async function createItem(controller, itemData) {
   }
 }
 // CREATE OBJECT WITH FORM FILE
-async function createItemWithFile(controller, itemData) {
+async function createItemWithFile(controller, model) {
   try {
     let token = localStorage.getItem("akktok");
     const formData = new FormData();
-    Object.keys(itemData).forEach((key) => {
-      if (itemData[key] !== null && typeof itemData[key] === "object") {
-        if (Array.isArray(itemData[key])) {
-          itemData[key].forEach((value) => {
-            formData.append(key, value.toString());
-          });
-        } else {
-          Object.keys(itemData[key]).forEach((subKey) => {
-            if (Array.isArray(itemData[key][subKey])) {
-              itemData[key][subKey].forEach((value) => {
-                formData.append(`${key}.${subKey}[]`, value.toString());
-              });
-            } else {
-              formData.append(`${key}.${subKey}`, itemData[key][subKey]);
-            }
-          });
-        }
+    
+    const appendToFormData = (key, value) => {
+      if (value instanceof File) {
+        formData.append(key, value);
+      } else if (Array.isArray(value)) {
+        value.forEach((val) => {
+          if (val instanceof File) {
+            formData.append(`${key}[]`, val);
+          } else {
+            formData.append(`${key}[]`, val.toString());
+          }
+        });
+      } else if (typeof value === 'object' && value !== null) {
+        Object.keys(value).forEach((subKey) => {
+          const subValue = value[subKey];
+          if (Array.isArray(subValue)) {
+            subValue.forEach((val) => {
+              if (val instanceof File) {
+                formData.append(`${key}.${subKey}[]`, val);
+              } else {
+                formData.append(`${key}.${subKey}[]`, val.toString());
+              }
+            });
+          } else if (subValue instanceof File) {
+            formData.append(`${key}.${subKey}`, subValue);
+          } else {
+            formData.append(`${key}.${subKey}`, subValue.toString());
+          }
+        });
       } else {
-        formData.append(key, itemData[key]);
+        formData.append(key, value);
       }
+    };
+    
+    Object.keys(model).forEach((key) => {
+      const value = model[key];
+      appendToFormData(key, value);
     });
-
-    // for (let i of formData.entries()) {
-    //   console.log(i[0] + i[1]);
-    // }
+    
     const response = await axios.post(
       `${API_BASE_URL}/${controller}`,
       formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "Multipart/form-data",
+          "Content-Type": "multipart/form-data",
         },
       }
     );
+    
     return response.data;
   } catch (error) {
     handleRequestError(error);
   }
 }
+
 // Update an existing item
 async function updateItem(controller, itemData) {
   try {
@@ -158,26 +174,39 @@ async function updateItemWithFile(controller, itemData) {
     let langId = localStorage.getItem("i18nextLng");
     const formData = new FormData();
     Object.keys(itemData).forEach((key) => {
-      if (itemData[key] !== null && typeof itemData[key] === "object") {
-        if (Array.isArray(itemData[key])) {
-          itemData[key].forEach((value) => {
-            formData.append(key, value.toString());
+      const value = itemData[key];
+      if (value !== null && typeof value === 'object') {
+        if (Array.isArray(value)) {
+          value.forEach((val) => {
+            if (val instanceof Document) {
+              formData.append(key, val);
+            } else {
+              formData.append(key, val.toString());
+            }
           });
         } else {
-          Object.keys(itemData[key]).forEach((subKey) => {
-            if (Array.isArray(itemData[key][subKey])) {
-              itemData[key][subKey].forEach((value) => {
-                formData.append(`${key}.${subKey}[]`, value.toString());
+          Object.keys(value).forEach((subKey) => {
+            const subValue = value[subKey];
+            if (Array.isArray(subValue)) {
+              subValue.forEach((val) => {
+                if (val instanceof Document) {
+                  formData.append(`${key}.${subKey}[]`, val);
+                } else {
+                  formData.append(`${key}.${subKey}[]`, val.toString());
+                }
               });
+            } else if (subValue instanceof Document) {
+              formData.append(`${key}.${subKey}`, subValue);
             } else {
-              formData.append(`${key}.${subKey}`, itemData[key][subKey]);
+              formData.append(`${key}.${subKey}`, subValue.toString());
             }
           });
         }
       } else {
-        formData.append(key, itemData[key]);
+        formData.append(key, value);
       }
     });
+    
 
     const response = await axios.put(
       `${API_BASE_URL}/${controller}/${langId}`,
