@@ -9,6 +9,7 @@ import Institutions from "../components/institutions/Institutions";
 import CreateInstitutions from "../components/institutions/CreateInstitutions";
 import EditInstitution from "../components/institutions/EditInstitutions";
 
+
 export const AppRoutes = () => {
   const ROLES = {
     ADMIN: "Admin",
