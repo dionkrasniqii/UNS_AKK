@@ -71,7 +71,7 @@ export const AppRoutes = () => {
       />
 
       <Route
-        path="/editlevel"
+        path="/editlevel/:id"
         element={
           <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={EditLevel} />
         }
