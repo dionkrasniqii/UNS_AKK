@@ -1,3 +1,23 @@
 {
-  "Hello": "Zdravo"
+  "Hello": "Zdravo",
+  "Institutions": "Institucije",
+  "InstitutionsList": "Spisak institucija",
+  "Add": "Dodati",
+  "InstitutionName": "Naziv ustanove",
+  "UniqueNumber": "Jedinstveni broj",
+  "Municipality": "Opština",
+  "Address": "Adresa",
+  "PostalCode": "Poštanski Kod",
+  "Web": "Veb sajt",
+  "Actions": "Akcije",
+  "ServerProblems": "Problemi sa serverom",
+  "DataDeletedSuccessfully": "Podaci su uspešno izbrisani!",
+  "Search": "Pretraga",
+  "RegisterInstitution": "Registrujte Ustanovu",
+  "PhoneNumber": "Broj telefona",
+  "Discard": "Odbaci",
+  "Save": "Sačuvati",
+  "ModifyInstitution": "Modifi Institution",
+  "DataUpdatedSuccessfully": "Podaci su uspešno ažurirani!",
+  "Edit": "Urediti"
 }

@@ -12,9 +12,9 @@ export default function Sidebar() {
   const SidebarItems = [
     //ZKPS
     {
-      label: "Institucionet",
+      label: t("Institutions"),
       roles: ["Admin"],
-      path: "/agencies",
+      path: "/institutions",
       hasMenu: false,
       icon: "mdi mdi-calendar-blank-outline",
     },

@@ -1,3 +1,23 @@
 {
-  "Hello": "Pëshendetje"
+  "Hello": "Pëshendetje",
+  "Institutions": "Institucionet",
+  "InstitutionsList": "Lista e institucioneve",
+  "Add": "Shto",
+  "InstitutionName": "Emri i institucionit",
+  "UniqueNumber": "Numri Unik",
+  "Municipality": "Qyteti",
+  "Address": "Adresa",
+  "PostalCode": "Kodi Postar",
+  "Web": "Faqja e Internetit",
+  "Actions": "Veprimet",
+  "ServerProblems": "Probleme në server",
+  "DataDeletedSuccessfully": "Të dhënat u fshin me sukses!",
+  "Search": "Kërko",
+  "RegisterInstitution": "Regjistro Institucionin",
+  "PhoneNumber": "Numri i telefonit",
+  "Discard": "Anulo",
+  "Save": "Ruaj",
+  "ModifyInstitution": "Modifiko Institucionin",
+  "DataUpdatedSuccessfully": "Të dhënat u përditësuan me sukses!",
+  "Edit": "Edito"
 }

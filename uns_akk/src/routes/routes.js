@@ -2,11 +2,12 @@ import { Route, Routes } from "react-router";
 import Home from "../components/home/Home";
 import Login from "../components/login/Login";
 import PrivateRoute from "../auth/PrivateRoute";
-import Agencies from "../components/institutions/Institutions";
-import CreateAgencies from "../components/institutions/CreateInstitutions";
 import Level from "../components/level/Level";
 import CreateLevel from "../components/level/CreateLevel";
 import EditLevel from "../components/level/EditLevel";
+import Institutions from "../components/institutions/Institutions";
+import CreateInstitutions from "../components/institutions/CreateInstitutions";
+import EditInstitution from "../components/institutions/EditInstitutions";
 
 
 export const AppRoutes = () => {
@@ -39,18 +40,28 @@ export const AppRoutes = () => {
         */}
 
       <Route
-        path="/agencies"
+        path="/institutions"
         element={
-          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={Agencies} />
+          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={Institutions} />
         }
       />
 
       <Route
-        path="/createagencies"
+        path="/createinstitutions"
         element={
           <PrivateRoute
             allowedRoles={[ROLES.ADMIN]}
-            component={CreateAgencies}
+            component={CreateInstitutions}
+          />
+        }
+      />
+
+<Route
+        path="/editinstitutions/:id"
+        element={
+          <PrivateRoute
+            allowedRoles={[ROLES.ADMIN]}
+            component={EditInstitution}
           />
         }
       />

@@ -7,21 +7,54 @@ import { red } from "@mui/material/colors";
 import CrudProvider from "../../provider/CrudProvider";
 import ProgressBar from "../custom/ProgressBar";
 import CustomSelect from "../custom/CustomSelect";
+import { useTranslation } from "react-i18next";
 
 export default function CreateInstitutions() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [cities, setCities] = useState([]);
   const [model, setModel] = useState({
     InstitutionName: "",
     UniqueNumber: "",
-    City: "",
+    // City: "",
     Address: "",
     PostalCode: "",
-    PhoneNumber: "",
-    MunicipalityId: "1",
+    PhoneNum: "",
+    MunicipalityId: "",
     Email: "",
     Web: "",
     Document: "",
   });
+
+  useEffect(() => {
+    CrudProvider.getAllWithLang("GeneralAPI/GetAllMunicipalities").then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setCities(res.result);
+        }
+      }
+    });
+  }, []);
+
+  const citiesList =
+    cities &&
+    cities.length > 0 &&
+    cities
+      .map((obj) => {
+        return {
+          value: obj.municipality.municipalityId,
+          label: obj.municipalityName,
+        };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label));
+
+  function changeCity(e) {
+    setModel({
+      ...model,
+      MunicipalityId: e,
+    });
+    formik.setFieldValue("MunicipalityId",e)
+  }
 
   async function SubmitForm() {
     await CrudProvider.createItemWithFile(
@@ -30,7 +63,7 @@ export default function CreateInstitutions() {
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          navigate("/agencies");
+          navigate("/institutions");
         }
       }
     });
@@ -40,26 +73,11 @@ export default function CreateInstitutions() {
     validationSchema: CreateAgenciesSchema,
     onSubmit: () => SubmitForm(),
   });
-
-function changeCity(e){
-  setModel({
-    ...model,
-    City:e
-  })
-}
-
-const cityList = [{
-  value:1,label:"Malisheve"
-},{
-  value:2,label:"Prishtine"
-}]
-
-
   return (
     <div className="col-xl-12">
       <div className="card">
         <div className="card-body">
-          <h3 className=" mb-3">Regjistro Institucionin</h3>
+          <h3 className=" mb-3">{t("RegisterInstitution")}</h3>
           <form onSubmit={formik.handleSubmit}>
             <div id="progressbarwizard">
               <div className="tab-content b-0 mb-0 pt-0">
@@ -69,7 +87,7 @@ const cityList = [{
                     <div className="col-12">
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Name of Institution
+                        {t("InstitutionName")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -93,7 +111,7 @@ const cityList = [{
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Unique Number
+                        {t("UniqueNumber")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -119,20 +137,24 @@ const cityList = [{
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">City</label>
+                        <label className="col-md-3 col-form-label">{t("Municipality")}</label>
                         <div className="col-md-9">
-                         <CustomSelect onChangeFunction={changeCity} optionsList={cityList} isMulti={false} />
-                          {formik.errors.City && (
+                          <CustomSelect
+                            onChangeFunction={changeCity}
+                            optionsList={citiesList}
+                            isMulti={false}
+                          />
+                          {formik.errors.MunicipalityId && (
                             <span className="text-danger">
                               {" "}
-                              {formik.errors.City}
+                              {formik.errors.MunicipalityId}
                             </span>
                           )}
                         </div>
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Address
+                        {t("Address")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -156,7 +178,7 @@ const cityList = [{
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Postal Code
+                        {t("PostalCode")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -183,7 +205,7 @@ const cityList = [{
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Phone Number
+                        {t("PhoneNumber")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -192,7 +214,7 @@ const cityList = [{
                             onChange={(e) => {
                               setModel({
                                 ...model,
-                                PhoneNumber: e.target.value,
+                                PhoneNum: e.target.value,
                               });
                               formik.setFieldValue(
                                 "PhoneNumber",
@@ -231,7 +253,7 @@ const cityList = [{
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">Web</label>
+                        <label className="col-md-3 col-form-label">{t("Web")}</label>
                         <div className="col-md-9">
                           <input
                             type="text"
@@ -281,13 +303,13 @@ const cityList = [{
                 </div>
                 <ul className="list-inline mb-0 wizard">
                   <Link
-                    to="/agencies"
+                    to="/institutions"
                     className="btn btn-danger waves-effect waves-light float-start"
                   >
                     <span className="btn-label">
                       <i className="fe-arrow-left"></i>
                     </span>
-                    Anulo
+                    {t("Discard")}
                   </Link>
                   <li className="next list-inline-item float-end">
                     <button
@@ -297,7 +319,7 @@ const cityList = [{
                       <span className="btn-label">
                         <i className="fe-check"></i>
                       </span>
-                      Ruaj
+                      {t("Save")}
                     </button>
                   </li>
                 </ul>

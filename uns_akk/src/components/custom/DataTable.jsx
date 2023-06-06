@@ -2,6 +2,7 @@
 
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function DataTable(props) {
   const [data, setData] = useState(props.dataSource);
@@ -9,11 +10,17 @@ export default function DataTable(props) {
   const [load, setLoad] = useState(false);
   let timeoutId;
 
+  const { t } = useTranslation();
+
   const filteredData = props.dataSource.filter((item) => {
     return Object.values(item).some((value) =>
       String(value).toLowerCase().includes(searchInput.toLowerCase())
     );
   });
+
+useEffect(()=>{
+  setData(props.dataSource)
+},[props.dataSource])
 
   useEffect(() => {
     setData(filteredData);
@@ -26,7 +33,7 @@ export default function DataTable(props) {
     timeoutId = setTimeout(() => {
       setSearchInput(value);
       setLoad(false);
-    }, 1000);
+    }, 800 );
   };
 
   return (
@@ -37,13 +44,13 @@ export default function DataTable(props) {
         </div>
         <div className="col-lg-3 col-md-3 col-xxl-3 mb-2 d-flex justify-content-start ">
           <label htmlFor="searchInput" className="form-label mt-1 pe-2">
-            Kërko:
+            {t("Search")}:
           </label>
           <input
             type="search"
             id="searchInput"
             className="form-control form-control-sm"
-            placeholder="Kerko sipas emrit..."
+            placeholder={t("Search")}
             onChange={(e) => handleChange(e)}
             aria-controls="selection-datatable"
             style={{ width: "200px" }}
