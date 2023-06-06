@@ -10,18 +10,49 @@ import CustomSelect from "../custom/CustomSelect";
 
 export default function CreateInstitutions() {
   const navigate = useNavigate();
+  const [cities, setCities] = useState([]);
   const [model, setModel] = useState({
     InstitutionName: "",
     UniqueNumber: "",
-    City: "",
+    // City: "",
     Address: "",
     PostalCode: "",
-    PhoneNumber: "",
-    MunicipalityId: "1",
+    PhoneNum: "",
+    MunicipalityId: "",
     Email: "",
     Web: "",
     Document: "",
   });
+
+  useEffect(() => {
+    CrudProvider.getAllWithLang("GeneralAPI/GetAllMunicipalities").then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setCities(res.result);
+        }
+      }
+    });
+  }, []);
+
+  const citiesList =
+    cities &&
+    cities.length > 0 &&
+    cities
+      .map((obj) => {
+        return {
+          value: obj.municipality.municipalityId,
+          label: obj.municipalityName,
+        };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label));
+
+  function changeCity(e) {
+    setModel({
+      ...model,
+      MunicipalityId: e,
+    });
+    formik.setFieldValue("MunicipalityId",e)
+  }
 
   async function SubmitForm() {
     await CrudProvider.createItemWithFile(
@@ -30,7 +61,7 @@ export default function CreateInstitutions() {
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          navigate("/agencies");
+          navigate("/institutions");
         }
       }
     });
@@ -40,21 +71,6 @@ export default function CreateInstitutions() {
     validationSchema: CreateAgenciesSchema,
     onSubmit: () => SubmitForm(),
   });
-
-function changeCity(e){
-  setModel({
-    ...model,
-    City:e
-  })
-}
-
-const cityList = [{
-  value:1,label:"Malisheve"
-},{
-  value:2,label:"Prishtine"
-}]
-
-
   return (
     <div className="col-xl-12">
       <div className="card">
@@ -63,7 +79,7 @@ const cityList = [{
           <form onSubmit={formik.handleSubmit}>
             <div id="progressbarwizard">
               <div className="tab-content b-0 mb-0 pt-0">
-               <ProgressBar model={model}/>
+                <ProgressBar model={model} />
                 <div className="tab-pane active" id="account-2">
                   <div className="row">
                     <div className="col-12">
@@ -121,11 +137,15 @@ const cityList = [{
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">City</label>
                         <div className="col-md-9">
-                         <CustomSelect onChangeFunction={changeCity} optionsList={cityList} isMulti={false} />
-                          {formik.errors.City && (
+                          <CustomSelect
+                            onChangeFunction={changeCity}
+                            optionsList={citiesList}
+                            isMulti={false}
+                          />
+                          {formik.errors.MunicipalityId && (
                             <span className="text-danger">
                               {" "}
-                              {formik.errors.City}
+                              {formik.errors.MunicipalityId}
                             </span>
                           )}
                         </div>
@@ -192,7 +212,7 @@ const cityList = [{
                             onChange={(e) => {
                               setModel({
                                 ...model,
-                                PhoneNumber: e.target.value,
+                                PhoneNum: e.target.value,
                               });
                               formik.setFieldValue(
                                 "PhoneNumber",
@@ -253,9 +273,7 @@ const cityList = [{
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">
-                          Logo
-                        </label>
+                        <label className="col-md-3 col-form-label">Logo</label>
                         <div className="col-md-9">
                           <input
                             type="file"
@@ -283,7 +301,7 @@ const cityList = [{
                 </div>
                 <ul className="list-inline mb-0 wizard">
                   <Link
-                    to="/agencies"
+                    to="/institutions"
                     className="btn btn-danger waves-effect waves-light float-start"
                   >
                     <span className="btn-label">

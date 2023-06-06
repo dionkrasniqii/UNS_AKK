@@ -11,7 +11,7 @@ export const CreateAgenciesSchema = Yup.object().shape({
       (value) => /^8\d{8}$/.test(value)
     )
     .required("Ju lutem mbushni fushën për numrin unik!"),
-  City: Yup.string().required("Ju lutem mbushni fushën për qytetin!"),
+  MunicipalityId: Yup.string().required("Ju lutem mbushni fushën për qytetin!"),
   Address: Yup.string().required("Ju lutem mbushni fushën për adresën!"),
   PostalCode: Yup.string().required(
     "Ju lutem mbushni fushën për kodin postal!"

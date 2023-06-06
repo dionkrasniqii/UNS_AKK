@@ -51,11 +51,35 @@ export default function Institutions() {
       key: "web",
       responsive: ["sm"],
     },
+    {
+      title: "Actions",
+      key: "institutionId",
+      responsive: ["sm"],
+      render: (value, record) => {
+        return (
+          <div className="row">
+            <div className="col-lg-3 col-xxl-3">
+              <Link
+                className="btn-secondary btn-sm"
+                to={`/editinstitutions/${record.institutionId}`}
+              >
+                <i className="fe-edit" />
+              </Link>
+            </div>
+            <div className="col-lg-3 col-xxl-3 ps-2">
+              <a className="btn-sm btn-danger" onClick={(e) => handleDelete(record.institutionId)}>
+                <i className="fe-trash-2" />
+              </a>
+            </div>
+          </div>
+        );
+      },
+    },
   ];
 
   useEffect(() => {
     setLoad(true);
-    CrudProvider.getAll("InstitutionAPI/GetAll").then((res) => {
+    CrudProvider.getAllWithLang("InstitutionAPI/GetAll").then((res) => {
       if (res) {
         if (res.statusCode === 200) {
           setData(res.result);
@@ -66,6 +90,31 @@ export default function Institutions() {
       setLoad(false);
     });
   }, []);
+
+  async function handleDelete(id) {
+    setLoad(true);
+    await CrudProvider.deleteItemById(
+      "InstitutionAPI/DeleteInstitution",
+      id
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          toast.success("Te dhenat u fshin me sukses!");
+          CrudProvider.getAllWithLang("InstitutionAPI/GetAll").then((res) => {
+            if (res) {
+
+              if (res.statusCode === 200) {
+                setData(res.result);
+              } else if (res.statusCode === 400) {
+                toast.error("Probleme ne server");
+              }
+            }
+          });
+        }
+      }
+      setLoad(false);
+    });
+  }
   return (
     <div className="col-xxl-12">
       <div className="col-xxl-12 text-end"></div>
@@ -76,7 +125,7 @@ export default function Institutions() {
               <div className="col-12 d-flex justify-content-end">
                 <Link
                   className="btn btn-info waves-effect waves-light"
-                  to="/createagencies"
+                  to="/createinstitutions"
                 >
                   <span className="btn-label">
                     <i className="fe-plus-circle"></i>

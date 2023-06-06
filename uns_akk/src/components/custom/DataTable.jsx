@@ -15,6 +15,10 @@ export default function DataTable(props) {
     );
   });
 
+useEffect(()=>{
+  setData(props.dataSource)
+},[props.dataSource])
+
   useEffect(() => {
     setData(filteredData);
   }, [searchInput]);
@@ -26,7 +30,7 @@ export default function DataTable(props) {
     timeoutId = setTimeout(() => {
       setSearchInput(value);
       setLoad(false);
-    }, 1000);
+    }, 800 );
   };
 
   return (
