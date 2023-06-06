@@ -1,3 +1,23 @@
 {
-  "Hello": "Hello"
+  "Hello": "Hello",
+  "Institutions": "Institutions",
+  "InstitutionsList": "List of institutions",
+  "Add": "Add",
+  "InstitutionName": "Name of the Institution",
+  "UniqueNumber": "Unique number",
+  "Municipality": "Municipality",
+  "Address": "Address",
+  "PostalCode": "Postal Code",
+  "Web": "Website",
+  "Actions": "Actions",
+  "ServerProblems": "Server problems",
+  "DataDeletedSuccessfully": "Data deleted successfully!",
+  "Search": "Search",
+  "RegisterInstitution": "Register Institution",
+  "PhoneNumber": "Phone Number",
+  "Discard": "Discard",
+  "Save": "Save",
+  "ModifyInstitution": "Modify Institution",
+  "DataUpdatedSuccessfully": "The data was updated successfully!",
+  "Edit": "Edit"
 }

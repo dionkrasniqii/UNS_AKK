@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 export default function EditInstitution() {
   const { id } = useParams();
-  const {t } = useTranslation()
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [load, setLoad] = useState(false);
   const [institution, setInstitution] = useState({});
@@ -83,7 +83,7 @@ export default function EditInstitution() {
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          toast.success("Te dhenat u perditsuan me sukses!");
+          toast.success(t("DataUpdatedSuccessfully"));
           navigate("/institutions");
         } else {
           toast.error(res.errorMessages[0]);
@@ -98,33 +98,35 @@ export default function EditInstitution() {
     validateOnMount: false,
     onSubmit: () => handleSubmit(),
   });
-  console.log(institution)
+  console.log(institution);
   return (
     <div className="col-xl-12">
       <div className="card">
         {!load ? (
           <div className="card-body">
-            <h3 className=" mb-3">Modifiko Institucionin</h3>
+            <h3 className=" mb-3">{t("ModifyInstitution")}</h3>
             <form onSubmit={formik.handleSubmit}>
               <div id="progressbarwizard">
                 <div className="tab-content b-0 mb-0 pt-0">
                   <div className="tab-pane active" id="account-2">
                     <div className="row">
                       <div className="col-12">
-                      <div className="row mb-3 text-center">
-                          <img
-                            src={CrudProvider.documentPath(institution.path)}
-                            alt="image"
-                            class="img-fluid rounded"
-                            width={100}
-                            height={100}
-                          />
+                        <div className="row mb-3">
+                          <div className="col-12 text-center">
+                            <img
+                              src={CrudProvider.documentPath(institution.path)}
+                              alt="image"
+                              class="img-fluid rounded"
+                              style={{ width: "250px", height: "150px" }}
+                            />
+                          </div>
                         </div>
-                        {console.log(CrudProvider.documentPath(institution.path))}
+                        {console.log(
+                          CrudProvider.documentPath(institution.path)
+                        )}
                         <div className="row mb-3">
                           <label className="col-md-3 col-form-label">
-                            Name of Institution
-                            {t('Hello')}
+                          {t("InstitutionName")}
                           </label>
                           <div className="col-md-9">
                             <input
@@ -149,7 +151,7 @@ export default function EditInstitution() {
                         </div>
                         <div className="row mb-3">
                           <label className="col-md-3 col-form-label">
-                            Unique Number
+                          {t("UniqueNumber")}
                           </label>
                           <div className="col-md-9">
                             <input
@@ -177,7 +179,7 @@ export default function EditInstitution() {
                         </div>
                         <div className="row mb-3">
                           <label className="col-md-3 col-form-label">
-                            City
+                          {t("Municipality")}
                           </label>
                           <div className="col-md-9">
                             <CustomSelect
@@ -197,7 +199,7 @@ export default function EditInstitution() {
                         </div>
                         <div className="row mb-3">
                           <label className="col-md-3 col-form-label">
-                            Address
+                          {t("Address")}
                           </label>
                           <div className="col-md-9">
                             <input
@@ -222,7 +224,7 @@ export default function EditInstitution() {
                         </div>
                         <div className="row mb-3">
                           <label className="col-md-3 col-form-label">
-                            Postal Code
+                          {t("PostalCode")}
                           </label>
                           <div className="col-md-9">
                             <input
@@ -250,7 +252,7 @@ export default function EditInstitution() {
                         </div>
                         <div className="row mb-3">
                           <label className="col-md-3 col-form-label">
-                            Phone Number
+                          {t("PhoneNumber")}
                           </label>
                           <div className="col-md-9">
                             <input
@@ -303,7 +305,7 @@ export default function EditInstitution() {
                         </div>
                         {console.log(institution)}
                         <div className="row mb-3">
-                          <label className="col-md-3 col-form-label">Web</label>
+                          <label className="col-md-3 col-form-label">{t("Web")}</label>
                           <div className="col-md-9">
                             <input
                               type="text"
@@ -338,7 +340,7 @@ export default function EditInstitution() {
                       <span className="btn-label">
                         <i className="fe-arrow-left"></i>
                       </span>
-                      Anulo
+                      {t("Discard")}
                     </Link>
                     <li className="next list-inline-item float-end">
                       <button
@@ -348,7 +350,7 @@ export default function EditInstitution() {
                         <span className="btn-label">
                           <i className="fe-check"></i>
                         </span>
-                        Ruaj
+                        {t("Edit")}
                       </button>
                     </li>
                   </ul>

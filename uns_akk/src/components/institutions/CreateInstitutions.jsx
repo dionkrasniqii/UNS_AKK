@@ -7,9 +7,11 @@ import { red } from "@mui/material/colors";
 import CrudProvider from "../../provider/CrudProvider";
 import ProgressBar from "../custom/ProgressBar";
 import CustomSelect from "../custom/CustomSelect";
+import { useTranslation } from "react-i18next";
 
 export default function CreateInstitutions() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [cities, setCities] = useState([]);
   const [model, setModel] = useState({
     InstitutionName: "",
@@ -75,7 +77,7 @@ export default function CreateInstitutions() {
     <div className="col-xl-12">
       <div className="card">
         <div className="card-body">
-          <h3 className=" mb-3">Regjistro Institucionin</h3>
+          <h3 className=" mb-3">{t("RegisterInstitution")}</h3>
           <form onSubmit={formik.handleSubmit}>
             <div id="progressbarwizard">
               <div className="tab-content b-0 mb-0 pt-0">
@@ -85,7 +87,7 @@ export default function CreateInstitutions() {
                     <div className="col-12">
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Name of Institution
+                        {t("InstitutionName")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -109,7 +111,7 @@ export default function CreateInstitutions() {
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Unique Number
+                        {t("UniqueNumber")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -135,7 +137,7 @@ export default function CreateInstitutions() {
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">City</label>
+                        <label className="col-md-3 col-form-label">{t("Municipality")}</label>
                         <div className="col-md-9">
                           <CustomSelect
                             onChangeFunction={changeCity}
@@ -152,7 +154,7 @@ export default function CreateInstitutions() {
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Address
+                        {t("Address")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -176,7 +178,7 @@ export default function CreateInstitutions() {
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Postal Code
+                        {t("PostalCode")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -203,7 +205,7 @@ export default function CreateInstitutions() {
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Phone Number
+                        {t("PhoneNumber")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -251,7 +253,7 @@ export default function CreateInstitutions() {
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">Web</label>
+                        <label className="col-md-3 col-form-label">{t("Web")}</label>
                         <div className="col-md-9">
                           <input
                             type="text"
@@ -307,7 +309,7 @@ export default function CreateInstitutions() {
                     <span className="btn-label">
                       <i className="fe-arrow-left"></i>
                     </span>
-                    Anulo
+                    {t("Discard")}
                   </Link>
                   <li className="next list-inline-item float-end">
                     <button
@@ -317,7 +319,7 @@ export default function CreateInstitutions() {
                       <span className="btn-label">
                         <i className="fe-check"></i>
                       </span>
-                      Ruaj
+                      {t("Save")}
                     </button>
                   </li>
                 </ul>

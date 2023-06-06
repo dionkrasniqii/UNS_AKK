@@ -4,37 +4,39 @@ import { Table, Input, Alert, Row, Col } from "antd";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
 import DataTable from "../custom/DataTable";
+import { useTranslation } from "react-i18next";
 
 export default function Institutions() {
   const [load, setLoad] = useState(false);
   const [data, setData] = useState([]);
+  const { t } = useTranslation(); 
   const columns = [
     {
-      title: "Emri i Institucionit",
+      title: t("InstitutionName"),
       dataIndex: "institutionName",
       key: "institutionName",
       responsive: ["sm"],
     },
     {
-      title: "Numri Unik",
+      title: t("UniqueNumber"),
       dataIndex: "uniqueNumber",
       key: "uniqueNumber",
       responsive: ["sm"],
     },
     {
-      title: "Qyteti",
+      title: t("Municipality"),
       dataIndex: "municipalityName",
       key: "municipalityName",
       responsive: ["sm"],
     },
     {
-      title: "Adresa",
+      title: t("Address"),
       dataIndex: "address",
       key: "address",
       responsive: ["sm"],
     },
     {
-      title: "Kodi Postal",
+      title: t("PostalCode"),
       dataIndex: "postalCode",
       key: "postalCode",
       responsive: ["sm"],
@@ -46,13 +48,13 @@ export default function Institutions() {
       responsive: ["sm"],
     },
     {
-      title: "Faqja e Internetit",
+      title: t("Web"),
       dataIndex: "web",
       key: "web",
       responsive: ["sm"],
     },
     {
-      title: "Actions",
+      title: t("Actions"),
       key: "institutionId",
       responsive: ["sm"],
       render: (value, record) => {
@@ -84,7 +86,7 @@ export default function Institutions() {
         if (res.statusCode === 200) {
           setData(res.result);
         } else if (res.statusCode === 400) {
-          toast.error("Probleme ne server");
+          toast.error(t("ServerProblems"));
         }
       }
       setLoad(false);
@@ -99,14 +101,14 @@ export default function Institutions() {
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          toast.success("Te dhenat u fshin me sukses!");
+          toast.success(t("DataDeletedSuccessfully"));
           CrudProvider.getAllWithLang("InstitutionAPI/GetAll").then((res) => {
             if (res) {
 
               if (res.statusCode === 200) {
                 setData(res.result);
               } else if (res.statusCode === 400) {
-                toast.error("Probleme ne server");
+                toast.error(t("ServerProblems"));
               }
             }
           });
@@ -130,7 +132,7 @@ export default function Institutions() {
                   <span className="btn-label">
                     <i className="fe-plus-circle"></i>
                   </span>
-                  Shto
+                  {t("Add")}
                 </Link>
               </div>
             </div>
@@ -140,7 +142,7 @@ export default function Institutions() {
               <DataTable
                 columns={columns}
                 dataSource={data}
-                title={"Lista e institucioneve"}
+                title={t("InstitutionsList")}
               />
             ) : (
               <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
