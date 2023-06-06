@@ -28,7 +28,7 @@ async function login(controller, model) {
   }
 }
 // Get all items
-async function getAll(controller) {
+async function getAllWithLang(controller) {
   try {
     let token = localStorage.getItem("akktok");
     let langId = localStorage.getItem("i18nextLng");
@@ -46,8 +46,25 @@ async function getAll(controller) {
     handleRequestError(error);
   }
 }
+async function getAll(controller) {
+  try {
+    let token = localStorage.getItem("akktok");
+    const response = await axios.get(
+      `${API_BASE_URL}/${controller}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    handleRequestError(error);
+  }
+}
 // Get a single item by ID
-async function getItemById(controller, itemId) {
+async function getItemByIdLang(controller, itemId) {
   try {
     let langId = localStorage.getItem("i18nextLng");
     let token = localStorage.getItem("akktok");
@@ -65,12 +82,28 @@ async function getItemById(controller, itemId) {
     handleRequestError(error);
   }
 }
+async function getItemById(controller, itemId) {
+  try {
+    let token = localStorage.getItem("akktok");
+    const response = await axios.get(
+      `${API_BASE_URL}/${controller}/${itemId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    handleRequestError(error);
+  }
+}
 
 // Create a new item
 async function createItem(controller, itemData) {
   try {
     let token = localStorage.getItem("akktok");
-
     const response = await axios.post(
       `${API_BASE_URL}/${controller}`,
       JSON.stringify(itemData),
@@ -150,10 +183,9 @@ async function createItemWithFile(controller, model) {
 // Update an existing item
 async function updateItem(controller, itemData) {
   try {
-    let langId = localStorage.getItem("i18nextLng");
     let token = localStorage.getItem("akktok");
     const response = await axios.put(
-      `${API_BASE_URL}/${controller}/${langId}`,
+      `${API_BASE_URL}/${controller}`,
       JSON.stringify(itemData),
       {
         headers: {
@@ -168,48 +200,51 @@ async function updateItem(controller, itemData) {
   }
 }
 
-async function updateItemWithFile(controller, itemData) {
+async function updateItemWithFile(controller, model) {
   try {
     let token = localStorage.getItem("akktok");
-    let langId = localStorage.getItem("i18nextLng");
     const formData = new FormData();
-    Object.keys(itemData).forEach((key) => {
-      const value = itemData[key];
-      if (value !== null && typeof value === 'object') {
-        if (Array.isArray(value)) {
-          value.forEach((val) => {
-            if (val instanceof Document) {
-              formData.append(key, val);
-            } else {
-              formData.append(key, val.toString());
-            }
-          });
-        } else {
-          Object.keys(value).forEach((subKey) => {
-            const subValue = value[subKey];
-            if (Array.isArray(subValue)) {
-              subValue.forEach((val) => {
-                if (val instanceof Document) {
-                  formData.append(`${key}.${subKey}[]`, val);
-                } else {
-                  formData.append(`${key}.${subKey}[]`, val.toString());
-                }
-              });
-            } else if (subValue instanceof Document) {
-              formData.append(`${key}.${subKey}`, subValue);
-            } else {
-              formData.append(`${key}.${subKey}`, subValue.toString());
-            }
-          });
-        }
+   
+    const appendToFormData = (key, value) => {
+      if (value instanceof File) {
+        formData.append(key, value);
+      } else if (Array.isArray(value)) {
+        value.forEach((val) => {
+          if (val instanceof File) {
+            formData.append(`${key}[]`, val);
+          } else {
+            formData.append(`${key}[]`, val.toString());
+          }
+        });
+      } else if (typeof value === 'object' && value !== null) {
+        Object.keys(value).forEach((subKey) => {
+          const subValue = value[subKey];
+          if (Array.isArray(subValue)) {
+            subValue.forEach((val) => {
+              if (val instanceof File) {
+                formData.append(`${key}.${subKey}[]`, val);
+              } else {
+                formData.append(`${key}.${subKey}[]`, val.toString());
+              }
+            });
+          } else if (subValue instanceof File) {
+            formData.append(`${key}.${subKey}`, subValue);
+          } else {
+            formData.append(`${key}.${subKey}`, subValue.toString());
+          }
+        });
       } else {
         formData.append(key, value);
       }
-    });
+    };
     
+    Object.keys(model).forEach((key) => {
+      const value = model[key];
+      appendToFormData(key, value);
+    });
 
     const response = await axios.put(
-      `${API_BASE_URL}/${controller}/${langId}`,
+      `${API_BASE_URL}/${controller}`,
       formData,
       {
         headers: {
@@ -282,7 +317,9 @@ async function handleRequestError(error) {
 export default {
   login,
   getAll,
+  getAllWithLang,
   getItemById,
+  getItemByIdLang,
   createItem,
   createItemWithFile,
   deleteItemById,
