@@ -1,14 +1,14 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CreateAgenciesSchema } from "../schemas/CreateAgenciesSchema";
 import { object } from "yup";
 import { red } from "@mui/material/colors";
 import CrudProvider from "../../provider/CrudProvider";
 import ProgressBar from "../custom/ProgressBar";
 import CustomSelect from "../custom/CustomSelect";
 import { useTranslation } from "react-i18next";
-
+import { toast } from "react-toastify";
+import * as Yup from "yup";
 export default function CreateInstitutions() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -16,7 +16,6 @@ export default function CreateInstitutions() {
   const [model, setModel] = useState({
     InstitutionName: "",
     UniqueNumber: "",
-    // City: "",
     Address: "",
     PostalCode: "",
     PhoneNum: "",
@@ -27,13 +26,15 @@ export default function CreateInstitutions() {
   });
 
   useEffect(() => {
-    CrudProvider.getAllWithLang("GeneralAPI/GetAllMunicipalities").then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          setCities(res.result);
+    CrudProvider.getAllWithLang("GeneralAPI/GetAllMunicipalities").then(
+      (res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setCities(res.result);
+          }
         }
       }
-    });
+    );
   }, []);
 
   const citiesList =
@@ -53,7 +54,7 @@ export default function CreateInstitutions() {
       ...model,
       MunicipalityId: e,
     });
-    formik.setFieldValue("MunicipalityId",e)
+    formik.setFieldValue("MunicipalityId", e);
   }
 
   async function SubmitForm() {
@@ -64,13 +65,43 @@ export default function CreateInstitutions() {
       if (res) {
         if (res.statusCode === 200) {
           navigate("/institutions");
+          toast.success(t("DataSavedSuccessfully"));
         }
       }
     });
   }
+  const CreateInstitutionSchema = Yup.object().shape({
+    Name: Yup.string().required(t("PleaseFillInstitutionName")),
+    UniqueNumber: Yup.number()
+      .test(
+        "is-valid",
+        t("UniqueNumberMustContain"),
+        (value) => /^8\d{8}$/.test(value)
+      )
+      .required(t("PleaseFillUniqueNumber")),
+    MunicipalityId: Yup.string().required(
+      t("PleaseFillMunicipality")
+    ),
+    Address: Yup.string().required(t("PleaseFillAddress")),
+    PostalCode: Yup.string().required(
+      t("PleaseFillPostalCode")
+    ),
+    PhoneNumber: Yup.string().required(
+      t("PleaseFillPhoneNumber")
+    ),
+    Email: Yup.string().required(t("PleaseFillEmail")),
+    Web: Yup.string().required(
+      t("PleaseFillWeb")
+    ),
+    Documents: Yup.string().required(
+      t("PleaseFillDocument")
+    ),
+  });
   const formik = useFormik({
     initialValues: {},
-    validationSchema: CreateAgenciesSchema,
+    validationSchema: CreateInstitutionSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: () => SubmitForm(),
   });
   return (
@@ -87,7 +118,7 @@ export default function CreateInstitutions() {
                     <div className="col-12">
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                        {t("InstitutionName")}
+                          {t("InstitutionName")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -103,7 +134,6 @@ export default function CreateInstitutions() {
                           />
                           {formik.errors.Name && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Name}
                             </span>
                           )}
@@ -111,7 +141,7 @@ export default function CreateInstitutions() {
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                        {t("UniqueNumber")}
+                          {t("UniqueNumber")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -130,14 +160,15 @@ export default function CreateInstitutions() {
                           />
                           {formik.errors.UniqueNumber && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.UniqueNumber}
                             </span>
                           )}
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">{t("Municipality")}</label>
+                        <label className="col-md-3 col-form-label">
+                          {t("Municipality")}
+                        </label>
                         <div className="col-md-9">
                           <CustomSelect
                             onChangeFunction={changeCity}
@@ -146,7 +177,6 @@ export default function CreateInstitutions() {
                           />
                           {formik.errors.MunicipalityId && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.MunicipalityId}
                             </span>
                           )}
@@ -154,7 +184,7 @@ export default function CreateInstitutions() {
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                        {t("Address")}
+                          {t("Address")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -170,7 +200,6 @@ export default function CreateInstitutions() {
                           />
                           {formik.errors.Address && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Address}
                             </span>
                           )}
@@ -178,7 +207,7 @@ export default function CreateInstitutions() {
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                        {t("PostalCode")}
+                          {t("PostalCode")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -197,7 +226,6 @@ export default function CreateInstitutions() {
                           />
                           {formik.errors.PostalCode && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.PostalCode}
                             </span>
                           )}
@@ -205,7 +233,7 @@ export default function CreateInstitutions() {
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                        {t("PhoneNumber")}
+                          {t("PhoneNumber")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -224,7 +252,6 @@ export default function CreateInstitutions() {
                           />
                           {formik.errors.PhoneNumber && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.PhoneNumber}
                             </span>
                           )}
@@ -246,14 +273,15 @@ export default function CreateInstitutions() {
                           />
                           {formik.errors.Email && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Email}
                             </span>
                           )}
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">{t("Web")}</label>
+                        <label className="col-md-3 col-form-label">
+                          {t("Web")}
+                        </label>
                         <div className="col-md-9">
                           <input
                             type="text"
@@ -268,7 +296,6 @@ export default function CreateInstitutions() {
                           />
                           {formik.errors.Web && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Web}
                             </span>
                           )}
@@ -290,16 +317,13 @@ export default function CreateInstitutions() {
                           />
                           {formik.errors.Documents && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Documents}
                             </span>
                           )}
                         </div>
                       </div>
-                    </div>{" "}
-                    {/* end col */}
-                  </div>{" "}
-                  {/* end row */}
+                    </div>
+                  </div>
                 </div>
                 <ul className="list-inline mb-0 wizard">
                   <Link
@@ -323,15 +347,11 @@ export default function CreateInstitutions() {
                     </button>
                   </li>
                 </ul>
-              </div>{" "}
-              {/* tab-content */}
-            </div>{" "}
-            {/* end #progressbarwizard*/}
+              </div>
+            </div>
           </form>
-        </div>{" "}
-        {/* end card-body */}
-      </div>{" "}
-      {/* end card*/}
+        </div>
+      </div>
     </div>
   );
 }

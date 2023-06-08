@@ -26,6 +26,13 @@ export default function Sidebar() {
       icon: "mdi mdi-share-variant",
     },
     {
+      label: "Qualifications",
+      roles: ["Admin"],
+      path: '/qualifications',
+      hasMenu: false,
+      icon: "mdi mdi-book-edit",
+    },
+{
       label: "Decisions",
       roles: ["Admin"],
       path: "/decisions",
