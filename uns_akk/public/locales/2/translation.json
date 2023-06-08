@@ -1,5 +1,4 @@
 {
-
   "Hello": "Hello",
   "Create Level": "Create Level",
   "Back": "Back",
@@ -18,7 +17,7 @@
   "English": "English",
   "Serbian": "Serbian",
   "Language": "Language",
-  "ChooseLanguage": "Choose Language"
+  "ChooseLanguage": "Choose Language",
   "Home": "Home",
   "Hello": "Hello",
   "Institutions": "Institutions",
@@ -65,11 +64,9 @@
   "PleaseFillQualificationNameEN": "Please fill in the qualification field in English!",
   "PleaseFillQualificationNameSR": "Please fill in the qualification field in Serbian language!",
   "PleaseFillLevel": "Please fill in the field for the level!",
-
   "PostalCodeMustContainMax": "Postal code must contain at most 20 characters!",
   "PhoneNumberMustContainMax": "The phone number must contain at most 20 characters!",
-  "Qualifications": "Qualifications"
-
+  "Qualifications": "Qualifications",
   "Decisions": "Decisions",
   "ListOfAllDecisions": "List of all decisions",
   "ExpirationDate": "Expiration date",
