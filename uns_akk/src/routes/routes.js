@@ -8,7 +8,9 @@ import EditLevel from "../components/level/EditLevel";
 import Institutions from "../components/institutions/Institutions";
 import CreateInstitutions from "../components/institutions/CreateInstitutions";
 import EditInstitution from "../components/institutions/EditInstitutions";
-
+import Qualifications from "../components/qualifications/Qualifications";
+import CreateQualifications from "../components/qualifications/CreateQualifications";
+import EditQualifications from "../components/qualifications/EditQualifications";
 
 export const AppRoutes = () => {
   const ROLES = {
@@ -38,7 +40,7 @@ export const AppRoutes = () => {
            }
         /> 
         */}
-
+      {/* Institutions */}
       <Route
         path="/institutions"
         element={
@@ -56,7 +58,7 @@ export const AppRoutes = () => {
         }
       />
 
-<Route
+      <Route
         path="/editinstitutions/:id"
         element={
           <PrivateRoute
@@ -85,6 +87,31 @@ export const AppRoutes = () => {
         path="/editlevel"
         element={
           <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={EditLevel} />
+        }
+      />
+
+      {/* Qualifications */}
+      <Route
+        path="/qualifications"
+        element={
+          <PrivateRoute
+            allowedRoles={[ROLES.ADMIN]}
+            component={Qualifications}
+          />
+        }
+      />
+
+      <Route
+        path="/createqualifications"
+        element={
+          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={CreateQualifications} />
+        }
+      />
+
+      <Route
+        path="/editqualifications/:id"
+        element={
+          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={EditQualifications} />
         }
       />
     </Routes>

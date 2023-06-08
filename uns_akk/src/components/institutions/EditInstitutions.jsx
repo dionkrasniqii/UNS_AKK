@@ -98,7 +98,6 @@ export default function EditInstitution() {
     validateOnMount: false,
     onSubmit: () => handleSubmit(),
   });
-  console.log(institution);
   return (
     <div className="col-xl-12">
       <div className="card">
@@ -121,9 +120,6 @@ export default function EditInstitution() {
                             />
                           </div>
                         </div>
-                        {console.log(
-                          CrudProvider.documentPath(institution.path)
-                        )}
                         <div className="row mb-3">
                           <label className="col-md-3 col-form-label">
                           {t("InstitutionName")}
@@ -303,7 +299,6 @@ export default function EditInstitution() {
                             )}
                           </div>
                         </div>
-                        {console.log(institution)}
                         <div className="row mb-3">
                           <label className="col-md-3 col-form-label">{t("Web")}</label>
                           <div className="col-md-9">
