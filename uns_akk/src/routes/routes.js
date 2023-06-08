@@ -125,7 +125,7 @@ export const AppRoutes = (props) => {
       />
 
       <Route
-        path="/editlevel"
+        path="/editlevel/:id"
         element={
           <PrivateRoute
             setAuthState={props.setAuthState}

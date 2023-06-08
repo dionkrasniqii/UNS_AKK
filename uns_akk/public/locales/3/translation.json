@@ -1,4 +1,24 @@
 {
+
+  "Hello": "Zdravo",
+  "Create Level": "Kreiraj nivo",
+  "Back": "Nazad",
+  "City": "Grad",
+  "Level Reference KEK": "Referenca nivoa KEK",
+  "Level Description": "Opis nivoa",
+  "Competencies": "Kompetencije",
+  "Detailed Description": "Detaljan opis",
+  "Knowledge": "Znanje",
+  "Level Indicator": "Pokazatelj nivoa",
+  "Skills": "Veštine",
+  "Descriptor": "Opis",
+  "Type": "Tip",
+  "Save": "Sačuvaj",
+  "Albanian": "Albanski",
+  "English": "Engleski",
+  "Serbian": "Srpski",
+  "Language": "Jezik",
+  "ChooseLanguage": "Izaberite jezik",
   "Home": "Kuća",
   "Hello": "Zdravo",
   "Institutions": "Institucije",
@@ -45,11 +65,9 @@
   "PleaseFillQualificationNameEN": "Molimo popunite polje za kvalifikaciju na engleskom!",
   "PleaseFillQualificationNameSR": "Molimo popunite polje kvalifikacije na srpskom jeziku!",
   "PleaseFillLevel": "Molimo popunite polje za nivo!",
-<<<<<<< HEAD
   "PostalCodeMustContainMax": "Poštanski broj mora da sadrži najviše 20 znakova!",
   "PhoneNumberMustContainMax": "Broj telefona mora da sadrži najviše 20 karaktera!",
-  "Qualifications": "Kvalifikacije"
-=======
+  "Qualifications": "Kvalifikacije",
   "Decisions": "Odluke",
   "ListOfAllDecisions": "Spisak svih odluka",
   "ExpirationDate": "Rok upotrebe",
@@ -82,5 +100,4 @@
   "SetNumberOfMembers": "Podesite broj članova po grupi",
   "UploadDoc": "Otpremite dokument",
   "RegisterDecision": "Odluka o registraciji"
->>>>>>> 02efa58 (.)
 }
