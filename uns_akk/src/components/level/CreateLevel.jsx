@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import CrudProvider from "../../provider/CrudProvider";
 import { CreateLevelSchema } from "../schemas/CreateLevelSchema";
@@ -7,39 +6,25 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import ProgressBar from "../custom/ProgressBar";
 import { useTranslation } from "react-i18next";
+import CustomSelect from "../custom/CustomSelect";
 
 export default function CreateLevel() {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [model, setModel] = useState({
     LevelReferenceKEK: "",
-    LevelDescriptionAl: "",
-    LevelDescriptionEn: "",
-    LevelDescriptionSr: "",
-    CompetenciesAl: "",
-    CompetenciesEn: "",
-    CompetenciesSr: "",
-    DetailedDescriptionAl: "",
-    DetailedDescriptionEn: "",
-    DetailedDescriptionSr: "",
-    KnowledgeAl: "",
-    KnowledgeEn: "",
-    KnowledgeSr: "",
-    LevelIndicatorAl: "",
-    LevelIndicatorEn: "",
-    LevelIndicatorSr: "",
-    SkillsAl: "",
-    SkillsEn: "",
-    SkillsSr: "",
-    DescriptorAl: "",
-    DescriptorEn: "",
-    DescriptorSr: "",
-    TypeAl: "",
-    TypeEn: "",
-    TypeSr: "",
+    LevelDescription: "",
+    Competencies: "",
+    DetailedDescription: "",
+    Knowledge: "",
+    LevelIndicator: "",
+    Skills: "",
+    Descriptor: "",
+    Type: "",
+    LangId: "",
   });
 
-  async function SubmitForm() {
+  const SubmitForm = async () => {
     await CrudProvider.createItem("LevelAPI/CreateLevel", model).then((res) => {
       console.log(res);
       if (res) {
@@ -48,708 +33,325 @@ export default function CreateLevel() {
         }
       }
     });
-  }
+  };
+
   const formik = useFormik({
     initialValues: {},
     validationSchema: CreateLevelSchema,
     onSubmit: () => SubmitForm(),
   });
+
+  const changeLangId = (e) => {
+    setModel({
+      ...model,
+      LangId: e,
+    });
+  };
+
+  const langList = [
+    {
+      value: 1,
+      label: t("Albanian"),
+    },
+    {
+      value: 2,
+      label: t("English"),
+    },
+    {
+      value: 3,
+      label: t("Serbian"),
+    },
+  ];
+
   return (
-      <div className="col-xl-12">
-        <div className="card">
-          <div className="card-body">
-            <h3 className="mb-3">Create Level</h3>
-            <form onSubmit={formik.handleSubmit}>
-              <div id="progressbarwizard">
-                <div className="tab-content b-0 mb-0 pt-0">
-                  <ProgressBar model={model} />
-    
-                  {/* LevelReferenceKEK */}
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <h5 className="card-title">Level Reference KEK</h5>
-                      <div className="row">
-                        <label className="col-md-3 col-form-label" htmlFor="levelRefKEK">
-                          Level Reference KEK
-                          {t("Hello")}
-                        </label>
-                        <div className="col-md-9">
-                          <input
-                            type="number"
-                            className="form-control"
-                            onChange={(e) => {
-                              setModel({
-                                ...model,
-                                LevelReferenceKEK: e.target.value,
-                              });
-                              formik.setFieldValue("LevelReferenceKEK", e.target.value);
-                            }}
-                          />
-                          {formik.errors.LevelReferenceKEK && (
-                            <span className="text-danger">{formik.errors.LevelReferenceKEK}</span>
-                          )}
-                        </div>
+    <>
+      <ProgressBar model={model} />
+      <div className="main-content">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="card">
+              <div className="card-header">
+                <h4 className="card-title">{t("Create Level")}</h4>
+              </div>
+              <div className="card-body">
+                <form onSubmit={formik.handleSubmit}>
+                  <div className="form-group">
+                    <div className="row">
+                      <div className="col-md-4">
+                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Language")}</label>
+                        <CustomSelect
+                          optionsList={langList}
+                          isMulti={false}
+                          onChangeFunction={changeLangId}
+                          placeholder={t("ChooseLanguage")}
+                        />
+                      </div>
+                      <div className="col-md-4">
+                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Level Reference KEK")}</label>
+                        <input
+                          name="LevelReferenceKEK"
+                          type="number"
+                          value={formik.values.LevelReferenceKEK}
+                          className="form-control"
+                          placeholder={t("Enter Level Reference KEK")}
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              LevelReferenceKEK: e.target.value,
+                            });
+                            formik.setFieldValue(
+                              "LevelReferenceKEK",
+                              e.target.value
+                            );
+                          }}
+                        />
+                        {formik.errors.LevelReferenceKEK && (
+                          <span className="text-danger">
+                            {formik.errors.LevelReferenceKEK}
+                          </span>
+                        )}
+                      </div>
+                      <div className="col-md-4">
+                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Type")}</label>
+                        <textarea
+                          name="Type"
+                          value={formik.values.Type}
+                          className="form-control"
+                          placeholder={t("Enter Type")}
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              Type: e.target.value,
+                            });
+                            formik.setFieldValue("Type", e.target.value);
+                          }}
+                          rows="1"
+                        />
+                        {formik.errors.Type && (
+                          <span className="text-danger">
+                            {formik.errors.Type}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                {/* LevelDescription */}
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="levelDescAL"
-                  >
-                    Level Description (AL)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          LevelDescriptionAl: e.target.value,
-                        });
-                        formik.setFieldValue(
-                          "LevelDescriptionAl",
-                          e.target.value
-                        );
-                      }}
-                    />
-                    {formik.errors.LevelDescriptionAl && (
-                      <span className="text-danger">
-                        {formik.errors.LevelDescriptionAl}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="levelDescEN"
-                  >
-                    Level Description (EN)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          LevelDescriptionEn: e.target.value,
-                        });
-                        formik.setFieldValue(
-                          "LevelDescriptionEn",
-                          e.target.value
-                        );
-                      }}
-                    />
-                    {formik.errors.LevelDescriptionEn && (
-                      <span className="text-danger">
-                        {formik.errors.LevelDescriptionEn}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="levelDescSR"
-                  >
-                    Level Description (SR)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          LevelDescriptionSr: e.target.value,
-                        });
-                        formik.setFieldValue(
-                          "LevelDescriptionSr",
-                          e.target.value
-                        );
-                      }}
-                    />
-                    {formik.errors.LevelDescriptionSr && (
-                      <span className="text-danger">
-                        {formik.errors.LevelDescriptionSr}
-                      </span>
-                    )}
-                  </div>
-                </div>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group mt-2">
+                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Level Description")}</label>
 
-                {/* Competencies */}
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="competenciesAL"
-                  >
-                    Competencies (AL)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          CompetenciesAl: e.target.value,
-                        });
-                        formik.setFieldValue("CompetenciesAl", e.target.value);
-                      }}
-                    />
-                    {formik.errors.CompetenciesAl && (
-                      <span className="text-danger">
-                        {formik.errors.CompetenciesAl}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="competenciesEN"
-                  >
-                    Competencies (EN)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          CompetenciesEn: e.target.value,
-                        });
-                        formik.setFieldValue("CompetenciesEn", e.target.value);
-                      }}
-                    />
-                    {formik.errors.CompetenciesEn && (
-                      <span className="text-danger">
-                        {formik.errors.CompetenciesEn}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="competenciesSR"
-                  >
-                    Competencies (SR)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          CompetenciesSr: e.target.value,
-                        });
-                        formik.setFieldValue("CompetenciesSr", e.target.value);
-                      }}
-                    />
-                    {formik.errors.CompetenciesSr && (
-                      <span className="text-danger">
-                        {formik.errors.CompetenciesSr}
-                      </span>
-                    )}
-                  </div>
-                </div>
+                        <textarea
+                          name="LevelDescription"
+                          value={formik.values.LevelDescription}
+                          className="form-control"
+                          placeholder={t("Enter Level Description")}
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              LevelDescription: e.target.value,
+                            });
+                            formik.setFieldValue(
+                              "LevelDescription",
+                              e.target.value
+                            );
+                          }}
+                          rows="5"
+                        ></textarea>
+                        {formik.errors.LevelDescription && (
+                          <span className="text-danger">
+                            {formik.errors.LevelDescription}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-md-6 mt-2">
+                      <div className="form-group">
+                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Competencies")}</label>
 
-                {/* DetailedDescription */}
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="detailedDescAL"
-                  >
-                    Detailed Description (AL)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
+                        <textarea
+                          name="Competencies"
+                          value={formik.values.Competencies}
+                          className="form-control"
+                          placeholder={t("Enter Competencies")}
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              Competencies: e.target.value,
+                            });
+                            formik.setFieldValue(
+                              "Competencies",
+                              e.target.value
+                            );
+                          }}
+                          rows="5"
+                        ></textarea>
+                        {formik.errors.Competencies && (
+                          <span className="text-danger">
+                            {formik.errors.Competencies}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="form-group mt-2">
+                  <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Detailed Description")}</label>
+
+                    <textarea
+                      name="DetailedDescription"
+                      value={formik.values.DetailedDescription}
                       className="form-control"
+                      placeholder={t("Enter Detailed Description")}
                       onChange={(e) => {
                         setModel({
                           ...model,
-                          DetailedDescriptionAl: e.target.value,
+                          DetailedDescription: e.target.value,
                         });
                         formik.setFieldValue(
-                          "DetailedDescriptionAl",
+                          "DetailedDescription",
                           e.target.value
                         );
                       }}
-                    />
-                    {formik.errors.DetailedDescriptionAl && (
+                      rows="6"
+                    ></textarea>
+                    {formik.errors.DetailedDescription && (
                       <span className="text-danger">
-                        {formik.errors.DetailedDescriptionAl}
+                        {formik.errors.DetailedDescription}
                       </span>
                     )}
                   </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="detailedDescEN"
-                  >
-                    Detailed Description (EN)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          DetailedDescriptionEn: e.target.value,
-                        });
-                        formik.setFieldValue(
-                          "DetailedDescriptionEn",
-                          e.target.value
-                        );
-                      }}
-                    />
-                    {formik.errors.DetailedDescriptionEn && (
-                      <span className="text-danger">
-                        {formik.errors.DetailedDescriptionEn}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="detailedDescSR"
-                  >
-                    Detailed Description (SR)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          DetailedDescriptionSr: e.target.value,
-                        });
-                        formik.setFieldValue(
-                          "DetailedDescriptionSr",
-                          e.target.value
-                        );
-                      }}
-                    />
-                    {formik.errors.DetailedDescriptionSr && (
-                      <span className="text-danger">
-                        {formik.errors.DetailedDescriptionSr}
-                      </span>
-                    )}
-                  </div>
-                </div>
 
-                {/* Knowledge */}
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="knowledgeAL"
-                  >
-                    Knowledge (AL)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          KnowledgeAl: e.target.value,
-                        });
-                        formik.setFieldValue("KnowledgeAl", e.target.value);
-                      }}
-                    />
-                    {formik.errors.KnowledgeAl && (
-                      <span className="text-danger">
-                        {formik.errors.KnowledgeAl}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="knowledgeEN"
-                  >
-                    Knowledge (EN)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          KnowledgeEn: e.target.value,
-                        });
-                        formik.setFieldValue("KnowledgeEn", e.target.value);
-                      }}
-                    />
-                    {formik.errors.KnowledgeEn && (
-                      <span className="text-danger">
-                        {formik.errors.KnowledgeEn}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="knowledgeSR"
-                  >
-                    Knowledge (SR)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          KnowledgeSr: e.target.value,
-                        });
-                        formik.setFieldValue("KnowledgeSr", e.target.value);
-                      }}
-                    />
-                    {formik.errors.KnowledgeSr && (
-                      <span className="text-danger">
-                        {formik.errors.KnowledgeSr}
-                      </span>
-                    )}
-                  </div>
-                </div>
+                  <div className="form-group mt-2">
+                    <div className="row">
+                      <div className="col-md-6">
+                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Descriptor")}</label>
 
-                {/* LevelIndicator */}
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="levelIndicatorAL"
-                  >
-                    Level Indicator (AL)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          LevelIndicatorAl: e.target.value,
-                        });
-                        formik.setFieldValue(
-                          "LevelIndicatorAl",
-                          e.target.value
-                        );
-                      }}
-                    />
-                    {formik.errors.LevelIndicatorAl && (
-                      <span className="text-danger">
-                        {formik.errors.LevelIndicatorAl}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="levelIndicatorEN"
-                  >
-                    Level Indicator (EN)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          LevelIndicatorEn: e.target.value,
-                        });
-                        formik.setFieldValue(
-                          "LevelIndicatorEn",
-                          e.target.value
-                        );
-                      }}
-                    />
-                    {formik.errors.LevelIndicatorEn && (
-                      <span className="text-danger">
-                        {formik.errors.LevelIndicatorEn}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="levelIndicatorSR"
-                  >
-                    Level Indicator (SR)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          LevelIndicatorSr: e.target.value,
-                        });
-                        formik.setFieldValue(
-                          "LevelIndicatorSr",
-                          e.target.value
-                        );
-                      }}
-                    />
-                    {formik.errors.LevelIndicatorSr && (
-                      <span className="text-danger">
-                        {formik.errors.LevelIndicatorSr}
-                      </span>
-                    )}
-                  </div>
-                </div>
+                        <textarea
+                          name="Descriptor"
+                          value={formik.values.Descriptor}
+                          className="form-control"
+                          placeholder={t("Enter Descriptor")}
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              Descriptor: e.target.value,
+                            });
+                            formik.setFieldValue("Descriptor", e.target.value);
+                          }}
+                          rows="6"
+                        ></textarea>
+                        {formik.errors.Descriptor && (
+                          <span className="text-danger">
+                            {formik.errors.Descriptor}
+                          </span>
+                        )}
+                      </div>
+                      <div className="col-md-6">
+                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Level Indicator")}</label>
 
-                {/* Skills */}
-                <div className="row mb-3">
-                  <label className="col-md-3 col-form-label" htmlFor="skillsAL">
-                    Skills (AL)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          SkillsAl: e.target.value,
-                        });
-                        formik.setFieldValue("SkillsAl", e.target.value);
-                      }}
-                    />
-                    {formik.errors.SkillsAl && (
-                      <span className="text-danger">
-                        {formik.errors.SkillsAl}
-                      </span>
-                    )}
+                        <textarea
+                          name="LevelIndicator"
+                          value={formik.values.LevelIndicator}
+                          className="form-control"
+                          placeholder={t("Enter Level Indicator")}
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              LevelIndicator: e.target.value,
+                            });
+                            formik.setFieldValue(
+                              "LevelIndicator",
+                              e.target.value
+                            );
+                          }}
+                          rows="6"
+                        ></textarea>
+                        {formik.errors.LevelIndicator && (
+                          <span className="text-danger">
+                            {formik.errors.LevelIndicator}
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="row mb-3">
-                  <label className="col-md-3 col-form-label" htmlFor="skillsEN">
-                    Skills (EN)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          SkillsEn: e.target.value,
-                        });
-                        formik.setFieldValue("SkillsEn", e.target.value);
-                      }}
-                    />
-                    {formik.errors.SkillsEn && (
-                      <span className="text-danger">
-                        {formik.errors.SkillsEn}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label className="col-md-3 col-form-label" htmlFor="skillsSR">
-                    Skills (SR)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          SkillsSr: e.target.value,
-                        });
-                        formik.setFieldValue("SkillsSr", e.target.value);
-                      }}
-                    />
-                    {formik.errors.SkillsSr && (
-                      <span className="text-danger">
-                        {formik.errors.SkillsSr}
-                      </span>
-                    )}
-                  </div>
-                </div>
 
-                {/* Descriptor */}
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="descriptorAL"
-                  >
-                    Descriptor (AL)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          DescriptorAl: e.target.value,
-                        });
-                        formik.setFieldValue("DescriptorAl", e.target.value);
-                      }}
-                    />
-                    {formik.errors.DescriptorAl && (
-                      <span className="text-danger">
-                        {formik.errors.DescriptorAl}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="descriptorEN"
-                  >
-                    Descriptor (EN)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          DescriptorEn: e.target.value,
-                        });
-                        formik.setFieldValue("DescriptorEn", e.target.value);
-                      }}
-                    />
-                    {formik.errors.DescriptorEn && (
-                      <span className="text-danger">
-                        {formik.errors.DescriptorEn}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-md-3 col-form-label"
-                    htmlFor="descriptorSR"
-                  >
-                    Descriptor (SR)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          DescriptorSr: e.target.value,
-                        });
-                        formik.setFieldValue("DescriptorSr", e.target.value);
-                      }}
-                    />
-                    {formik.errors.DescriptorSr && (
-                      <span className="text-danger">
-                        {formik.errors.DescriptorSr}
-                      </span>
-                    )}
-                  </div>
-                </div>
+                  <div className="form-group mt-2">
+                  <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Knowledge")}</label>
 
-                {/* Type */}
-                <div className="row mb-3">
-                  <label className="col-md-3 col-form-label" htmlFor="typeAL">
-                    Type (AL)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
+                    <textarea
+                      name="Knowledge"
+                      value={formik.values.Knowledge}
                       className="form-control"
+                      placeholder={t("Enter Knowledge")}
                       onChange={(e) => {
                         setModel({
                           ...model,
-                          TypeAl: e.target.value,
+                          Knowledge: e.target.value,
                         });
-                        formik.setFieldValue("TypeAl", e.target.value);
+                        formik.setFieldValue("Knowledge", e.target.value);
                       }}
-                    />
-                    {formik.errors.TypeAl && (
+                      rows="6"
+                    ></textarea>
+                    {formik.errors.Knowledge && (
                       <span className="text-danger">
-                        {formik.errors.TypeAl}
+                        {formik.errors.Knowledge}
                       </span>
                     )}
                   </div>
-                </div>
-                <div className="row mb-3">
-                  <label className="col-md-3 col-form-label" htmlFor="typeEN">
-                    Type (EN)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          TypeEn: e.target.value,
-                        });
-                        formik.setFieldValue("TypeEn", e.target.value);
-                      }}
-                    />
-                    {formik.errors.TypeEn && (
-                      <span className="text-danger">
-                        {formik.errors.TypeEn}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label className="col-md-3 col-form-label" htmlFor="typeSR">
-                    Type (SR)
-                  </label>
-                  <div className="col-md-9">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          TypeSr: e.target.value,
-                        });
-                        formik.setFieldValue("TypeSr", e.target.value);
-                      }}
-                    />
-                    {formik.errors.TypeSr && (
-                      <span className="text-danger">
-                        {formik.errors.TypeSr}
-                      </span>
-                    )}
-                  </div>
-                </div>
 
-                <button type="submit" className="btn btn-primary">
-                  Submit
-                </button>
+                  <div className="form-group mt-2">
+                  <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Skills")}</label>
+
+                    <textarea
+                      name="Skills"
+                      value={formik.values.Skills}
+                      className="form-control"
+                      placeholder={t("Enter Skills")}
+                      onChange={(e) => {
+                        setModel({
+                          ...model,
+                          Skills: e.target.value,
+                        });
+                        formik.setFieldValue("Skills", e.target.value);
+                      }}
+                      rows="6"
+                    ></textarea>
+                    {formik.errors.Skills && (
+                      <span className="text-danger">
+                        {formik.errors.Skills}
+                      </span>
+                    )}
+                  </div>
+
+                  <ul className="list-inline mb-0 wizard mt-3 mb-2">
+                    <Link
+                      to="/agencies"
+                      className="btn btn-danger waves-effect waves-light float-start"
+                    >
+                      <span className="btn-label">
+                        <i className="fe-arrow-left"></i>
+                      </span>
+                      {t("Back")}
+                    </Link>
+                    <li className="next list-inline-item float-end">
+                      <button
+                        type="submit"
+                        className="btn btn-success waves-effect waves-light"
+                      >
+                        <span className="btn-label">
+                          <i className="fe-check"></i>
+                        </span>
+                        {t("Save")}
+                      </button>
+                    </li>
+                  </ul>
+                </form>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

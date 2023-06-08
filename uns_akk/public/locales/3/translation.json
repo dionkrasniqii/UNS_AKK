@@ -1,3 +1,21 @@
 {
-  "Hello": "Zdravo"
+  "Hello": "Zdravo",
+  "Create Level": "Kreiraj nivo",
+  "Back": "Nazad",
+  "City": "Grad",
+  "Level Reference KEK": "Referenca nivoa KEK",
+  "Level Description": "Opis nivoa",
+  "Competencies": "Kompetencije",
+  "Detailed Description": "Detaljan opis",
+  "Knowledge": "Znanje",
+  "Level Indicator": "Pokazatelj nivoa",
+  "Skills": "Veštine",
+  "Descriptor": "Opis",
+  "Type": "Tip",
+  "Save": "Sačuvaj",
+  "Albanian": "Albanski",
+  "English": "Engleski",
+  "Serbian": "Srpski",
+  "Language": "Jezik",
+  "ChooseLanguage": "Izaberite jezik"
 }

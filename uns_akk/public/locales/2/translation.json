@@ -1,3 +1,21 @@
 {
-  "Hello": "Hello"
+  "Hello": "Hello",
+  "Create Level": "Create Level",
+  "Back": "Back",
+  "City": "City",
+  "Level Reference KEK": "Level Reference KEK",
+  "Level Description": "Level Description",
+  "Competencies": "Competencies",
+  "Detailed Description": "Detailed Description",
+  "Knowledge": "Knowledge",
+  "Level Indicator": "Level Indicator",
+  "Skills": "Skills",
+  "Descriptor": "Descriptor",
+  "Type": "Type",
+  "Save": "Save",
+  "Albanian": "Albanian",
+  "English": "English",
+  "Serbian": "Serbian",
+  "Language": "Language",
+  "ChooseLanguage": "Choose Language"
 }

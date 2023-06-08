@@ -1,3 +1,21 @@
 {
-  "Hello": "Pëshendetje"
+  "Hello": "Pëshendetje",
+  "Create Level": "Krijo Nivel",
+  "Back": "Prapa",
+  "City": "Qyteti",
+  "Level Reference KEK": "Referenca e Niveleve KEK",
+  "Level Description": "Përshkrimi i Nivelit",
+  "Competencies": "Kompentencat",
+  "Detailed Description": "Përshkrimi Detajuar",
+  "Knowledge": "Njohurit",
+  "Level Indicator": "Treguesi i Nivelit",
+  "Skills": "Aftësitë",
+  "Descriptor": "Përshkruesi",
+  "Type": "Lloji",
+  "Save": "Ruaj",
+  "Albanian": "Shqipë",
+  "English": "Anglisht",
+  "Serbian": "Serbisht",
+  "Language": "Gjuha",
+  "ChooseLanguage": "Zgjidh Gjuhën"
 }
