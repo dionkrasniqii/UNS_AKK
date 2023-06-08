@@ -2,6 +2,8 @@ const initialState = {
   professors: [],
   userRole: 0,
 };
+const token = "";
+
 export const ListReducers = (state = initialState, action) => {
   switch (action.type) {
     case "SET_ROLE":
@@ -27,6 +29,17 @@ export const ListReducers = (state = initialState, action) => {
           (professor) => professor.id !== action.payload
         ),
       };
+    default:
+      return state;
+  }
+};
+
+export const TokenReducers = (state = token, action) => {
+  switch (action.type) {
+    case "SET_TOKEN":
+      return { token: action.payload };
+    case "REMOVE_TOKEN":
+      return { token: null };
     default:
       return state;
   }

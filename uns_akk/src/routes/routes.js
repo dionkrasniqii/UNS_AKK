@@ -8,17 +8,39 @@ import EditLevel from "../components/level/EditLevel";
 import Institutions from "../components/institutions/Institutions";
 import CreateInstitutions from "../components/institutions/CreateInstitutions";
 import EditInstitution from "../components/institutions/EditInstitutions";
+import Decisions from "../components/decisions/Decisions";
+import CreateDecisions from "../components/decisions/CreateDecisions";
+import EditDecisions from "../components/decisions/EditDecisions";
 
-
-export const AppRoutes = () => {
+export const AppRoutes = (props) => {
   const ROLES = {
     ADMIN: "Admin",
-    USER: "User",
+    INSTITUTION: "Institution",
   };
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route
+        path='/'
+        element={
+          <Login
+            authState={props.authState}
+            setAuthState={props.setAuthState}
+          />
+        }
+      />
+      <Route
+        path='/home'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN, ROLES.INSTITUTION]}
+            component={Home}
+          />
+        }
+      />
+
       {/* 
      // PUBLIC ROUTE
        <Route
@@ -31,7 +53,7 @@ export const AppRoutes = () => {
         <Route
           path='/applicationsinprocess'
           element={
-            <PrivateRoute
+            <PrivateRoute setAuthState={props.setAuthState}
               allowedRoles={[ROLES.PROFESOR]}
               component={ApplicationList}
             />
@@ -40,26 +62,34 @@ export const AppRoutes = () => {
         */}
 
       <Route
-        path="/institutions"
+        path='/institutions'
         element={
-          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={Institutions} />
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={Institutions}
+          />
         }
       />
 
       <Route
-        path="/createinstitutions"
+        path='/createinstitutions'
         element={
           <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
             allowedRoles={[ROLES.ADMIN]}
             component={CreateInstitutions}
           />
         }
       />
 
-<Route
-        path="/editinstitutions/:id"
+      <Route
+        path='/editinstitutions/:id'
         element={
           <PrivateRoute
+            setAuthState={props.setAuthState}
             allowedRoles={[ROLES.ADMIN]}
             component={EditInstitution}
           />
@@ -68,23 +98,73 @@ export const AppRoutes = () => {
 
       {/* Levels */}
       <Route
-        path="/level"
+        path='/level'
         element={
-          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={Level} />
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={Level}
+          />
         }
       />
 
       <Route
-        path="/createlevel"
+        path='/createlevel'
         element={
-          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={CreateLevel} />
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={CreateLevel}
+          />
         }
       />
 
       <Route
-        path="/editlevel"
+        path='/editlevel'
         element={
-          <PrivateRoute allowedRoles={[ROLES.ADMIN]} component={EditLevel} />
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={EditLevel}
+          />
+        }
+      />
+
+      <Route
+        path='/decisions'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={Decisions}
+          />
+        }
+      />
+
+      <Route
+        path='/createdecisions'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={CreateDecisions}
+          />
+        }
+      />
+      <Route
+        path='/editdecisions/:id'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={EditDecisions}
+          />
         }
       />
     </Routes>

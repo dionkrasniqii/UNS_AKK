@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import mainLogo from "./../../assets/images/logo_akk.jpg";
+import smallLogo from "./../../assets/images/sm.jpg";
 export default function Navbar(props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
@@ -42,7 +44,10 @@ export default function Navbar(props) {
 
   function logout() {
     localStorage.removeItem("akktoken");
+    // localStorage.removeItem("role");
+    localStorage.removeItem("hasShownToast");
     props.setAuthState(false);
+    navigate("/");
   }
 
   return (
@@ -77,12 +82,12 @@ export default function Navbar(props) {
       </ul>
       {/* LOGO */}
       <div className='logo-box'>
-        <Link to='/' className='logo logo-dark text-center'>
+        <Link to='/home' className='logo logo-dark text-center'>
           <span className='logo-lg'>
-            <img src='assets/images/logo_akk.jpg' alt='' height={50} />
+            <img src={mainLogo} alt='' height={50} />
           </span>
           <span className='logo-sm'>
-            <img src='assets/images/sm.jpg' alt='' height={30} />
+            <img src={smallLogo} alt='' height={30} />
           </span>
         </Link>
       </div>

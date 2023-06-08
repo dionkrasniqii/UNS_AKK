@@ -30,7 +30,7 @@ async function login(controller, model) {
 // Get all items
 async function getAllWithLang(controller) {
   try {
-    let token = localStorage.getItem("akktok");
+    let token = localStorage.getItem("akktoken");
     let langId = localStorage.getItem("i18nextLng");
     const response = await axios.get(
       `${API_BASE_URL}/${controller}/${langId}`,
@@ -48,16 +48,13 @@ async function getAllWithLang(controller) {
 }
 async function getAll(controller) {
   try {
-    let token = localStorage.getItem("akktok");
-    const response = await axios.get(
-      `${API_BASE_URL}/${controller}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let token = localStorage.getItem("akktoken");
+    const response = await axios.get(`${API_BASE_URL}/${controller}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     handleRequestError(error);
@@ -67,7 +64,7 @@ async function getAll(controller) {
 async function getItemByIdLang(controller, itemId) {
   try {
     let langId = localStorage.getItem("i18nextLng");
-    let token = localStorage.getItem("akktok");
+    let token = localStorage.getItem("akktoken");
     const response = await axios.get(
       `${API_BASE_URL}/${controller}/${langId}/${itemId}`,
       {
@@ -84,7 +81,7 @@ async function getItemByIdLang(controller, itemId) {
 }
 async function getItemById(controller, itemId) {
   try {
-    let token = localStorage.getItem("akktok");
+    let token = localStorage.getItem("akktoken");
     const response = await axios.get(
       `${API_BASE_URL}/${controller}/${itemId}`,
       {
@@ -103,7 +100,7 @@ async function getItemById(controller, itemId) {
 // Create a new item
 async function createItem(controller, itemData) {
   try {
-    let token = localStorage.getItem("akktok");
+    let token = localStorage.getItem("akktoken");
     const response = await axios.post(
       `${API_BASE_URL}/${controller}`,
       JSON.stringify(itemData),
@@ -122,9 +119,9 @@ async function createItem(controller, itemData) {
 // CREATE OBJECT WITH FORM FILE
 async function createItemWithFile(controller, model) {
   try {
-    let token = localStorage.getItem("akktok");
+    let token = localStorage.getItem("akktoken");
     const formData = new FormData();
-    
+
     const appendToFormData = (key, value) => {
       if (value instanceof File) {
         formData.append(key, value);
@@ -136,7 +133,7 @@ async function createItemWithFile(controller, model) {
             formData.append(`${key}[]`, val.toString());
           }
         });
-      } else if (typeof value === 'object' && value !== null) {
+      } else if (typeof value === "object" && value !== null) {
         Object.keys(value).forEach((subKey) => {
           const subValue = value[subKey];
           if (Array.isArray(subValue)) {
@@ -157,12 +154,12 @@ async function createItemWithFile(controller, model) {
         formData.append(key, value);
       }
     };
-    
+
     Object.keys(model).forEach((key) => {
       const value = model[key];
       appendToFormData(key, value);
     });
-    
+
     const response = await axios.post(
       `${API_BASE_URL}/${controller}`,
       formData,
@@ -173,7 +170,7 @@ async function createItemWithFile(controller, model) {
         },
       }
     );
-    
+
     return response.data;
   } catch (error) {
     handleRequestError(error);
@@ -183,7 +180,7 @@ async function createItemWithFile(controller, model) {
 // Update an existing item
 async function updateItem(controller, itemData) {
   try {
-    let token = localStorage.getItem("akktok");
+    let token = localStorage.getItem("akktoken");
     const response = await axios.put(
       `${API_BASE_URL}/${controller}`,
       JSON.stringify(itemData),
@@ -202,9 +199,9 @@ async function updateItem(controller, itemData) {
 
 async function updateItemWithFile(controller, model) {
   try {
-    let token = localStorage.getItem("akktok");
+    let token = localStorage.getItem("akktoken");
     const formData = new FormData();
-   
+
     const appendToFormData = (key, value) => {
       if (value instanceof File) {
         formData.append(key, value);
@@ -216,7 +213,7 @@ async function updateItemWithFile(controller, model) {
             formData.append(`${key}[]`, val.toString());
           }
         });
-      } else if (typeof value === 'object' && value !== null) {
+      } else if (typeof value === "object" && value !== null) {
         Object.keys(value).forEach((subKey) => {
           const subValue = value[subKey];
           if (Array.isArray(subValue)) {
@@ -237,7 +234,7 @@ async function updateItemWithFile(controller, model) {
         formData.append(key, value);
       }
     };
-    
+
     Object.keys(model).forEach((key) => {
       const value = model[key];
       appendToFormData(key, value);
@@ -261,7 +258,7 @@ async function updateItemWithFile(controller, model) {
 
 async function deleteItemById(controller, itemId) {
   try {
-    let token = localStorage.getItem("akktok");
+    let token = localStorage.getItem("akktoken");
     const response = await axios.delete(
       `${API_BASE_URL}/${controller}/${itemId}`,
       {
@@ -276,7 +273,7 @@ async function deleteItemById(controller, itemId) {
   }
 }
 async function getReportRDLC(methodRoute, id, reportName) {
-  // let token = localStorage.getItem("akktok");
+  // let token = localStorage.getItem("akktoken");
   try {
     let langId = localStorage.getItem("i18nextLng");
     const response = await axios.get(

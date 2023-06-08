@@ -8,11 +8,6 @@ export default function Home() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    CrudProvider.getAll("LevelAPI/GetAll").then((res) => {
-      console.log(res);
-    });
-  }, []);
   return (
     <div className='container-fluid'>
       {t("Hello")}
