@@ -32,7 +32,7 @@ export default function Sidebar() {
       hasMenu: false,
       icon: "mdi mdi-book-edit",
     },
-
+{
       label: "Decisions",
       roles: ["Admin"],
       path: "/decisions",
