@@ -10,7 +10,7 @@ export default function Sidebar() {
   const role = decodedToken?.role;
 
   const SidebarItems = [
-    //ZKPS
+    //Admin
     {
       label: t("Institutions"),
       roles: ["Admin"],
@@ -21,11 +21,17 @@ export default function Sidebar() {
     {
       label: "Level",
       roles: ["Admin"],
-      path: '/level',
+      path: "/level",
       hasMenu: false,
       icon: "mdi mdi-share-variant",
     },
-
+    {
+      label: "Decisions",
+      roles: ["Admin"],
+      path: "/decisions",
+      hasMenu: false,
+      icon: "fas fa-file-archive",
+    },
     // {
     //   label: "Buxheti",
     //   hasMenu: true,
@@ -78,7 +84,7 @@ export default function Sidebar() {
                       {SidebarItems.map((item, index) => {
                         if (item.roles.includes(role))
                           return (
-                            <>
+                            <React.Fragment key={index}>
                               {item.hasMenu ? (
                                 <>
                                   <li className='menu-title' key={index}>
@@ -108,7 +114,7 @@ export default function Sidebar() {
                                   </li>
                                 </>
                               )}
-                            </>
+                            </React.Fragment>
                           );
                       })}
                     </ul>

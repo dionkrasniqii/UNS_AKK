@@ -20,7 +20,7 @@ export default function MultiRoles(props) {
   }, [props.model.SelectedRole]);
   return (
     <div
-      className='modal fade show'
+      className='modal fade show my-5 px-5'
       id='scrollable-modal'
       tabIndex={-1}
       aria-labelledby='scrollableModalTitle'
