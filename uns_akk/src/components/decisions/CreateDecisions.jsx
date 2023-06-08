@@ -99,12 +99,11 @@ export default function CreateDecisions() {
     });
     formik.setFieldValue("MunicipalityId", e);
   }
-
   const qualificationsList =
     qualifications.length > 0
       ? qualifications.map((obj) => ({
           label: obj.qualificationName,
-          value: obj.qualification.qualificationId,
+          value: obj.qualificationId,
         }))
       : [];
   function changeQualification(e) {
@@ -172,25 +171,21 @@ export default function CreateDecisions() {
     });
   }
   const CreateDecisionSchema = Yup.object().shape({
-    InstitutionId: Yup.string().required("Zgjedhni institucionin"),
-    MunicipalityId: Yup.string().required("Zgjedhni komunën"),
-    QualificationId: Yup.string().required("Zgjedhni kualifikimin"),
-    Credits: Yup.string().required("Plotësoni kredit"),
-    ProtocolNr: Yup.string().required("Plotësoni numrin e protokolit"),
-    ProtocolDate: Yup.mixed().required("Zgjedhni datën e protokolit"),
-    DecisionDate: Yup.string().required("Zgjedhni datën e vendimit"),
-    TermDate: Yup.mixed().required(
-      "Zgjedhni datën deri kur është valid vendimi"
-    ),
+    InstitutionId: Yup.string().required(t("ChooseInstitution")),
+    MunicipalityId: Yup.string().required(t("ChooseMunicipality")),
+    QualificationId: Yup.string().required(t("ChooseQualification")),
+    Credits: Yup.string().max(20).required(t("CompleteCredits")),
+    ProtocolNr: Yup.string().max(20).required(t("CompleteProtocolNumber")),
+    ProtocolDate: Yup.mixed().required(t("CompleteProtocolDate")),
+    DecisionDate: Yup.string().required(t("CompleteStartDateDecision")),
+    TermDate: Yup.mixed().required(t("ExpirationDateDecision")),
     NumOfGroups: Yup.number()
-      .positive("Numri duhet të jetë pozitiv")
-      .required("Vendosni numrin e grupeve"),
-    NoLimitGroups: Yup.boolean().required("Zgjedhni"),
-    MaximumPeoplePerGroup: Yup.string().required(
-      "Vendosni numrin e antarëve për grup"
-    ),
-    Reaccreditation: Yup.string().required("Zgjedhni"),
-    Document: Yup.string().required("Ngarkoni dokumentin"),
+      .positive(t("PositiveNumber"))
+      .required(t("ChooseNumber")),
+    NoLimitGroups: Yup.boolean().required(t("Choose")),
+    MaximumPeoplePerGroup: Yup.string().required(t("SetNumberOfMembers")),
+    Reaccreditation: Yup.string().required(t("Choose")),
+    Document: Yup.string().required(t("UploadDoc")),
   });
 
   const formik = useFormik({
@@ -209,151 +204,120 @@ export default function CreateDecisions() {
     <div className='col-xl-12'>
       <div className='card'>
         <div className='card-body'>
-          <h3 className=' mb-3'>Regjistro vendimin</h3>
+          <h3 className=' mb-3'>{t("RegisterDecision")}</h3>
           <form onSubmit={formik.handleSubmit}>
             <div id='progressbarwizard'>
               <div className='tab-content b-0 mb-0 pt-0'>
                 <ProgressBar model={model} />
                 <div className='tab-pane active' id='account-2'>
                   <div className='row'>
-                    <div className='row mb-3'>
-                      <label className='col-md-3 col-form-label'>
-                        Institucioni:
-                      </label>
-                      <div className='col-md-9'>
-                        <CustomSelect
-                          onChangeFunction={changeInstitution}
-                          isMulti={false}
-                          optionsList={institutionsList}
-                        />
-                        {formik.errors.InstitutionId && (
-                          <span className='text-danger'>
-                            {formik.errors.InstitutionId}
-                          </span>
-                        )}
-                      </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("Institution")}:</label>
+                      <CustomSelect
+                        onChangeFunction={changeInstitution}
+                        isMulti={false}
+                        optionsList={institutionsList}
+                      />
+                      {formik.errors.InstitutionId && (
+                        <span className='text-danger'>
+                          {formik.errors.InstitutionId}
+                        </span>
+                      )}
                     </div>
-                    <div className='row mb-3'>
-                      <label className='col-md-3 col-form-label'>
-                        {t("Municipality")}
-                      </label>
-                      <div className='col-md-9'>
-                        <CustomSelect
-                          onChangeFunction={changeMunicipality}
-                          isMulti={false}
-                          optionsList={municipalitiesList}
-                        />
-                        {formik.errors.MunicipalityId && (
-                          <span className='text-danger'>
-                            {formik.errors.MunicipalityId}
-                          </span>
-                        )}
-                      </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("Municipality")}:</label>
+                      <CustomSelect
+                        onChangeFunction={changeMunicipality}
+                        isMulti={false}
+                        optionsList={municipalitiesList}
+                      />
+                      {formik.errors.MunicipalityId && (
+                        <span className='text-danger'>
+                          {formik.errors.MunicipalityId}
+                        </span>
+                      )}
                     </div>
-                    <div className='row mb-3'>
-                      <label className='col-md-3 col-form-label'>
-                        Kualifikimi
-                      </label>
-                      <div className='col-md-9'>
-                        <CustomSelect
-                          onChangeFunction={changeQualification}
-                          isMulti={false}
-                          optionsList={qualificationsList}
-                        />
-                        {formik.errors.QualificationId && (
-                          <span className='text-danger'>
-                            {formik.errors.QualificationId}
-                          </span>
-                        )}
-                      </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("Qualification")}:</label>
+                      <CustomSelect
+                        onChangeFunction={changeQualification}
+                        isMulti={false}
+                        optionsList={qualificationsList}
+                      />
+                      {formik.errors.QualificationId && (
+                        <span className='text-danger'>
+                          {formik.errors.QualificationId}
+                        </span>
+                      )}
                     </div>
-                    <div className='row mb-3'>
-                      <label className='col-md-3 col-form-label'>
-                        Nën kualifikimet:
-                      </label>
-                      <div className='col-md-9'>
-                        <CustomSelect
-                          onChangeFunction={changeSubQualification}
-                          isMulti={true}
-                          optionsList={subQualificationsList}
-                        />
-                      </div>
+
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("SubQualifications")}:</label>
+                      <CustomSelect
+                        onChangeFunction={changeSubQualification}
+                        isMulti={true}
+                        optionsList={subQualificationsList}
+                      />
                     </div>
-                    <div className='row mb-3'>
-                      <label className='col-md-3 col-form-label'>Kredit:</label>
-                      <div className='col-md-9'>
-                        <input
-                          type='number'
-                          className='form-control'
-                          onChange={(e) => {
-                            setModel({
-                              ...model,
-                              Credits: e.target.value,
-                            });
-                            formik.setFieldValue("Credits", e.target.value);
-                          }}
-                        />
-                        {formik.errors.Credits && (
-                          <span className='text-danger'>
-                            {formik.errors.Credits}
-                          </span>
-                        )}
-                      </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("Credits")}:</label>
+                      <input
+                        type='number'
+                        className='form-control'
+                        onChange={(e) => {
+                          setModel({
+                            ...model,
+                            Credits: e.target.value,
+                          });
+                          formik.setFieldValue("Credits", e.target.value);
+                        }}
+                      />
+                      {formik.errors.Credits && (
+                        <span className='text-danger'>
+                          {formik.errors.Credits}
+                        </span>
+                      )}
                     </div>
-                    <div className='row mb-3'>
-                      <label className='col-md-3 col-form-label'>
-                        Nr Protokolit
-                      </label>
-                      <div className='col-md-9'>
-                        <input
-                          type='text'
-                          className='form-control'
-                          onChange={(e) => {
-                            setModel({
-                              ...model,
-                              ProtocolNr: e.target.value,
-                            });
-                            formik.setFieldValue("ProtocolNr", e.target.value);
-                          }}
-                        />
-                        {formik.errors.ProtocolNr && (
-                          <span className='text-danger'>
-                            {formik.errors.ProtocolNr}
-                          </span>
-                        )}
-                      </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("ProtocolNumber")}:</label>
+                      <input
+                        type='text'
+                        className='form-control'
+                        onChange={(e) => {
+                          setModel({
+                            ...model,
+                            ProtocolNr: e.target.value,
+                          });
+                          formik.setFieldValue("ProtocolNr", e.target.value);
+                        }}
+                      />
+                      {formik.errors.ProtocolNr && (
+                        <span className='text-danger'>
+                          {formik.errors.ProtocolNr}
+                        </span>
+                      )}
                     </div>
-                    <div className='col-xxl-4 col-lg-4 col-md-4 col-sm-12 mb-3'>
-                      <label>Data Protokolit</label>
-                      <div className='col-lg-7 col-xxl-7'>
-                        <CustomDatePicker
-                          onChangeFunction={changeProtocolDate}
-                        />
-                      </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("ProtocolDate")}:</label>
+                      <CustomDatePicker onChangeFunction={changeProtocolDate} />
                       {formik.errors.ProtocolDate && (
                         <span className='text-danger'>
                           {formik.errors.ProtocolDate}
                         </span>
                       )}
                     </div>
-                    <div className='col-xxl-4 col-lg-4 col-md-4 col-sm-12 mb-3'>
-                      <label> Data e lëshimit të vendimit</label>
-                      <div className='col-lg-7 col-xxl-7'>
-                        <CustomDatePicker
-                          onChangeFunction={changeDecisionDate}
-                        />
-                      </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("DateIssuanceDecision")}:</label>
+                      <CustomDatePicker onChangeFunction={changeDecisionDate} />
                       {formik.errors.DecisionDate && (
                         <span className='text-danger'>
                           {formik.errors.DecisionDate}
                         </span>
                       )}
                     </div>
-                    <div className='col-xxl-4 col-lg-4 col-md-4 col-sm-12 mb-3'>
-                      <label> Data e skadimit të vendimit</label>
-                      <div className='col-lg-7 col-xxl-7'>
-                        <CustomDatePicker onChangeFunction={changeTermDate} />
-                      </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("DateExpirationDecision")}:</label>
+                      <CustomDatePicker onChangeFunction={changeTermDate} />
                       {formik.errors.TermDate && (
                         <span className='text-danger'>
                           {formik.errors.TermDate}
@@ -362,7 +326,7 @@ export default function CreateDecisions() {
                     </div>
                     <div className='col-xxl-2 col-md-3 col-lg-3 col-sm-12 mb-3'>
                       <div className='row'>
-                        <label>A ka grupe të limituara:</label>
+                        <label>{t("GroupLimits")}:</label>
                         <div className='form-check ps-4'>
                           <input
                             type='radio'
@@ -389,7 +353,7 @@ export default function CreateDecisions() {
                             className='form-check-label'
                             htmlFor='customRadio1'
                           >
-                            Po
+                            {t("Yes")}
                           </label>
                         </div>
                         <div className='form-check ps-4'>
@@ -413,7 +377,7 @@ export default function CreateDecisions() {
                             className='form-check-label'
                             htmlFor='customRadio2'
                           >
-                            Jo
+                            {t("No")}
                           </label>
                         </div>
                       </div>
@@ -421,7 +385,7 @@ export default function CreateDecisions() {
                     {model.NoLimitGroups === true && (
                       <>
                         <div className=' mb-3 col-xxl-1 col-lg-2 col-md-2 col-sm-12'>
-                          <label>Numri i grupeve</label>
+                          <label>{t("NumberOfGroups")}:</label>
                           <input
                             type='number'
                             onChange={(e) => {
@@ -443,7 +407,7 @@ export default function CreateDecisions() {
                           )}
                         </div>
                         <div className=' mb-3 col-xxl-3 col-lg-3 col-md-4 col-sm-12'>
-                          <label>Numri maksimal i personave në grup</label>
+                          <label>{t("MaxPersonsInGroup")}:</label>
                           <input
                             type='number'
                             onChange={(e) => {
@@ -467,7 +431,7 @@ export default function CreateDecisions() {
                       </>
                     )}
                     <div className=' mb-3 col-xxl-1 col-lg-2 col-md-2 col-sm-12'>
-                      <label>Është riakreditim</label>
+                      <label>{t("IsReaccrediation")}:</label>
                       <div className='form-check ps-4'>
                         <input
                           type='radio'
@@ -492,7 +456,7 @@ export default function CreateDecisions() {
                           className='form-check-label'
                           htmlFor='customRadio3'
                         >
-                          Po
+                          {t("Yes")}
                         </label>
                       </div>
                       <div className='form-check ps-4'>
@@ -519,7 +483,7 @@ export default function CreateDecisions() {
                           className='form-check-label'
                           htmlFor='customRadio4'
                         >
-                          Jo
+                          {t("No")}
                         </label>
                       </div>
                       {formik.errors.Reaccreditation && (
@@ -529,7 +493,7 @@ export default function CreateDecisions() {
                       )}
                     </div>
                     <div className='col-xxl-6 col-md-6 col-lg-6 col-sm-12 mb-3'>
-                      <label>Ngarko vendimin</label>
+                      <label>{t("UploadDecision")}:</label>
                       <input
                         type='file'
                         accept='application/pdf'

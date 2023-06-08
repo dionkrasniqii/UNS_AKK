@@ -160,7 +160,11 @@ export const AppRoutes = (props) => {
         }
       />
       <Route
+<<<<<<< HEAD
         path="/editdecisions/:id"
+=======
+        path='/editdecisions/:id/:id/:id'
+>>>>>>> 02efa58 (.)
         element={
           <PrivateRoute
             setAuthState={props.setAuthState}

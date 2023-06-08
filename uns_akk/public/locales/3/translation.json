@@ -1,4 +1,5 @@
 {
+  "Home": "Kuća",
   "Hello": "Zdravo",
   "Institutions": "Institucije",
   "InstitutionsList": "Spisak institucija",
@@ -44,7 +45,42 @@
   "PleaseFillQualificationNameEN": "Molimo popunite polje za kvalifikaciju na engleskom!",
   "PleaseFillQualificationNameSR": "Molimo popunite polje kvalifikacije na srpskom jeziku!",
   "PleaseFillLevel": "Molimo popunite polje za nivo!",
+<<<<<<< HEAD
   "PostalCodeMustContainMax": "Poštanski broj mora da sadrži najviše 20 znakova!",
   "PhoneNumberMustContainMax": "Broj telefona mora da sadrži najviše 20 karaktera!",
   "Qualifications": "Kvalifikacije"
+=======
+  "Decisions": "Odluke",
+  "ListOfAllDecisions": "Spisak svih odluka",
+  "ExpirationDate": "Rok upotrebe",
+  "Qualification": "Kvalifikacije",
+  "Institution": "Institucije",
+  "SubQualifications": "Pod-kvalifikacije",
+  "Credits": "Credits",
+  "ProtocolNumber": "Broj protokola",
+  "ProtocolDate": "Datum date",
+  "DateIssuanceDecision": "Datum donošenja odluke",
+  "DateExpirationDecision": "Rok važenja odluke",
+  "GroupLimits": "Ograničene grupe",
+  "Yes": "Da",
+  "No": "Ne",
+  "NumberOfGroups": "Broj grupa",
+  "MaxPersonsInGroup": "Maksimalan broj osoba u grupi",
+  "IsReaccrediation": "Da li je re akreditacija",
+  "UploadDecision": "Otpremite odluku",
+  "ChooseInstitution": "Izaberite instituciju",
+  "ChooseMunicipality": "Izaberite opštinu",
+  "ChooseQualification": "Izaberite kvalifikaciju",
+  "CompleteCredits": "Popunite kredite",
+  "CompleteProtocolNumber": "Popunite broj protokola",
+  "CompleteProtocolDate": "Izaberite datum protokola",
+  "CompleteStartDateDecision": "Upisati datum odluke",
+  "ExpirationDateDecision": "Izaberite datum isteka",
+  "PositiveNumber": "Broj mora biti pozitivan",
+  "ChooseNumber": "Podesite broj grupa",
+  "Choose": "Izaberi",
+  "SetNumberOfMembers": "Podesite broj članova po grupi",
+  "UploadDoc": "Otpremite dokument",
+  "RegisterDecision": "Odluka o registraciji"
+>>>>>>> 02efa58 (.)
 }
