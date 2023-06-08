@@ -32,6 +32,7 @@ export default function Login(props) {
     setLoad(true);
     await CrudProvider.login("AccountController/login", model).then((res) => {
       if (res) {
+        console.log(res);
         if (res.code === 200) {
           toast.success("Qasja juaj u realizua me sukses");
           props.setAuthState(true);
@@ -48,6 +49,9 @@ export default function Login(props) {
         }
         if (res.code === 404) {
           toast.error("Te dhena te pasakta");
+        }
+        if (res.code === "ERR_NETWORK") {
+          toast.info("Probleme ne server ju lutem provoni perseri");
         }
       }
       setLoad(false);
