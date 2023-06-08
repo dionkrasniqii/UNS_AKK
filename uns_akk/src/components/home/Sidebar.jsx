@@ -44,11 +44,7 @@ export default function Sidebar() {
       icon: "mdi mdi-book-edit",
     },
     {
-<<<<<<< HEAD
-      label: "Decisions",
-=======
       label: t("Decisions"),
->>>>>>> 02efa58 (.)
       roles: ["Admin"],
       path: "/decisions",
       hasMenu: false,
@@ -90,17 +86,11 @@ export default function Sidebar() {
                             <React.Fragment key={index}>
                               {item.hasMenu ? (
                                 <>
-<<<<<<< HEAD
-                                  <li className="menu-title" key={index}>
-                                    <strong>{item.label}</strong>
-                                  </li>
-=======
                                   {item.showLabel && (
                                     <li className='menu-title' key={index}>
                                       <strong>{item.label}</strong>
                                     </li>
                                   )}
->>>>>>> 02efa58 (.)
                                   {item.menus.map((menus, index2) => {
                                     return (
                                       <li className="ps-2" key={index2}>
@@ -114,17 +104,11 @@ export default function Sidebar() {
                                 </>
                               ) : (
                                 <>
-<<<<<<< HEAD
-                                  <li className="menu-title">
-                                    <strong>{item.label}</strong>
-                                  </li>
-=======
                                   {item.showLabel && (
                                     <li className='menu-title'>
                                       <strong>{item.label}</strong>
                                     </li>
                                   )}
->>>>>>> 02efa58 (.)
                                   <li key={index}>
                                     <Link to={item.path}>
                                       <i className={item.icon} />
