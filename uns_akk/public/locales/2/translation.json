@@ -45,11 +45,9 @@
   "PleaseFillQualificationNameEN": "Please fill in the qualification field in English!",
   "PleaseFillQualificationNameSR": "Please fill in the qualification field in Serbian language!",
   "PleaseFillLevel": "Please fill in the field for the level!",
-<<<<<<< HEAD
   "PostalCodeMustContainMax": "Postal code must contain at most 20 characters!",
   "PhoneNumberMustContainMax": "The phone number must contain at most 20 characters!",
-  "Qualifications": "Qualifications"
-=======
+  "Qualifications": "Qualifications",
   "Decisions": "Decisions",
   "ListOfAllDecisions": "List of all decisions",
   "ExpirationDate": "Expiration date",
@@ -82,5 +80,4 @@
   "SetNumberOfMembers": "Set the number of members per group",
   "UploadDoc": "Upload document",
   "RegisterDecision": "Register decision"
->>>>>>> 02efa58 (.)
 }

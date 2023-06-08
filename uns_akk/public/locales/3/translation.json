@@ -45,11 +45,9 @@
   "PleaseFillQualificationNameEN": "Molimo popunite polje za kvalifikaciju na engleskom!",
   "PleaseFillQualificationNameSR": "Molimo popunite polje kvalifikacije na srpskom jeziku!",
   "PleaseFillLevel": "Molimo popunite polje za nivo!",
-<<<<<<< HEAD
   "PostalCodeMustContainMax": "Poštanski broj mora da sadrži najviše 20 znakova!",
   "PhoneNumberMustContainMax": "Broj telefona mora da sadrži najviše 20 karaktera!",
-  "Qualifications": "Kvalifikacije"
-=======
+  "Qualifications": "Kvalifikacije",
   "Decisions": "Odluke",
   "ListOfAllDecisions": "Spisak svih odluka",
   "ExpirationDate": "Rok upotrebe",
@@ -82,5 +80,4 @@
   "SetNumberOfMembers": "Podesite broj članova po grupi",
   "UploadDoc": "Otpremite dokument",
   "RegisterDecision": "Odluka o registraciji"
->>>>>>> 02efa58 (.)
 }

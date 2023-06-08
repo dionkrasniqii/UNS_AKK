@@ -44,11 +44,7 @@ export default function Sidebar() {
       icon: "mdi mdi-book-edit",
     },
     {
-<<<<<<< HEAD
-      label: "Decisions",
-=======
       label: t("Decisions"),
->>>>>>> 02efa58 (.)
       roles: ["Admin"],
       path: "/decisions",
       hasMenu: false,
@@ -58,52 +54,46 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="left-side-menu menuitem-active ">
-      <div className="h-100 show" data-simplebar="init">
-        <div className="simplebar-wrapper" style={{ margin: 0 }}>
-          <div className="simplebar-height-auto-observer-wrapper">
-            <div className="simplebar-height-auto-observer" />
+    <div className='left-side-menu menuitem-active '>
+      <div className='h-100 show' data-simplebar='init'>
+        <div className='simplebar-wrapper' style={{ margin: 0 }}>
+          <div className='simplebar-height-auto-observer-wrapper'>
+            <div className='simplebar-height-auto-observer' />
           </div>
-          <div className="simplebar-mask menuitem-active">
+          <div className='simplebar-mask menuitem-active'>
             <div
-              className="simplebar-offset show"
+              className='simplebar-offset show'
               style={{ right: 0, bottom: 0 }}
             >
               <div
-                className="simplebar-content-wrapper"
+                className='simplebar-content-wrapper'
                 tabIndex={0}
-                role="region"
-                aria-label="scrollable content"
+                role='region'
+                aria-label='scrollable content'
                 style={{ height: "100%", overflow: "hidden scroll" }}
               >
                 <div
-                  className="simplebar-content menuitem-active"
+                  className='simplebar-content menuitem-active'
                   style={{ padding: 0 }}
                 >
                   {/*- Sidemenu */}
 
-                  <div id="sidebar-menu">
-                    <ul id="side-menu">
+                  <div id='sidebar-menu'>
+                    <ul id='side-menu'>
                       {SidebarItems.map((item, index) => {
                         if (item.roles.includes(role))
                           return (
                             <React.Fragment key={index}>
                               {item.hasMenu ? (
                                 <>
-<<<<<<< HEAD
-                                  <li className="menu-title" key={index}>
-                                    <strong>{item.label}</strong>
-                                  </li>
-=======
                                   {item.showLabel && (
                                     <li className='menu-title' key={index}>
                                       <strong>{item.label}</strong>
                                     </li>
                                   )}
->>>>>>> 02efa58 (.)
                                   {item.menus.map((menus, index2) => {
                                     return (
-                                      <li className="ps-2" key={index2}>
+                                      <li className='ps-2' key={index2}>
                                         <Link to={menus.path}>
                                           <i className={menus.icon} />
                                           <span>{menus.label} </span>
@@ -114,17 +104,11 @@ export default function Sidebar() {
                                 </>
                               ) : (
                                 <>
-<<<<<<< HEAD
-                                  <li className="menu-title">
-                                    <strong>{item.label}</strong>
-                                  </li>
-=======
                                   {item.showLabel && (
                                     <li className='menu-title'>
                                       <strong>{item.label}</strong>
                                     </li>
                                   )}
->>>>>>> 02efa58 (.)
                                   <li key={index}>
                                     <Link to={item.path}>
                                       <i className={item.icon} />
@@ -139,31 +123,31 @@ export default function Sidebar() {
                     </ul>
                   </div>
                   {/* End Sidebar */}
-                  <div className="clearfix" />
+                  <div className='clearfix' />
                 </div>
               </div>
             </div>
           </div>
           <div
-            className="simplebar-placeholder"
+            className='simplebar-placeholder'
             style={{ width: "auto", height: 1272 }}
           />
         </div>
         <div
-          className="simplebar-track simplebar-horizontal"
+          className='simplebar-track simplebar-horizontal'
           style={{ visibility: "hidden" }}
         >
           <div
-            className="simplebar-scrollbar"
+            className='simplebar-scrollbar'
             style={{ width: 0, display: "none" }}
           />
         </div>
         <div
-          className="simplebar-track simplebar-vertical"
+          className='simplebar-track simplebar-vertical'
           style={{ visibility: "visible" }}
         >
           <div
-            className="simplebar-scrollbar"
+            className='simplebar-scrollbar'
             style={{
               height: 569,
               display: "block",
