@@ -232,11 +232,11 @@ export default function EditQualifications() {
                       <div className="card mb-3">
                         <div className="card-body">
                           <h5 className="card-title">
-                          {t("QualificatioName")} (AL)
+                          {t("QualificationName")} (AL)
                           </h5>
                           <div className="row">
                             <label className="col-md-5 col-form-label">
-                            {t("QualificatioName")} (AL)
+                            {t("QualificationName")} (AL)
                             </label>
                             <div className="col-md-7">
                               <input
@@ -271,11 +271,11 @@ export default function EditQualifications() {
                       <div className="card mb-3">
                         <div className="card-body">
                           <h5 className="card-title">
-                          {t("QualificatioName")} (EN)
+                          {t("QualificationName")} (EN)
                           </h5>
                           <div className="row">
                             <label className="col-md-5 col-form-label">
-                            {t("QualificatioName")} (EN)
+                            {t("QualificationName")} (EN)
                             </label>
                             <div className="col-md-7">
                               <input
@@ -310,11 +310,11 @@ export default function EditQualifications() {
                       <div className="card mb-3">
                         <div className="card-body">
                           <h5 className="card-title">
-                          {t("QualificatioName")} (SR)
+                          {t("QualificationName")} (SR)
                           </h5>
                           <div className="row">
                             <label className="col-md-5 col-form-label">
-                            {t("QualificatioName")} (SR)
+                            {t("QualificationName")} (SR)
                             </label>
                             <div className="col-md-7">
                               <input

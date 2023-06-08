@@ -43,5 +43,8 @@
   "PleaseFillQualificationNameAL": "Ju lutem mbushni fushën për kualifikimin në gjuhën shqipe!",
   "PleaseFillQualificationNameEN": "Ju lutem mbushni fushën për kualifikimin në gjuhën angleze!",
   "PleaseFillQualificationNameSR": "Ju lutem mbushni fushën për kualifikimin në gjuhën serbe!",
-  "PleaseFillLevel": "Ju lutem mbushni fushën për levelin!"
+  "PleaseFillLevel": "Ju lutem mbushni fushën për levelin!",
+  "PostalCodeMustContainMax": "Kodi postal duhet të përmbaj më së shumti 20 karaktere!",
+  "PhoneNumberMustContainMax": "Numri i telefonit duhet të përmbaj më së shumti 20 karaktere!",
+  "Qualifications": "Kualifikimet"
 }

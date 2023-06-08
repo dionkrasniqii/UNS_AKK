@@ -15,44 +15,52 @@ export default function Institutions() {
       title: t("InstitutionName"),
       dataIndex: "institutionName",
       key: "institutionName",
+      // className: "col-lg-2 col-md-2 col-sm-4",
     },
     {
       title: t("UniqueNumber"),
       dataIndex: "uniqueNumber",
       key: "uniqueNumber",
+      // className: "col-lg-2 col-md-2 col-sm-4",
     },
     {
       title: t("Municipality"),
       dataIndex: "municipalityName",
       key: "municipalityName",
+      // className: "col-lg-2 col-md-2 col-sm-4",
     },
     {
       title: t("Address"),
       dataIndex: "address",
       key: "address",
+      // className: "d-none d-md-table-cell col-md-2",
     },
     {
       title: t("PostalCode"),
       dataIndex: "postalCode",
       key: "postalCode",
+      // className: "d-none d-md-table-cell col-md-2",
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      // className: "d-none d-lg-table-cell col-lg-2",
     },
     {
       title: t("Web"),
       dataIndex: "web",
       key: "web",
+      // className: "d-none d-lg-table-cell col-lg-2",
     },
     {
       title: t("Actions"),
       key: "institutionId",
+      className: "col-12 col-sm-4 col-md-2 col-lg-2 text-center",
       render: (value, record) => {
         return (
-          <div className="row">
-            <div className="col-lg-3 col-xxl-3">
+          <div className="row d-flex justify-content-center">
+            <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
               <Link
                 className="btn-secondary btn-sm"
                 to={`/editinstitutions/${record.institutionId}`}
@@ -60,7 +68,7 @@ export default function Institutions() {
                 <i className="fe-edit" />
               </Link>
             </div>
-            <div className="col-lg-3 col-xxl-3 ps-2">
+            <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
               <a className="btn-sm btn-danger" onClick={(e) => handleDelete(record.institutionId)}>
                 <i className="fe-trash-2" />
               </a>

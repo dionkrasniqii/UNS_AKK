@@ -14,24 +14,28 @@ export default function Qualifications() {
       title: t("QualificationName"),
       dataIndex: "qualificationName",
       key: "qualificationName",
+      className: "col-lg-3 col-md-4 col-sm-6",
     },
     {
       title: t("Code"),
       dataIndex: "code",
       key: "code",
+      className: "col-lg-2 col-md-3 col-sm-4",
     },
     {
       title: t("Level"),
       dataIndex: "levelName",
       key: "levelName",
+      className: "col-lg-2 col-md-3 col-sm-4",
     },
     {
       title: t("Actions"),
       key: "qualificationId",
+      className: "col-lg-2 col-md-2 col-sm-2 text-center",
       render: (value, record) => {
         return (
           <div className="row d-flex justify-content-center">
-            <div className="col-lg-3 col-xxl-3">
+            <div className="col-lg-3 col-xxl-3 mr-md-3">
               <Link
                 className="btn-secondary btn-sm"
                 to={`/editqualifications/${record.qualificationId}`}
@@ -39,7 +43,7 @@ export default function Qualifications() {
                 <i className="fe-edit" />
               </Link>
             </div>
-            <div className="col-lg-3 col-xxl-3 ps-2">
+            <div className="col-lg-3 col-xxl-3 mt-3 mt-lg-0">
               <a
                 className="btn-sm btn-danger"
                 onClick={(e) => handleDelete(record.qualificationId)}

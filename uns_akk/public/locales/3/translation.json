@@ -43,5 +43,8 @@
   "PleaseFillQualificationNameAL": "Molimo popunite polje za kvalifikaciju na albanskom jeziku!",
   "PleaseFillQualificationNameEN": "Molimo popunite polje za kvalifikaciju na engleskom!",
   "PleaseFillQualificationNameSR": "Molimo popunite polje kvalifikacije na srpskom jeziku!",
-  "PleaseFillLevel": "Molimo popunite polje za nivo!"
+  "PleaseFillLevel": "Molimo popunite polje za nivo!",
+  "PostalCodeMustContainMax": "Poštanski broj mora da sadrži najviše 20 znakova!",
+  "PhoneNumberMustContainMax": "Broj telefona mora da sadrži najviše 20 karaktera!",
+  "Qualifications": "Kvalifikacije"
 }
