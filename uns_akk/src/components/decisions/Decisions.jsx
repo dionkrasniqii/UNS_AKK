@@ -13,7 +13,7 @@ export default function Decisions() {
 
   useEffect(() => {
     setLoad(true);
-    CrudProvider.getAll("InstitutionDesicionAPI/GetAll").then((res) => {
+    CrudProvider.getAllWithLang("InstitutionDesicionAPI/GetAll").then((res) => {
       if (res) {
         if (res.statusCode === 200) {
           setData(res.result);
@@ -26,7 +26,7 @@ export default function Decisions() {
   const columns = [
     {
       title: t("UniqueNumber"),
-      dataIndex: "institution",
+      dataIndex: ["institution"],
       key: (item) => item.uniqueNumber,
       responsive: ["sm"],
       render: (item) => item.uniqueNumber,
@@ -39,9 +39,9 @@ export default function Decisions() {
       render: (item) => item.institutionName,
     },
     {
-      title: "Data e skadimit",
+      title: t("ExpirationDate"),
       dataIndex: ["termDate"],
-      key: ["termDate"],
+      key: (item) => item,
       responsive: ["sm"],
       render: (item) => {
         const date = item.split("T")[0];
@@ -49,9 +49,15 @@ export default function Decisions() {
       },
     },
     {
+      title: t("Municipality"),
+      dataIndex: ["municipalityName"],
+      key: (item) => item,
+      responsive: ["sm"],
+    },
+    {
       title: "Aktiv",
-      dataIndex: ["institution"],
-      key: (item) => item.aktiv,
+      dataIndex: ["aktiv"],
+      key: (item) => item,
       responsive: ["sm"],
       render: (item) => {
         if (item === true) {
@@ -74,7 +80,7 @@ export default function Decisions() {
 
     {
       title: "Email",
-      dataIndex: "institution",
+      dataIndex: ["institution"],
       key: (item) => item.email,
       responsive: ["sm"],
       render: (item) => item.email,
@@ -90,7 +96,7 @@ export default function Decisions() {
             <div className='col-lg-3 col-xxl-3'>
               <Link
                 className='btn-secondary btn-sm'
-                to={`/editdecisions/${record.institution.institutionId}`}
+                to={`/editdecisions/${record.institution.institutionId}/${record.institution.municipality.municipalityId}/${record.qualificationId}`}
               >
                 <i className='fe-edit' />
               </Link>
@@ -125,7 +131,7 @@ export default function Decisions() {
               <DataTable
                 columns={columns}
                 dataSource={data}
-                title={"Lista e të gjitha vendimeve"}
+                title={t("ListOfAllDecisions")}
               />
             ) : (
               <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>

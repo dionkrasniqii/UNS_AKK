@@ -1,4 +1,5 @@
 {
+  "Home": "Home",
   "Hello": "Hello",
   "Institutions": "Institutions",
   "InstitutionsList": "List of institutions",
@@ -44,7 +45,42 @@
   "PleaseFillQualificationNameEN": "Please fill in the qualification field in English!",
   "PleaseFillQualificationNameSR": "Please fill in the qualification field in Serbian language!",
   "PleaseFillLevel": "Please fill in the field for the level!",
+<<<<<<< HEAD
   "PostalCodeMustContainMax": "Postal code must contain at most 20 characters!",
   "PhoneNumberMustContainMax": "The phone number must contain at most 20 characters!",
   "Qualifications": "Qualifications"
+=======
+  "Decisions": "Decisions",
+  "ListOfAllDecisions": "List of all decisions",
+  "ExpirationDate": "Expiration date",
+  "Qualification": "Qualification",
+  "Institution": "Institution",
+  "SubQualifications": "Sub-qualifications",
+  "Credits": "Credits",
+  "ProtocolNumber": "Protocol number",
+  "ProtocolDate": "Protocol date",
+  "DateIssuanceDecision": "The date of the decision",
+  "DateExpirationDecision": "Decision expiration date",
+  "GroupLimits": "Limited groups",
+  "Yes": "Yes",
+  "No": "No",
+  "NumberOfGroups": "Number of groups",
+  "MaxPersonsInGroup": "Maximum number of persons in the group",
+  "IsReaccrediation": "Is Re-accreditation",
+  "UploadDecision": "Upload the decision",
+  "ChooseInstitution": "Choose institution",
+  "ChooseMunicipality": "Select the municipality",
+  "ChooseQualification": "Choose qualification",
+  "CompleteCredits": "Complete the credits",
+  "CompleteProtocolNumber": "Fill in the protocol number",
+  "CompleteProtocolDate": "Select the protocol date",
+  "CompleteStartDateDecision": "Fill in the date of the decision",
+  "ExpirationDateDecision": "Select the expiration date",
+  "PositiveNumber": "The number must be positive",
+  "ChooseNumber": "Set the number of groups",
+  "Choose": "Choose",
+  "SetNumberOfMembers": "Set the number of members per group",
+  "UploadDoc": "Upload document",
+  "RegisterDecision": "Register decision"
+>>>>>>> 02efa58 (.)
 }

@@ -15,7 +15,7 @@ export default function EditDecisions() {
   });
 
   useEffect(() => {
-    CrudProvider.getItemById("InstitutionDesicionAPI/GetById", id).then(
+    CrudProvider.getItemByIdLang("InstitutionDesicionAPI/GetById", id).then(
       (res) => {
         if (res) {
           if (res.statusCode === 200) {

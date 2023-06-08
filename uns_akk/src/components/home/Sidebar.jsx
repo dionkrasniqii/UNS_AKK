@@ -12,10 +12,19 @@ export default function Sidebar() {
   const SidebarItems = [
     //Admin
     {
+      label: t("Home"),
+      roles: ["Admin", "Institutions"],
+      path: "/home",
+      hasMenu: false,
+      showLabel: false,
+      icon: "mdi mdi-view-dashboard-outline",
+    },
+    {
       label: t("Institutions"),
       roles: ["Admin"],
       path: "/institutions",
       hasMenu: false,
+      showLabel: true,
       icon: "mdi mdi-calendar-blank-outline",
     },
     {
@@ -23,6 +32,7 @@ export default function Sidebar() {
       roles: ["Admin"],
       path: "/level",
       hasMenu: false,
+      showLabel: true,
       icon: "mdi mdi-share-variant",
     },
     {
@@ -30,35 +40,21 @@ export default function Sidebar() {
       roles: ["Admin"],
       path: "/qualifications",
       hasMenu: false,
+      showLabel: true,
       icon: "mdi mdi-book-edit",
     },
     {
+<<<<<<< HEAD
       label: "Decisions",
+=======
+      label: t("Decisions"),
+>>>>>>> 02efa58 (.)
       roles: ["Admin"],
       path: "/decisions",
       hasMenu: false,
+      showLabel: true,
       icon: "fas fa-file-archive",
     },
-    // {
-    //   label: "Buxheti",
-    //   hasMenu: true,
-    //   icon: "mdi mdi-calendar-blank-outline",
-    //   roles: ["35"],
-    //   menus: [
-    //     {
-    //       label: `Buxheti Total`,
-    //       path: "/budget/totalbudget",
-    //       roles: ["35"],
-    //       icon: "mdi mdi-calendar-blank-outline",
-    //     },
-    //     {
-    //       label: `Buxheti Fakulteteve`,
-    //       path: "/budget/index",
-    //       icon: "mdi mdi-calendar-blank-outline",
-    //       roles: ["35"],
-    //     },
-    //   ],
-    // },
   ];
 
   return (
@@ -94,9 +90,17 @@ export default function Sidebar() {
                             <React.Fragment key={index}>
                               {item.hasMenu ? (
                                 <>
+<<<<<<< HEAD
                                   <li className="menu-title" key={index}>
                                     <strong>{item.label}</strong>
                                   </li>
+=======
+                                  {item.showLabel && (
+                                    <li className='menu-title' key={index}>
+                                      <strong>{item.label}</strong>
+                                    </li>
+                                  )}
+>>>>>>> 02efa58 (.)
                                   {item.menus.map((menus, index2) => {
                                     return (
                                       <li className="ps-2" key={index2}>
@@ -110,9 +114,17 @@ export default function Sidebar() {
                                 </>
                               ) : (
                                 <>
+<<<<<<< HEAD
                                   <li className="menu-title">
                                     <strong>{item.label}</strong>
                                   </li>
+=======
+                                  {item.showLabel && (
+                                    <li className='menu-title'>
+                                      <strong>{item.label}</strong>
+                                    </li>
+                                  )}
+>>>>>>> 02efa58 (.)
                                   <li key={index}>
                                     <Link to={item.path}>
                                       <i className={item.icon} />
