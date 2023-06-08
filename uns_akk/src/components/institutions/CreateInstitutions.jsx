@@ -1,27 +1,61 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CreateAgenciesSchema } from "../schemas/CreateAgenciesSchema";
 import { object } from "yup";
 import { red } from "@mui/material/colors";
 import CrudProvider from "../../provider/CrudProvider";
 import ProgressBar from "../custom/ProgressBar";
 import CustomSelect from "../custom/CustomSelect";
-
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
 export default function CreateInstitutions() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [cities, setCities] = useState([]);
   const [model, setModel] = useState({
     InstitutionName: "",
     UniqueNumber: "",
-    City: "",
     Address: "",
     PostalCode: "",
-    PhoneNumber: "",
-    MunicipalityId: "1",
+    PhoneNum: "",
+    MunicipalityId: "",
     Email: "",
     Web: "",
     Document: "",
   });
+
+  useEffect(() => {
+    CrudProvider.getAllWithLang("GeneralAPI/GetAllMunicipalities").then(
+      (res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setCities(res.result);
+          }
+        }
+      }
+    );
+  }, []);
+
+  const citiesList =
+    cities &&
+    cities.length > 0 &&
+    cities
+      .map((obj) => {
+        return {
+          value: obj.municipality.municipalityId,
+          label: obj.municipalityName,
+        };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label));
+
+  function changeCity(e) {
+    setModel({
+      ...model,
+      MunicipalityId: e,
+    });
+    formik.setFieldValue("MunicipalityId", e);
+  }
 
   async function SubmitForm() {
     await CrudProvider.createItemWithFile(
@@ -30,36 +64,51 @@ export default function CreateInstitutions() {
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          navigate("/agencies");
+          navigate("/institutions");
+          toast.success(t("DataSavedSuccessfully"));
         }
       }
     });
   }
+  const CreateInstitutionSchema = Yup.object().shape({
+    Name: Yup.string().required(t("PleaseFillInstitutionName")),
+    UniqueNumber: Yup.number()
+      .test(
+        "is-valid",
+        t("UniqueNumberMustContain"),
+        (value) => /^8\d{8}$/.test(value)
+      )
+      .required(t("PleaseFillUniqueNumber")),
+    MunicipalityId: Yup.string().required(
+      t("PleaseFillMunicipality")
+    ),
+    Address: Yup.string().required(t("PleaseFillAddress")),
+    PostalCode: Yup.string().required(
+      t("PleaseFillPostalCode")
+    ).max(20, t("PostalCodeMustContainMax")),
+    PhoneNumber: Yup.string().required(
+      t("PleaseFillPhoneNumber")
+    ).max(20, t("PhoneNumberMustContainMax")),
+    Email: Yup.string().required(t("PleaseFillEmail")),
+    Web: Yup.string().required(
+      t("PleaseFillWeb")
+    ),
+    Documents: Yup.string().required(
+      t("PleaseFillDocument")
+    ),
+  });
   const formik = useFormik({
     initialValues: {},
-    validationSchema: CreateAgenciesSchema,
+    validationSchema: CreateInstitutionSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: () => SubmitForm(),
   });
-
-function changeCity(e){
-  setModel({
-    ...model,
-    City:e
-  })
-}
-
-const cityList = [{
-  value:1,label:"Malisheve"
-},{
-  value:2,label:"Prishtine"
-}]
-
-
   return (
     <div className="col-xl-12">
       <div className="card">
         <div className="card-body">
-          <h3 className=" mb-3">Regjistro Institucionin</h3>
+          <h3 className=" mb-3">{t("RegisterInstitution")}</h3>
           <form onSubmit={formik.handleSubmit}>
             <div id="progressbarwizard">
               <div className="tab-content b-0 mb-0 pt-0">
@@ -69,7 +118,7 @@ const cityList = [{
                     <div className="col-12">
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Name of Institution
+                          {t("InstitutionName")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -85,7 +134,6 @@ const cityList = [{
                           />
                           {formik.errors.Name && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Name}
                             </span>
                           )}
@@ -93,7 +141,7 @@ const cityList = [{
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Unique Number
+                          {t("UniqueNumber")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -112,27 +160,31 @@ const cityList = [{
                           />
                           {formik.errors.UniqueNumber && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.UniqueNumber}
                             </span>
                           )}
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">City</label>
+                        <label className="col-md-3 col-form-label">
+                          {t("Municipality")}
+                        </label>
                         <div className="col-md-9">
-                         <CustomSelect onChangeFunction={changeCity} optionsList={cityList} isMulti={false} />
-                          {formik.errors.City && (
+                          <CustomSelect
+                            onChangeFunction={changeCity}
+                            optionsList={citiesList}
+                            isMulti={false}
+                          />
+                          {formik.errors.MunicipalityId && (
                             <span className="text-danger">
-                              {" "}
-                              {formik.errors.City}
+                              {formik.errors.MunicipalityId}
                             </span>
                           )}
                         </div>
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Address
+                          {t("Address")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -148,7 +200,6 @@ const cityList = [{
                           />
                           {formik.errors.Address && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Address}
                             </span>
                           )}
@@ -156,7 +207,7 @@ const cityList = [{
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Postal Code
+                          {t("PostalCode")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -175,7 +226,6 @@ const cityList = [{
                           />
                           {formik.errors.PostalCode && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.PostalCode}
                             </span>
                           )}
@@ -183,7 +233,7 @@ const cityList = [{
                       </div>
                       <div className="row mb-3">
                         <label className="col-md-3 col-form-label">
-                          Phone Number
+                          {t("PhoneNumber")}
                         </label>
                         <div className="col-md-9">
                           <input
@@ -192,7 +242,7 @@ const cityList = [{
                             onChange={(e) => {
                               setModel({
                                 ...model,
-                                PhoneNumber: e.target.value,
+                                PhoneNum: e.target.value,
                               });
                               formik.setFieldValue(
                                 "PhoneNumber",
@@ -202,7 +252,6 @@ const cityList = [{
                           />
                           {formik.errors.PhoneNumber && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.PhoneNumber}
                             </span>
                           )}
@@ -224,14 +273,15 @@ const cityList = [{
                           />
                           {formik.errors.Email && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Email}
                             </span>
                           )}
                         </div>
                       </div>
                       <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">Web</label>
+                        <label className="col-md-3 col-form-label">
+                          {t("Web")}
+                        </label>
                         <div className="col-md-9">
                           <input
                             type="text"
@@ -246,7 +296,6 @@ const cityList = [{
                           />
                           {formik.errors.Web && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Web}
                             </span>
                           )}
@@ -268,26 +317,23 @@ const cityList = [{
                           />
                           {formik.errors.Documents && (
                             <span className="text-danger">
-                              {" "}
                               {formik.errors.Documents}
                             </span>
                           )}
                         </div>
                       </div>
-                    </div>{" "}
-                    {/* end col */}
-                  </div>{" "}
-                  {/* end row */}
+                    </div>
+                  </div>
                 </div>
                 <ul className="list-inline mb-0 wizard">
                   <Link
-                    to="/agencies"
+                    to="/institutions"
                     className="btn btn-danger waves-effect waves-light float-start"
                   >
                     <span className="btn-label">
                       <i className="fe-arrow-left"></i>
                     </span>
-                    Anulo
+                    {t("Discard")}
                   </Link>
                   <li className="next list-inline-item float-end">
                     <button
@@ -297,19 +343,15 @@ const cityList = [{
                       <span className="btn-label">
                         <i className="fe-check"></i>
                       </span>
-                      Ruaj
+                      {t("Save")}
                     </button>
                   </li>
                 </ul>
-              </div>{" "}
-              {/* tab-content */}
-            </div>{" "}
-            {/* end #progressbarwizard*/}
+              </div>
+            </div>
           </form>
-        </div>{" "}
-        {/* end card-body */}
-      </div>{" "}
-      {/* end card*/}
+        </div>
+      </div>
     </div>
   );
 }

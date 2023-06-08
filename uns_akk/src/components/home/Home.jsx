@@ -8,21 +8,8 @@ export default function Home() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    CrudProvider.getAll("LevelAPI/GetAll").then((res) => {
-      console.log(res);
-    });
-  }, []);
   return (
     <div className='container-fluid'>
-      {t("Hello")}
-      <ul>
-        <li>
-          <button onClick={(e) => i18next.changeLanguage("1")}>Shqip</button>
-          <button onClick={(e) => i18next.changeLanguage("2")}>Anglisht</button>
-          <button onClick={(e) => i18next.changeLanguage("3")}>Serb</button>
-        </li>
-      </ul>
       <div className='row'>
         <div className='col-sm-4'>
           <a

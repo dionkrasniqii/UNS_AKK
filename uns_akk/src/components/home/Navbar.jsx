@@ -1,33 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import mainLogo from "./../../assets/images/logo_akk.jpg";
+import smallLogo from "./../../assets/images/sm.jpg";
+import i18next from "i18next";
+
 export default function Navbar(props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  //  const [prevScrollPos, setPrevScrollPos] = useState(0);
-
-  //  useEffect(() => {
-  //    const handleScroll = () => {
-  //      const currentScrollPos = window.pageYOffset;
-
-  //      if (prevScrollPos > currentScrollPos) {
-  //        // Scrolling up
-  //        document
-  //          .querySelector(".navbar-custom")
-  //          .classList.remove("navbar-hidden");
-  //      } else {
-  //        // Scrolling down
-  //        document.querySelector(".navbar-custom").classList.add("navbar-hidden");
-  //      }
-
-  //      setPrevScrollPos(currentScrollPos);
-  //    };
-
-  //    window.addEventListener("scroll", handleScroll);
-
-  //    return () => {
-  //      window.removeEventListener("scroll", handleScroll);
-  //    };
-  //  }, [prevScrollPos]);
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    localStorage.getItem("i18nextLng")
+  );
 
   useEffect(() => {
     const bodyDiv = document.getElementById("body");
@@ -42,13 +25,112 @@ export default function Navbar(props) {
 
   function logout() {
     localStorage.removeItem("akktoken");
+    // localStorage.removeItem("role");
+    localStorage.removeItem("hasShownToast");
     props.setAuthState(false);
+    navigate("/");
   }
 
+  async function changeLang(e) {
+    i18next.changeLanguage(e);
+    setSelectedLanguage(e);
+  }
   return (
     // <div className='navbar-custom navbar-hidden bg-white border'>
     <div className='navbar-custom bg-white border'>
       <ul className='list-unstyled topnav-menu float-end mb-0'>
+        <li
+          className={`dropdown notification-list topbar-dropdown ${
+            isDropdownOpen ? "show" : ""
+          }`}
+          onMouseEnter={() => setDropdownOpen(true)}
+          onMouseLeave={() => setDropdownOpen(false)}
+        >
+          <a
+            className='nav-link dropdown-toggle nav-user me-0 waves-effect waves-light'
+            data-bs-toggle='dropdown'
+            href='#'
+            role='button'
+            aria-haspopup='false'
+            aria-expanded='false'
+          >
+            {selectedLanguage == 1 ? (
+              <img
+                className='flag-icon'
+                src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/al.svg'
+              />
+            ) : selectedLanguage == 2 ? (
+              <img
+                className='flag-icon'
+                src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/gb.svg'
+              />
+            ) : (
+              <img
+                className='flag-icon'
+                src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/al.svg'
+              />
+            )}
+            <span className='pro-user-name ms-1'>
+              {selectedLanguage == 1 ? (
+                <span>AL</span>
+              ) : selectedLanguage == 2 ? (
+                <span>ENG</span>
+              ) : (
+                <span>SR</span>
+              )}{" "}
+              <i className='mdi mdi-chevron-down' />
+            </span>
+          </a>
+          <div
+            className={`dropdown-menu dropdown-menu-end profile-dropdown ${
+              isDropdownOpen ? "show" : ""
+            }`}
+            style={{}}
+          >
+            <a
+              className='dropdown-item notify-item'
+              onClick={(e) => changeLang("1")}
+            >
+              <label>
+                <img
+                  className='flag-icon'
+                  src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/al.svg'
+                />
+                {" "}
+                (AL)
+              </label>
+            </a>
+            <div className='dropdown-divider' />
+            <a
+              className='dropdown-item notify-item'
+              onClick={(e) => changeLang("2")}
+            >
+              <label className='fs-6'>
+                <img
+                  className='flag-icon'
+                  src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/gb.svg'
+                />
+                {" "}
+                (ENG)
+              </label>
+            </a>
+            <div className='dropdown-divider' />
+            <a
+              className='dropdown-item notify-item'
+              onClick={(e) => changeLang("3")}
+            >
+              <label className='fs-6'>
+                (SR){" "}
+                {/* <img
+                  className='flag-icon'
+                  src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/rs.svg'
+                  alt='UK Flag'
+                /> */}
+              </label>
+            </a>
+          </div>
+        </li>
+
         <li className='dropdown notification-list'>
           <a
             onClick={logout}
@@ -77,12 +159,12 @@ export default function Navbar(props) {
       </ul>
       {/* LOGO */}
       <div className='logo-box'>
-        <Link to='/' className='logo logo-dark text-center'>
+        <Link to='/home' className='logo logo-dark text-center'>
           <span className='logo-lg'>
-            <img src='assets/images/logo_akk.jpg' alt='' height={50} />
+            <img src={mainLogo} alt='' height={50} />
           </span>
           <span className='logo-sm'>
-            <img src='assets/images/sm.jpg' alt='' height={30} />
+            <img src={smallLogo} alt='' height={30} />
           </span>
         </Link>
       </div>

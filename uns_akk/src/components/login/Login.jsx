@@ -1,12 +1,14 @@
 import { ModelTrainingSharp } from "@mui/icons-material";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { LoginSchema } from "../schemas/LoginSchema";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
 import MultiRoles from "./MultiRoles";
-
+import logo from "./../../assets/images/logo_akk.jpg";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../store/actions";
 export default function Login(props) {
   const navigate = useNavigate();
   const [load, setLoad] = useState(false);
@@ -17,14 +19,26 @@ export default function Login(props) {
   });
   const [showMultiRolesModal, setShowMultiRolesModal] = useState(false);
   const [roles, setRoles] = useState([]);
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("akktoken");
+
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    }
+  }, [token]);
+
   async function loginFunction() {
     setLoad(true);
     await CrudProvider.login("AccountController/login", model).then((res) => {
       if (res) {
+        console.log(res);
         if (res.code === 200) {
           toast.success("Qasja juaj u realizua me sukses");
           props.setAuthState(true);
           localStorage.setItem("akktoken", res.token);
+          dispatch(setToken(res.token));
+          navigate("/home");
         }
         if (res.response?.status === 401) {
           toast.error("Te dhena te pasakta");
@@ -36,8 +50,11 @@ export default function Login(props) {
         if (res.code === 404) {
           toast.error("Te dhena te pasakta");
         }
-        setLoad(false);
+        if (res.code === "ERR_NETWORK") {
+          toast.info("Probleme ne server ju lutem provoni perseri");
+        }
       }
+      setLoad(false);
     });
   }
   const formik = useFormik({
@@ -53,7 +70,7 @@ export default function Login(props) {
       setAuthState={props.setAuthState}
     />
   ) : (
-    <div className='account-pages my-5'>
+    <div className='account-pages my-5 px-5'>
       <div className='container'>
         <div className='row justify-content-center'>
           <div className='col-md-8 col-lg-6 col-xl-4'>
@@ -62,9 +79,9 @@ export default function Login(props) {
                 <div className='text-center'>
                   <a href='index.html'>
                     <img
-                      src='assets/images/logo_akk.jpg'
+                      src={logo}
                       alt=''
-                      height={70}
+                      height={60}
                       className='mx-auto mt-2'
                     />
                   </a>
