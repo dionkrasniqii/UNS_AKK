@@ -85,10 +85,10 @@ export default function CreateInstitutions() {
     Address: Yup.string().required(t("PleaseFillAddress")),
     PostalCode: Yup.string().required(
       t("PleaseFillPostalCode")
-    ),
+    ).max(20, t("PostalCodeMustContainMax")),
     PhoneNumber: Yup.string().required(
       t("PleaseFillPhoneNumber")
-    ),
+    ).max(20, t("PhoneNumberMustContainMax")),
     Email: Yup.string().required(t("PleaseFillEmail")),
     Web: Yup.string().required(
       t("PleaseFillWeb")

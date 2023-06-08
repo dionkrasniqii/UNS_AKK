@@ -43,5 +43,8 @@
   "PleaseFillQualificationNameAL": "Please fill in the field for the qualification in the Albanian language!",
   "PleaseFillQualificationNameEN": "Please fill in the qualification field in English!",
   "PleaseFillQualificationNameSR": "Please fill in the qualification field in Serbian language!",
-  "PleaseFillLevel": "Please fill in the field for the level!"
+  "PleaseFillLevel": "Please fill in the field for the level!",
+  "PostalCodeMustContainMax": "Postal code must contain at most 20 characters!",
+  "PhoneNumberMustContainMax": "The phone number must contain at most 20 characters!",
+  "Qualifications": "Qualifications"
 }
