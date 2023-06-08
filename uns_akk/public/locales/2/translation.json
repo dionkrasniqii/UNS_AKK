@@ -1,4 +1,23 @@
 {
+  "Hello": "Hello",
+  "Create Level": "Create Level",
+  "Back": "Back",
+  "City": "City",
+  "Level Reference KEK": "Level Reference KEK",
+  "Level Description": "Level Description",
+  "Competencies": "Competencies",
+  "Detailed Description": "Detailed Description",
+  "Knowledge": "Knowledge",
+  "Level Indicator": "Level Indicator",
+  "Skills": "Skills",
+  "Descriptor": "Descriptor",
+  "Type": "Type",
+  "Save": "Save",
+  "Albanian": "Albanian",
+  "English": "English",
+  "Serbian": "Serbian",
+  "Language": "Language",
+  "ChooseLanguage": "Choose Language",
   "Home": "Home",
   "Hello": "Hello",
   "Institutions": "Institutions",
@@ -45,11 +64,9 @@
   "PleaseFillQualificationNameEN": "Please fill in the qualification field in English!",
   "PleaseFillQualificationNameSR": "Please fill in the qualification field in Serbian language!",
   "PleaseFillLevel": "Please fill in the field for the level!",
-<<<<<<< HEAD
   "PostalCodeMustContainMax": "Postal code must contain at most 20 characters!",
   "PhoneNumberMustContainMax": "The phone number must contain at most 20 characters!",
-  "Qualifications": "Qualifications"
-=======
+  "Qualifications": "Qualifications",
   "Decisions": "Decisions",
   "ListOfAllDecisions": "List of all decisions",
   "ExpirationDate": "Expiration date",
@@ -82,5 +99,4 @@
   "SetNumberOfMembers": "Set the number of members per group",
   "UploadDoc": "Upload document",
   "RegisterDecision": "Register decision"
->>>>>>> 02efa58 (.)
 }
