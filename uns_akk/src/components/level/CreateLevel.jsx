@@ -19,7 +19,7 @@ export default function CreateLevel() {
     Knowledge: "",
     LevelIndicator: "",
     Skills: "",
-    Descriptor: "",
+    TheDescriptor: "",
     Type: "",
     LangId: "",
   });
@@ -78,22 +78,20 @@ export default function CreateLevel() {
                   <div className="form-group">
                     <div className="row">
                       <div className="col-md-4">
-                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Language")}</label>
+                      <h5 className="card-title">{t("Language")}</h5>
                         <CustomSelect
                           optionsList={langList}
                           isMulti={false}
                           onChangeFunction={changeLangId}
-                          placeholder={t("ChooseLanguage")}
                         />
                       </div>
                       <div className="col-md-4">
-                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Level Reference KEK")}</label>
+                      <h5 className="card-title">{t("Level Reference KEK")}</h5>
                         <input
-                          name="LevelReferenceKEK"
+                          name="LevelReferenceKEK"y
                           type="number"
                           value={formik.values.LevelReferenceKEK}
                           className="form-control"
-                          placeholder={t("Enter Level Reference KEK")}
                           onChange={(e) => {
                             setModel({
                               ...model,
@@ -112,12 +110,11 @@ export default function CreateLevel() {
                         )}
                       </div>
                       <div className="col-md-4">
-                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Type")}</label>
+                      <h5 className="card-title">{t("Type")}</h5>
                         <textarea
                           name="Type"
                           value={formik.values.Type}
                           className="form-control"
-                          placeholder={t("Enter Type")}
                           onChange={(e) => {
                             setModel({
                               ...model,
@@ -139,13 +136,13 @@ export default function CreateLevel() {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group mt-2">
-                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Level Description")}</label>
+                      <h5 className="card-title">{t("Level Description")}</h5>
 
                         <textarea
                           name="LevelDescription"
                           value={formik.values.LevelDescription}
                           className="form-control"
-                          placeholder={t("Enter Level Description")}
+                        
                           onChange={(e) => {
                             setModel({
                               ...model,
@@ -167,13 +164,12 @@ export default function CreateLevel() {
                     </div>
                     <div className="col-md-6 mt-2">
                       <div className="form-group">
-                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Competencies")}</label>
+                      <h5 className="card-title">{t("Competencies")}</h5>
 
                         <textarea
                           name="Competencies"
                           value={formik.values.Competencies}
                           className="form-control"
-                          placeholder={t("Enter Competencies")}
                           onChange={(e) => {
                             setModel({
                               ...model,
@@ -196,13 +192,12 @@ export default function CreateLevel() {
                   </div>
 
                   <div className="form-group mt-2">
-                  <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Detailed Description")}</label>
+                  <h5 className="card-title">{t("Detailed Description")}</h5>
 
                     <textarea
                       name="DetailedDescription"
                       value={formik.values.DetailedDescription}
                       className="form-control"
-                      placeholder={t("Enter Detailed Description")}
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -225,36 +220,34 @@ export default function CreateLevel() {
                   <div className="form-group mt-2">
                     <div className="row">
                       <div className="col-md-6">
-                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Descriptor")}</label>
+                      <h5 className="card-title">{t("Descriptor")}</h5>
 
                         <textarea
-                          name="Descriptor"
-                          value={formik.values.Descriptor}
+                          name="TheDescriptor"
+                          value={formik.values.TheDescriptor}
                           className="form-control"
-                          placeholder={t("Enter Descriptor")}
                           onChange={(e) => {
                             setModel({
                               ...model,
-                              Descriptor: e.target.value,
+                              TheDescriptor: e.target.value,
                             });
-                            formik.setFieldValue("Descriptor", e.target.value);
+                            formik.setFieldValue("TheDescriptor", e.target.value);
                           }}
                           rows="6"
                         ></textarea>
-                        {formik.errors.Descriptor && (
+                        {formik.errors.TheDescriptor && (
                           <span className="text-danger">
-                            {formik.errors.Descriptor}
+                            {formik.errors.TheDescriptor}
                           </span>
                         )}
                       </div>
                       <div className="col-md-6">
-                      <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Level Indicator")}</label>
+                      <h5 className="card-title">{t("Level Indicator")}</h5>
 
                         <textarea
                           name="LevelIndicator"
                           value={formik.values.LevelIndicator}
                           className="form-control"
-                          placeholder={t("Enter Level Indicator")}
                           onChange={(e) => {
                             setModel({
                               ...model,
@@ -277,13 +270,12 @@ export default function CreateLevel() {
                   </div>
 
                   <div className="form-group mt-2">
-                  <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Knowledge")}</label>
+                  <h5 className="card-title">{t("Knowledge")}</h5>
 
                     <textarea
                       name="Knowledge"
                       value={formik.values.Knowledge}
                       className="form-control"
-                      placeholder={t("Enter Knowledge")}
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -301,13 +293,12 @@ export default function CreateLevel() {
                   </div>
 
                   <div className="form-group mt-2">
-                  <label style={{ fontFamily: 'Arial', fontWeight: 'bold', color: 'black' }}>{t("Skills")}</label>
+                  <h5 className="card-title">{t("Skills")}</h5>
 
                     <textarea
                       name="Skills"
                       value={formik.values.Skills}
                       className="form-control"
-                      placeholder={t("Enter Skills")}
                       onChange={(e) => {
                         setModel({
                           ...model,
