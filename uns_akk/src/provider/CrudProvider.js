@@ -1,3 +1,4 @@
+import { isContentEditable } from "@testing-library/user-event/dist/utils";
 import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL_LOCAL;
@@ -310,7 +311,17 @@ async function handleRequestError(error) {
     console.log("Error", error.message);
   }
 }
-
+function checkIsPDf(event) {
+  if (event) {
+    let parts = event.split(".");
+    let rest = parts.slice(-1)[0];
+    if (rest == "pdf") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
 export default {
   login,
   getAll,
@@ -324,4 +335,5 @@ export default {
   updateItemWithFile,
   documentPath,
   getReportRDLC,
+  checkIsPDf,
 };

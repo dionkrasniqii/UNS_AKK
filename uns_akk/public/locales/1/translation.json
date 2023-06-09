@@ -99,5 +99,6 @@
   "Choose": "Zgjedhni",
   "SetNumberOfMembers": "Vendosni numrin e antarëve për grup",
   "UploadDoc":"Ngarkoni dokumentin",
-  "RegisterDecision":"Shtoni vendimin"
+  "RegisterDecision":"Shtoni vendimin",
+  "NumOfGroups":"Numri grupeve"
 }

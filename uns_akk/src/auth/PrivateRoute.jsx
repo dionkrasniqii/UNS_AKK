@@ -23,7 +23,8 @@ const PrivateRoute = ({
       navigate("/");
     }
   }, [token]);
-  return isAuthorized  ? (
+
+  return isAuthorized ? (
     <Component {...rest} />
   ) : (
     <Navigate to={authState ? "/home" : "/"} />

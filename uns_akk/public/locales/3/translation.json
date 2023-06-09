@@ -1,5 +1,4 @@
 {
-
   "Hello": "Zdravo",
   "Create Level": "Kreiraj nivo",
   "Back": "Nazad",
@@ -99,5 +98,6 @@
   "Choose": "Izaberi",
   "SetNumberOfMembers": "Podesite broj članova po grupi",
   "UploadDoc": "Otpremite dokument",
-  "RegisterDecision": "Odluka o registraciji"
+  "RegisterDecision": "Odluka o registraciji",
+  "NumOfGroups": "Broj grupa"
 }

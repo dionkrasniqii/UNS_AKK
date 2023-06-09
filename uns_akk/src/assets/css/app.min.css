@@ -14482,7 +14482,7 @@ body[data-layout-color=dark] .user-pro-dropdown {
     left: 0;
     right: 0;
     height: 70px;
-    z-index: 1001
+    z-index: 999;
 }
 
 .navbar-hidden {
@@ -24651,4 +24651,11 @@ body[data-layout-color=dark] .datepicker tfoot tr th:hover {
 .custom-select .ant-select-dropdown-menu-item-disabled {
     color: #999999;
     cursor: not-allowed;
+}
+
+.ant-modal-content {
+    max-height: 1000px;
+    height: 850px;
+    width: 850px;
+    z-index: 9999;
 }
