@@ -1,68 +1,64 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Table, Input, Alert, Row, Col } from "antd";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
 import DataTable from "../custom/DataTable";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+
 
 export default function Level() {
   const [load, setLoad] = useState(false);
   const [data, setData] = useState([]);
+  const { t } = useTranslation();
 
   const [selectedLang, setSelectedLang] = useState(
     localStorage.getItem("i18nextLng")
   );
   const columns = [
     {
-      title: "Pershkrimi i levelit KKK",
+      title: t("Level Description"),
       dataIndex: "levelKKKDescription",
       key: "levelKKKDescription",
       responsive: ["sm"],
     },
     {
-      title: "Kategoria",
+      title: t("Type"),
       dataIndex: "type",
       key: "type",
       responsive: ["sm"],
     },
     {
-      title: "Kompetencat",
-      dataIndex: "competencies",
-      key: "competencies",
-      responsive: ["sm"],
-    },
-    {
-      title: "Pershkrim i detajuar",
+      title: t("Detailed Description"),
       dataIndex: "detailedDescription",
       key: "detailedDescription",
       responsive: ["sm"],
     },
     {
-      title: "Njohurit",
-      dataIndex: "knowledge",
-      key: "knowledge",
-      responsive: ["sm"],
-    },
-    {
-      title: "Aftesit",
-      dataIndex: "skills",
-      key: "skills",
-      responsive: ["sm"],
-    },
-    {
-      title: "Indikatoret e levelit",
-      dataIndex: "levelIndicators",
-      key: "levelIndicators",
-      responsive: ["sm"],
-    },
-    {
-      title: "Pershkruesi",
-      dataIndex: "theDescriptor",
-      key: "theDescriptor",
-      responsive: ["sm"],
+      title: t("Actions"),
+      key: "levelKKKLanguageId",
+      className: "col-12 col-sm-4 col-md-2 col-lg-2 text-center",
+      render: (value, record) => {
+        return (
+          <div className="row d-flex justify-content-center">
+            <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
+              <Link
+                className="btn-secondary btn-sm"
+                to={`/editlevel/${record.levelKKKId}`}
+              >
+                <i className="fe-edit" />
+              </Link>
+            </div>
+            <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
+              <a className="btn-sm btn-danger" onClick={(e) => handleDelete(record.levelKKKId)}>
+                <i className="fe-trash-2" />
+              </a>
+            </div>
+          </div>
+        );
+      },
     },
   ];
-
   async function getData() {
     setLoad(true);
     CrudProvider.getAllWithLang("LevelAPI/GetAll").then((res) => {
@@ -83,6 +79,31 @@ export default function Level() {
   useEffect(() => {
     getData();
   }, [selectedLang]);
+
+  async function handleDelete(id) {
+    setLoad(true);
+    await CrudProvider.deleteItemById(
+      "LevelAPI/DeleteLevel",
+      id
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          toast.success(t("DataDeletedSuccessfully"));
+          CrudProvider.getAllWithLang("LevelAPI/GetAll").then((res) => {
+            if (res) {
+
+              if (res.statusCode === 200) {
+                setData(res.result);
+              } else if (res.statusCode === 400) {
+                toast.error(t("ServerProblems"));
+              }
+            }
+          });
+        }
+      }
+      setLoad(false);
+    });
+  }
   return (
     <div className="col-xxl-12">
       <div className="col-xxl-12 text-end"></div>
