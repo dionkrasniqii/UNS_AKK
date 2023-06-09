@@ -551,23 +551,3 @@ export default function CreateDecisions() {
     </div>
   );
 }
-
-export const CreateDecisionSchema = Yup.object().shape({
-  InstitutionId: Yup.string().required("Zgjedhni institucionin"),
-  MunicipalityId: Yup.string().required("Zgjedhni komunën"),
-  QualificationId: Yup.string().required("Zgjedhni kualifikimin"),
-  Credits: Yup.string().required("Plotësoni kredit"),
-  ProtocolNr: Yup.string().required("Plotësoni numrin e protokolit"),
-  ProtocolDate: Yup.mixed().required("Zgjedhni datën e protokolit"),
-  DecisionDate: Yup.string().required("Zgjedhni datën e vendimit"),
-  TermDate: Yup.mixed().required("Zgjedhni datën deri kur është valid vendimi"),
-  NumOfGroups: Yup.number()
-    .positive("Numri duhet të jetë pozitiv")
-    .required("Vendosni numrin e grupeve"),
-  NoLimitGroups: Yup.boolean().required("Zgjedhni"),
-  MaximumPeoplePerGroup: Yup.string().required(
-    "Vendosni numrin e antarëve për grup"
-  ),
-  Reaccreditation: Yup.string().required("Zgjedhni"),
-  Document: Yup.string().required("Ngarkoni dokumentin"),
-});

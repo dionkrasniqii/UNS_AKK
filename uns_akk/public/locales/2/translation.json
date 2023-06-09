@@ -98,5 +98,6 @@
   "Choose": "Choose",
   "SetNumberOfMembers": "Set the number of members per group",
   "UploadDoc": "Upload document",
-  "RegisterDecision": "Register decision"
+  "RegisterDecision": "Register decision",
+  "NumOfGroups": "Number of groups"
 }
