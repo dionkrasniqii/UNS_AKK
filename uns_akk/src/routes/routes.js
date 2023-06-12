@@ -14,6 +14,9 @@ import EditQualifications from "../components/qualifications/EditQualifications"
 import Decisions from "../components/decisions/Decisions";
 import CreateDecisions from "../components/decisions/CreateDecisions";
 import EditDecisions from "../components/decisions/EditDecisions";
+import SubQualifications from "../components/subqualifications/SubQualifications";
+import CreateSubQualification from "../components/subqualifications/CreateSubQualification";
+import EditSubQualification from "../components/subqualifications/EditSubQualification";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -204,6 +207,43 @@ export const AppRoutes = (props) => {
             authState={props.authState}
             allowedRoles={[ROLES.ADMIN]}
             component={EditQualifications}
+          />
+        }
+      />
+
+      {/* QualificationChildren */}
+      <Route
+        path='/subqualifications'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={SubQualifications}
+          />
+        }
+      />
+
+      <Route
+        path='/createsubqualifications'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={CreateSubQualification}
+          />
+        }
+      />
+
+      <Route
+        path='/editsubqualifications/:id'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={EditSubQualification}
           />
         }
       />

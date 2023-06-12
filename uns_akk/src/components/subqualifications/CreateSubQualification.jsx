@@ -1,98 +1,95 @@
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
-import CrudProvider from "../../provider/CrudProvider";
-import { useFormik } from "formik";
-import ProgressBar from "../custom/ProgressBar";
+import { Link, useNavigate } from "react-router-dom";
 import CustomSelect from "../custom/CustomSelect";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import ProgressBar from "../custom/ProgressBar";
+import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
+import CrudProvider from "../../provider/CrudProvider";
+import { useTranslation } from "react-i18next";
 
-export default function CreateQualifications() {
+export default function CreateSubQualification() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [levels, setLevels] = useState([]);
+  const [qualifications, setQualifications] = useState([]);
   const langId = localStorage.getItem("i18nextLng");
   const [model, setModel] = useState({
-    LevelKKKId: "",
+    QualificationId: "",
     CodeAL: "",
     CodeEN: "",
     CodeSR: "",
-    QualificationNameAL: "",
-    QualificationNameEN: "",
-    QualificationNameSR: "",
+    Credits: "",
+    DescriptionAL: "",
+    DescriptionEN: "",
+    DescriptionSR: "",
   });
 
-  async function GetLevelsWithLang(){
-    await CrudProvider.getAllWithLang("GeneralAPI/GetAllLevels").then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          setLevels(res.result);
+  async function GetAllQualificationsWithLang(){
+    await CrudProvider.getAllWithLang("GeneralAPI/GetAllQualifications").then(
+      (res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setQualifications(res.result);
+          }
         }
       }
-    });
+    );
   }
 
   useEffect(() => {
-    GetLevelsWithLang();
+    GetAllQualificationsWithLang();
   }, []);
 
   useEffect(() => {
-    GetLevelsWithLang();
+    GetAllQualificationsWithLang();
   }, [langId]);
 
   async function SubmitForm() {
     await CrudProvider.createItem(
-      "QualificationAPI/CreateQualification",
+      "QualificationChildAPI/CreateQualificationChild",
       model
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          navigate("/qualifications");
+          navigate("/subqualifications");
           toast.success(t("DataSavedSuccessfully"));
         }
       }
     });
   }
 
-  const levelList =
-    levels &&
-    levels.length > 0 &&
-    levels.map((obj) => {
+  const qualificationList =
+    qualifications &&
+    qualifications.length > 0 &&
+    qualifications.map((obj) => {
       return {
-        value: obj.levelKKK.levelKKKId,
-        label: obj.levelKKKDescription,
+        value: obj.qualification.qualificationId,
+        label: obj.qualificationName,
       };
     });
 
-  function changeLevel(e) {
+  function changeQualification(e) {
     setModel({
       ...model,
-      LevelKKKId: e,
+      QualificationId: e,
     });
-    formik.setFieldValue("LevelKKKId", e);
+    formik.setFieldValue("QualificationId", e);
   }
 
-  const CreateQualificationsSchema = Yup.object().shape({
+  const CreateSubQualificationsSchema = Yup.object().shape({
     CodeAL: Yup.string().required(t("PleaseFillCodeAL")),
     CodeEN: Yup.string().required(t("PleaseFillCodeEN")),
     CodeSR: Yup.string().required(t("PleaseFillCodeSR")),
-    QualificationNameAL: Yup.string().required(
-      t("PleaseFillQualificationNameAL")
-    ),
-    QualificationNameEN: Yup.string().required(
-      t("PleaseFillQualificationNameEN")
-    ),
-    QualificationNameSR: Yup.string().required(
-      t("PleaseFillQualificationNameSR")
-    ),
-    LevelKKKId: Yup.string().required(t("PleaseFillLevel")),
+    Credits: Yup.string().required(t("PleaseFillCodeSR")),
+    DescriptionAL: Yup.string().required("Ju lutem mbushni fushën për emrin e nën kualifikimit në gjuhën shqipe!"),
+    DescriptionEN: Yup.string().required("Ju lutem mbushni fushën për emrin e nën kualifikimit në gjuhën angleze!"),
+    DescriptionSR: Yup.string().required("Ju lutem mbushni fushën për emrin e nën kualifikimit në gjuhën serbe!"),
+    QualificationId: Yup.string().required("Ju lutem mbushni fushën për kualifikimin!"),
   });
 
   const formik = useFormik({
     initialValues: {},
-    validationSchema: CreateQualificationsSchema,
+    validationSchema: CreateSubQualificationsSchema,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: () => SubmitForm(),
@@ -102,12 +99,11 @@ export default function CreateQualifications() {
     <div className="col-xl-12">
       <div className="card">
         <div className="card-body">
-          <h3 className="mb-3">{t("RegisterQualification")}</h3>
+          <h3 className="mb-3">{t("RegisterSubQualification")}</h3>
           <form onSubmit={formik.handleSubmit}>
             <div id="progressbarwizard">
               <div className="tab-content b-0 mb-0 pt-0">
                 <ProgressBar model={model} />
-
                 <div className="row">
                   <div className="col-md-4">
                     <div className="card mb-3">
@@ -209,11 +205,11 @@ export default function CreateQualifications() {
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">
-                          {t("QualificationName")} (AL)
+                          {t("SubQualificationName")} (AL)
                         </h5>
                         <div className="row">
                           <label className="col-md-5 col-form-label">
-                            {t("QualificationName")} (AL)
+                          {t("SubQualificationName")} (AL)
                           </label>
                           <div className="col-md-7">
                             <input
@@ -222,17 +218,17 @@ export default function CreateQualifications() {
                               onChange={(e) => {
                                 setModel({
                                   ...model,
-                                  QualificationNameAL: e.target.value,
+                                  DescriptionAL: e.target.value,
                                 });
                                 formik.setFieldValue(
-                                  "QualificationNameAL",
+                                  "DescriptionAL",
                                   e.target.value
                                 );
                               }}
                             />
-                            {formik.errors.QualificationNameAL && (
+                            {formik.errors.DescriptionAL && (
                               <span className="text-danger">
-                                {formik.errors.QualificationNameAL}
+                                {formik.errors.DescriptionAL}
                               </span>
                             )}
                           </div>
@@ -245,11 +241,11 @@ export default function CreateQualifications() {
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">
-                          {t("QualificationName")} (EN)
+                        {t("SubQualificationName")} (EN)
                         </h5>
                         <div className="row">
                           <label className="col-md-5 col-form-label">
-                            {t("QualificationName")} (EN)
+                          {t("SubQualificationName")} (EN)
                           </label>
                           <div className="col-md-7">
                             <input
@@ -258,17 +254,17 @@ export default function CreateQualifications() {
                               onChange={(e) => {
                                 setModel({
                                   ...model,
-                                  QualificationNameEN: e.target.value,
+                                  DescriptionEN: e.target.value,
                                 });
                                 formik.setFieldValue(
-                                  "QualificationNameEN",
+                                  "DescriptionEN",
                                   e.target.value
                                 );
                               }}
                             />
-                            {formik.errors.QualificationNameEN && (
+                            {formik.errors.DescriptionEN && (
                               <span className="text-danger">
-                                {formik.errors.QualificationNameEN}
+                                {formik.errors.DescriptionEN}
                               </span>
                             )}
                           </div>
@@ -281,11 +277,11 @@ export default function CreateQualifications() {
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">
-                          {t("QualificationName")} (SR)
+                        {t("SubQualificationName")} (SR)
                         </h5>
                         <div className="row">
                           <label className="col-md-5 col-form-label">
-                            {t("QualificationName")} (SR)
+                          {t("SubQualificationName")} (SR)
                           </label>
                           <div className="col-md-7">
                             <input
@@ -294,17 +290,17 @@ export default function CreateQualifications() {
                               onChange={(e) => {
                                 setModel({
                                   ...model,
-                                  QualificationNameSR: e.target.value,
+                                  DescriptionSR: e.target.value,
                                 });
                                 formik.setFieldValue(
-                                  "QualificationNameSR",
+                                  "DescriptionSR",
                                   e.target.value
                                 );
                               }}
                             />
-                            {formik.errors.QualificationNameSR && (
+                            {formik.errors.DescriptionSR && (
                               <span className="text-danger">
-                                {formik.errors.QualificationNameSR}
+                                {formik.errors.DescriptionSR}
                               </span>
                             )}
                           </div>
@@ -316,21 +312,51 @@ export default function CreateQualifications() {
                   <div className="col-md-4">
                     <div className="card mb-3">
                       <div className="card-body">
-                        <h5 className="card-title">{t("Level")}</h5>
+                        <h5 className="card-title">{t("Qualifications")}</h5>
                         <div className="row">
                           <label className="col-md-5 col-form-label">
-                            {t("Level")}
+                            {t("Qualifications")}
                           </label>
                           <div className="col-md-7">
                             <CustomSelect
-                              onChangeFunction={changeLevel}
-                              optionsList={levelList}
+                              onChangeFunction={changeQualification}
+                              optionsList={qualificationList}
                               isMulti={false}
                             />
-                            {formik.errors.LevelKKKId && (
+                            {formik.errors.QualificationId && (
                               <span className="text-danger">
                                 {" "}
-                                {formik.errors.LevelKKKId}
+                                {formik.errors.QualificationId}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="card mb-3">
+                      <div className="card-body">
+                        <h5 className="card-title">{t("Credits")}</h5>
+                        <div className="row">
+                          <label className="col-md-5 col-form-label">
+                          {t("Credits")}
+                          </label>
+                          <div className="col-md-7">
+                            <input
+                              type="number"
+                              className="form-control"
+                              onChange={(e) => {
+                                setModel({
+                                  ...model,
+                                  Credits: e.target.value,
+                                });
+                                formik.setFieldValue("Credits", e.target.value);
+                              }}
+                            />
+                            {formik.errors.Credits && (
+                              <span className="text-danger">
+                                {formik.errors.Credits}
                               </span>
                             )}
                           </div>
@@ -342,7 +368,7 @@ export default function CreateQualifications() {
 
                 <ul className="list-inline mb-0 wizard">
                   <Link
-                    to="/qualifications"
+                    to="/subqualifications"
                     className="btn btn-danger waves-effect waves-light float-start"
                   >
                     <span className="btn-label">

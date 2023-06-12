@@ -9,6 +9,7 @@ export default function Qualifications() {
   const [load, setLoad] = useState(false);
   const [data, setData] = useState([]);
   const { t } = useTranslation();
+  const langId = localStorage.getItem("i18nextLng");
   const columns = [
     {
       title: t("QualificationName"),
@@ -57,9 +58,8 @@ export default function Qualifications() {
     },
   ];
 
-  useEffect(() => {
-    setLoad(true);
-    CrudProvider.getAllWithLang("QualificationAPI/GetAll").then((res) => {
+  async function GetAllData() {
+    await CrudProvider.getAllWithLang("QualificationAPI/GetAll").then((res) => {
       if (res) {
         if (res.statusCode === 200) {
           setData(res.result);
@@ -69,7 +69,17 @@ export default function Qualifications() {
       }
       setLoad(false);
     });
+  }
+
+  useEffect(() => {
+    setLoad(true);
+    GetAllData();
   }, []);
+
+  useEffect(() => {
+    setLoad(true);
+    GetAllData();
+  }, [langId]);
 
   async function handleDelete(id) {
     setLoad(true);

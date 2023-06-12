@@ -12,6 +12,7 @@ import * as Yup from "yup";
 export default function CreateInstitutions() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [showErrors, setShowErrors] = useState(false);
   const [cities, setCities] = useState([]);
   const [model, setModel] = useState({
     InstitutionName: "",
@@ -66,6 +67,8 @@ export default function CreateInstitutions() {
         if (res.statusCode === 200) {
           navigate("/institutions");
           toast.success(t("DataSavedSuccessfully"));
+        } else if (res.statusCode === 409) {
+          toast.error(t("InstitutionExists"));
         }
       }
     });

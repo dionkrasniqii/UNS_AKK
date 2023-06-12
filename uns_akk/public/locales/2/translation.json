@@ -19,7 +19,6 @@
   "Language": "Language",
   "ChooseLanguage": "Choose Language",
   "Home": "Home",
-  "Hello": "Hello",
   "Institutions": "Institutions",
   "InstitutionsList": "List of institutions",
   "Add": "Add",
@@ -36,7 +35,6 @@
   "RegisterInstitution": "Register Institution",
   "PhoneNumber": "Phone Number",
   "Discard": "Discard",
-  "Save": "Save",
   "ModifyInstitution": "Modify Institution",
   "DataUpdatedSuccessfully": "The data was updated successfully!",
   "Edit": "Edit",
@@ -99,5 +97,10 @@
   "SetNumberOfMembers": "Set the number of members per group",
   "UploadDoc": "Upload document",
   "RegisterDecision": "Register decision",
+  "SubQualificationsList": "Subqualifications List",
+  "SubQualificationName": "Subqualification Name",
+  "RegisterSubQualification": "Register Subqualification",
+  "ModifySubQualification": "Modify Subqualification",
+  "InstitutionExists": "There is the institution with these data!",
   "NumOfGroups": "Number of groups"
 }
