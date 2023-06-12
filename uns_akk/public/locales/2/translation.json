@@ -101,5 +101,6 @@
   "SubQualificationName": "Subqualification Name",
   "RegisterSubQualification": "Register Subqualification",
   "ModifySubQualification": "Modify Subqualification",
-  "InstitutionExists": "There is the institution with these data!"
+  "InstitutionExists": "There is the institution with these data!",
+  "NumOfGroups": "Number of groups"
 }

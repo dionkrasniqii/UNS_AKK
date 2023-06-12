@@ -96,7 +96,7 @@ export default function Decisions() {
             <div className='col-lg-3 col-xxl-3'>
               <Link
                 className='btn-secondary btn-sm'
-                to={`/editdecisions/${record.institution.institutionId}/${record.institution.municipality.municipalityId}/${record.qualificationId}`}
+                to={`/editdecisions/${record.institution.institutionId}/${record.municipalityDecisionId}/${record.qualificationId}`}
               >
                 <i className='fe-edit' />
               </Link>

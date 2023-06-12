@@ -102,5 +102,6 @@
   "SubQualificationName": "Emri i nënkualifikimit",
   "RegisterSubQualification": "Regjisto Nënkualifikim",
   "ModifySubQualification": "Modifiko Nënkualifikim",
-  "InstitutionExists": "Ekziston institucioni me këto të dhëna!"
+  "InstitutionExists": "Ekziston institucioni me këto të dhëna!",
+  "NumOfGroups":"Numri grupeve"
 }

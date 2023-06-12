@@ -1,5 +1,4 @@
 {
-
   "Hello": "Zdravo",
   "Create Level": "Kreiraj nivo",
   "Back": "Nazad",
@@ -102,5 +101,6 @@
   "SubQualificationName": "Naziv podkvalifikacije",
   "RegisterSubQualification": "Registrujte se pod kvalifikacijom",
   "ModifySubQualification": "Modifi Subkualification",
-  "InstitutionExists": "Postoji institucija sa ovim podacima!"
+  "InstitutionExists": "Postoji institucija sa ovim podacima!",
+  "NumOfGroups": "Broj grupa"
 }
