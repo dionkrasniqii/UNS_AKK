@@ -11,6 +11,7 @@ export default function EditQualifications() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [load, setLoad] = useState(false);
+  const langId = localStorage.getItem("i18nextLng");
   const [qualification, setQualification] = useState({
     QualificationId: id,
     LevelKKKId: "",
@@ -22,6 +23,28 @@ export default function EditQualifications() {
     QualificationNameSR: "",
   });
   const [levels, setLevels] = useState([]);
+  const [subQualification, setSubQualification] = useState([]);
+
+  async function getAllLevelsWithLang(){
+    CrudProvider.getAllWithLang("GeneralAPI/GetAllLevels").then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setLevels(res.result);
+        }
+      }
+    })
+  }
+
+  async function getAllSubQualificationsWithLang(){
+    CrudProvider.getItemByIdLang("GeneralAPI/GetAllSubQualificationsByQualificationId", id).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setSubQualification(res.result);
+        }
+      }
+    })
+  }
+
   useEffect(() => {
     setLoad(true);
     Promise.all([
@@ -45,17 +68,21 @@ export default function EditQualifications() {
           }
         }
       }),
-      CrudProvider.getAllWithLang("GeneralAPI/GetAllLevels").then((res) => {
-        if (res) {
-          if (res.statusCode === 200) {
-            setLevels(res.result);
-          }
-        }
-      }),
+      getAllLevelsWithLang(),
+      getAllSubQualificationsWithLang(),
     ]).then((res) => {
       setLoad(false);
     });
   }, [id]);
+
+  useEffect(() => {
+    getAllLevelsWithLang();
+  },[langId])
+
+  useEffect(() => {
+    getAllSubQualificationsWithLang();
+  },[langId])
+
 
   const levelList =
     levels &&
@@ -89,6 +116,25 @@ export default function EditQualifications() {
     label: defaultLabel,
     value: defaultValue,
   };
+
+  
+  const subQualificationList =
+    subQualification &&
+    subQualification.length > 0 &&
+    subQualification.map((obj) => {
+      return {
+        key: obj.qualificationChild.qualificationChildId,
+        value: obj.description,
+      };
+    });
+
+    let textareaValue = "";
+    if (Array.isArray(subQualificationList) && subQualificationList.length > 0) {
+      textareaValue = subQualificationList
+        .map((option) => option.value)
+        .join(",\n");
+    }
+
   async function handleSubmit() {
     await CrudProvider.updateItem(
       "QualificationAPI/UpdateQualification",
@@ -367,6 +413,29 @@ export default function EditQualifications() {
                                   {formik.errors.LevelKKKId}
                                 </span>
                               )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-md-4">
+                      <div className="card mb-3">
+                        <div className="card-body">
+                          <h5 className="card-title">{t("SubQualifications")}</h5>
+                          <div className="row">
+                            <div className="col-md-5">
+                              <label className="col-form-label">
+                              {t("SubQualifications")}
+                              </label>
+                            </div>
+                            <div className="col-md-7">
+                              <textarea
+                                type="text"
+                                readOnly
+                                value={textareaValue}
+                                className="form-control"
+                              />
                             </div>
                           </div>
                         </div>

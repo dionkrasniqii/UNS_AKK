@@ -20,7 +20,6 @@
   "Language": "Gjuha",
   "ChooseLanguage": "Zgjidh Gjuhën",
   "Home": "Ballina",
-  "Hello": "Pëshendetje",
   "Institutions": "Institucionet",
   "InstitutionsList": "Lista e institucioneve",
   "Add": "Shto",
@@ -37,7 +36,6 @@
   "RegisterInstitution": "Regjistro Institucionin",
   "PhoneNumber": "Numri i telefonit",
   "Discard": "Anulo",
-  "Save": "Ruaj",
   "ModifyInstitution": "Modifiko Institucionin",
   "DataUpdatedSuccessfully": "Të dhënat u përditësuan me sukses!",
   "Edit": "Modifiko",
@@ -99,5 +97,10 @@
   "Choose": "Zgjedhni",
   "SetNumberOfMembers": "Vendosni numrin e antarëve për grup",
   "UploadDoc":"Ngarkoni dokumentin",
-  "RegisterDecision":"Shtoni vendimin"
+  "RegisterDecision":"Shtoni vendimin",
+  "SubQualificationsList": "Lista e nënkualifikimeve",
+  "SubQualificationName": "Emri i nënkualifikimit",
+  "RegisterSubQualification": "Regjisto Nënkualifikim",
+  "ModifySubQualification": "Modifiko Nënkualifikim",
+  "InstitutionExists": "Ekziston institucioni me këto të dhëna!"
 }

@@ -20,7 +20,6 @@
   "Language": "Jezik",
   "ChooseLanguage": "Izaberite jezik",
   "Home": "Kuća",
-  "Hello": "Zdravo",
   "Institutions": "Institucije",
   "InstitutionsList": "Spisak institucija",
   "Add": "Dodati",
@@ -37,7 +36,6 @@
   "RegisterInstitution": "Registrujte Ustanovu",
   "PhoneNumber": "Broj telefona",
   "Discard": "Odbaci",
-  "Save": "Sačuvati",
   "ModifyInstitution": "Modifi Institution",
   "DataUpdatedSuccessfully": "Podaci su uspešno ažurirani!",
   "Edit": "Urediti",
@@ -74,7 +72,7 @@
   "Qualification": "Kvalifikacije",
   "Institution": "Institucije",
   "SubQualifications": "Pod-kvalifikacije",
-  "Credits": "Credits",
+  "Credits": "Krediti",
   "ProtocolNumber": "Broj protokola",
   "ProtocolDate": "Datum date",
   "DateIssuanceDecision": "Datum donošenja odluke",
@@ -99,5 +97,10 @@
   "Choose": "Izaberi",
   "SetNumberOfMembers": "Podesite broj članova po grupi",
   "UploadDoc": "Otpremite dokument",
-  "RegisterDecision": "Odluka o registraciji"
+  "RegisterDecision": "Odluka o registraciji",
+  "SubQualificationsList": "Lista potkvalifikacija",
+  "SubQualificationName": "Naziv podkvalifikacije",
+  "RegisterSubQualification": "Registrujte se pod kvalifikacijom",
+  "ModifySubQualification": "Modifi Subkualification",
+  "InstitutionExists": "Postoji institucija sa ovim podacima!"
 }
