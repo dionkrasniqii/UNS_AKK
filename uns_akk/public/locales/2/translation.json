@@ -97,7 +97,6 @@
   "SetNumberOfMembers": "Set the number of members per group",
   "UploadDoc": "Upload document",
   "RegisterDecision": "Register decision",
-<<<<<<< HEAD
   "SubQualificationsList": "Subqualifications List",
   "SubQualificationName": "Subqualification Name",
   "RegisterSubQualification": "Register Subqualification",
@@ -113,8 +112,7 @@
   "PleaseFillTheLevelIndicator": "Please write the level indicator!",
   "PleaseFillTheSkills": "Please write the skills!",
   "PlaseFillTheDescriptor": "Please write the descriptor!",
-  "PleaseChooseTheLanguange": "Please select the language!"
-=======
+  "PleaseChooseTheLanguange": "Please select the language!",
   "NumOfGroups": "Number of groups",
   "Decision": "Decision",
   "Remark": "Remark",
@@ -149,5 +147,4 @@
   "Residence": "Residence",
   "Address": "Address",
   "ChooseGroup": "Choose group"
->>>>>>> 699427a (feat(CreateStudent))
 }

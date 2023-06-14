@@ -2,7 +2,6 @@ import { ModelTrainingSharp } from "@mui/icons-material";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { LoginSchema } from "../schemas/LoginSchema";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
 import MultiRoles from "./MultiRoles";
@@ -10,6 +9,8 @@ import logo from "./../../assets/images/logo_akk.jpg";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/actions";
 import { useTranslation } from "react-i18next";
+import * as Yup from "yup";
+
 export default function Login(props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -64,7 +65,10 @@ export default function Login(props) {
       setLoad(false);
     });
   }
-
+  const LoginSchema = Yup.object().shape({
+    Username: Yup.string().required(),
+    Password: Yup.string().required(),
+  });
   const formik = useFormik({
     initialValues: {},
     validationSchema: LoginSchema,

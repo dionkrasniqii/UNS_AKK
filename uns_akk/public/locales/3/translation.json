@@ -97,7 +97,6 @@
   "SetNumberOfMembers": "Podesite broj članova po grupi",
   "UploadDoc": "Otpremite dokument",
   "RegisterDecision": "Odluka o registraciji",
-<<<<<<< HEAD
   "SubQualificationsList": "Lista potkvalifikacija",
   "SubQualificationName": "Naziv podkvalifikacije",
   "RegisterSubQualification": "Registrujte se pod kvalifikacijom",
@@ -113,8 +112,7 @@
   "PleaseFillTheLevelIndicator": "Molimo vas da navedete indikator nivoa!",
   "PleaseFillTheSkills": "Molimo vas da navedete veštine!",
   "PlaseFillTheDescriptor": "Molimo vas da navedete deskriptor!",
-  "PleaseChooseTheLanguange": "Molimo izaberite svoj jezik!"
-=======
+  "PleaseChooseTheLanguange": "Molimo izaberite svoj jezik!",
   "NumOfGroups": "Broj grupa",
   "Decision": "Odluka",
   "Remark": "Napomena",
@@ -149,5 +147,4 @@
   "Residence": "Residence",
   "Address": "Adresa",
   "ChooseGroup": "Izaberite grupu"
->>>>>>> 699427a (feat(CreateStudent))
 }
