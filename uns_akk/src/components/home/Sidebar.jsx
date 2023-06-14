@@ -13,7 +13,7 @@ export default function Sidebar() {
     //Admin
     {
       label: t("Home"),
-      roles: ["Admin", "Institutions"],
+      roles: ["Admin", "Institution"],
       path: "/home",
       hasMenu: false,
       showLabel: false,
@@ -58,6 +58,23 @@ export default function Sidebar() {
       hasMenu: false,
       showLabel: true,
       icon: "fas fa-file-archive",
+    },
+    /* -----------INSTITUTION------------- */
+    {
+      label: t("Students"),
+      roles: ["Institution"],
+      path: "/students",
+      hasMenu: false,
+      showLabel: true,
+      icon: "fe-user",
+    },
+    {
+      label: t("Groups"),
+      roles: ["Institution"],
+      path: "/groups",
+      hasMenu: false,
+      showLabel: true,
+      icon: "fas fa-layer-group",
     },
   ];
 

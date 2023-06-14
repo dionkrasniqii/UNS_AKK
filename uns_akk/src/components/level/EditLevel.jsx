@@ -2,7 +2,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CrudProvider from "../../provider/CrudProvider";
-import { CreateLevelSchema } from "../schemas/CreateLevelSchema";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import ProgressBar from "../custom/ProgressBar";

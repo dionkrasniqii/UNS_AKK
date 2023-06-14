@@ -2,14 +2,17 @@ import { ModelTrainingSharp } from "@mui/icons-material";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { LoginSchema } from "../schemas/LoginSchema";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
 import MultiRoles from "./MultiRoles";
 import logo from "./../../assets/images/logo_akk.jpg";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/actions";
+import { useTranslation } from "react-i18next";
+import * as Yup from "yup";
+
 export default function Login(props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [load, setLoad] = useState(false);
   const [model, setModel] = useState({
@@ -33,30 +36,39 @@ export default function Login(props) {
     await CrudProvider.login("AccountController/login", model).then((res) => {
       if (res) {
         console.log(res);
-        if (res.code === 200) {
-          toast.success("Qasja juaj u realizua me sukses");
-          props.setAuthState(true);
-          localStorage.setItem("akktoken", res.token);
-          dispatch(setToken(res.token));
-          navigate("/home");
-        }
-        if (res.response?.status === 401) {
-          toast.error("Te dhena te pasakta");
-        }
-        if (res.code === 207) {
-          setShowMultiRolesModal(true);
-          setRoles(res.roles);
-        }
-        if (res.code === 404) {
-          toast.error("Te dhena te pasakta");
-        }
-        if (res.code === "ERR_NETWORK") {
-          toast.info("Probleme ne server ju lutem provoni perseri");
+        switch (res.code) {
+          case 200:
+            toast.success(t("LoginSuccess"));
+            props.setAuthState(true);
+            localStorage.setItem("akktoken", res.token);
+            dispatch(setToken(res.token));
+            navigate("/home");
+            break;
+          case 207:
+            setShowMultiRolesModal(true);
+            setRoles(res.roles);
+            break;
+          case 401:
+            toast.error(t("InCorrectCreds"));
+            break;
+          case 405:
+            toast.error(t("YourAccountIsNotActive"));
+            break;
+          case "ERR_NETWORK":
+            toast.info(t("ServerProblems"));
+            break;
+          default:
+            toast.error(t("InCorrectCreds"));
+            break;
         }
       }
       setLoad(false);
     });
   }
+  const LoginSchema = Yup.object().shape({
+    Username: Yup.string().required(),
+    Password: Yup.string().required(),
+  });
   const formik = useFormik({
     initialValues: {},
     validationSchema: LoginSchema,
@@ -88,11 +100,11 @@ export default function Login(props) {
                 </div>
                 <div className='card-body p-4'>
                   <div className='text-center mb-4'>
-                    <h4 className='text-uppercase mt-0'>Qasja</h4>
+                    <h4 className='text-uppercase mt-0'>{t("Prijavite se")}</h4>
                   </div>
                   <div className='mb-3'>
                     <label htmlFor='emailaddress' className='form-label'>
-                      Username
+                      {t("Username")}
                     </label>
                     <input
                       className='form-control'
@@ -117,7 +129,7 @@ export default function Login(props) {
                   </div>
                   <div className='mb-3'>
                     <label htmlFor='password' className='form-label'>
-                      Password
+                      {t("Password")}
                     </label>
                     <input
                       className='form-control'
@@ -140,7 +152,7 @@ export default function Login(props) {
                       </span>
                     )}
                   </div>
-                  <div className='mb-3'>
+                  {/* <div className='mb-3'>
                     <div className='form-check'>
                       <input
                         type='checkbox'
@@ -156,11 +168,11 @@ export default function Login(props) {
                         Remember me
                       </label>
                     </div>
-                  </div>
+                  </div> */}
                   <div className='mb-3 d-grid text-center'>
                     {!load ? (
                       <button className='btn btn-primary' type='submit'>
-                        Log In
+                        {t("Log-in")}
                       </button>
                     ) : (
                       <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
@@ -171,17 +183,11 @@ export default function Login(props) {
                       </div>
                     )}
                   </div>
-                </div>{" "}
-                {/* end card-body */}
+                </div>
               </div>
             </form>
-
-            {/* end card */}
-            {/* end row */}
-          </div>{" "}
-          {/* end col */}
+          </div>
         </div>
-        {/* end row */}
       </div>
     </div>
   );

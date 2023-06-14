@@ -17,6 +17,11 @@ import EditDecisions from "../components/decisions/EditDecisions";
 import SubQualifications from "../components/subqualifications/SubQualifications";
 import CreateSubQualification from "../components/subqualifications/CreateSubQualification";
 import EditSubQualification from "../components/subqualifications/EditSubQualification";
+import Students from "../components/students/Students";
+import CreateStudents from "../components/students/CreateStudents";
+import EditStudents from "../components/students/EditStudents";
+import Groups from "../components/groups/Groups";
+import CreateGroup from "../components/groups/CreateGroup";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -46,26 +51,6 @@ export const AppRoutes = (props) => {
           />
         }
       />
-
-      {/* 
-     // PUBLIC ROUTE
-       <Route
-          path='/confirmApplication/:id'
-            element={<ConfirmApplication />}
-        />
-
-
-    //PRIVATEROUTE
-        <Route
-          path='/applicationsinprocess'
-          element={
-            <PrivateRoute setAuthState={props.setAuthState}
-              allowedRoles={[ROLES.PROFESOR]}
-              component={ApplicationList}
-            />
-           }
-        /> 
-        */}
       {/* Institutions */}
       <Route
         path='/institutions'
@@ -138,6 +123,7 @@ export const AppRoutes = (props) => {
           />
         }
       />
+      {/* Decisions */}
 
       <Route
         path='/decisions'
@@ -163,7 +149,7 @@ export const AppRoutes = (props) => {
         }
       />
       <Route
-        path='/editdecisions/:institutionId/:municipalityId/:qualificationId'
+        path='/editdecisions/:id'
         element={
           <PrivateRoute
             setAuthState={props.setAuthState}
@@ -244,6 +230,42 @@ export const AppRoutes = (props) => {
             authState={props.authState}
             allowedRoles={[ROLES.ADMIN]}
             component={EditSubQualification}
+          />
+        }
+      />
+      {/* Students */}
+      <Route
+        path='/students'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={Students}
+          />
+        }
+      />
+
+      <Route
+        path='/createstudents'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={CreateStudents}
+          />
+        }
+      />
+
+      <Route
+        path='/editstudent/:id'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.ADMIN]}
+            component={EditStudents}
           />
         }
       />

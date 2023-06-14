@@ -1,5 +1,6 @@
 import { isContentEditable } from "@testing-library/user-event/dist/utils";
 import axios from "axios";
+import { lang } from "moment/moment";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL_LOCAL;
 //const API_BASE_URL = process.env.REACT_APP_API_BASE_URL_STAGING;
@@ -295,7 +296,25 @@ async function getReportRDLC(methodRoute, id, reportName) {
     handleRequestError(error);
   }
 }
-
+async function changeLang(controller) {
+  try {
+    let token = localStorage.getItem("akktoken");
+    let langId = localStorage.getItem("i18nextLng");
+    let langByName = langId === "1" ? "sq" : langId === "2" ? "en" : "sr";
+    const response = await axios.get(
+      `${API_BASE_URL}/GeneralAPI/SetCulture/${langByName}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    handleRequestError(error);
+  }
+}
 function documentPath(filePath) {
   return `${API_BASE_URL_DOC}/${filePath}`;
 }
@@ -336,4 +355,5 @@ export default {
   documentPath,
   getReportRDLC,
   checkIsPDf,
+  changeLang,
 };

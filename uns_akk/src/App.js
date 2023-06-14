@@ -29,7 +29,6 @@ function App() {
       const currentTime = Date.now() / 1000;
       if (decodedToken.exp < currentTime) {
         navigate("/");
-        console.log(3);
         const hasShownToast = localStorage.getItem("hasShownToast");
         if (!hasShownToast) {
           toast.info("Seanca ka mbaruar qasuni perseri");
@@ -37,18 +36,19 @@ function App() {
         }
         dispatch(removeToken());
         localStorage.removeItem("akktoken");
-        // localStorage.removeItem("role");
         localStorage.removeItem("hasShownToast");
         setOldSession(null);
         setAuthState(false);
+      } else {
+        setAuthState(true);
       }
-      setAuthState(true);
     } else {
       setAuthState(false);
       dispatch(removeToken());
       localStorage.removeItem("akktoken");
     }
   }, [oldSession]);
+
   return (
     <>
       <ToastContainer
