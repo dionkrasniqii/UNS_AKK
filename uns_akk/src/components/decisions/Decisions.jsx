@@ -16,7 +16,7 @@ export default function Decisions() {
     CrudProvider.getAllWithLang("InstitutionDesicionAPI/GetAll").then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          setData(res.result);
+          setData(res.result.value);
         }
       }
       setLoad(false);
@@ -39,18 +39,14 @@ export default function Decisions() {
       render: (item) => item.institutionName,
     },
     {
-      title: t("ExpirationDate"),
-      dataIndex: ["termDate"],
-      key: (item) => item,
-      responsive: ["sm"],
-      render: (item) => {
-        const date = item.split("T")[0];
-        return new Date(date).toLocaleDateString("en-GB");
-      },
-    },
-    {
       title: t("Municipality"),
       dataIndex: ["municipalityName"],
+      key: (item) => item,
+      responsive: ["sm"],
+    },
+    {
+      title: t("Qualification"),
+      dataIndex: ["qualificationName"],
       key: (item) => item,
       responsive: ["sm"],
     },
@@ -77,72 +73,54 @@ export default function Decisions() {
         }
       },
     },
-
-    {
-      title: "Email",
-      dataIndex: ["institution"],
-      key: (item) => item.email,
-      responsive: ["sm"],
-      render: (item) => item.email,
-    },
     {
       title: t("Actions"),
       key: (item, index) => index,
       responsive: ["sm"],
-      width: "2%",
+      width: "20%",
       render: (value, record) => {
         return (
-          <div className='row '>
-            <div className='col-lg-3 col-xxl-3'>
-              <Link
-                className='btn-secondary btn-sm'
-                to={`/editdecisions/${record.institution.institutionId}/${record.municipalityDecisionId}/${record.qualificationId}`}
-              >
-                <i className='fe-edit' />
-              </Link>
-            </div>
-          </div>
+          <Link
+            to={`/editdecisions/${record.institutionDecisionDetailsId}`}
+            className='btn btn-info btn-sm rounded-pill waves-effect waves-light'
+          >
+            <span className='btn-label'>
+              <i className='mdi mdi-alert-circle-outline' />
+            </span>
+            Shiko vendimin
+          </Link>
         );
       },
     },
   ];
   return (
-    <div className='col-xxl-12'>
-      <div className='col-xxl-12 text-end'></div>
-      <div className='row'>
-        <div className='col-12'>
-          <div className='row'>
-            <div className='col-12'>
-              <div className='col-12 d-flex justify-content-end'>
-                <Link
-                  className='btn btn-info waves-effect waves-light'
-                  to='/createdecisions'
-                >
-                  <span className='btn-label'>
-                    <i className='fe-plus-circle'></i>
-                  </span>
-                  {t("Add")}
-                </Link>
-              </div>
-            </div>
+    <div className='row'>
+      <div className='col-12 d-flex justify-content-end'>
+        <Link
+          className='btn btn-info waves-effect waves-light'
+          to='/createdecisions'
+        >
+          <span className='btn-label'>
+            <i className='fe-plus-circle'></i>
+          </span>
+          {t("Add")}
+        </Link>
+      </div>
+      <div className='p-2 mt-2'>
+        {!load ? (
+          <DataTable
+            columns={columns}
+            dataSource={data}
+            title={t("ListOfAllDecisions")}
+          />
+        ) : (
+          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+            <div
+              className='spinner-border text-primary m-2 text-center'
+              role='status'
+            />
           </div>
-          <div className='p-2 mt-2'>
-            {!load ? (
-              <DataTable
-                columns={columns}
-                dataSource={data}
-                title={t("ListOfAllDecisions")}
-              />
-            ) : (
-              <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
-                <div
-                  className='spinner-border text-primary m-2 text-center'
-                  role='status'
-                />
-              </div>
-            )}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

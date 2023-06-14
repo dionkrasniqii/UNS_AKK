@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import mainLogo from "./../../assets/images/logo_akk.jpg";
 import smallLogo from "./../../assets/images/sm.jpg";
 import i18next from "i18next";
+import CrudProvider from "../../provider/CrudProvider";
 
 export default function Navbar(props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -35,6 +36,10 @@ export default function Navbar(props) {
     i18next.changeLanguage(e);
     setSelectedLanguage(e);
   }
+  // useEffect(() => {
+  //   CrudProvider.changeLang();
+  //   CrudProvider.getAll("InstitutionGroupDecisionAPI/Test");
+  // }, [selectedLanguage]);
   return (
     // <div className='navbar-custom navbar-hidden bg-white border'>
     <div className='navbar-custom bg-white border'>
@@ -95,8 +100,7 @@ export default function Navbar(props) {
                 <img
                   className='flag-icon'
                   src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/al.svg'
-                />
-                {" "}
+                />{" "}
                 (AL)
               </label>
             </a>
@@ -109,8 +113,7 @@ export default function Navbar(props) {
                 <img
                   className='flag-icon'
                   src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/gb.svg'
-                />
-                {" "}
+                />{" "}
                 (ENG)
               </label>
             </a>

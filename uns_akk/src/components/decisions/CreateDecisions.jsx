@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomSelect from "../custom/CustomSelect";
 import CustomDatePicker from "../custom/CustomDatePicker";
 import CrudProvider from "../../provider/CrudProvider";
-import { mode } from "crypto-js";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 export default function CreateDecisions() {
@@ -27,8 +26,8 @@ export default function CreateDecisions() {
     ProtocolDate: "",
     DecisionDate: "",
     TermDate: "",
-    NoLimitGroups: false,
-    NumOfGroups: "",
+    NoLimitGroups: true,
+    NumOfGroups: 0,
     MaximumPeoplePerGroup: "",
     Reaccreditation: false,
     Document: "",
@@ -59,17 +58,23 @@ export default function CreateDecisions() {
           }
         }
       }),
-      CrudProvider.getAllWithLang("QualificationChildAPI/GetAll").then(
-        (res) => {
-          if (res) {
-            if (res.statusCode === 200) {
-              setSubQualifications(res.result);
-            }
-          }
-        }
-      ),
     ]);
   }, []);
+
+  useEffect(() => {
+    if (model.QualificationId) {
+      CrudProvider.getItemByIdLang(
+        "GeneralAPI/GetAllSubQualificationsByQualificationId",
+        model.QualificationId
+      ).then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setSubQualifications(res.result);
+          }
+        }
+      });
+    }
+  }, [model.QualificationId]);
 
   const institutionsList =
     institutions.length > 0
@@ -155,6 +160,13 @@ export default function CreateDecisions() {
   }
   async function submitForm() {
     setLoad(true);
+
+    if (model.DecisionDate >= model.TermDate) {
+      toast.error("Decision date cannot be greater than term date");
+      setLoad(false);
+      return;
+    }
+
     await CrudProvider.createItemWithFile(
       "InstitutionDesicionAPI/CreateInstitutionDecision",
       model
@@ -170,6 +182,35 @@ export default function CreateDecisions() {
       setLoad(false);
     });
   }
+
+  const credits =
+    subQualifications.length > 0 &&
+    subQualifications
+      .filter((obj) =>
+        model.QualificationChildIds.includes(
+          obj.qualificationChild.qualificationChildId
+        )
+      )
+      .map((obj) => obj.qualificationChild.credits);
+  const numbersArray = credits && Array.from(credits, Number);
+  let total = 0;
+  numbersArray.length > 0 && numbersArray.map((obj) => (total += obj));
+  useEffect(() => {
+    if (total !== 0) {
+      setModel({
+        ...model,
+        Credits: total,
+      });
+      formik.setFieldValue("Credits", total);
+    } else {
+      formik.setFieldValue("Credits", "");
+      setModel({
+        ...model,
+        Credits: "",
+      });
+    }
+  }, [total]);
+
   const CreateDecisionSchema = Yup.object().shape({
     InstitutionId: Yup.string().required(t("ChooseInstitution")),
     MunicipalityId: Yup.string().required(t("ChooseMunicipality")),
@@ -180,20 +221,19 @@ export default function CreateDecisions() {
     DecisionDate: Yup.string().required(t("CompleteStartDateDecision")),
     TermDate: Yup.mixed().required(t("ExpirationDateDecision")),
     NumOfGroups: Yup.number()
-      .positive(t("PositiveNumber"))
+      // .positive(t("PositiveNumber"))
       .required(t("ChooseNumber")),
     NoLimitGroups: Yup.boolean().required(t("Choose")),
-    MaximumPeoplePerGroup: Yup.string().required(t("SetNumberOfMembers")),
+    MaximumPeoplePerGroup: Yup.number().required(t("SetNumberOfMembers")),
     Reaccreditation: Yup.string().required(t("Choose")),
     Document: Yup.string().required(t("UploadDoc")),
   });
 
   const formik = useFormik({
     initialValues: {
-      MaximumPeoplePerGroup: "1",
-      NumOfGroups: "1",
       NoLimitGroups: false,
       Reaccreditation: false,
+      NumOfGroups: 0,
     },
     validateOnChange: false,
     validateOnBlur: false,
@@ -261,17 +301,28 @@ export default function CreateDecisions() {
                     </div>
                     <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Credits")}:</label>
-                      <input
-                        type='number'
-                        className='form-control'
-                        onChange={(e) => {
-                          setModel({
-                            ...model,
-                            Credits: e.target.value,
-                          });
-                          formik.setFieldValue("Credits", e.target.value);
-                        }}
-                      />
+                      {total !== 0 ? (
+                        <input
+                          type='number'
+                          className='form-control'
+                          readOnly
+                          defaultValue={model.Credits}
+                        />
+                      ) : (
+                        <input
+                          type='number'
+                          className='form-control'
+                          defaultValue={""}
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              Credits: e.target.value,
+                            });
+                            formik.setFieldValue("Credits", e.target.value);
+                          }}
+                        />
+                      )}
+
                       {formik.errors.Credits && (
                         <span className='text-danger'>
                           {formik.errors.Credits}
@@ -281,7 +332,8 @@ export default function CreateDecisions() {
                     <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("ProtocolNumber")}:</label>
                       <input
-                        type='text'
+                        type='number'
+                        min={1}
                         className='form-control'
                         onChange={(e) => {
                           setModel({
@@ -332,13 +384,11 @@ export default function CreateDecisions() {
                             type='radio'
                             id='customRadio1'
                             name='customRadio'
-                            defaultChecked={
-                              model.NoLimitGroups === true ? true : false
-                            }
+                            defaultChecked={!model.NoLimitGroups ? true : false}
                             onChange={(e) => {
                               setModel({
                                 ...model,
-                                NoLimitGroups: !model.NoLimitGroups,
+                                NoLimitGroups: false,
                               });
                               formik.setFieldValue("NoLimitGroups", true);
                               formik.setFieldValue("NumOfGroups", null);
@@ -361,16 +411,16 @@ export default function CreateDecisions() {
                             type='radio'
                             id='customRadio2'
                             name='customRadio'
-                            defaultChecked={
-                              model.NoLimitGroups === false ? true : false
-                            }
+                            defaultChecked={model.NoLimitGroups ? true : false}
                             className='form-check-input'
                             onChange={(e) => {
                               setModel({
                                 ...model,
-                                NoLimitGroups: !model.NoLimitGroups,
+                                NoLimitGroups: true,
                               });
                               formik.setFieldValue("NoLimitGroups", false);
+                              formik.setFieldValue("NumOfGroups", 1);
+                              formik.setFieldValue("MaximumPeoplePerGroup", 0);
                             }}
                           />
                           <label
@@ -382,54 +432,49 @@ export default function CreateDecisions() {
                         </div>
                       </div>
                     </div>
-                    {model.NoLimitGroups === true && (
-                      <>
-                        <div className=' mb-3 col-xxl-1 col-lg-2 col-md-2 col-sm-12'>
-                          <label>{t("NumberOfGroups")}:</label>
-                          <input
-                            type='number'
-                            onChange={(e) => {
-                              setModel({
-                                ...model,
-                                NumOfGroups: e.target.value,
-                              });
-                              formik.setFieldValue(
-                                "NumOfGroups",
-                                e.target.value
-                              );
-                            }}
-                            className='form-control'
-                          />
-                          {formik.errors.NumOfGroups && (
-                            <span className='text-danger'>
-                              {formik.errors.NumOfGroups}
-                            </span>
-                          )}
-                        </div>
-                        <div className=' mb-3 col-xxl-3 col-lg-3 col-md-4 col-sm-12'>
-                          <label>{t("MaxPersonsInGroup")}:</label>
-                          <input
-                            type='number'
-                            onChange={(e) => {
-                              setModel({
-                                ...model,
-                                MaximumPeoplePerGroup: e.target.value,
-                              });
-                              formik.setFieldValue(
-                                "MaximumPeoplePerGroup",
-                                e.target.value
-                              );
-                            }}
-                            className='form-control'
-                          />
-                          {formik.errors.MaximumPeoplePerGroup && (
-                            <span className='text-danger'>
-                              {formik.errors.MaximumPeoplePerGroup}
-                            </span>
-                          )}
-                        </div>
-                      </>
+                    {!model.NoLimitGroups && (
+                      <div className=' mb-3 col-xxl-1 col-lg-2 col-md-2 col-sm-12'>
+                        <label>{t("NumberOfGroups")}:</label>
+                        <input
+                          type='number'
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              NumOfGroups: e.target.value,
+                            });
+                            formik.setFieldValue("NumOfGroups", e.target.value);
+                          }}
+                          className='form-control'
+                        />
+                        {formik.errors.NumOfGroups && (
+                          <span className='text-danger'>
+                            {formik.errors.NumOfGroups}
+                          </span>
+                        )}
+                      </div>
                     )}
+                    <div className=' mb-3 col-xxl-3 col-lg-3 col-md-4 col-sm-12'>
+                      <label>{t("MaxPersonsInGroup")}:</label>
+                      <input
+                        type='number'
+                        onChange={(e) => {
+                          setModel({
+                            ...model,
+                            MaximumPeoplePerGroup: e.target.value,
+                          });
+                          formik.setFieldValue(
+                            "MaximumPeoplePerGroup",
+                            e.target.value
+                          );
+                        }}
+                        className='form-control'
+                      />
+                      {formik.errors.MaximumPeoplePerGroup && (
+                        <span className='text-danger'>
+                          {formik.errors.MaximumPeoplePerGroup}
+                        </span>
+                      )}
+                    </div>
                     <div className=' mb-3 col-xxl-1 col-lg-2 col-md-2 col-sm-12'>
                       <label>{t("IsReaccrediation")}:</label>
                       <div className='form-check ps-4'>

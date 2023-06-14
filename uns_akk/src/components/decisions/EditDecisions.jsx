@@ -11,7 +11,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 export default function EditDecisions() {
-  const { institutionId, municipalityId, qualificationId } = useParams();
+  const { id } = useParams();
   const { t } = useTranslation();
   const [load, setLoad] = useState(false);
   const [postLoad, setPostLoad] = useState(false);
@@ -19,10 +19,10 @@ export default function EditDecisions() {
   const [decision, setDecision] = useState({});
   const [documentModal, setDocumentModal] = useState(false);
   const [model, setModel] = useState({
-    InstitutionId: institutionId,
+    InstitutionId: "",
     Aktiv: "",
-    MunicipalityDecisionId: municipalityId,
-    QualificationId: qualificationId,
+    MunicipalityDecisionId: "",
+    QualificationId: "",
     Remark: "",
   });
   const columns = [
@@ -41,19 +41,24 @@ export default function EditDecisions() {
   ];
   useEffect(() => {
     setLoad(true);
-    CrudProvider.getItemByIdLang(
-      "InstitutionDesicionAPI/GetById",
-      `${institutionId}/${municipalityId}/${qualificationId}`
-    ).then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          setDecision(res.result);
+    CrudProvider.getItemByIdLang("InstitutionDesicionAPI/GetById", id).then(
+      (res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setDecision(res.result.value);
+            setModel({
+              ...model,
+              InstitutionId: res.result.value.institution.institutionId,
+              Aktiv: res.result.value.aktiv,
+              MunicipalityDecisionId: res.result.value.municipalityDecisionId,
+              QualificationId: res.result.value.qualificationId,
+            });
+          }
+          setLoad(false);
         }
-        setLoad(false);
       }
-    });
-  }, [institutionId]);
-
+    );
+  }, [id]);
   function changeStatus(e) {
     setModel({
       ...model,
@@ -130,11 +135,11 @@ export default function EditDecisions() {
                     <br />
                     {decision.qualificationName}
                     <br />
-                    <label className='fs-5'>Numri protokollit:</label>
+                    <label className='fs-5'>{t("ProtocolNumber")}:</label>
                     <br />
                     {decision.protocolNr}
                     <br />
-                    <label className='fs-5'>Data protokollit:</label>
+                    <label className='fs-5'>{t("ProtocolDate")}:</label>
                     <br />
                     {new Date(
                       decision.protocolDate.split("T")[0]
@@ -145,24 +150,26 @@ export default function EditDecisions() {
                     <br />
                     {decision.credits}
                     <br />
-                    <label className='fs-5'>Grupe të limituara:</label>
+                    <label className='fs-5'>{t("GroupLimits")}:</label>
                     <br />
                     {decision.noLimitGroups ? t("Yes") : t("No")}
                     <br />
-                    <label className='fs-5'>Numri i grupeve:</label>
+                    <label className='fs-5'>{t("NumberOfGroups")}:</label>
                     <br />
                     {decision.numOfGroups}
                   </div>
                   <div className='float-start mt-3 ps-5'>
-                    <label className='fs-5'>
-                      Numri maksimal i personave për grup:
-                    </label>
+                    <label className='fs-5'>{t("MaxPersonsInGroup")}:</label>
                     <br />
                     {decision.maximumPeoplePerGroup}
                     <br />
                     <label className='fs-5'>{t("IsReaccrediation")}</label>
                     <br />
                     {decision.reaccreditation ? t("Yes") : t("No")}
+                    <br />
+                    <label className='fs-5'>{t("Municipality")}</label>
+                    <br />
+                    {decision.municipalityName}
                   </div>
                   <div className='float-start mt-3 ps-5'>
                     <p>
@@ -182,10 +189,10 @@ export default function EditDecisions() {
                       onClick={(e) => setDocumentModal(true)}
                       className=''
                     >
-                      Dokumenti
+                      {t("Decision")}
                     </Button>
                     <Modal
-                      title={"Vendimi"}
+                      title={t("Decision")}
                       centered
                       style={{ width: "700px" }}
                       okButtonProps={{ style: { display: "none" } }}
@@ -225,7 +232,7 @@ export default function EditDecisions() {
               )}
               <div className='row'>
                 <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                  <label>Ndryshoni statusin:</label>
+                  <label>{t("ChangeStatus")}:</label>
                   <CustomSelect
                     onChangeFunction={changeStatus}
                     isMulti={false}
@@ -246,7 +253,7 @@ export default function EditDecisions() {
                 </div>
                 {model.Aktiv === false && (
                   <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
-                    <label>Vërejtje:</label>
+                    <label>{t("Remark")}:</label>
                     <textarea
                       id='textarea'
                       className='form-control'

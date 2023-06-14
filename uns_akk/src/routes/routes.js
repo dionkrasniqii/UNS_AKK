@@ -14,9 +14,17 @@ import EditQualifications from "../components/qualifications/EditQualifications"
 import Decisions from "../components/decisions/Decisions";
 import CreateDecisions from "../components/decisions/CreateDecisions";
 import EditDecisions from "../components/decisions/EditDecisions";
+<<<<<<< HEAD
 import SubQualifications from "../components/subqualifications/SubQualifications";
 import CreateSubQualification from "../components/subqualifications/CreateSubQualification";
 import EditSubQualification from "../components/subqualifications/EditSubQualification";
+=======
+import Students from "../components/students/Students";
+import CreateStudents from "../components/students/CreateStudents";
+import EditStudents from "../components/students/EditStudents";
+import Groups from "../components/groups/Groups";
+import CreateGroup from "../components/groups/CreateGroup";
+>>>>>>> 699427a (feat(CreateStudent))
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -46,26 +54,6 @@ export const AppRoutes = (props) => {
           />
         }
       />
-
-      {/* 
-     // PUBLIC ROUTE
-       <Route
-          path='/confirmApplication/:id'
-            element={<ConfirmApplication />}
-        />
-
-
-    //PRIVATEROUTE
-        <Route
-          path='/applicationsinprocess'
-          element={
-            <PrivateRoute setAuthState={props.setAuthState}
-              allowedRoles={[ROLES.PROFESOR]}
-              component={ApplicationList}
-            />
-           }
-        /> 
-        */}
       {/* Institutions */}
       <Route
         path='/institutions'
@@ -138,6 +126,7 @@ export const AppRoutes = (props) => {
           />
         }
       />
+      {/* Decisions */}
 
       <Route
         path='/decisions'
@@ -163,7 +152,7 @@ export const AppRoutes = (props) => {
         }
       />
       <Route
-        path='/editdecisions/:institutionId/:municipalityId/:qualificationId'
+        path='/editdecisions/:id'
         element={
           <PrivateRoute
             setAuthState={props.setAuthState}
@@ -211,39 +200,92 @@ export const AppRoutes = (props) => {
         }
       />
 
+<<<<<<< HEAD
       {/* QualificationChildren */}
       <Route
         path='/subqualifications'
+=======
+      {/* Students */}
+      <Route
+        path='/students'
+>>>>>>> 699427a (feat(CreateStudent))
         element={
           <PrivateRoute
             setAuthState={props.setAuthState}
             authState={props.authState}
+<<<<<<< HEAD
             allowedRoles={[ROLES.ADMIN]}
             component={SubQualifications}
+=======
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={Students}
+>>>>>>> 699427a (feat(CreateStudent))
           />
         }
       />
 
       <Route
+<<<<<<< HEAD
         path='/createsubqualifications'
+=======
+        path='/createstudents'
+>>>>>>> 699427a (feat(CreateStudent))
         element={
           <PrivateRoute
             setAuthState={props.setAuthState}
             authState={props.authState}
+<<<<<<< HEAD
             allowedRoles={[ROLES.ADMIN]}
             component={CreateSubQualification}
+=======
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={CreateStudents}
+>>>>>>> 699427a (feat(CreateStudent))
           />
         }
       />
 
       <Route
+<<<<<<< HEAD
         path='/editsubqualifications/:id'
+=======
+        path='/editstudent/:id'
+>>>>>>> 699427a (feat(CreateStudent))
         element={
           <PrivateRoute
             setAuthState={props.setAuthState}
             authState={props.authState}
+<<<<<<< HEAD
             allowedRoles={[ROLES.ADMIN]}
             component={EditSubQualification}
+=======
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={EditStudents}
+          />
+        }
+      />
+      {/* Groups */}
+      <Route
+        path='/groups'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={Groups}
+          />
+        }
+      />
+
+      <Route
+        path='/creategroup'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={CreateGroup}
+>>>>>>> 699427a (feat(CreateStudent))
           />
         }
       />
