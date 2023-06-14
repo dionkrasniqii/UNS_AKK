@@ -103,5 +103,16 @@
   "RegisterSubQualification": "Regjisto Nënkualifikim",
   "ModifySubQualification": "Modifiko Nënkualifikim",
   "InstitutionExists": "Ekziston institucioni me këto të dhëna!",
-  "NumOfGroups":"Numri grupeve"
+  "NumOfGroups":"Numri grupeve",
+  "PleaseFillTheType": "Ju lutem tregoni se çfarë kategorie është leveli!",
+  "PleaseFillTheLevelReferenceKEK": "Ju lutem referenconi levelin KEK",
+  "PleaseFillTheLevelDescription": "Ju lutem shkruani një përshkrim të nivelit!",
+  "PleaseFillTheCompetencies": "Ju lutem shkruani kompetencat!",
+  "PleaseFillTheDetailedDescription": "Ju lutem shkruani një përshkrim të detajuar për nivelin!",
+  "PleaseFillTheKnowledge": "Ju lutem shkruani njohuritë!",
+  "PleaseFillTheLevelIndicator": "Ju lutem shkruani indikatorin e nivelit!",
+  "PleaseFillTheSkills": "Ju lutem shkruani aftësitë!",
+  "PlaseFillTheDescriptor": "Ju lutem shkruani përshkruesin!",
+  "PleaseChooseTheLanguange": "Ju lutem zgjidhni gjuhën!"
+
 }

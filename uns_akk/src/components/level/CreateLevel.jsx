@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import ProgressBar from "../custom/ProgressBar";
 import { useTranslation } from "react-i18next";
+import * as Yup from "yup";
 import CustomSelect from "../custom/CustomSelect";
 
 export default function CreateLevel() {
@@ -35,9 +36,34 @@ export default function CreateLevel() {
     });
   };
 
+  const CreateLevelSchema = Yup.object().shape({
+    Type: Yup.string().max(50).required(t("PleaseFillTheType")),
+    LevelReferenceKEK: Yup.string()
+      .max(450)
+      .required(t("PleaseFillTheLevelReferenceKEK")),
+    LevelDescription: Yup.string()
+      .max(200)
+      .required(t("PleaseFillTheLevelDescription")),
+    Competencies: Yup.string()
+      .max(1000)
+      .required(t("PleaseFillTheCompetencies")),
+    DetailedDescription: Yup.string()
+      .max(300)
+      .required(t("PleaseFillTheDetailedDescription")),
+    Knowledge: Yup.string().max(1000).required(t("PleaseFillTheKnowledge")),
+    LevelIndicator: Yup.string()
+      .max(1000)
+      .required(t("PleaseFillTheLevelIndicator")),
+    Skills: Yup.string().max(1000).required(t("PleaseFillTheSkills")),
+    TheDescriptor: Yup.string().max(1000).required(t("PlaseFillTheDescriptor")),
+    LangId: Yup.string().required(t("PleaseChooseTheLanguange")),
+  });
+
   const formik = useFormik({
     initialValues: {},
     validationSchema: CreateLevelSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: () => SubmitForm(),
   });
 
@@ -78,17 +104,26 @@ export default function CreateLevel() {
                   <div className="form-group">
                     <div className="row">
                       <div className="col-md-4">
-                      <h5 className="card-title">{t("Language")}</h5>
+                        <h5 className="card-title">{t("Language")}</h5>
                         <CustomSelect
                           optionsList={langList}
                           isMulti={false}
+                          name="LangId"
                           onChangeFunction={changeLangId}
                         />
+                        {formik.errors.LangId && (
+                            <span className="text-danger">
+                              {formik.errors.LangId}
+                            </span>
+                          )}
                       </div>
                       <div className="col-md-4">
-                      <h5 className="card-title">{t("Level Reference KEK")}</h5>
+                        <h5 className="card-title">
+                          {t("Level Reference KEK")}
+                        </h5>
                         <input
-                          name="LevelReferenceKEK"y
+                          name="LevelReferenceKEK"
+                          y
                           type="number"
                           value={formik.values.LevelReferenceKEK}
                           className="form-control"
@@ -110,7 +145,7 @@ export default function CreateLevel() {
                         )}
                       </div>
                       <div className="col-md-4">
-                      <h5 className="card-title">{t("Type")}</h5>
+                        <h5 className="card-title">{t("Type")}</h5>
                         <textarea
                           name="Type"
                           value={formik.values.Type}
@@ -136,13 +171,12 @@ export default function CreateLevel() {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group mt-2">
-                      <h5 className="card-title">{t("Level Description")}</h5>
+                        <h5 className="card-title">{t("Level Description")}</h5>
 
                         <textarea
                           name="LevelDescription"
                           value={formik.values.LevelDescription}
                           className="form-control"
-                        
                           onChange={(e) => {
                             setModel({
                               ...model,
@@ -164,7 +198,7 @@ export default function CreateLevel() {
                     </div>
                     <div className="col-md-6 mt-2">
                       <div className="form-group">
-                      <h5 className="card-title">{t("Competencies")}</h5>
+                        <h5 className="card-title">{t("Competencies")}</h5>
 
                         <textarea
                           name="Competencies"
@@ -192,7 +226,7 @@ export default function CreateLevel() {
                   </div>
 
                   <div className="form-group mt-2">
-                  <h5 className="card-title">{t("Detailed Description")}</h5>
+                    <h5 className="card-title">{t("Detailed Description")}</h5>
 
                     <textarea
                       name="DetailedDescription"
@@ -220,7 +254,7 @@ export default function CreateLevel() {
                   <div className="form-group mt-2">
                     <div className="row">
                       <div className="col-md-6">
-                      <h5 className="card-title">{t("Descriptor")}</h5>
+                        <h5 className="card-title">{t("Descriptor")}</h5>
 
                         <textarea
                           name="TheDescriptor"
@@ -231,7 +265,10 @@ export default function CreateLevel() {
                               ...model,
                               TheDescriptor: e.target.value,
                             });
-                            formik.setFieldValue("TheDescriptor", e.target.value);
+                            formik.setFieldValue(
+                              "TheDescriptor",
+                              e.target.value
+                            );
                           }}
                           rows="6"
                         ></textarea>
@@ -242,7 +279,7 @@ export default function CreateLevel() {
                         )}
                       </div>
                       <div className="col-md-6">
-                      <h5 className="card-title">{t("Level Indicator")}</h5>
+                        <h5 className="card-title">{t("Level Indicator")}</h5>
 
                         <textarea
                           name="LevelIndicator"
@@ -270,7 +307,7 @@ export default function CreateLevel() {
                   </div>
 
                   <div className="form-group mt-2">
-                  <h5 className="card-title">{t("Knowledge")}</h5>
+                    <h5 className="card-title">{t("Knowledge")}</h5>
 
                     <textarea
                       name="Knowledge"
@@ -293,7 +330,7 @@ export default function CreateLevel() {
                   </div>
 
                   <div className="form-group mt-2">
-                  <h5 className="card-title">{t("Skills")}</h5>
+                    <h5 className="card-title">{t("Skills")}</h5>
 
                     <textarea
                       name="Skills"

@@ -102,5 +102,15 @@
   "RegisterSubQualification": "Registrujte se pod kvalifikacijom",
   "ModifySubQualification": "Modifi Subkualification",
   "InstitutionExists": "Postoji institucija sa ovim podacima!",
-  "NumOfGroups": "Broj grupa"
+  "NumOfGroups": "Broj grupa",
+  "PleaseFillTheType": "Molimo vas da navedete kategoriju nivoa!",
+  "PleaseFillTheLevelReferenceKEK": "Molimo vas da navedete KEK referencu nivoa!",
+  "PleaseFillTheLevelDescription": "Molimo vas da napišete opis nivoa!",
+  "PleaseFillTheCompetencies": "Molimo vas da navedete kompetencije!",
+  "PleaseFillTheDetailedDescription": "Molimo vas da napišete detaljan opis nivoa!",
+  "PleaseFillTheKnowledge": "Molimo vas da navedete znanje!",
+  "PleaseFillTheLevelIndicator": "Molimo vas da navedete indikator nivoa!",
+  "PleaseFillTheSkills": "Molimo vas da navedete veštine!",
+  "PlaseFillTheDescriptor": "Molimo vas da navedete deskriptor!",
+  "PleaseChooseTheLanguange": "Molimo izaberite svoj jezik!"
 }

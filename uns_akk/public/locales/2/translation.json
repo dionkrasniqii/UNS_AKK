@@ -102,5 +102,15 @@
   "RegisterSubQualification": "Register Subqualification",
   "ModifySubQualification": "Modify Subqualification",
   "InstitutionExists": "There is the institution with these data!",
-  "NumOfGroups": "Number of groups"
+  "NumOfGroups": "Number of groups",
+  "PleaseFillTheType": "Please specify the category of the level!",
+  "PleaseFillTheLevelReferenceKEK": "Please provide the KEK level reference!",
+  "PleaseFillTheLevelDescription": "Please write a description of the level!",
+  "PleaseFillTheCompetencies": "Please write the competencies!",
+  "PleaseFillTheDetailedDescription": "Please write a detailed description of the level!",
+  "PleaseFillTheKnowledge": "Please write the knowledge!",
+  "PleaseFillTheLevelIndicator": "Please write the level indicator!",
+  "PleaseFillTheSkills": "Please write the skills!",
+  "PlaseFillTheDescriptor": "Please write the descriptor!",
+  "PleaseChooseTheLanguange": "Please select the language!"
 }
