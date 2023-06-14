@@ -35,6 +35,7 @@ export default function CreateStudents() {
     ResidenceId: "",
     ResidenceForeign: "",
     Address: "",
+    Email: "",
     PhoneNum: "",
     InstitutionId: decodedToken.groupsid,
     InstitutionDecisionId: "",
@@ -205,10 +206,10 @@ export default function CreateStudents() {
     Residence: Yup.string().required("Choose Residence"),
     Address: Yup.string().required("Fill address"),
     Phonenumber: Yup.string().required("Fill address"),
+    Email: Yup.string().required("Fill Email"),
     Group: Yup.string().required("Choose group"),
     RegisterDate: Yup.string().required("Choose RegisterDate"),
   });
-  console.log(model);
   async function submitForm() {
     setLoadSubmit(true);
     await CrudProvider.createItem("PersonAPI/CreatePerson", model).then(
@@ -295,6 +296,25 @@ export default function CreateStudents() {
                           Surname: e.target.value,
                         });
                         formik.setFieldValue("Surname", e.target.value);
+                      }}
+                    />
+                    {formik.errors.Surname && (
+                      <span className='text-danger'>
+                        {formik.errors.Surname}
+                      </span>
+                    )}
+                  </div>
+                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                    <label>{t("Email")}:</label>
+                    <input
+                      type='text'
+                      className='form-control'
+                      onChange={(e) => {
+                        setModel({
+                          ...model,
+                          Email: e.target.value,
+                        });
+                        formik.setFieldValue("Email", e.target.value);
                       }}
                     />
                     {formik.errors.Surname && (

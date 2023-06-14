@@ -32,46 +32,45 @@ export default function Students() {
   }, []);
   const columns = [
     {
-      title: t("InstitutionName"),
-      dataIndex: "institutionName",
-      key: "institutionName",
-      // className: "col-lg-2 col-md-2 col-sm-4",
+      title: t("CertificateNumber"),
+      dataIndex: "certificateNumber",
+      key: (item) => item,
     },
     {
-      title: t("UniqueNumber"),
-      dataIndex: "uniqueNumber",
-      key: "uniqueNumber",
-      // className: "col-lg-2 col-md-2 col-sm-4",
+      title: t("Name") + " " + t("Surname"),
+      dataIndex: "person",
+      key: (item) => item.name,
+      render: (item) => item.name + " " + item.surname,
     },
     {
-      title: t("Municipality"),
-      dataIndex: "municipalityName",
-      key: "municipalityName",
-      // className: "col-lg-2 col-md-2 col-sm-4",
+      title: t("Email"),
+      dataIndex: "person",
+      key: (item) => item.email,
+      render: (item) => item.email,
     },
     {
-      title: t("Address"),
-      dataIndex: "address",
-      key: "address",
-      // className: "d-none d-md-table-cell col-md-2",
+      title: t("GroupName"),
+      dataIndex: "institutionGroupDecision",
+      key: (item) => item.groupName,
+      render: (item) => item.groupName,
     },
     {
-      title: t("PostalCode"),
-      dataIndex: "postalCode",
-      key: "postalCode",
-      // className: "d-none d-md-table-cell col-md-2",
-    },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      // className: "d-none d-lg-table-cell col-lg-2",
-    },
-    {
-      title: t("Web"),
-      dataIndex: "web",
-      key: "web",
-      // className: "d-none d-lg-table-cell col-lg-2",
+      title: t("Graduated"),
+      dataIndex: "graduated",
+      key: "graduated",
+      render: (item) => {
+        return item === true ? (
+          <a>
+            {t("Yes")}
+            <i className='text-success ps-1 fas fa-circle-notch' />
+          </a>
+        ) : (
+          <a>
+            {t("No")}
+            <i className='text-danger ps-1  fas fa-circle-notch' />
+          </a>
+        );
+      },
     },
     {
       title: t("Actions"),
@@ -83,7 +82,7 @@ export default function Students() {
             <div className='col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2'>
               <Link
                 className='btn-secondary btn-sm'
-                to={`/editinstitutions/${record.institutionId}`}
+                to={`/editstudent/${record.personInstitutionId}`}
               >
                 <i className='fe-edit' />
               </Link>
@@ -117,12 +116,11 @@ export default function Students() {
       </div>
       <div className='p-2 mt-2'>
         {!load ? (
-          //<DataTable
-          // columns={columns}
-          //dataSource={data}
-          //title={t("InstitutionsList")}
-          ///>
-          <p>1</p>
+          <DataTable
+            columns={columns}
+            dataSource={data}
+            title={"Lista e studenteve"}
+          />
         ) : (
           <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
             <div

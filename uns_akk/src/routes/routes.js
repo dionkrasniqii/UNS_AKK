@@ -269,6 +269,30 @@ export const AppRoutes = (props) => {
           />
         }
       />
+      {/* Groups */}
+      <Route
+        path='/groups'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={Groups}
+          />
+        }
+      />
+
+      <Route
+        path='/creategroup'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={CreateGroup}
+          />
+        }
+      />
     </Routes>
   );
 };
