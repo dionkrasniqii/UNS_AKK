@@ -306,7 +306,7 @@ console.log(level);
                       <span className="btn-label">
                         <i className="fe-arrow-left"></i>
                       </span>
-                      {t("Back")}
+                      {t("Discard")}
                     </Link>
                     <li className="next list-inline-item float-end">
                       <button

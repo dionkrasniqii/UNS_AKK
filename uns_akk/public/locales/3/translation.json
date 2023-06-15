@@ -160,5 +160,7 @@
   "FillPersonalNumber": "Popunite lični broj",
   "FillBirthDate": "i datum rođenja",
   "ChooseResidence": "Izaberite prebivalište",
-  "ChooseRegisterDate": "Izaberite datum registracije"
+  "ChooseRegisterDate": "Izaberite datum registracije",
+  "AddLevel": "Dodaj Nivo",
+  "LevelList": "Lista nivoa"
 }
