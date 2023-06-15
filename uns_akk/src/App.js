@@ -22,7 +22,8 @@ function App() {
     localStorage.getItem("akktoken")
   );
   const navigate = useNavigate();
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState(null);
+  console.log(authState);
   useEffect(() => {
     if (oldSession !== null) {
       const decodedToken = jwtDecode(oldSession);
@@ -64,18 +65,15 @@ function App() {
         theme='light'
         style={{ fontSize: "14px" }}
       />
-      {authState && (
+
+      {authState !== null && authState && (
         <>
           <Navbar authState={authState} setAuthState={setAuthState} />
           <Sidebar />
         </>
       )}
-      <div className='content-page'>
-        <div className='content mt-2 '>
-          <AppRoutes authState={authState} setAuthState={setAuthState} />
-          {authState && <Footer />}
-        </div>
-      </div>
+      <AppRoutes authState={authState} setAuthState={setAuthState} />
+      {authState && <Footer />}
     </>
   );
 }

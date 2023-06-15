@@ -34,6 +34,7 @@ export default function CustomSelect({
       // optionStyle={optionStyle}
       allowClear
       showSearch
+      f
       value={hasDefaultValue ? defaultValue : null}
       onChange={onChangeFunction}
       options={optionsList}
