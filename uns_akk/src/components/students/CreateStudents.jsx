@@ -29,9 +29,9 @@ export default function CreateStudents() {
     PersonalNr: "",
     BirthDate: "",
     CountryId: "1",
-    CountryForeign: "",
+    CountryForeign: "0",
     MunicipalityId: "",
-    MunicipalityForeign: "",
+    MunicipalityForeign: "0",
     ResidenceId: "",
     ResidenceForeign: "",
     Address: "",
@@ -40,13 +40,8 @@ export default function CreateStudents() {
     InstitutionId: decodedToken.groupsid,
     InstitutionDecisionId: "",
     InstitutionGroupDecisionId: "",
-    RegisteredDate: "",
-    Registered: true,
-    GraduatedDate: "",
-    Graduated: false,
-    CertificateNumber: "",
-    Remark: "",
   });
+
   useEffect(() => {
     setLoad(true);
     Promise.all([
@@ -73,7 +68,7 @@ export default function CreateStudents() {
       setLoad(false);
     });
   }, []);
-
+  console.log(model);
   useEffect(() => {
     if (model.MunicipalityId !== "") {
       CrudProvider.getItemByIdLang(
@@ -177,24 +172,30 @@ export default function CreateStudents() {
     });
     formik.setFieldValue("Residence", e);
   }
+  function formatedDate(date) {
+    const [day, month, year] = date.split("/");
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  }
+
   function changeBirthDate(date, dateString) {
     setModel({
       ...model,
-      BirthDate: dateString,
+      BirthDate: formatedDate(dateString),
     });
     formik.setFieldValue("BirthDate", dateString);
   }
   function changeRegisterDate(date, dateString) {
     setModel({
       ...model,
-      RegisteredDate: dateString,
+      RegisteredDate: formatedDate(dateString),
     });
     formik.setFieldValue("RegisterDate", dateString);
   }
   function changeGraduationDate(date, dateString) {
     setModel({
       ...model,
-      GraduatedDate: dateString,
+      GraduatedDate: formatedDate(dateString),
     });
     formik.setFieldValue("RegisterDate", dateString);
   }
@@ -209,7 +210,6 @@ export default function CreateStudents() {
     Phonenumber: Yup.string().required(t("PleaseFillPhoneNumber")),
     Email: Yup.string().required(t("PleaseFillEmail")),
     Group: Yup.string().required(t("ChooseGroup")),
-    RegisterDate: Yup.string().required(t("ChooseRegisterDate")),
     ChooseDecision: Yup.string().required(t("ChooseDecision")),
   });
   async function submitForm() {
@@ -257,6 +257,28 @@ export default function CreateStudents() {
               <ProgressBar model={model} />
               <div className='tab-pane active' id='account-2'>
                 <div className='row'>
+                  <div className='col-xxl-12 text-start mb-1'>
+                    <Checkbox
+                      onChange={(e) => {
+                        // setModel({
+                        //   ...model,
+                        //   IsForeign: e.target.checked,
+                        // });
+                        setIsForeign(e.target.checked);
+                        formik.setFieldValue("Municipality", null);
+                        formik.setFieldValue("Residence", null);
+                        setModel({
+                          ...model,
+                          ResidenceId: "",
+                          ResidenceForeign: "",
+                          Municipality: "",
+                          MunicipalityForeign: "",
+                        });
+                      }}
+                    >
+                      {t("ForeignStudent")}
+                    </Checkbox>
+                  </div>
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("Name")}:</label>
                     <input
@@ -293,23 +315,7 @@ export default function CreateStudents() {
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                    <label>{t("Email")}:</label>
-                    <input
-                      type='email'
-                      className='form-control'
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          Email: e.target.value,
-                        });
-                        formik.setFieldValue("Email", e.target.value);
-                      }}
-                    />
-                    {formik.errors.Email && (
-                      <span className='text-danger'>{formik.errors.Email}</span>
-                    )}
-                  </div>
+
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("PersonalNr")}:</label>
                     <input
@@ -338,31 +344,43 @@ export default function CreateStudents() {
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-12'>
-                    <div className='col-xxl-2 col-lg-3 col-sm-12 border border-info rounded-pill d-flex justify-content-center'>
-                      <Checkbox
-                        className='ps-2'
-                        onChange={(e) => {
-                          // setModel({
-                          //   ...model,
-                          //   IsForeign: e.target.checked,
-                          // });
-                          setIsForeign(e.target.checked);
-                          formik.setFieldValue("Municipality", null);
-                          formik.setFieldValue("Residence", null);
-                          setModel({
-                            ...model,
-                            ResidenceId: "",
-                            ResidenceForeign: "",
-                            Municipality: "",
-                            MunicipalityForeign: "",
-                          });
-                        }}
-                      >
-                        {t("ForeignStudent")}
-                      </Checkbox>
-                    </div>
+                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                    <label>{t("Email")}:</label>
+                    <input
+                      type='email'
+                      className='form-control'
+                      onChange={(e) => {
+                        setModel({
+                          ...model,
+                          Email: e.target.value,
+                        });
+                        formik.setFieldValue("Email", e.target.value);
+                      }}
+                    />
+                    {formik.errors.Email && (
+                      <span className='text-danger'>{formik.errors.Email}</span>
+                    )}
                   </div>
+                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                    <label>{t("PhoneNumber")}:</label>
+                    <input
+                      type='text'
+                      className='form-control'
+                      onChange={(e) => {
+                        setModel({
+                          ...model,
+                          PhoneNum: e.target.value,
+                        });
+                        formik.setFieldValue("Phonenumber", e.target.value);
+                      }}
+                    />
+                    {formik.errors.Phonenumber && (
+                      <span className='text-danger'>
+                        {formik.errors.Phonenumber}
+                      </span>
+                    )}
+                  </div>
+
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("Country")}:</label>
                     {IsForeign ? (
@@ -489,25 +507,7 @@ export default function CreateStudents() {
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                    <label>{t("PhoneNumber")}:</label>
-                    <input
-                      type='text'
-                      className='form-control'
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          PhoneNum: e.target.value,
-                        });
-                        formik.setFieldValue("Phonenumber", e.target.value);
-                      }}
-                    />
-                    {formik.errors.Phonenumber && (
-                      <span className='text-danger'>
-                        {formik.errors.Phonenumber}
-                      </span>
-                    )}
-                  </div>
+
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("ChooseDecision")}:</label>
                     <CustomSelect
@@ -531,32 +531,6 @@ export default function CreateStudents() {
                     {formik.errors.Group && (
                       <span className='text-danger'>{formik.errors.Group}</span>
                     )}
-                  </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                    <label>{t("RegisterDate")}:</label>
-                    <CustomDatePicker onChangeFunction={changeRegisterDate} />
-                    {formik.errors.RegisterDate && (
-                      <span className='text-danger'>
-                        {formik.errors.RegisterDate}
-                      </span>
-                    )}
-                  </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                    <label>{t("GraduationDate")}:</label>
-                    <CustomDatePicker onChangeFunction={changeGraduationDate} />
-                  </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3 d-flex align-items-center'>
-                    <Checkbox
-                      className='mt-3'
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          Graduated: e.target.checked,
-                        });
-                      }}
-                    >
-                      {t("HasGraduated")}
-                    </Checkbox>
                   </div>
                 </div>
               </div>

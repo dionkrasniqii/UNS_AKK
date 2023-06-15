@@ -13,7 +13,6 @@ export default function CustomDatePicker({ onChangeFunction }) {
       onChange={onChangeFunction}
       placeholder='DD/MM/YYYY'
       format='DD/MM/YYYY'
-      // format='DD/MM/YYYY'
       className='form-group'
     />
   );
