@@ -115,7 +115,7 @@ export default function EditInstitution() {
                             <img
                               src={CrudProvider.documentPath(institution.path)}
                               alt="image"
-                              class="img-fluid rounded"
+                              className="img-fluid rounded"
                               style={{ width: "250px", height: "150px" }}
                             />
                           </div>
