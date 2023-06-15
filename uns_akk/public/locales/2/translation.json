@@ -163,5 +163,7 @@
   "ChooseRegisterDate": "Select the registration date",
   "HasGraduated": "Has graduated?",
   "RegisterStudent": "Register student",
-  "GraduationDate": "Graduation date"
+  "GraduationDate": "Graduation date",
+  "AddLevel": "Add Level",
+  "LevelList": "Level List"
 }

@@ -61,7 +61,7 @@
   "PleaseFillQualificationNameAL": "Ju lutem mbushni fushën për kualifikimin në gjuhën shqipe!",
   "PleaseFillQualificationNameEN": "Ju lutem mbushni fushën për kualifikimin në gjuhën angleze!",
   "PleaseFillQualificationNameSR": "Ju lutem mbushni fushën për kualifikimin në gjuhën serbe!",
-  "PleaseFillLevel": "Ju lutem mbushni fushën për levelin!",
+  "PleaseFillLevel": "Ju lutem mbushni fushën për nivelin!",
   "PostalCodeMustContainMax": "Kodi postal duhet të përmbaj më së shumti 20 karaktere!",
   "PhoneNumberMustContainMax": "Numri i telefonit duhet të përmbaj më së shumti 20 karaktere!",
   "Qualifications": "Kualifikimet",
@@ -147,5 +147,17 @@
   "NewPasswordValidation": "Fjalëkalimi duhet të fillojë me një shkronjë të madhe, të ketë 8 karaktere ose më shumë dhe të përmbajë të paktën një numër dhe një simbol",
   "CurrentPassword": "Fjalëkalimi aktual",
   "NewPassword": "Fjalëkalimi i ri",
-  "PasswordConfirmation": "Konfirmimi i fjalëkalimit"
+  "PasswordConfirmation": "Konfirmimi i fjalëkalimit",
+  "AddLevel": "Shto Nivel",
+  "LevelList": "Lista e Niveleve",
+  "PleaseFillTheType": "Ju lutem specifikoni kategorinë e niveleve!",
+  "PleaseFillTheLevelReferenceKEK": "Ju lutem jepni referencën e niveleve KEK!",
+  "PleaseFillTheLevelDescription": "Ju lutem shkruani një përshkrim të niveleve!",
+  "PleaseFillTheCompetencies": "Ju lutem shkruani kompetencat!",
+  "PleaseFillTheDetailedDescription": "Ju lutem shkruani një përshkrim të hollësishëm të niveleve!",
+  "PleaseFillTheKnowledge": "Ju lutem shkruani njohuritë!",
+  "PleaseFillTheLevelIndicator": "Ju lutem shkruani indikatorin e niveleve!",
+  "PleaseFillTheSkills": "Ju lutem shkruani aftësitë!",
+  "PlaseFillTheDescriptor": "Ju lutem shkruani përcaktuesin!",
+  "PleaseChooseTheLanguange": "Ju lutem zgjidhni gjuhën!"
 }
