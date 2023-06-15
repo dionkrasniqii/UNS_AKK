@@ -17,6 +17,7 @@ import EditDecisions from "../components/decisions/EditDecisions";
 import SubQualifications from "../components/subqualifications/SubQualifications";
 import CreateSubQualification from "../components/subqualifications/CreateSubQualification";
 import EditSubQualification from "../components/subqualifications/EditSubQualification";
+import Profile from "../components/profile/Profile";
 import Students from "../components/students/Students";
 import CreateStudents from "../components/students/CreateStudents";
 import EditStudents from "../components/students/EditStudents";
@@ -290,6 +291,19 @@ export const AppRoutes = (props) => {
             authState={props.authState}
             allowedRoles={[ROLES.INSTITUTION]}
             component={CreateGroup}
+          />
+        }
+      />
+
+      {/* Profile */}
+      <Route
+        path='/profile'
+        element={
+          <PrivateRoute
+            setAuthState={props.setAuthState}
+            authState={props.authState}
+            allowedRoles={[ROLES.INSTITUTION]}
+            component={Profile}
           />
         }
       />

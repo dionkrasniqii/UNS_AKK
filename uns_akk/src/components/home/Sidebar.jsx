@@ -48,7 +48,7 @@ export default function Sidebar() {
       roles: ["Admin"],
       path: "/subqualifications",
       hasMenu: false,
-      showLabel: true,
+      showLabel: false,
       icon: "mdi mdi-book-settings",
     },
     {

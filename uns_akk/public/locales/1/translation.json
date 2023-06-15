@@ -140,5 +140,12 @@
   "ChooseRegisterDate": "Zgjedhni datën e regjistrimit",
   "HasGraduated": "Është diplomuar?",
   "RegisterStudent": "Regjistroni studentin",
-  "GraduationDate": "Data diplomimit"
+  "GraduationDate": "Data diplomimit",
+  "Profile": "Profili",
+  "OldPasswordNotValid": "Fjalëkalimi i vjetër nuk është valid!",
+  "PasswordsDoNotMatch": "Fjalëkalimi i ri dhe konfirmimi i fjalëkalimit nuk përputhen!",
+  "NewPasswordValidation": "Fjalëkalimi duhet të fillojë me një shkronjë të madhe, të ketë 8 karaktere ose më shumë dhe të përmbajë të paktën një numër dhe një simbol",
+  "CurrentPassword": "Fjalëkalimi aktual",
+  "NewPassword": "Fjalëkalimi i ri",
+  "PasswordConfirmation": "Konfirmimi i fjalëkalimit"
 }
