@@ -108,7 +108,7 @@ export default function EditQualifications() {
     levels.find( 
       (obj) =>  obj.levelKKK.levelKKKId === qualification.LevelKKKId
     );
-   
+
   const defaultLabel = defaultSelectValue?.levelKKKDescription ?? "";
   const defaultValue = defaultSelectValue?.levelKKK?.levelKKKId ?? "";
 

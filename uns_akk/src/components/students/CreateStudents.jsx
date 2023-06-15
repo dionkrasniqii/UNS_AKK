@@ -131,7 +131,6 @@ export default function CreateStudents() {
         };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
-
   const decisionList =
     decisions &&
     decisions.length > 0 &&
@@ -141,7 +140,7 @@ export default function CreateStudents() {
         label:
           obj.municipality.municipalityLanguages[0].municipalityName +
           " - " +
-          obj.qualification.qualificationLanguages[0].qualificationName,
+          obj.qualification.qualificationLanguage[0].qualificationName,
       }))
       .sort((a, b) => a.label.localeCompare(b.label));
   const groupsList =
@@ -248,20 +247,20 @@ export default function CreateStudents() {
   });
 
   return (
-    <div className='card'>
-      <div className='card-body'>
-        <h3 className=' mb-3'>{t("RegisterStudent")}</h3>
+    <div className="card">
+      <div className="card-body">
+        <h3 className=" mb-3">{t("RegisterStudent")}</h3>
         <form onSubmit={formik.handleSubmit}>
-          <div id='progressbarwizard'>
-            <div className='tab-content b-0 mb-0 pt-0'>
+          <div id="progressbarwizard">
+            <div className="tab-content b-0 mb-0 pt-0">
               <ProgressBar model={model} />
-              <div className='tab-pane active' id='account-2'>
-                <div className='row'>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+              <div className="tab-pane active" id="account-2">
+                <div className="row">
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Name")}:</label>
                     <input
-                      type='text'
-                      className='form-control'
+                      type="text"
+                      className="form-control"
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -271,14 +270,14 @@ export default function CreateStudents() {
                       }}
                     />
                     {formik.errors.Name && (
-                      <span className='text-danger'>{formik.errors.Name}</span>
+                      <span className="text-danger">{formik.errors.Name}</span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Surname")}:</label>
                     <input
-                      type='text'
-                      className='form-control'
+                      type="text"
+                      className="form-control"
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -288,16 +287,16 @@ export default function CreateStudents() {
                       }}
                     />
                     {formik.errors.Surname && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.Surname}
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Email")}:</label>
                     <input
-                      type='email'
-                      className='form-control'
+                      type="email"
+                      className="form-control"
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -307,14 +306,14 @@ export default function CreateStudents() {
                       }}
                     />
                     {formik.errors.Email && (
-                      <span className='text-danger'>{formik.errors.Email}</span>
+                      <span className="text-danger">{formik.errors.Email}</span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("PersonalNr")}:</label>
                     <input
-                      type='text'
-                      className='form-control'
+                      type="text"
+                      className="form-control"
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -324,24 +323,24 @@ export default function CreateStudents() {
                       }}
                     />
                     {formik.errors.PersonalNr && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.PersonalNr}
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("BirthDate")}:</label>
                     <CustomDatePicker onChangeFunction={changeBirthDate} />
                     {formik.errors.BirthDate && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.BirthDate}
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-12'>
-                    <div className='col-xxl-2 col-lg-3 col-sm-12 border border-info rounded-pill d-flex justify-content-center'>
+                  <div className="col-xxl-12">
+                    <div className="col-xxl-2 col-lg-3 col-sm-12 border border-info rounded-pill d-flex justify-content-center">
                       <Checkbox
-                        className='ps-2'
+                        className="ps-2"
                         onChange={(e) => {
                           // setModel({
                           //   ...model,
@@ -363,14 +362,14 @@ export default function CreateStudents() {
                       </Checkbox>
                     </div>
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Country")}:</label>
                     {IsForeign ? (
                       <input
-                        key='1'
-                        type='text'
-                        className='form-control'
-                        placeholder='....'
+                        key="1"
+                        type="text"
+                        className="form-control"
+                        placeholder="...."
                         onChange={(e) =>
                           setModel({
                             ...model,
@@ -380,22 +379,22 @@ export default function CreateStudents() {
                       />
                     ) : (
                       <input
-                        key='2'
-                        type='text'
-                        className='form-control'
-                        defaultValue='Kosovë'
+                        key="2"
+                        type="text"
+                        className="form-control"
+                        defaultValue="Kosovë"
                       />
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Municipality")}:</label>
                     {IsForeign ? (
                       <>
                         <input
-                          key='1'
-                          type='text'
-                          className='form-control'
-                          placeholder='....'
+                          key="1"
+                          type="text"
+                          className="form-control"
+                          placeholder="...."
                           onChange={(e) => {
                             setModel({
                               ...model,
@@ -409,7 +408,7 @@ export default function CreateStudents() {
                         />
                         <>
                           {formik.errors.Municipality && (
-                            <span className='text-danger'>
+                            <span className="text-danger">
                               {formik.errors.Municipality}
                             </span>
                           )}
@@ -423,22 +422,22 @@ export default function CreateStudents() {
                           isMulti={false}
                         />
                         {formik.errors.Municipality && (
-                          <span className='text-danger'>
+                          <span className="text-danger">
                             {formik.errors.Municipality}
                           </span>
                         )}
                       </>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Residence")}:</label>
                     {IsForeign ? (
                       <>
                         <input
-                          key='1'
-                          type='text'
-                          placeholder='....'
-                          className='form-control'
+                          key="1"
+                          type="text"
+                          placeholder="...."
+                          className="form-control"
                           onChange={(e) => {
                             setModel({
                               ...model,
@@ -449,7 +448,7 @@ export default function CreateStudents() {
                         />
                         <>
                           {formik.errors.Residence && (
-                            <span className='text-danger'>
+                            <span className="text-danger">
                               {formik.errors.Residence}
                             </span>
                           )}
@@ -463,18 +462,18 @@ export default function CreateStudents() {
                           isMulti={false}
                         />
                         {formik.errors.Residence && (
-                          <span className='text-danger'>
+                          <span className="text-danger">
                             {formik.errors.Residence}
                           </span>
                         )}
                       </>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Address")}:</label>
                     <input
-                      type='text'
-                      className='form-control'
+                      type="text"
+                      className="form-control"
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -484,16 +483,16 @@ export default function CreateStudents() {
                       }}
                     />
                     {formik.errors.Address && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.Address}
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("PhoneNumber")}:</label>
                     <input
-                      type='text'
-                      className='form-control'
+                      type="text"
+                      className="form-control"
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -503,12 +502,12 @@ export default function CreateStudents() {
                       }}
                     />
                     {formik.errors.Phonenumber && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.Phonenumber}
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("ChooseDecision")}:</label>
                     <CustomSelect
                       onChangeFunction={changeDecision}
@@ -516,12 +515,12 @@ export default function CreateStudents() {
                       optionsList={decisionList}
                     />
                     {formik.errors.ChooseDecision && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.ChooseDecision}
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("ChooseGroup")}:</label>
                     <CustomSelect
                       onChangeFunction={changeGroup}
@@ -529,25 +528,25 @@ export default function CreateStudents() {
                       optionsList={groupsList}
                     />
                     {formik.errors.Group && (
-                      <span className='text-danger'>{formik.errors.Group}</span>
+                      <span className="text-danger">{formik.errors.Group}</span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("RegisterDate")}:</label>
                     <CustomDatePicker onChangeFunction={changeRegisterDate} />
                     {formik.errors.RegisterDate && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.RegisterDate}
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("GraduationDate")}:</label>
                     <CustomDatePicker onChangeFunction={changeGraduationDate} />
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3 d-flex align-items-center'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3 d-flex align-items-center">
                     <Checkbox
-                      className='mt-3'
+                      className="mt-3"
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -561,31 +560,31 @@ export default function CreateStudents() {
                 </div>
               </div>
             </div>
-            <ul className='list-inline mb-0 wizard'>
+            <ul className="list-inline mb-0 wizard">
               <Link
-                to='/students'
-                className='btn btn-danger waves-effect waves-light float-start'
+                to="/students"
+                className="btn btn-danger waves-effect waves-light float-start"
               >
-                <span className='btn-label'>
-                  <i className='fe-arrow-left'></i>
+                <span className="btn-label">
+                  <i className="fe-arrow-left"></i>
                 </span>
                 {t("Discard")}
               </Link>
-              <li className='next list-inline-item float-end'>
+              <li className="next list-inline-item float-end">
                 {!loadSubmit ? (
                   <button
-                    type='submit'
-                    className='btn btn-success waves-effect waves-light'
+                    type="submit"
+                    className="btn btn-success waves-effect waves-light"
                   >
-                    <span className='btn-label'>
-                      <i className='fe-check'></i>
+                    <span className="btn-label">
+                      <i className="fe-check"></i>
                     </span>
                     {t("Save")}
                   </button>
                 ) : (
                   <div
-                    className='spinner-border text-primary m-2 text-center'
-                    role='status'
+                    className="spinner-border text-primary m-2 text-center"
+                    role="status"
                   />
                 )}
               </li>
