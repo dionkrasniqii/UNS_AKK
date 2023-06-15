@@ -146,5 +146,15 @@
   "ForeignStudent": "Is it a foreign student?",
   "Residence": "Residence",
   "Address": "Address",
-  "ChooseGroup": "Choose group"
+  "ChooseGroup": "Choose group",
+  "Fill": "Fill",
+  "FillName": "Fill name",
+  "FillSurname": "Fill surname",
+  "FillPersonalNumber": "Fill in personal number",
+  "FillBirthDate": "Fill birthdate",
+  "ChooseResidence": "Choose residence",
+  "ChooseRegisterDate": "Select the registration date",
+  "HasGraduated": "Has graduated?",
+  "RegisterStudent": "Register student",
+  "GraduationDate": "Graduation date"
 }
