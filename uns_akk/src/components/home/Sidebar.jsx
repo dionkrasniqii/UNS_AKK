@@ -14,7 +14,7 @@ export default function Sidebar() {
     {
       label: t("Home"),
       roles: ["Admin", "Institution"],
-      path: "/home",
+      path: "/",
       hasMenu: false,
       showLabel: false,
       icon: "mdi mdi-view-dashboard-outline",

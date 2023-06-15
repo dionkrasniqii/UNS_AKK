@@ -353,13 +353,13 @@ export default function CreateLevel() {
 
                   <ul className='list-inline mb-0 wizard mt-3 mb-2'>
                     <Link
-                      to='/agencies'
+                      to='/level'
                       className='btn btn-danger waves-effect waves-light float-start'
                     >
                       <span className='btn-label'>
                         <i className='fe-arrow-left'></i>
                       </span>
-                      {t("Back")}
+                      {t("Discard")}
                     </Link>
                     <li className='next list-inline-item float-end'>
                       <button

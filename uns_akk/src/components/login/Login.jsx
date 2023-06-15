@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
 import MultiRoles from "./MultiRoles";
-import logo from "./../../assets/images/logo_akk.jpg";
+import logo from "./../../assets/images/logo_akk.png";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/actions";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,7 @@ export default function Login(props) {
 
   useEffect(() => {
     if (token) {
-      navigate("/home");
+      navigate("/");
     }
   }, [token]);
 
@@ -42,7 +42,7 @@ export default function Login(props) {
             props.setAuthState(true);
             localStorage.setItem("akktoken", res.token);
             dispatch(setToken(res.token));
-            navigate("/home");
+            navigate("/");
             break;
           case 207:
             setShowMultiRolesModal(true);
@@ -100,7 +100,7 @@ export default function Login(props) {
                 </div>
                 <div className='card-body p-4'>
                   <div className='text-center mb-4'>
-                    <h4 className='text-uppercase mt-0'>{t("Prijavite se")}</h4>
+                    <h4 className='text-uppercase mt-0'>{t("Login")}</h4>
                   </div>
                   <div className='mb-3'>
                     <label htmlFor='emailaddress' className='form-label'>
@@ -172,7 +172,7 @@ export default function Login(props) {
                   <div className='mb-3 d-grid text-center'>
                     {!load ? (
                       <button className='btn btn-primary' type='submit'>
-                        {t("Log-in")}
+                        {t("Log-In")}
                       </button>
                     ) : (
                       <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>

@@ -119,7 +119,7 @@ export default function Level() {
                   <span className="btn-label">
                     <i className="fe-plus-circle"></i>
                   </span>
-                  Shto Level
+                  {t("AddLevel")}
                 </Link>
               </div>
             </div>
@@ -129,7 +129,7 @@ export default function Level() {
               <DataTable
                 columns={columns}
                 dataSource={data}
-                title={"Lista e Level-ve"}
+                title={t("LevelList")}
               />
             ) : (
               <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">

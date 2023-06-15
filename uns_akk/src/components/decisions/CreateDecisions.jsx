@@ -379,56 +379,69 @@ export default function CreateDecisions() {
                     <div className='col-xxl-2 col-md-3 col-lg-3 col-sm-12 mb-3'>
                       <div className='row'>
                         <label>{t("GroupLimits")}:</label>
-                        <div className='form-check ps-4'>
-                          <input
-                            type='radio'
-                            id='customRadio1'
-                            name='customRadio'
-                            defaultChecked={!model.NoLimitGroups ? true : false}
-                            onChange={(e) => {
-                              setModel({
-                                ...model,
-                                NoLimitGroups: false,
-                              });
-                              formik.setFieldValue("NoLimitGroups", true);
-                              formik.setFieldValue("NumOfGroups", null);
-                              formik.setFieldValue(
-                                "MaximumPeoplePerGroup",
-                                null
-                              );
-                            }}
-                            className='form-check-input'
-                          />
-                          <label
-                            className='form-check-label'
-                            htmlFor='customRadio1'
-                          >
-                            {t("Yes")}
-                          </label>
-                        </div>
-                        <div className='form-check ps-4'>
-                          <input
-                            type='radio'
-                            id='customRadio2'
-                            name='customRadio'
-                            defaultChecked={model.NoLimitGroups ? true : false}
-                            className='form-check-input'
-                            onChange={(e) => {
-                              setModel({
-                                ...model,
-                                NoLimitGroups: true,
-                              });
-                              formik.setFieldValue("NoLimitGroups", false);
-                              formik.setFieldValue("NumOfGroups", 1);
-                              formik.setFieldValue("MaximumPeoplePerGroup", 0);
-                            }}
-                          />
-                          <label
-                            className='form-check-label'
-                            htmlFor='customRadio2'
-                          >
-                            {t("No")}
-                          </label>
+                        <div className='row'>
+                          <div className=''>
+                            <div className='form-check ps-4'>
+                              <input
+                                type='radio'
+                                id='customRadio1'
+                                name='customRadio'
+                                defaultChecked={
+                                  !model.NoLimitGroups ? true : false
+                                }
+                                onChange={(e) => {
+                                  setModel({
+                                    ...model,
+                                    NoLimitGroups: false,
+                                  });
+                                  formik.setFieldValue("NoLimitGroups", true);
+                                  formik.setFieldValue("NumOfGroups", null);
+                                  formik.setFieldValue(
+                                    "MaximumPeoplePerGroup",
+                                    null
+                                  );
+                                }}
+                                className='form-check-input'
+                              />
+                              <label
+                                className='form-check-label'
+                                htmlFor='customRadio1'
+                              >
+                                {t("Yes")}
+                              </label>
+                            </div>
+                          </div>
+                          <div>
+                            <div className='form-check ps-4'>
+                              <input
+                                type='radio'
+                                id='customRadio2'
+                                name='customRadio'
+                                defaultChecked={
+                                  model.NoLimitGroups ? true : false
+                                }
+                                className='form-check-input'
+                                onChange={(e) => {
+                                  setModel({
+                                    ...model,
+                                    NoLimitGroups: true,
+                                  });
+                                  formik.setFieldValue("NoLimitGroups", false);
+                                  formik.setFieldValue("NumOfGroups", 1);
+                                  formik.setFieldValue(
+                                    "MaximumPeoplePerGroup",
+                                    0
+                                  );
+                                }}
+                              />
+                              <label
+                                className='form-check-label'
+                                htmlFor='customRadio2'
+                              >
+                                {t("No")}
+                              </label>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
