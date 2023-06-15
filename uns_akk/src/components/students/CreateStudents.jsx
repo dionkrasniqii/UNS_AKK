@@ -161,6 +161,7 @@ export default function CreateStudents() {
       ...model,
       InstitutionDecisionId: e,
     });
+    formik.setFieldValue("ChooseDecision", e);
   }
   function changeGroup(e) {
     setModel({
@@ -198,17 +199,18 @@ export default function CreateStudents() {
     formik.setFieldValue("RegisterDate", dateString);
   }
   const CreateStudentSchema = Yup.object().shape({
-    Name: Yup.string().required("Fill name"),
-    Surname: Yup.string().required("Fill surname"),
-    PersonalNr: Yup.string().required("Fill personal number"),
-    BirthDate: Yup.string().required("Fill birthdate"),
-    Municipality: Yup.string().required("Choose Municipality"),
-    Residence: Yup.string().required("Choose Residence"),
-    Address: Yup.string().required("Fill address"),
-    Phonenumber: Yup.string().required("Fill address"),
-    Email: Yup.string().required("Fill Email"),
-    Group: Yup.string().required("Choose group"),
-    RegisterDate: Yup.string().required("Choose RegisterDate"),
+    Name: Yup.string().required(t("FillName")),
+    Surname: Yup.string().required(t("FillSurname")),
+    PersonalNr: Yup.string().required(t("FillPersonalNumber")),
+    BirthDate: Yup.string().required(t("FillBirthDate")),
+    Municipality: Yup.string().required(t("ChooseMunicipality")),
+    Residence: Yup.string().required(t("ChooseResidence")),
+    Address: Yup.string().required(t("PleaseFillAddress")),
+    Phonenumber: Yup.string().required(t("PleaseFillPhoneNumber")),
+    Email: Yup.string().required(t("PleaseFillEmail")),
+    Group: Yup.string().required(t("ChooseGroup")),
+    RegisterDate: Yup.string().required(t("ChooseRegisterDate")),
+    ChooseDecision: Yup.string().required(t("ChooseDecision")),
   });
   async function submitForm() {
     setLoadSubmit(true);
@@ -255,19 +257,6 @@ export default function CreateStudents() {
               <ProgressBar model={model} />
               <div className='tab-pane active' id='account-2'>
                 <div className='row'>
-                  {/* <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                      <label>{t("Municipality")}:</label>
-                      <CustomSelect
-                        onChangeFunction={changeMunicipality}
-                        isMulti={false}
-                        optionsList={municipalitiesList}
-                      />
-                      {formik.errors.MunicipalityId && (
-                        <span className='text-danger'>
-                          {formik.errors.MunicipalityId}
-                        </span>
-                      )}
-                    </div> */}
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("Name")}:</label>
                     <input
@@ -307,7 +296,7 @@ export default function CreateStudents() {
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("Email")}:</label>
                     <input
-                      type='text'
+                      type='email'
                       className='form-control'
                       onChange={(e) => {
                         setModel({
@@ -317,10 +306,8 @@ export default function CreateStudents() {
                         formik.setFieldValue("Email", e.target.value);
                       }}
                     />
-                    {formik.errors.Surname && (
-                      <span className='text-danger'>
-                        {formik.errors.Surname}
-                      </span>
+                    {formik.errors.Email && (
+                      <span className='text-danger'>{formik.errors.Email}</span>
                     )}
                   </div>
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
@@ -361,6 +348,15 @@ export default function CreateStudents() {
                           //   IsForeign: e.target.checked,
                           // });
                           setIsForeign(e.target.checked);
+                          formik.setFieldValue("Municipality", null);
+                          formik.setFieldValue("Residence", null);
+                          setModel({
+                            ...model,
+                            ResidenceId: "",
+                            ResidenceForeign: "",
+                            Municipality: "",
+                            MunicipalityForeign: "",
+                          });
                         }}
                       >
                         {t("ForeignStudent")}
@@ -374,7 +370,7 @@ export default function CreateStudents() {
                         key='1'
                         type='text'
                         className='form-control'
-                        defaultValue='Write country'
+                        placeholder='....'
                         onChange={(e) =>
                           setModel({
                             ...model,
@@ -384,7 +380,7 @@ export default function CreateStudents() {
                       />
                     ) : (
                       <input
-                        key='1'
+                        key='2'
                         type='text'
                         className='form-control'
                         defaultValue='Kosovë'
@@ -394,47 +390,84 @@ export default function CreateStudents() {
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("Municipality")}:</label>
                     {IsForeign ? (
-                      <input
-                        key='1'
-                        type='text'
-                        className='form-control'
-                        placeholder='....'
-                        onChange={(e) =>
-                          setModel({
-                            ...model,
-                            MunicipalityForeign: e.target.value,
-                          })
-                        }
-                        readOnly
-                      />
+                      <>
+                        <input
+                          key='1'
+                          type='text'
+                          className='form-control'
+                          placeholder='....'
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              MunicipalityForeign: e.target.value,
+                            });
+                            formik.setFieldValue(
+                              "Municipality",
+                              e.target.value
+                            );
+                          }}
+                        />
+                        <>
+                          {formik.errors.Municipality && (
+                            <span className='text-danger'>
+                              {formik.errors.Municipality}
+                            </span>
+                          )}
+                        </>
+                      </>
                     ) : (
-                      <CustomSelect
-                        optionsList={citiesList}
-                        onChangeFunction={changeMunicipality}
-                        isMulti={false}
-                      />
+                      <>
+                        <CustomSelect
+                          optionsList={citiesList}
+                          onChangeFunction={changeMunicipality}
+                          isMulti={false}
+                        />
+                        {formik.errors.Municipality && (
+                          <span className='text-danger'>
+                            {formik.errors.Municipality}
+                          </span>
+                        )}
+                      </>
                     )}
                   </div>
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("Residence")}:</label>
                     {IsForeign ? (
-                      <input
-                        key='1'
-                        type='text'
-                        className='form-control'
-                        onChange={(e) =>
-                          setModel({
-                            ...model,
-                            ResidenceForeign: e.target.value,
-                          })
-                        }
-                      />
+                      <>
+                        <input
+                          key='1'
+                          type='text'
+                          placeholder='....'
+                          className='form-control'
+                          onChange={(e) => {
+                            setModel({
+                              ...model,
+                              ResidenceForeign: e.target.value,
+                            });
+                            formik.setFieldValue("Residence", e.target.value);
+                          }}
+                        />
+                        <>
+                          {formik.errors.Residence && (
+                            <span className='text-danger'>
+                              {formik.errors.Residence}
+                            </span>
+                          )}
+                        </>
+                      </>
                     ) : (
-                      <CustomSelect
-                        optionsList={residenceList}
-                        onChangeFunction={changeResidence}
-                        isMulti={false}
-                      />
+                      <>
+                        <CustomSelect
+                          optionsList={residenceList}
+                          onChangeFunction={changeResidence}
+                          isMulti={false}
+                        />
+                        {formik.errors.Residence && (
+                          <span className='text-danger'>
+                            {formik.errors.Residence}
+                          </span>
+                        )}
+                      </>
                     )}
                   </div>
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
@@ -450,6 +483,11 @@ export default function CreateStudents() {
                         formik.setFieldValue("Address", e.target.value);
                       }}
                     />
+                    {formik.errors.Address && (
+                      <span className='text-danger'>
+                        {formik.errors.Address}
+                      </span>
+                    )}
                   </div>
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("PhoneNumber")}:</label>
@@ -464,6 +502,11 @@ export default function CreateStudents() {
                         formik.setFieldValue("Phonenumber", e.target.value);
                       }}
                     />
+                    {formik.errors.Phonenumber && (
+                      <span className='text-danger'>
+                        {formik.errors.Phonenumber}
+                      </span>
+                    )}
                   </div>
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("ChooseDecision")}:</label>
@@ -472,6 +515,11 @@ export default function CreateStudents() {
                       isMulti={false}
                       optionsList={decisionList}
                     />
+                    {formik.errors.ChooseDecision && (
+                      <span className='text-danger'>
+                        {formik.errors.ChooseDecision}
+                      </span>
+                    )}
                   </div>
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("ChooseGroup")}:</label>
@@ -480,10 +528,18 @@ export default function CreateStudents() {
                       isMulti={false}
                       optionsList={groupsList}
                     />
+                    {formik.errors.Group && (
+                      <span className='text-danger'>{formik.errors.Group}</span>
+                    )}
                   </div>
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("RegisterDate")}:</label>
                     <CustomDatePicker onChangeFunction={changeRegisterDate} />
+                    {formik.errors.RegisterDate && (
+                      <span className='text-danger'>
+                        {formik.errors.RegisterDate}
+                      </span>
+                    )}
                   </div>
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("GraduationDate")}:</label>
@@ -507,7 +563,7 @@ export default function CreateStudents() {
             </div>
             <ul className='list-inline mb-0 wizard'>
               <Link
-                to='/decisions'
+                to='/students'
                 className='btn btn-danger waves-effect waves-light float-start'
               >
                 <span className='btn-label'>

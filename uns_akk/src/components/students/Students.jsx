@@ -15,6 +15,7 @@ export default function Students() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    setLoad(true);
     CrudProvider.getItemById(
       "PersonAPI/GetPersons",
       decodedToken.groupsid
@@ -28,6 +29,7 @@ export default function Students() {
             break;
         }
       }
+      setLoad(false);
     });
   }, []);
   const columns = [
@@ -75,7 +77,6 @@ export default function Students() {
     {
       title: t("Actions"),
       key: "institutionId",
-      className: "col-12 col-sm-4 col-md-2 col-lg-2 text-center",
       render: (value, record) => {
         return (
           <div className='row d-flex justify-content-center'>
@@ -100,7 +101,7 @@ export default function Students() {
       },
     },
   ];
-  console.log(data);
+
   return (
     <div className='row'>
       <div className='col-12 d-flex justify-content-end'>

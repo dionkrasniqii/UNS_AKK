@@ -62,7 +62,6 @@ export default function Groups() {
       },
     },
   ];
-
   async function deleteGroup(id) {
     await CrudProvider.deleteItemById(
       "InstitutionGroupDecisionAPI/DeleteGroup",
@@ -99,10 +98,9 @@ export default function Groups() {
       }
     });
   }
-  // useEffect(() => {
-  //   console.log(1);
-  //   getAllData();
-  // }, [langId]);
+  useEffect(() => {
+    getAllData();
+  }, []);
 
   return (
     <div className='row'>

@@ -104,7 +104,7 @@
   "DecisionDateCannotBeGreaterThanTermDate": "Data e vendimit nuk mund të jetë më e madhe se data e afatit",
   "YouHaveExceededGroupLimit": "Ju keni kaluar limitin e grupeve nuk mund të regjistroni",
   "WriteGroupName": "Shkruani emrin e grupit",
-  "ChooseDecision": "Zgjedhni vendimin",
+  "ChooseDecision": "Zgjedhni komunën për regjistrim",
   "ChooseStartDate": "Zgjedhni datën e fillimit",
   "ChooseEndDate": "Zgjedhni datën e mbarimit",
   "RegisterGroup": "Regjistroni grupin",
@@ -130,5 +130,15 @@
   "ForeignStudent": "Është student i huaj?",
   "Residence": "Vendbanimi",
   "Address": "Adresa",
-  "ChooseGroup": "Zgjedhni grupin"
+  "ChooseGroup": "Zgjedhni grupin",
+  "Fill": "Plotësoni",
+  "FillName": "Plotësoni emrin",
+  "FillSurname": "Plotësoni mbiemrin",
+  "FillPersonalNumber": "Plotësoni numrin personal",
+  "FillBirthDate": "Plotësoni datëlindjen",
+  "ChooseResidence": "Zgjedhni vendbanimin",
+  "ChooseRegisterDate": "Zgjedhni datën e regjistrimit",
+  "HasGraduated": "Është diplomuar?",
+  "RegisterStudent": "Regjistroni studentin",
+  "GraduationDate": "Data diplomimit"
 }

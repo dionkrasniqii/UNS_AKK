@@ -117,8 +117,8 @@ export default function Navbar(props) {
                 (ENG)
               </label>
             </a>
-            <div className='dropdown-divider' />
-            <a
+            {/*<div className='dropdown-divider' />
+           <a
               className='dropdown-item notify-item'
               onClick={(e) => changeLang("3")}
             >
@@ -128,9 +128,10 @@ export default function Navbar(props) {
                   className='flag-icon'
                   src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/rs.svg'
                   alt='UK Flag'
-                /> */}
+                /> 
+                
               </label>
-            </a>
+            </a> */}
           </div>
         </li>
 

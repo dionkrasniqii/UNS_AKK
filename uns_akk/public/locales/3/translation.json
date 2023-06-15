@@ -146,5 +146,12 @@
   "ForeignStudent": "Da li je to strani student?",
   "Residence": "Residence",
   "Address": "Adresa",
-  "ChooseGroup": "Izaberite grupu"
+  "ChooseGroup": "Izaberite grupu",
+  "Fill": "Fill",
+  "FillName": "Popunite ime",
+  "FillSurname": "Popunite prezime",
+  "FillPersonalNumber": "Popunite lični broj",
+  "FillBirthDate": "i datum rođenja",
+  "ChooseResidence": "Izaberite prebivalište",
+  "ChooseRegisterDate": "Izaberite datum registracije"
 }

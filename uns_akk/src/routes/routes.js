@@ -264,7 +264,7 @@ export const AppRoutes = (props) => {
           <PrivateRoute
             setAuthState={props.setAuthState}
             authState={props.authState}
-            allowedRoles={[ROLES.ADMIN]}
+            allowedRoles={[ROLES.INSTITUTION]}
             component={EditStudents}
           />
         }

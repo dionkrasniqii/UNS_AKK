@@ -66,8 +66,8 @@ export default function Login(props) {
     });
   }
   const LoginSchema = Yup.object().shape({
-    Username: Yup.string().required(),
-    Password: Yup.string().required(),
+    Username: Yup.string().required(t("Fill") + " " + t("Username")),
+    Password: Yup.string().required(t("Fill") + " " + t("Password")),
   });
   const formik = useFormik({
     initialValues: {},
