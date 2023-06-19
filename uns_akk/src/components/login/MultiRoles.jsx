@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import CrudProvider from "../../provider/CrudProvider";
 import { useNavigate } from "react-router";
+import CrudProvider from "../../provider/CrudProvider";
 
 export default function MultiRoles(props) {
   const navigate = useNavigate();

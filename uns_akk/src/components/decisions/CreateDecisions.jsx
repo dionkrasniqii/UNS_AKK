@@ -290,7 +290,6 @@ export default function CreateDecisions() {
                         </span>
                       )}
                     </div>
-
                     <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("SubQualifications")}:</label>
                       <CustomSelect

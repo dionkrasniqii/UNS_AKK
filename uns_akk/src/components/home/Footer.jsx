@@ -6,7 +6,7 @@ export default function Footer() {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-md-6'>
-            2023 © All rights reserved by{" "}
+            {new Date().getFullYear()} © All rights reserved by{" "}
             <a href='http://www.unisoft-rks.com/' target='_blank'>
               UniSoft
             </a>
