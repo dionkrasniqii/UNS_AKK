@@ -80,20 +80,20 @@ export default function EditStudents() {
               PhoneNum: obj.person.phoneNum,
               InstitutionGroupDecisionId:
                 obj.institutionGroupDecision?.institutionGroupDecisionId,
-              RegisteredDate: obj.person.registerDate
-                ? new Date(obj.person.registerDate.split("T")[0])
+              RegisteredDate: obj.registeredDate
+                ? new Date(obj.registeredDate.split("T")[0])
                     .toISOString()
                     .split("T")[0]
                 : "",
               Registered: obj.registered,
-              UnRegisteredDate: obj.person.unRegisterDate
-                ? new Date(obj.person.unRegisterDate.split("T")[0])
+              UnRegisteredDate: obj.unregisteredDate
+                ? new Date(obj.unregisteredDate.split("T")[0])
                     .toISOString()
                     .split("T")[0]
                 : "",
               UnRegistered: obj.unregistered,
-              GraduatedDate: obj.person.graduatedDate
-                ? new Date(obj.person.graduatedDate.split("T")[0])
+              GraduatedDate: obj.graduatedDate
+                ? new Date(obj.graduatedDate.split("T")[0])
                     .toISOString()
                     .split("T")[0]
                 : "",
@@ -101,7 +101,6 @@ export default function EditStudents() {
               CertificateNumber: obj.certificateNumber,
               Remark: obj.remark,
               InstitutionId: decodedToken.groupsid,
-              InstitutionDecisionId: "",
               InstitutionGroupDecision: obj.institutionGroupDecision,
               ValidFrom: obj.validFrom,
               ValidTo: obj.validTo,
@@ -136,6 +135,8 @@ export default function EditStudents() {
     });
   }, []);
 
+  console.log(candidates)
+
   useEffect(() => {
     if (candidates.MunicipalityId !== "") {
       CrudProvider.getItemByIdLang(
@@ -166,7 +167,6 @@ export default function EditStudents() {
       });
     }
   }, [candidates.MunicipalityId, candidates.InstitutionGroupDecision]);
-
   const citiesList =
     municipality &&
     municipality.length > 0 &&
@@ -178,6 +178,28 @@ export default function EditStudents() {
         };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
+
+  const dateString = candidates.ValidFrom;
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const validFrom = `${year}-${month}-${day}`;
+
+  const dateString2 = candidates.ValidTo;
+  const date2 = new Date(dateString2);
+  const year2 = date2.getFullYear();
+  const month2 = String(date2.getMonth() + 1).padStart(2, "0");
+  const day2 = String(date2.getDate()).padStart(2, "0");
+  const validTo = `${year2}-${month2}-${day2}`;
+
+  const dateString3 = candidates.RegisteredDate;
+  const date3 = new Date(dateString3);
+  const year3 = date3.getFullYear();
+  const month3 = String(date3.getMonth() + 1).padStart(2, "0");
+  const day3 = String(date3.getDate()).padStart(2, "0");
+  const registeredDate = `${year3}-${month3}-${day3}`;
+
 
   function changeMunicipality(e) {
     setCandidates({
@@ -197,7 +219,6 @@ export default function EditStudents() {
         };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
-
   const decisionList =
     decisions &&
     decisions.length > 0 &&
@@ -462,7 +483,7 @@ export default function EditStudents() {
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("Country")}:</label>
-                      {candidates.CountryForeign !== "" ? (
+                      {candidates.CountryForeign !== "0" ? (
                         <input
                           key="1"
                           type="text"
@@ -487,7 +508,7 @@ export default function EditStudents() {
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("Municipality")}:</label>
-                      {candidates.MunicipalityForeign !== "" ? (
+                      {candidates.MunicipalityForeign !== "0" ? (
                         <>
                           <input
                             key="1"
@@ -648,10 +669,19 @@ export default function EditStudents() {
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("RegisterDate")}:</label>
-                      <CustomDatePicker
-                        hasDefaultValue={true}
-                        defaultValue={candidates.RegisteredDate}
-                        onChangeFunction={changeRegisterDate}
+                      <input
+                        type="date"
+                        autoComplete="off"
+                        id="basic-datepicker"
+                        className="form-control flatpickr-input active"
+                        value={registeredDate}
+                        onChange={(e) => {
+                          setCandidates({
+                            ...candidates,
+                            RegisterDate: e.target.value,
+                          });
+                          formik.setFieldValue("RegisterDate", e.target.value);
+                        }}
                       />
                       {formik.errors.RegisterDate && (
                         <span className="text-danger">
@@ -661,30 +691,65 @@ export default function EditStudents() {
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("GraduationDate")}:</label>
-                      <CustomDatePicker
-                      hasDefaultValue={true}
-                      defaultValue={candidates.GraduatedDate}
-                        onChangeFunction={changeGraduationDate}
+                      <input
+                        type="date"
+                        autoComplete="off"
+                        id="basic-datepicker"
+                        className="form-control flatpickr-input active"
+                        value={candidates.GraduatedDate}
+                        onChange={(e) => {
+                          setCandidates({
+                            ...candidates,
+                            GraduatedDate: e.target.value,
+                          });
+                          formik.setFieldValue("GraduatedDate", e.target.value);
+                        }}
                       />
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                    <label>Valid From:</label>
-                    <CustomDatePicker onChangeFunction={changeValidFromDate} hasDefaultValue={true}/>
-                    {formik.errors.ValidFrom && (
-                      <span className="text-danger">
-                        {formik.errors.ValidFrom}
-                      </span>
-                    )}
-                  </div>
-                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                    <label>Valid To:</label>
-                    <CustomDatePicker onChangeFunction={changeValidToDate} hasDefaultValue={true}/>
-                    {formik.errors.ValidTo && (
-                      <span className="text-danger">
-                        {formik.errors.ValidTo}
-                      </span>
-                    )}
-                  </div>
+                      <label>Valid From:</label>
+                      <input
+                        type="date"
+                        autoComplete="off"
+                        id="basic-datepicker"
+                        className="form-control flatpickr-input active"
+                        value={validFrom}
+                        onChange={(e) => {
+                          setCandidates({
+                            ...candidates,
+                            ValidFrom: e.target.value,
+                          });
+                          formik.setFieldValue("ValidFrom", e.target.value);
+                        }}
+                      />
+                      {formik.errors.ValidFrom && (
+                        <span className="text-danger">
+                          {formik.errors.ValidFrom}
+                        </span>
+                      )}
+                    </div>
+                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                      <label>Valid To:</label>
+                      <input
+                        type="date"
+                        autoComplete="off"
+                        id="basic-datepicker"
+                        className="form-control flatpickr-input active"
+                        value={validTo}
+                        onChange={(e) => {
+                          setCandidates({
+                            ...candidates,
+                            ValidTo: e.target.value,
+                          });
+                          formik.setFieldValue("ValidTo", e.target.value);
+                        }}
+                      />
+                      {formik.errors.ValidTo && (
+                        <span className="text-danger">
+                          {formik.errors.ValidTo}
+                        </span>
+                      )}
+                    </div>
                     {/* <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3 d-flex align-items-center">
                       <Checkbox
                         className="mt-3"

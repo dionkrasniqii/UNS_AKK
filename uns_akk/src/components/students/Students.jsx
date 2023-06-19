@@ -77,8 +77,9 @@ export default function Students() {
     },
     {
       title: t("Actions"),
-      key: "personInstitutionId",
+      key: "personId",
       render: (value, record) => {
+        console.log(record)
         return (
           <div className='row d-flex justify-content-center'>
             <div className='col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2'>
@@ -90,7 +91,7 @@ export default function Students() {
               </Link>
             </div>
             <div className='col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2'>
-              <a className="btn-sm btn-danger" onClick={(e) => handleDelete(record.personInstitutionId)}>
+              <a className="btn-sm btn-danger" onClick={(e) => handleDelete(record.person.personId)}>
                 <i className="fe-trash-2" />
               </a>
             </div>
@@ -109,6 +110,7 @@ export default function Students() {
       if (res) {
         if (res.statusCode === 200) {
           toast.success(t("DataDeletedSuccessfully"));
+          window.location.reload();
         }
       }
       setLoad(false);
