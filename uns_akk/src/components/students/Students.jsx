@@ -5,6 +5,7 @@ import CrudProvider from "../../provider/CrudProvider";
 import jwtDecode from "jwt-decode";
 import DataTable from "../custom/DataTable";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Students() {
   const { t } = useTranslation();
@@ -76,7 +77,7 @@ export default function Students() {
     },
     {
       title: t("Actions"),
-      key: "institutionId",
+      key: "personInstitutionId",
       render: (value, record) => {
         return (
           <div className='row d-flex justify-content-center'>
@@ -89,18 +90,30 @@ export default function Students() {
               </Link>
             </div>
             <div className='col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2'>
-              {/* <a
-                className='btn-sm btn-danger'
-                onClick={(e) => handleDelete(record.institutionId)}
-              >
-                <i className='fe-trash-2' />
-              </a> */}
+              <a className="btn-sm btn-danger" onClick={(e) => handleDelete(record.personInstitutionId)}>
+                <i className="fe-trash-2" />
+              </a>
             </div>
           </div>
         );
       },
     },
   ];
+
+  async function handleDelete(id) {
+    setLoad(true);
+    await CrudProvider.deleteItemById(
+      "PersonAPI/DeletePersonInstitution",
+      id
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          toast.success(t("DataDeletedSuccessfully"));
+        }
+      }
+      setLoad(false);
+    });
+  }
 
   return (
     <div className='row'>

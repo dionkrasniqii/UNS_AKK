@@ -23,6 +23,7 @@ export default function CreateStudents() {
   const decodedToken = token && jwtDecode(token);
   const [loadSubmit, setLoadSubmit] = useState(false);
   const [IsForeign, setIsForeign] = useState(false);
+  const [graduatedChecked, setGraduatedChecked] = useState(false);
   const [model, setModel] = useState({
     Name: "",
     Surname: "",
@@ -40,6 +41,10 @@ export default function CreateStudents() {
     InstitutionId: decodedToken.groupsid,
     InstitutionDecisionId: "",
     InstitutionGroupDecisionId: "",
+    // GraduatedDate: "",
+    // Graduate: "",
+    ValidFrom: "",
+    ValidTo: "",
   });
 
   useEffect(() => {
@@ -68,7 +73,7 @@ export default function CreateStudents() {
       setLoad(false);
     });
   }, []);
-  console.log(model);
+
   useEffect(() => {
     if (model.MunicipalityId !== "") {
       CrudProvider.getItemByIdLang(
@@ -184,24 +189,40 @@ export default function CreateStudents() {
     });
     formik.setFieldValue("BirthDate", dateString);
   }
-  function changeRegisterDate(date, dateString) {
-    setModel({
-      ...model,
-      RegisteredDate: formatedDate(dateString),
-    });
-    formik.setFieldValue("RegisterDate", dateString);
-  }
+  // function changeRegisterDate(date, dateString) {
+  //   setModel({
+  //     ...model,
+  //     RegisteredDate: formatedDate(dateString),
+  //   });
+  //   formik.setFieldValue("RegisterDate", dateString);
+  // }
   function changeGraduationDate(date, dateString) {
     setModel({
       ...model,
       GraduatedDate: formatedDate(dateString),
     });
-    formik.setFieldValue("RegisterDate", dateString);
+    formik.setFieldValue("GraduatedDate", dateString);
+  }
+
+  function changeValidFromDate(date, dateString) {
+    setModel({
+      ...model,
+      ValidFrom: formatedDate(dateString),
+    });
+    formik.setFieldValue("ValidFrom", dateString);
+  }
+
+  function changeValidToDate(date, dateString) {
+    setModel({
+      ...model,
+      ValidTo: formatedDate(dateString),
+    });
+    formik.setFieldValue("ValidTo", dateString);
   }
   const CreateStudentSchema = Yup.object().shape({
     Name: Yup.string().required(t("FillName")),
     Surname: Yup.string().required(t("FillSurname")),
-    PersonalNr: Yup.string().required(t("FillPersonalNumber")),
+    PersonalNr: Yup.string().required(t("FillPersonalNumber")).matches(/^\d{10}$/, "Numri personal duhet të përmbaj 10 numra!"),
     BirthDate: Yup.string().required(t("FillBirthDate")),
     Municipality: Yup.string().required(t("ChooseMunicipality")),
     Residence: Yup.string().required(t("ChooseResidence")),
@@ -210,6 +231,8 @@ export default function CreateStudents() {
     Email: Yup.string().required(t("PleaseFillEmail")),
     Group: Yup.string().required(t("ChooseGroup")),
     ChooseDecision: Yup.string().required(t("ChooseDecision")),
+    ValidFrom:Yup.string().required("Plotësoni nga cila datë është valide"),
+    ValidTo: Yup.string().required("Plotësoni deri në cilën datë është valide"),
   });
   async function submitForm() {
     setLoadSubmit(true);
@@ -254,9 +277,9 @@ export default function CreateStudents() {
           <div id="progressbarwizard">
             <div className="tab-content b-0 mb-0 pt-0">
               <ProgressBar model={model} />
-              <div className='tab-pane active' id='account-2'>
-                <div className='row'>
-                  <div className='col-xxl-12 text-start mb-1'>
+              <div className="tab-pane active" id="account-2">
+                <div className="row">
+                  <div className="col-xxl-2 text-start mb-1">
                     <Checkbox
                       onChange={(e) => {
                         // setModel({
@@ -278,7 +301,20 @@ export default function CreateStudents() {
                       {t("ForeignStudent")}
                     </Checkbox>
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-9 text-start mb-1">
+                    <Checkbox
+                      onChange={(e) => {
+                        setGraduatedChecked(e.target.checked);
+                        setModel({
+                          ...model,
+                          Graduated: e.target.checked,
+                        });
+                      }}
+                    >
+                      {t("HasGraduated")}
+                    </Checkbox>
+                  </div>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Name")}:</label>
                     <input
                       type="text"
@@ -315,10 +351,10 @@ export default function CreateStudents() {
                     )}
                   </div>
 
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("PersonalNr")}:</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       onChange={(e) => {
                         setModel({
@@ -343,11 +379,11 @@ export default function CreateStudents() {
                       </span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Email")}:</label>
                     <input
-                      type='email'
-                      className='form-control'
+                      type="email"
+                      className="form-control"
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -357,14 +393,14 @@ export default function CreateStudents() {
                       }}
                     />
                     {formik.errors.Email && (
-                      <span className='text-danger'>{formik.errors.Email}</span>
+                      <span className="text-danger">{formik.errors.Email}</span>
                     )}
                   </div>
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("PhoneNumber")}:</label>
                     <input
-                      type='text'
-                      className='form-control'
+                      type="text"
+                      className="form-control"
                       onChange={(e) => {
                         setModel({
                           ...model,
@@ -374,13 +410,13 @@ export default function CreateStudents() {
                       }}
                     />
                     {formik.errors.Phonenumber && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.Phonenumber}
                       </span>
                     )}
                   </div>
 
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("Country")}:</label>
                     {IsForeign ? (
                       <input
@@ -507,7 +543,7 @@ export default function CreateStudents() {
                     )}
                   </div>
 
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("ChooseDecision")}:</label>
                     <CustomSelect
                       onChangeFunction={changeDecision}
@@ -527,8 +563,44 @@ export default function CreateStudents() {
                       isMulti={false}
                       optionsList={groupsList}
                     />
+                    {!model.InstitutionDecisionId && (
+                      <span className="text-info">
+                        Zgjedhni komunen per vendim per te ju shfaqur grupet
+                      </span>
+                    )}
                     {formik.errors.Group && (
                       <span className="text-danger">{formik.errors.Group}</span>
+                    )}
+                  </div>
+                  {graduatedChecked ? (
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <label>Graduation Date:</label>
+                    <CustomDatePicker onChangeFunction={changeGraduationDate} />
+                    {formik.errors.GraduatedDate && (
+                      <span className="text-danger">
+                        {formik.errors.GraduatedDate}
+                      </span>
+                    )}
+                  </div>
+                  ) : (
+                    ""
+                  )}
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <label>Valid From:</label>
+                    <CustomDatePicker onChangeFunction={changeValidFromDate} />
+                    {formik.errors.ValidFrom && (
+                      <span className="text-danger">
+                        {formik.errors.ValidFrom}
+                      </span>
+                    )}
+                  </div>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <label>Valid To:</label>
+                    <CustomDatePicker onChangeFunction={changeValidToDate} />
+                    {formik.errors.ValidTo && (
+                      <span className="text-danger">
+                        {formik.errors.ValidTo}
+                      </span>
                     )}
                   </div>
                 </div>
