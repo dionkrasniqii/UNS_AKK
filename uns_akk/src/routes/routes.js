@@ -27,6 +27,8 @@ import Landing from "../components/home/Landing";
 import CertificateDetails from "../components/search/CertificateDetails";
 import LevelDetails from "../components/search/LevelDetails";
 import QualificationDetails from "../components/search/QualificationDetails";
+import DecisionDetails from "../components/search/DecisionDetails";
+import InstitutionDetails from "../components/search/InstitutionDetails";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -40,7 +42,6 @@ export const AppRoutes = (props) => {
         <Routes>
           <Route
             path='/'
-            indexs
             element={
               props.authState ? (
                 <PrivateRoute
@@ -323,7 +324,12 @@ export const AppRoutes = (props) => {
           />
           {/* Level */}
           <Route path='/leveldetails/:id' element={<LevelDetails />} />
-          <Route path='/*' component={<Landing />} />
+          {/*Decision */}
+          <Route path='/decisiondetails/:id' element={<DecisionDetails />} />
+          <Route
+            path='/institutiondetails/:id'
+            element={<InstitutionDetails />}
+          />
         </Routes>
       </div>
     </div>

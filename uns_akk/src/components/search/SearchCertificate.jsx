@@ -71,11 +71,12 @@ export default function SearchCertificate() {
         switch (res.statusCode) {
           case 200:
             setData(res.result);
+            setLoad(false);
             break;
           default:
+            setLoad(false);
             break;
         }
-        setLoad(false);
       }
     });
   }
@@ -196,17 +197,17 @@ export default function SearchCertificate() {
             <div className='button-list text-end'>
               <button
                 type='button'
-                className='btn btn-soft-secondary waves-effect mt-2'
-                onClick={clearInputs}
-              >
-                {t("Clear")}
-              </button>
-              <button
-                type='button'
                 onClick={submitForm}
                 className='btn btn-soft-primary waves-effect waves-light mt-2'
               >
                 {t("Search")}
+              </button>
+              <button
+                type='button'
+                className='btn btn-soft-secondary waves-effect mt-2'
+                onClick={clearInputs}
+              >
+                {t("Clear")}
               </button>
             </div>
           ) : (

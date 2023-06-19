@@ -20,10 +20,8 @@ export default function QualificationDetails() {
         switch (res.statusCode) {
           case 200:
             setData(res.result);
-
             break;
           default:
-            navigate("/");
             break;
         }
         setLoad(false);

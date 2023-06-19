@@ -27,7 +27,6 @@ export default function CertificateDetails() {
       }
     });
   }, [id]);
-  console.log(data);
   return (
     <div className='content-page-landing content-custom  animation'>
       <div className='content'>

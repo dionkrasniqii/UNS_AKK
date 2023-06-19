@@ -5,7 +5,7 @@ import CrudProvider from "../../provider/CrudProvider";
 import CustomSelect from "../custom/CustomSelect";
 import img_bus from "../../images/biz-img.png";
 
-export default function SearchDecisions() {
+export default function SearchInstitution() {
   const { t } = useTranslation();
   const [load, setLoad] = useState(false);
   const [data, setData] = useState([]);
@@ -13,25 +13,75 @@ export default function SearchDecisions() {
   const [model, setModel] = useState({
     LangId: localStorage.getItem("i18nextLng"),
     MunicipalityId: "",
+    MunicipalityName: "",
     UniqueNumber: "",
-    NameOfInstitution: "",
+    InstitutionName: "",
   });
-  const columns = [];
+  const columns = [
+    {
+      title: t("NumberOfCertificate"),
+      key: "institutionName",
+      dataIndex: "institutionName",
+      responsive: ["sm"],
+      render: (item, record) => {
+        console.log(record);
+        return (
+          <a
+            href={`/decisiondetails/${record.institutionDecisionDetailsId}`}
+            target='_blank'
+          >
+            {item}
+          </a>
+        );
+      },
+    },
+    {
+      title: t("Municipality"),
+      dataIndex: "municipalityName",
+      key: "municipalityName",
+      responsive: ["sm"],
+    },
+    {
+      title: t("Qualification"),
+      dataIndex: "qualificationName",
+      key: "qualificationName",
+      responsive: ["sm"],
+    },
+    {
+      title: t("DateIssuanceDecision"),
+      dataIndex: "decisionDate",
+      key: "decisionDate",
+      responsive: ["sm"],
+      render: (item) =>
+        item ? new Date(item.split("T")[0]).toLocaleDateString("en-GB") : "",
+    },
+    {
+      title: t("DateExpirationDecision"),
+      dataIndex: "termDate",
+      key: "termDate",
+      responsive: ["sm"],
+      render: (item) =>
+        item ? new Date(item.split("T")[0]).toLocaleDateString("en-GB") : "",
+    },
+  ];
   async function submitForm() {
+    console.log(model);
+
     setLoad(true);
     await CrudProvider.createItem(
-      "CertificatesAPI/GetCertificates",
+      "InstitutionAPI/GetInstitutionDecision",
       model
     ).then((res) => {
       if (res) {
         switch (res.statusCode) {
           case 200:
             setData(res.result);
+            setLoad(false);
             break;
           default:
+            setLoad(false);
             break;
         }
-        setLoad(false);
       }
     });
   }
@@ -65,19 +115,20 @@ export default function SearchDecisions() {
       })
       .sort((a, b) => a.label.localeCompare(b.label));
 
-  function changeCity(e) {
+  function changeCity(e, record) {
     setModel({
       ...model,
+      LangId: localStorage.getItem("i18nextLng"),
       MunicipalityId: e,
+      MunicipalityName: record?.label ? record.label : "",
     });
   }
 
   function clearInputs() {
     setModel({
-      PersonalNr: "",
-      CertificateNr: "",
-      NameSurname: "",
-      Keyword: "",
+      UniqueNumber: "",
+      MunicipalityId: "",
+      InstitutionName: "",
     });
     setData([]);
   }
@@ -97,8 +148,11 @@ export default function SearchDecisions() {
                 <input
                   type='text'
                   className='form-control'
+                  value={model.UniqueNumber || ""}
                   onChange={(e) =>
                     setModel({
+                      ...model,
+                      LangId: localStorage.getItem("i18nextLng"),
                       UniqueNumber: e.target.value,
                     })
                   }
@@ -115,9 +169,12 @@ export default function SearchDecisions() {
                 <input
                   type='text'
                   className='form-control'
+                  value={model.InstitutionName || ""}
                   onChange={(e) =>
                     setModel({
-                      NameOfInstitution: e.target.value,
+                      ...model,
+                      LangId: localStorage.getItem("i18nextLng"),
+                      InstitutionName: e.target.value,
                     })
                   }
                 />
@@ -132,6 +189,10 @@ export default function SearchDecisions() {
               <div className='col-md-8'>
                 <CustomSelect
                   optionsList={citiesList}
+                  hasDefaultValue={true}
+                  defaultValue={
+                    model.MunicipalityName ? model.MunicipalityName : ""
+                  }
                   onChangeFunction={changeCity}
                   isMulti={false}
                 />
@@ -143,17 +204,17 @@ export default function SearchDecisions() {
               <div className='button-list'>
                 <button
                   type='button'
-                  className='btn btn-soft-secondary waves-effect mt-2'
-                  onClick={clearInputs}
-                >
-                  {t("Clear")}
-                </button>
-                <button
-                  type='button'
                   onClick={submitForm}
                   className='btn btn-soft-primary waves-effect waves-light mt-2'
                 >
                   {t("Search")}
+                </button>
+                <button
+                  type='button'
+                  className='btn btn-soft-secondary waves-effect mt-2'
+                  onClick={clearInputs}
+                >
+                  {t("Clear")}
                 </button>
               </div>
             ) : (

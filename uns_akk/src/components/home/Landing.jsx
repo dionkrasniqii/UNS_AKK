@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import i18next from "i18next";
 import SearchCertificate from "../search/SearchCertificate";
 import { useTranslation } from "react-i18next";
-import SearchDecisions from "../search/SearchDecisions";
 import NavbarLanding from "./NavbarLanding";
 import { Link } from "react-router-dom";
 import $ from "jquery";
+import SearchInstitution from "../search/SearchInstitution";
 export default function Landing() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("1");
@@ -140,7 +140,7 @@ export default function Landing() {
                         activeTab === "2" ? "show active" : ""
                       }`}
                     >
-                      <SearchDecisions />
+                      <SearchInstitution />
                     </div>
                   </div>
                 </div>

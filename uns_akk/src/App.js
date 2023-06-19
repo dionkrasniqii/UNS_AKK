@@ -45,10 +45,8 @@ function App() {
         setAuthState(true);
       }
     } else {
-      console.log(1);
       setAuthState(false);
       dispatch(removeToken());
-      navigate("/");
       localStorage.removeItem("akktoken");
     }
   }, [oldSession]);

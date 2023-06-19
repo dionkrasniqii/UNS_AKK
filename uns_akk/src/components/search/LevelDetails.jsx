@@ -17,17 +17,14 @@ export default function LevelDetails() {
         switch (res.statusCode) {
           case 200:
             setData(res.result);
-
             break;
           default:
-            navigate("/");
             break;
         }
         setLoad(false);
       }
     });
   }, [id]);
-  console.log(data);
   return (
     <div className='content-page-landing content-custom  animation'>
       <div className='content'>
