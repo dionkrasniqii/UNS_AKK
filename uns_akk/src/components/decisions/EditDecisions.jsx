@@ -207,12 +207,14 @@ export default function EditDecisions() {
                           )}
                           width='800px'
                           height='700px'
+                          loading='lazy'
                         ></iframe>
                       ) : (
                         <img
                           src={CrudProvider.documentPath(
                             decision.documents.docPath
                           )}
+                          loading='lazy'
                         ></img>
                       )}
                     </Modal>

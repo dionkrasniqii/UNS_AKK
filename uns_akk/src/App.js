@@ -13,6 +13,7 @@ import Footer from "./components/home/Footer";
 import Navbar from "./components/home/Navbar";
 import jwtDecode from "jwt-decode";
 import { removeToken, setToken } from "./store/actions";
+import NavbarLanding from "./components/home/NavbarLanding";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function App() {
   );
   const navigate = useNavigate();
   const [authState, setAuthState] = useState(null);
-  console.log(authState);
+
   useEffect(() => {
     if (oldSession !== null) {
       const decodedToken = jwtDecode(oldSession);
@@ -66,11 +67,13 @@ function App() {
         style={{ fontSize: "14px" }}
       />
 
-      {authState !== null && authState && (
+      {authState !== null && authState ? (
         <>
           <Navbar authState={authState} setAuthState={setAuthState} />
           <Sidebar />
         </>
+      ) : (
+        <NavbarLanding />
       )}
       <AppRoutes authState={authState} setAuthState={setAuthState} />
       {authState && <Footer />}

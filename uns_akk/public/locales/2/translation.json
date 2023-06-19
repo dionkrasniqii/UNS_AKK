@@ -165,5 +165,18 @@
   "RegisterStudent": "Register student",
   "GraduationDate": "Graduation date",
   "AddLevel": "Add Level",
-  "LevelList": "Level List"
+  "LevelList": "Level List",
+  "FormsForSearch": "Forms for search",
+  "Languages": "Languages",
+  "Certificate": "Certificate",
+  "Institucion1": "Institucion",
+  "Clear": "Clear",
+  "NumberOfCertificate": "Number of certificate",
+  "Keyword": "Keyword",
+  "NameOfInstitution": "Name of institution",
+  "ListOfCandidate": "List of candidates",
+  "ValidFrom": "Valid from",
+  "ValidTo": "Valid to",
+  "NoLimit": "No limit",
+  "CandidateDetails": "Candidate details"
 }

@@ -1,55 +1,31 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import mainLogo from "./../../assets/images/logo_akk.png";
-import smallLogo from "./../../assets/images/sm.png";
 import i18next from "i18next";
 import SearchCertificate from "../search/SearchCertificate";
-
+import { useTranslation } from "react-i18next";
+import NavbarLanding from "./NavbarLanding";
+import { Link } from "react-router-dom";
+import $ from "jquery";
+import SearchInstitution from "../search/SearchInstitution";
 export default function Landing() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("1");
-
-  async function changeLang(e) {
-    i18next.changeLanguage(e);
-  }
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
+  async function changeLang(e) {
+    i18next.changeLanguage(e);
+  }
 
+  $(window).on("scroll", function () {
+    if ($(window).scrollTop() > 0) {
+      $(".topnav").addClass("hidden");
+    } else {
+      $(".topnav").removeClass("hidden");
+    }
+  });
   return (
     <>
-      <div className='navbar-custom navbar-costum-padding'>
-        <div className='container-fluid'>
-          <ul className='list-unstyled topnav-menu float-end mb-0'></ul>
-
-          <div className='logo-box bg-dark-custom ' style={{ height: "67px" }}>
-            <Link to='/' className='logo logo-dark text-center'>
-              <span className='logo-lg text-start'>
-                <img src={smallLogo} alt='' height={50} />
-              </span>
-              <span className='logo-sm text-start'>
-                <img src={smallLogo} alt='' height={30} />
-              </span>
-            </Link>
-          </div>
-          <ul className='list-unstyled topnav-menu topnav-menu-left mb-0'>
-            <li>
-              <a
-                className='navbar-toggle nav-link'
-                data-bs-toggle='collapse'
-                data-bs-target='#topnav-menu-content'
-              >
-                <div className='lines'>
-                  <span />
-                  <span />
-                  <span />
-                </div>
-              </a>
-            </li>
-          </ul>
-          <div className='clearfix' />
-        </div>
-      </div>
       <div className='topnav navbar-costum-padding'>
         <div className='container-fluid'>
           <nav className='navbar navbar-light navbar-expand-lg topnav-menu'>
@@ -64,7 +40,8 @@ export default function Landing() {
                     aria-haspopup='true'
                     aria-expanded='false'
                   >
-                    <i className='mdi mdi-view-dashboard me-1' /> Ballina
+                    <i className='mdi mdi-view-dashboard me-1' />
+                    {t("Home")}
                   </Link>
                 </li>
                 <li className='nav-item '>
@@ -76,7 +53,7 @@ export default function Landing() {
                     aria-haspopup='true'
                     aria-expanded='false'
                   >
-                    <i className='fe-log-in me-1' /> Qasja
+                    <i className='fe-log-in me-1' /> {t("Login")}
                   </Link>
                 </li>
                 <li className='nav-item dropdown '>
@@ -89,7 +66,7 @@ export default function Landing() {
                     aria-expanded='false'
                   >
                     <i className='mdi mdi-card-bulleted-settings-outline me-1' />
-                    Gjuhët <div className='arrow-down' />
+                    {t("Languages")} <div className='arrow-down' />
                   </a>
                   <div
                     className='dropdown-menu active'
@@ -99,25 +76,13 @@ export default function Landing() {
                       className='dropdown-item '
                       onClick={(e) => changeLang("1")}
                     >
-                      <label>
-                        <img
-                          className='flag-icon'
-                          src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/al.svg'
-                        />
-                        (AL)
-                      </label>
+                      <label>AL</label>
                     </a>
                     <a
                       className='dropdown-item '
                       onClick={(e) => changeLang("2")}
                     >
-                      <label className='fs-6'>
-                        <img
-                          className='flag-icon'
-                          src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/gb.svg'
-                        />
-                        (ENG)
-                      </label>
+                      <label className='fs-6'>ENG</label>
                     </a>
                   </div>
                 </li>
@@ -126,15 +91,14 @@ export default function Landing() {
           </nav>
         </div>
       </div>
-
       <div className='content-page-landing navbar-costum-padding content-custom'>
-        <div className='content '>
+        <div className='content mb-5'>
           <div className='container-fluid d-flex justify-content-center'>
             <div className='col-md-10'>
               <div className='card'>
                 <div className='card-body'>
                   <h4 className='header-title mb-4 text-uppercase'>
-                    Format e kërkimit
+                    {t("FormsForSearch")}
                   </h4>
                   <ul className='nav nav-pills navtab-bg nav-justified'>
                     <li className='nav-item'>
@@ -146,7 +110,7 @@ export default function Landing() {
                           activeTab === "1" ? " active" : ""
                         }`}
                       >
-                        Certifikata
+                        {t("Certificate")}
                       </a>
                     </li>
                     <li className='nav-item'>
@@ -159,7 +123,7 @@ export default function Landing() {
                           activeTab === "2" ? " active" : ""
                         }`}
                       >
-                        Vendime
+                        {t("Institucion1")}
                       </a>
                     </li>
                   </ul>
@@ -168,7 +132,6 @@ export default function Landing() {
                       className={`tab-pane ${
                         activeTab === "1" ? "show active" : ""
                       }`}
-                      id='home1'
                     >
                       <SearchCertificate />
                     </div>
@@ -176,10 +139,8 @@ export default function Landing() {
                       className={`tab-pane ${
                         activeTab === "2" ? "show active" : ""
                       }`}
-                      id='profile1'
                     >
-                      <p>Form 2</p>
-                      <p className='mb-0'>Form 2</p>
+                      <SearchInstitution />
                     </div>
                   </div>
                 </div>
@@ -187,6 +148,18 @@ export default function Landing() {
             </div>
           </div>
         </div>
+        <footer className='footer footer-landing mt-5'>
+          <div className='container-fluid m-0'>
+            <div className='row'>
+              <div className='col-md-6'>
+                {new Date().getFullYear()} © All rights reserved by{" "}
+                <a href='http://www.unisoft-rks.com/' target='_blank'>
+                  UniSoft
+                </a>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </>
   );

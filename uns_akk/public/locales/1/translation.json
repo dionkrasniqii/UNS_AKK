@@ -159,5 +159,18 @@
   "PleaseFillTheLevelIndicator": "Ju lutem shkruani indikatorin e niveleve!",
   "PleaseFillTheSkills": "Ju lutem shkruani aftësitë!",
   "PlaseFillTheDescriptor": "Ju lutem shkruani përcaktuesin!",
-  "PleaseChooseTheLanguange": "Ju lutem zgjidhni gjuhën!"
+  "PleaseChooseTheLanguange": "Ju lutem zgjidhni gjuhën!",
+  "FormsForSearch": "Format e kërkimit",
+  "Languages": "Gjuhët",
+  "Certificate": "Certifikatë",
+  "Institucion1": "Institucion",
+  "Clear": "Pastro",
+  "NumberOfCertificate": "Numri certifikatës",
+  "Keyword": "Fjalë kyçe",
+  "NameOfInstitution": "Emri institucionit",
+  "ListOfCandidate": "Lista e kandidatëve",
+  "ValidFrom": "Valide prej",
+  "ValidTo": "Valide deri",
+  "NoLimit":"Nuk ka limit",
+  "CandidateDetails":"Të dhënat e kandidatit"
 }

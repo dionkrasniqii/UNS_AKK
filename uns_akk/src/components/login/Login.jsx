@@ -1,15 +1,15 @@
-import { ModelTrainingSharp } from "@mui/icons-material";
-import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
+import { useFormik } from "formik";
 import { useNavigate } from "react-router";
 import CrudProvider from "../../provider/CrudProvider";
+
 import { toast } from "react-toastify";
 import MultiRoles from "./MultiRoles";
-import logo from "./../../assets/images/logo_akk.png";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/actions";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
 
 export default function Login(props) {
   const { t } = useTranslation();
@@ -82,22 +82,23 @@ export default function Login(props) {
       setAuthState={props.setAuthState}
     />
   ) : (
-    <div className='account-pages my-5 px-5'>
+    <div
+      className='account-pages pt-5 animation'
+      style={{ marginTop: "150px" }}
+    >
       <div className='container'>
         <div className='row justify-content-center'>
           <div className='col-md-8 col-lg-6 col-xl-4'>
             <form onSubmit={formik.handleSubmit}>
               <div className='card'>
-                <div className='text-center'>
-                  <a href='index.html'>
+                {/* <div className='text-center'>
                     <img
                       src={logo}
                       alt=''
                       height={60}
                       className='mx-auto mt-2'
                     />
-                  </a>
-                </div>
+                </div> */}
                 <div className='card-body p-4'>
                   <div className='text-center mb-4'>
                     <h4 className='text-uppercase mt-0'>{t("Login")}</h4>
@@ -186,6 +187,16 @@ export default function Login(props) {
                 </div>
               </div>
             </form>
+          </div>
+          <div className='row mt-3'>
+            <div className='col-12 text-center'>
+              <p className='text-muted'>
+                <Link to='/' className='text-dark ms-1'>
+                  <i className='fe-arrow-left' />
+                  <b> {t("Back")}</b>
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -88,22 +88,6 @@ export default function Navbar(props) {
             aria-haspopup='false'
             aria-expanded='false'
           >
-            {selectedLanguage == 1 ? (
-              <img
-                className='flag-icon'
-                src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/al.svg'
-              />
-            ) : selectedLanguage == 2 ? (
-              <img
-                className='flag-icon'
-                src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/gb.svg'
-              />
-            ) : (
-              <img
-                className='flag-icon'
-                src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/al.svg'
-              />
-            )}
             <span className='pro-user-name ms-1'>
               {selectedLanguage == 1 ? (
                 <span>AL</span>
@@ -125,42 +109,15 @@ export default function Navbar(props) {
               className='dropdown-item notify-item'
               onClick={(e) => changeLang("1")}
             >
-              <label>
-                <img
-                  className='flag-icon'
-                  src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/al.svg'
-                />{" "}
-                (AL)
-              </label>
+              <label>AL</label>
             </a>
             <div className='dropdown-divider' />
             <a
               className='dropdown-item notify-item'
               onClick={(e) => changeLang("2")}
             >
-              <label className='fs-6'>
-                <img
-                  className='flag-icon'
-                  src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/gb.svg'
-                />{" "}
-                (ENG)
-              </label>
+              <label className='fs-6'>ENG</label>
             </a>
-            {/*<div className='dropdown-divider' />
-           <a
-              className='dropdown-item notify-item'
-              onClick={(e) => changeLang("3")}
-            >
-              <label className="fs-6">
-                (SR){" "}
-                {/* <img
-                  className='flag-icon'
-                  src='https://cdn.jsdelivr.net/gh/lipis/flag-icon-css@3.5.0/flags/4x3/rs.svg'
-                  alt='UK Flag'
-                /> 
-                
-              </label>
-            </a> */}
           </div>
         </li>
         <li
@@ -206,10 +163,10 @@ export default function Navbar(props) {
       <div className='logo-box' style={{ height: "66px" }}>
         <Link to='/home' className='logo logo-dark text-center'>
           <span className='logo-lg text-start'>
-            <img src={smallLogo} alt='' height={50} />
+            <img src={smallLogo} alt='' height={50} loading='lazy' />
           </span>
           <span className='logo-sm'>
-            <img src={smallLogo} alt='' height={30} />
+            <img src={smallLogo} alt='' height={30} loading='lazy' />
           </span>
         </Link>
       </div>
