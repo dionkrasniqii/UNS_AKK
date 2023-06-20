@@ -129,14 +129,14 @@ export default function Landing() {
                   </ul>
                   <div className='tab-content'>
                     <div
-                      className={`tab-pane ${
+                      className={`tab-pane animation ${
                         activeTab === "1" ? "show active" : ""
                       }`}
                     >
                       <SearchCertificate />
                     </div>
                     <div
-                      className={`tab-pane ${
+                      className={`tab-pane animation ${
                         activeTab === "2" ? "show active" : ""
                       }`}
                     >
