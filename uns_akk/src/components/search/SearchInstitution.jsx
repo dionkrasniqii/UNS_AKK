@@ -19,7 +19,7 @@ export default function SearchInstitution() {
   });
   const columns = [
     {
-      title: t("NumberOfCertificate"),
+      title: t("Name"),
       key: "institutionName",
       dataIndex: "institutionName",
       responsive: ["sm"],
@@ -231,11 +231,20 @@ export default function SearchInstitution() {
 
       <div className='col-xxl-12'>
         <hr />
-        <DataTable
-          dataSource={data}
-          columns={columns}
-          title={t("InstitutionsList")}
-        />
+        {!load ? (
+          <DataTable
+            dataSource={data}
+            columns={columns}
+            title={t("InstitutionsList")}
+          />
+        ) : (
+          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+            <div
+              className='spinner-border text-primary m-2 text-center'
+              role='status'
+            />
+          </div>
+        )}
       </div>
     </div>
   );

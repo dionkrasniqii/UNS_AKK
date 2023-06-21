@@ -24,6 +24,8 @@ import EditStudents from "../components/students/EditStudents";
 import Groups from "../components/groups/Groups";
 import CreateGroup from "../components/groups/CreateGroup";
 import Landing from "../components/home/Landing";
+import Person from "../components/personinstitutions/Person";
+import PersonList from "../components/personinstitutions/PersonList";
 import CertificateDetails from "../components/search/CertificateDetails";
 import LevelDetails from "../components/search/LevelDetails";
 import QualificationDetails from "../components/search/QualificationDetails";
@@ -329,6 +331,29 @@ export const AppRoutes = (props) => {
           <Route
             path='/institutiondetails/:id'
             element={<InstitutionDetails />}
+          />
+          {/* {/ PersonList /} */}
+          <Route
+            path='/person'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN]}
+                component={Person}
+              />
+            }
+          />
+          <Route
+            path='/personlist/:id'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN]}
+                component={PersonList}
+              />
+            }
           />
         </Routes>
       </div>

@@ -28,6 +28,14 @@ export default function Sidebar() {
       icon: "mdi mdi-calendar-blank-outline",
     },
     {
+      label: "Kandidatet",
+      roles: ["Admin"],
+      path: "/person",
+      hasMenu: false,
+      showLabel: true,
+      icon: "mdi mdi-calendar-blank-outline",
+    },
+    {
       label: "Level",
       roles: ["Admin"],
       path: "/level",

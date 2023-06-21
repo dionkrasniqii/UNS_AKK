@@ -1,6 +1,4 @@
-import { isContentEditable } from "@testing-library/user-event/dist/utils";
 import axios from "axios";
-import { lang } from "moment/moment";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL_LOCAL;
 //const API_BASE_URL = process.env.REACT_APP_API_BASE_URL_STAGING;
@@ -274,24 +272,58 @@ async function deleteItemById(controller, itemId) {
     handleRequestError(error);
   }
 }
-async function getReportRDLC(methodRoute, id, reportName) {
-  // let token = localStorage.getItem("akktoken");
+async function getReportRDLC(methodRoute, fileType, id, reportName) {
+  let token = localStorage.getItem("akktoken");
   try {
-    let langId = localStorage.getItem("i18nextLng");
     const response = await axios.get(
-      `${API_BASE_URL}/ReportAPIController/${methodRoute}/${langId}/${id}`,
+      `${API_BASE_URL}/${methodRoute}/${fileType}`,
       {
-        // headers: {
-        //   Authorization: `Bearer ${token}`,
-        // },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         responseType: "blob",
       }
     );
     const url = URL.createObjectURL(response.data);
-    const link = document.createElement("a");
-    link.href = url;
-    // link.download = `${reportName}.pdf`;
-    link.click();
+
+    const contentType = response.headers["content-type"];
+    if (contentType === "application/pdf") {
+      window.open(url, "_blank");
+    } else if (contentType === "application/vnd.ms-excel") {
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${reportName}`;
+      link.click();
+    }
+  } catch (error) {
+    handleRequestError(error);
+  }
+}
+
+async function getReportRDLCWithLang(methodRoute, fileType, id, reportName) {
+  let langId = localStorage.getItem("i18nextLng");
+  let token = localStorage.getItem("akktoken");
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/${methodRoute}/${langId}/${fileType}/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+      }
+    );
+    const url = URL.createObjectURL(response.data);
+
+    const contentType = response.headers["content-type"];
+    if (contentType === "application/pdf") {
+      window.open(url, "_blank");
+    } else if (contentType === "application/vnd.ms-excel") {
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${reportName}`;
+      link.click();
+    }
   } catch (error) {
     handleRequestError(error);
   }
@@ -354,6 +386,7 @@ export default {
   updateItemWithFile,
   documentPath,
   getReportRDLC,
+  getReportRDLCWithLang,
   checkIsPDf,
   changeLang,
 };

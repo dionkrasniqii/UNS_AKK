@@ -46,7 +46,7 @@ export default function QualificationDetails() {
                           {t("QualificationName")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.qualificationName}</strong>
+                          {data.qualificationName}
                         </span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
@@ -79,7 +79,7 @@ export default function QualificationDetails() {
                             href={`/leveldetails/${data.levelKKKId}`}
                             target='_blank'
                           >
-                            <strong>{data.levelKKKDesc}</strong>
+                            {data.levelKKKDesc}
                           </a>
                         </span>
                         <hr />

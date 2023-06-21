@@ -95,9 +95,9 @@ export default function InstitutionDetails() {
                             {t("Web")}:
                           </label>
                           <span className='ms-2 font-20'>
-                            <a href={data.web} target='_blank'>
+                            <Link to={data.web} target='_blank'>
                               <strong>{data.web}</strong>
-                            </a>
+                            </Link>
                           </span>
                           <hr />
                         </div>
