@@ -42,63 +42,63 @@ export default function LevelDetails() {
                           {t("Level Reference KEK")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.levelKKK.levelReferenceKEK}</strong>
+                          {data.levelKKK.levelReferenceKEK}
                         </span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Competencies")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.competencies}</strong>
+                          {data.competencies}
                         </span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Knowledge")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.knowledge}</strong>
+                          {data.knowledge}
                         </span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Level Indicator")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.levelIndicators}</strong>
+                          {data.levelIndicators}
                         </span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Skills")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.skills}</strong>
+                          {data.skills}
                         </span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Descriptor")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.theDescriptor}</strong>
+                          {data.theDescriptor}
                         </span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Type")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.type}</strong>
+                          {data.type}
                         </span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Type")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.type}</strong>
+                          {data.type}
                         </span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Detailed Description")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.levelKKKDescription}</strong>
+                          {data.levelKKKDescription}
                         </span>
                         <hr />
                       </div>

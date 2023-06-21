@@ -6,6 +6,7 @@ import NavbarLanding from "./NavbarLanding";
 import { Link } from "react-router-dom";
 import $ from "jquery";
 import SearchInstitution from "../search/SearchInstitution";
+import CrudProvider from "../../provider/CrudProvider";
 export default function Landing() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("1");
@@ -24,6 +25,11 @@ export default function Landing() {
       $(".topnav").removeClass("hidden");
     }
   });
+
+  function getRaporti() {
+    CrudProvider.getReportRDLC("ReportsAPI/PrintReport", "pdf", null, "Test");
+  }
+
   return (
     <>
       <div className='topnav navbar-costum-padding'>
@@ -93,6 +99,9 @@ export default function Landing() {
       </div>
       <div className='content-page-landing navbar-costum-padding content-custom'>
         <div className='content mb-5'>
+          <button className='btn btn-primary' onClick={getRaporti}>
+            Test raport
+          </button>
           <div className='container-fluid d-flex justify-content-center'>
             <div className='col-md-10'>
               <div className='card'>
@@ -129,7 +138,7 @@ export default function Landing() {
                   </ul>
                   <div className='tab-content'>
                     <div
-                      className={`tab-pane animation ${
+                      className={`tab-pane animation animation-reverse ${
                         activeTab === "1" ? "show active" : ""
                       }`}
                     >
