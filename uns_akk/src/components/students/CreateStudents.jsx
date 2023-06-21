@@ -23,16 +23,15 @@ export default function CreateStudents() {
   const decodedToken = token && jwtDecode(token);
   const [loadSubmit, setLoadSubmit] = useState(false);
   const [IsForeign, setIsForeign] = useState(false);
-  const [graduatedChecked, setGraduatedChecked] = useState(false);
   const [model, setModel] = useState({
     Name: "",
     Surname: "",
     PersonalNr: "",
     BirthDate: "",
-    CountryId: "1",
-    CountryForeign: "0",
+    CountryId: "",
+    CountryForeign: "",
     MunicipalityId: "",
-    MunicipalityForeign: "0",
+    MunicipalityForeign: "",
     ResidenceId: "",
     ResidenceForeign: "",
     Address: "",
@@ -41,12 +40,11 @@ export default function CreateStudents() {
     InstitutionId: decodedToken.groupsid,
     InstitutionDecisionId: "",
     InstitutionGroupDecisionId: "",
-    // GraduatedDate: "",
-    // Graduate: "",
+    GraduatedDate: null,
+    Graduate: false,
     ValidFrom: "",
     ValidTo: "",
   });
-
   useEffect(() => {
     setLoad(true);
     Promise.all([
@@ -222,7 +220,9 @@ export default function CreateStudents() {
   const CreateStudentSchema = Yup.object().shape({
     Name: Yup.string().required(t("FillName")),
     Surname: Yup.string().required(t("FillSurname")),
-    PersonalNr: Yup.string().required(t("FillPersonalNumber")).matches(/^\d{10}$/, "Numri personal duhet të përmbaj 10 numra!"),
+    PersonalNr: Yup.string()
+      .required(t("FillPersonalNumber"))
+      .matches(/^\d{10}$/, "Numri personal duhet të përmbaj 10 numra!"),
     BirthDate: Yup.string().required(t("FillBirthDate")),
     Municipality: Yup.string().required(t("ChooseMunicipality")),
     Residence: Yup.string().required(t("ChooseResidence")),
@@ -231,9 +231,10 @@ export default function CreateStudents() {
     Email: Yup.string().required(t("PleaseFillEmail")),
     Group: Yup.string().required(t("ChooseGroup")),
     ChooseDecision: Yup.string().required(t("ChooseDecision")),
-    ValidFrom:Yup.string().required("Plotësoni nga cila datë është valide"),
+    ValidFrom: Yup.string().required("Plotësoni nga cila datë është valide"),
     ValidTo: Yup.string().required("Plotësoni deri në cilën datë është valide"),
   });
+  console.log(model)
   async function submitForm() {
     setLoadSubmit(true);
     await CrudProvider.createItem("PersonAPI/CreatePerson", model).then(
@@ -244,6 +245,8 @@ export default function CreateStudents() {
               toast.success(t("DataSavedSuccessfully"));
               navigate("/students");
               break;
+            case 406:
+              toast.error("Ekziston personi me këtë numër personal apo email!")
             case 409:
               toast.error(
                 "Ju nuk mund të regjistroni kandidat ne grupin e zgjedhur sepse ska vende te lira"
@@ -260,7 +263,6 @@ export default function CreateStudents() {
       }
     );
   }
-
   const formik = useFormik({
     initialValues: {},
     validateOnChange: false,
@@ -291,10 +293,12 @@ export default function CreateStudents() {
                         formik.setFieldValue("Residence", null);
                         setModel({
                           ...model,
+                          CountryId: "",
+                          CountryForeign: e.target.checked,
                           ResidenceId: "",
-                          ResidenceForeign: "",
+                          ResidenceForeign: e.target.checked,
                           Municipality: "",
-                          MunicipalityForeign: "",
+                          MunicipalityForeign: e.target.checked,
                         });
                       }}
                     >
@@ -304,10 +308,9 @@ export default function CreateStudents() {
                   <div className="col-xxl-9 text-start mb-1">
                     <Checkbox
                       onChange={(e) => {
-                        setGraduatedChecked(e.target.checked);
                         setModel({
                           ...model,
-                          Graduated: e.target.checked,
+                          Graduate: e.target.checked,
                         });
                       }}
                     >
@@ -572,16 +575,18 @@ export default function CreateStudents() {
                       <span className="text-danger">{formik.errors.Group}</span>
                     )}
                   </div>
-                  {graduatedChecked ? (
-                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                    <label>Graduation Date:</label>
-                    <CustomDatePicker onChangeFunction={changeGraduationDate} />
-                    {formik.errors.GraduatedDate && (
-                      <span className="text-danger">
-                        {formik.errors.GraduatedDate}
-                      </span>
-                    )}
-                  </div>
+                  {model.Graduate ? (
+                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                      <label>Graduation Date:</label>
+                      <CustomDatePicker
+                        onChangeFunction={changeGraduationDate}
+                      />
+                      {formik.errors.GraduatedDate && (
+                        <span className="text-danger">
+                          {formik.errors.GraduatedDate}
+                        </span>
+                      )}
+                    </div>
                   ) : (
                     ""
                   )}

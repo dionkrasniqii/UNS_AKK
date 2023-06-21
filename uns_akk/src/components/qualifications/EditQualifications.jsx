@@ -274,19 +274,20 @@ export default function EditQualifications() {
                   </div>
 
                   <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-12">
                       <div className="card mb-3">
                         <div className="card-body">
                           <h5 className="card-title">
                           {t("QualificationName")} (AL)
                           </h5>
                           <div className="row">
-                            <label className="col-md-5 col-form-label">
+                            <label className="col-md-2 col-form-label">
                             {t("QualificationName")} (AL)
                             </label>
-                            <div className="col-md-7">
-                              <input
+                            <div className="col-md-9">
+                              <textarea
                                 type="text"
+                                rows={6}
                                 defaultValue={
                                   qualification.QualificationNameAL
                                 }
@@ -313,19 +314,20 @@ export default function EditQualifications() {
                       </div>
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-12">
                       <div className="card mb-3">
                         <div className="card-body">
                           <h5 className="card-title">
                           {t("QualificationName")} (EN)
                           </h5>
                           <div className="row">
-                            <label className="col-md-5 col-form-label">
+                            <label className="col-md-2 col-form-label">
                             {t("QualificationName")} (EN)
                             </label>
-                            <div className="col-md-7">
-                              <input
+                            <div className="col-md-9">
+                              <textarea
                                 type="text"
+                                rows={6}
                                 defaultValue={
                                   qualification.QualificationNameEN
                                 }
@@ -352,19 +354,20 @@ export default function EditQualifications() {
                       </div>
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-12">
                       <div className="card mb-3">
                         <div className="card-body">
                           <h5 className="card-title">
                           {t("QualificationName")} (SR)
                           </h5>
                           <div className="row">
-                            <label className="col-md-5 col-form-label">
+                            <label className="col-md-2 col-form-label">
                             {t("QualificationName")} (SR)
                             </label>
-                            <div className="col-md-7">
-                              <input
+                            <div className="col-md-9">
+                              <textarea
                                 type="text"
+                                rows={6}
                                 defaultValue={
                                   qualification.QualificationNameSR
                                 }
@@ -419,19 +422,21 @@ export default function EditQualifications() {
                       </div>
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-8">
                       <div className="card mb-3">
                         <div className="card-body">
                           <h5 className="card-title">{t("SubQualifications")}</h5>
                           <div className="row">
-                            <div className="col-md-5">
+                            <div className="col-md-2">
                               <label className="col-form-label">
                               {t("SubQualifications")}
                               </label>
                             </div>
-                            <div className="col-md-7">
+                            <div className="col-md-9">
                               <textarea
                                 type="text"
+                                rows={6}
+                                colums={100}
                                 readOnly
                                 value={textareaValue}
                                 className="form-control"

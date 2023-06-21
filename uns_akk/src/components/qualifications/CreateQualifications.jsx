@@ -205,19 +205,20 @@ export default function CreateQualifications() {
                 </div>
 
                 <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-12">
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">
                           {t("QualificationName")} (AL)
                         </h5>
                         <div className="row">
-                          <label className="col-md-5 col-form-label">
+                          <label className="col-md-2 col-form-label">
                             {t("QualificationName")} (AL)
                           </label>
-                          <div className="col-md-7">
-                            <input
+                          <div className="col-md-9">
+                            <textarea
                               type="text"
+                              rows={6}
                               className="form-control"
                               onChange={(e) => {
                                 setModel({
@@ -241,19 +242,20 @@ export default function CreateQualifications() {
                     </div>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-12">
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">
                           {t("QualificationName")} (EN)
                         </h5>
                         <div className="row">
-                          <label className="col-md-5 col-form-label">
+                          <label className="col-md-2 col-form-label">
                             {t("QualificationName")} (EN)
                           </label>
-                          <div className="col-md-7">
-                            <input
+                          <div className="col-md-9">
+                            <textarea
                               type="text"
+                              rows={6}
                               className="form-control"
                               onChange={(e) => {
                                 setModel({
@@ -277,19 +279,20 @@ export default function CreateQualifications() {
                     </div>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-12">
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">
                           {t("QualificationName")} (SR)
                         </h5>
                         <div className="row">
-                          <label className="col-md-5 col-form-label">
+                          <label className="col-md-2 col-form-label">
                             {t("QualificationName")} (SR)
                           </label>
-                          <div className="col-md-7">
-                            <input
+                          <div className="col-md-9">
+                            <textarea
                               type="text"
+                              rows={6}
                               className="form-control"
                               onChange={(e) => {
                                 setModel({
@@ -313,15 +316,15 @@ export default function CreateQualifications() {
                     </div>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-6">
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">{t("Level")}</h5>
                         <div className="row">
-                          <label className="col-md-5 col-form-label">
+                          <label className="col-md-2 col-form-label">
                             {t("Level")}
                           </label>
-                          <div className="col-md-7">
+                          <div className="col-md-9">
                             <CustomSelect
                               onChangeFunction={changeLevel}
                               optionsList={levelList}

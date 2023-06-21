@@ -14,14 +14,13 @@ export default function EditStudents() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [load, setLoad] = useState(false);
-  const langId = localStorage.getItem("i18nextLng");
   const [municipality, setMunicipality] = useState([]);
   const [residences, setResidences] = useState([]);
   const [decisions, setDecisions] = useState([]);
-  const [decision, setDecision] = useState({});
   const [groups, setGroups] = useState([]);
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
+  const [group, setGroup] = useState({});
   const [loadSubmit, setLoadSubmit] = useState(false);
   const [candidates, setCandidates] = useState({
     PersonId: "",
@@ -57,6 +56,7 @@ export default function EditStudents() {
         if (res) {
           if (res.statusCode === 200) {
             const obj = res.result;
+            console.log(obj)
             setCandidates({
               ...candidates,
               PersonId: obj.person.personId,
@@ -69,7 +69,7 @@ export default function EditStudents() {
                     .toISOString()
                     .split("T")[0]
                 : "",
-              CountryId: obj.person.countries.countriesId,
+              CountryId: obj.person?.countries?.countriesId,
               CountryForeign: obj.person.countryForeign,
               MunicipalityId: obj.person.municipality?.municipalityId,
               MunicipalityForeign: obj.person.municipalityForeign,
@@ -90,20 +90,27 @@ export default function EditStudents() {
                 ? new Date(obj.unregisteredDate.split("T")[0])
                     .toISOString()
                     .split("T")[0]
-                : "",
+                : null,
               UnRegistered: obj.unregistered,
-              GraduatedDate: obj.graduatedDate
-                ? new Date(obj.graduatedDate.split("T")[0])
+              GraduatedDate: obj.graduationDate
+                ? new Date(obj.graduationDate.split("T")[0])
                     .toISOString()
                     .split("T")[0]
-                : "",
+                : null,
               Graduated: obj.graduated,
               CertificateNumber: obj.certificateNumber,
               Remark: obj.remark,
               InstitutionId: decodedToken.groupsid,
               InstitutionGroupDecision: obj.institutionGroupDecision,
+              InstitutionDecisionDetailsId:
+                obj.institutionGroupDecision?.institutionDecisionDetails
+                  ?.institutionDecisionDetailsId,
               ValidFrom: obj.validFrom,
               ValidTo: obj.validTo,
+            });
+            setGroup({
+              label: obj.institutionGroupDecision?.groupName,
+              value: obj.institutionGroupDecision?.institutionGroupDecisionId,
             });
           } else {
             toast.error(res.errorMessages[0]);
@@ -134,9 +141,6 @@ export default function EditStudents() {
       setLoad(false);
     });
   }, []);
-
-  console.log(candidates)
-
   useEffect(() => {
     if (candidates.MunicipalityId !== "") {
       CrudProvider.getItemByIdLang(
@@ -150,14 +154,10 @@ export default function EditStudents() {
         }
       });
     }
-    if (
-      candidates.InstitutionGroupDecision?.institutionDecisionDetails
-        ?.institutionDecisionDetailsId !== ""
-    ) {
+    if (candidates.InstitutionDecisionDetailsId) {
       CrudProvider.getItemById(
         "InstitutionGroupDecisionAPI/GetGroupsByDecision",
-        candidates.InstitutionGroupDecision?.institutionDecisionDetails
-          ?.institutionDecisionDetailsId
+        candidates.InstitutionDecisionDetailsId
       ).then((res) => {
         if (res) {
           if (res.statusCode === 200) {
@@ -166,7 +166,8 @@ export default function EditStudents() {
         }
       });
     }
-  }, [candidates.MunicipalityId, candidates.InstitutionGroupDecision]);
+  }, [candidates.MunicipalityId, candidates.InstitutionDecisionDetailsId]);
+
   const citiesList =
     municipality &&
     municipality.length > 0 &&
@@ -200,6 +201,16 @@ export default function EditStudents() {
   const day3 = String(date3.getDate()).padStart(2, "0");
   const registeredDate = `${year3}-${month3}-${day3}`;
 
+  let dateString4 = candidates.GraduatedDate;
+  dateString4 =
+    candidates.GraduatedDate !== null
+      ? `${new Date(dateString4).getFullYear()}-${String(
+          new Date(dateString4).getMonth() + 1
+        ).padStart(2, "0")}-${String(new Date(dateString4).getDate()).padStart(
+          2,
+          "0"
+        )}`
+      : null;
 
   function changeMunicipality(e) {
     setCandidates({
@@ -219,6 +230,7 @@ export default function EditStudents() {
         };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
+
   const decisionList =
     decisions &&
     decisions.length > 0 &&
@@ -247,8 +259,11 @@ export default function EditStudents() {
   function changeDecision(e) {
     setCandidates({
       ...candidates,
-      InstitutionDecisionId: e,
+      InstitutionDecisionDetailsId: e,
+      InstitutionGroupDecisionId: "",
     });
+    setGroup(null);
+    // defaultSele
     formik.setFieldValue("ChooseDecision", e);
   }
   function changeGroup(e) {
@@ -265,43 +280,6 @@ export default function EditStudents() {
     });
     formik.setFieldValue("Residence", e);
   }
-  function changeValidFromDate(e) {
-    setCandidates({
-      ...candidates,
-      ValidFrom: e,
-    });
-    formik.setFieldValue("ValidFrom", e);
-  }
-
-  function changeValidToDate(e) {
-    setCandidates({
-      ...candidates,
-      ValidTo: e,
-    });
-    formik.setFieldValue("ValidTo", e);
-  }
-  function changeBirthDate(date, dateString) {
-    setCandidates({
-      ...candidates,
-      BirthDate: dateString,
-    });
-    formik.setFieldValue("BirthDate", dateString);
-  }
-  function changeRegisterDate(date, dateString) {
-    setCandidates({
-      ...candidates,
-      RegisteredDate: dateString,
-    });
-    formik.setFieldValue("RegisterDate", dateString);
-  }
-  function changeGraduationDate(date, dateString) {
-    setCandidates({
-      ...candidates,
-      GraduatedDate: dateString,
-    });
-    formik.setFieldValue("RegisterDate", dateString);
-  }
-
   async function handleSubmit() {
     await CrudProvider.updateItem("PersonAPI/UpdatePerson", candidates).then(
       (res) => {
@@ -334,17 +312,14 @@ export default function EditStudents() {
 
   const defaultSelectValueR =
     residences.length > 0 &&
-    residences.find(
-      (obj) => obj.residence.residenceId === candidates.ResidenceId
-    );
-
-  const defaultLabelR = defaultSelectValueR?.residenceName ?? "";
-  const defaultValueR = defaultSelectValueR?.residence?.residenceId ?? "";
-
-  const defaultOptionR = {
-    label: defaultLabelR,
-    value: defaultValueR,
-  };
+    residences
+      .filter((obj) => obj.residence.residenceId === candidates.ResidenceId)
+      .map((obj) => {
+        return {
+          label: obj.residenceName,
+          value: obj.residence.residenceId,
+        };
+      });
 
   const defaultSelectValueD =
     decisions.length > 0 &&
@@ -379,6 +354,30 @@ export default function EditStudents() {
               <div className="tab-content b-0 mb-0 pt-0">
                 <div className="tab-pane active" id="account-2">
                   <div className="row">
+                  <div className="col-xxl-2 text-start mb-1">
+                    <Checkbox
+                      onChange={(e) => {
+                        setCandidates({
+                          ...candidates,
+                          Graduated: e.target.checked,
+                        });
+                      }}
+                    >
+                      {t("HasGraduated")}
+                    </Checkbox>
+                  </div>
+                    <div className="col-xxl-9 text-start mb-2">
+                      <Checkbox
+                        onChange={(e) => {
+                          setCandidates({
+                            ...candidates,
+                            UnRegistered: e.target.checked,
+                          });
+                        }}
+                      >
+                        Unregistered
+                      </Checkbox>
+                    </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("Name")}:</label>
                       <input
@@ -483,7 +482,7 @@ export default function EditStudents() {
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("Country")}:</label>
-                      {candidates.CountryForeign !== "0" ? (
+                      {candidates.CountryForeign !== null ? (
                         <input
                           key="1"
                           type="text"
@@ -508,7 +507,7 @@ export default function EditStudents() {
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("Municipality")}:</label>
-                      {candidates.MunicipalityForeign !== "0" ? (
+                      {candidates.MunicipalityForeign !== null ? (
                         <>
                           <input
                             key="1"
@@ -554,7 +553,7 @@ export default function EditStudents() {
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("Residence")}:</label>
-                      {candidates.ResidenceForeign !== "" ? (
+                      {candidates.ResidenceForeign !== null ? (
                         <>
                           <input
                             key="1"
@@ -567,32 +566,38 @@ export default function EditStudents() {
                                 ...candidates,
                                 ResidenceForeign: e.target.value,
                               });
-                              formik.setFieldValue("Residence", e.target.value);
+                              formik.setFieldValue(
+                                "ResidenceForeign",
+                                e.target.value
+                              );
                             }}
                           />
                           <>
+                            {formik.errors.ResidenceForeign && (
+                              <span className="text-danger">
+                                {formik.errors.ResidenceForeign}
+                              </span>
+                            )}
+                          </>
+                        </>
+                      ) : (
+                        defaultSelectValueR && (
+                          <>
+                            <CustomSelect
+                              id={"residenceId"}
+                              optionsList={residenceList}
+                              hasDefaultValue={true}
+                              defaultValue={defaultSelectValueR[0]}
+                              onChangeFunction={changeResidence}
+                              isMulti={false}
+                            />
                             {formik.errors.Residence && (
                               <span className="text-danger">
                                 {formik.errors.Residence}
                               </span>
                             )}
                           </>
-                        </>
-                      ) : (
-                        <>
-                          <CustomSelect
-                            optionsList={residenceList}
-                            hasDefaultValue={true}
-                            defaultValue={defaultOptionR}
-                            onChangeFunction={changeResidence}
-                            isMulti={false}
-                          />
-                          {formik.errors.Residence && (
-                            <span className="text-danger">
-                              {formik.errors.Residence}
-                            </span>
-                          )}
-                        </>
+                        )
                       )}
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
@@ -656,9 +661,7 @@ export default function EditStudents() {
                         onChangeFunction={changeGroup}
                         isMulti={false}
                         hasDefaultValue={true}
-                        defaultValue={
-                          candidates.InstitutionGroupDecision?.groupName
-                        }
+                        defaultValue={group}
                         optionsList={groupsList}
                       />
                       {formik.errors.Group && (
@@ -689,6 +692,7 @@ export default function EditStudents() {
                         </span>
                       )}
                     </div>
+                    {candidates.Graduated ? (
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("GraduationDate")}:</label>
                       <input
@@ -696,7 +700,7 @@ export default function EditStudents() {
                         autoComplete="off"
                         id="basic-datepicker"
                         className="form-control flatpickr-input active"
-                        value={candidates.GraduatedDate}
+                        value={dateString4}
                         onChange={(e) => {
                           setCandidates({
                             ...candidates,
@@ -706,6 +710,9 @@ export default function EditStudents() {
                         }}
                       />
                     </div>
+                    ) : (
+                        ""
+                    )}
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>Valid From:</label>
                       <input
@@ -750,6 +757,26 @@ export default function EditStudents() {
                         </span>
                       )}
                     </div>
+                    {candidates.UnRegistered ? (
+                      <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                        <label>Remark:</label>
+                        <textarea
+                          type="text"
+                          rows={6}
+                          defaultValue={candidates.Remark}
+                          className="form-control"
+                          onChange={(e) => {
+                            setCandidates({
+                              ...candidates,
+                              Remark: e.target.value,
+                            });
+                            formik.setFieldValue("Remark", e.target.value);
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     {/* <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3 d-flex align-items-center">
                       <Checkbox
                         className="mt-3"

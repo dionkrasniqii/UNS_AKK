@@ -201,19 +201,20 @@ export default function CreateSubQualification() {
                 </div>
 
                 <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-12">
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">
                           {t("SubQualificationName")} (AL)
                         </h5>
                         <div className="row">
-                          <label className="col-md-5 col-form-label">
+                          <label className="col-md-2 col-form-label">
                           {t("SubQualificationName")} (AL)
                           </label>
-                          <div className="col-md-7">
-                            <input
+                          <div className="col-md-9">
+                            <textarea
                               type="text"
+                              rows={6}
                               className="form-control"
                               onChange={(e) => {
                                 setModel({
@@ -237,19 +238,20 @@ export default function CreateSubQualification() {
                     </div>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-12">
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">
                         {t("SubQualificationName")} (EN)
                         </h5>
                         <div className="row">
-                          <label className="col-md-5 col-form-label">
+                          <label className="col-md-2 col-form-label">
                           {t("SubQualificationName")} (EN)
                           </label>
-                          <div className="col-md-7">
-                            <input
+                          <div className="col-md-9">
+                            <textarea
                               type="text"
+                              rows={6}
                               className="form-control"
                               onChange={(e) => {
                                 setModel({
@@ -273,19 +275,20 @@ export default function CreateSubQualification() {
                     </div>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-12">
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">
                         {t("SubQualificationName")} (SR)
                         </h5>
                         <div className="row">
-                          <label className="col-md-5 col-form-label">
+                          <label className="col-md-2 col-form-label">
                           {t("SubQualificationName")} (SR)
                           </label>
-                          <div className="col-md-7">
-                            <input
+                          <div className="col-md-9">
+                            <textarea
                               type="text"
+                              rows={6}
                               className="form-control"
                               onChange={(e) => {
                                 setModel({
@@ -309,15 +312,15 @@ export default function CreateSubQualification() {
                     </div>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-5">
                     <div className="card mb-3">
                       <div className="card-body">
                         <h5 className="card-title">{t("Qualifications")}</h5>
                         <div className="row">
-                          <label className="col-md-5 col-form-label">
+                          <label className="col-md-2 col-form-label">
                             {t("Qualifications")}
                           </label>
-                          <div className="col-md-7">
+                          <div className="col-md-9">
                             <CustomSelect
                               onChangeFunction={changeQualification}
                               optionsList={qualificationList}
