@@ -26,15 +26,13 @@ export default function CustomSelect({
   // const optionStyle = {
   //   color: '#333333',
   // };
-
-  return hasDefaultValue ? (
+  return hasDefaultValue && defaultValue !== null ? (
     <Select
+    key={defaultValue}
       style={selectStyle}
-      // dropdownStyle={dropdownStyle}
-      // optionStyle={optionStyle}
       allowClear
       showSearch
-      defaultValue={hasDefaultValue ? defaultValue : null}
+      defaultValue={defaultValue}
       onChange={onChangeFunction}
       options={optionsList}
       mode={isMulti ? "multiple" : "single"}
@@ -46,8 +44,6 @@ export default function CustomSelect({
   ) : (
     <Select
       style={selectStyle}
-      // dropdownStyle={dropdownStyle}
-      // optionStyle={optionStyle}
       allowClear
       showSearch
       onChange={onChangeFunction}
@@ -59,4 +55,5 @@ export default function CustomSelect({
       }
     />
   );
+  
 }
