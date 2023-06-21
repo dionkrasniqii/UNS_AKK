@@ -44,7 +44,7 @@ export default function CertificateDetails() {
                           {t("Name") + " " + t("Surname")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.nameSurname}</strong>
+                       {data.nameSurname}
                         </span>
                         <hr />
 
@@ -52,7 +52,7 @@ export default function CertificateDetails() {
                           {t("Institution")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.institution}</strong>
+                   {data.institution}
                         </span>
                         <hr />
 
@@ -61,11 +61,11 @@ export default function CertificateDetails() {
                         </label>
 
                         <span className='ms-2 font-20'>
-                          <strong>
+                          
                             {new Date(
                               data.dateOfBirth.split("T")[0]
                             ).toLocaleDateString("en-GB")}
-                          </strong>
+                          
                         </span>
                         <hr />
 
@@ -73,7 +73,7 @@ export default function CertificateDetails() {
                           {t("Level Description")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>{data.levelDescription}</strong>
+                          {data.levelDescription}
                         </span>
                         <hr />
 
@@ -85,7 +85,7 @@ export default function CertificateDetails() {
                             href={`/qualificationdetails/${data.qualificationId}/${data.municipalityId}/${data.institutionId}`}
                             target='_blank'
                           >
-                            <strong>{data.qualificationName}</strong>
+                            {data.qualificationName}
                           </a>
                         </span>
                         <hr />
@@ -94,13 +94,13 @@ export default function CertificateDetails() {
                           {t("ValidFrom")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>
+                          
                             {data.validFrom
                               ? new Date(
                                   data.validFrom.split("T")[0]
                                 ).toLocaleDateString("en-GB")
                               : ""}
-                          </strong>
+                          
                         </span>
                         <hr />
 
@@ -108,13 +108,13 @@ export default function CertificateDetails() {
                           {t("ValidTo")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          <strong>
+                          
                             {data.validTo
                               ? new Date(
                                   data.validTo.split("T")[0]
                                 ).toLocaleDateString("en-GB")
                               : t("NoLimit")}
-                          </strong>
+                          
                         </span>
                         <hr />
                       </div>

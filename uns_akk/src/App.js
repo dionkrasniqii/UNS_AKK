@@ -51,6 +51,9 @@ function App() {
     }
   }, [oldSession]);
 
+  useEffect(() => {
+    localStorage.setItem("i18nextLng", "1");
+  }, []);
   return (
     <>
       <ToastContainer

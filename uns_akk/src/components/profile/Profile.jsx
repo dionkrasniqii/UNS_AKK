@@ -43,26 +43,24 @@ export default function Profile() {
   async function SubmitForm() {
     await CrudProvider.createItemWithFile(
       "UserProfileAPI/ChangeImage",
-      model,console.log(model)
+      model
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
           toast.success(t("DataSavedSuccessfully"));
-          if (model.Img !== '' && model.Password !== '') {
+          if (model.Img !== "" && model.Password !== "") {
             localStorage.removeItem("akktoken");
             window.location.href = "/";
-          } else if (model.Img !== '' && model.Password === '') {
+          } else if (model.Img !== "" && model.Password === "") {
             window.location.reload();
-          } else if (model.Password !== '') {
+          } else if (model.Password !== "") {
             localStorage.removeItem("akktoken");
             window.location.href = "/";
           }
         } else if (res.statusCode === 400) {
           toast.error(t("OldPasswordNotValid"));
         } else if (res.statusCode === 401) {
-          toast.error(
-            t("PasswordsDoNotMatch")
-          );
+          toast.error(t("PasswordsDoNotMatch"));
         }
       }
     });
@@ -88,28 +86,28 @@ export default function Profile() {
   });
 
   return (
-    <div className="row">
-      <div className="col-lg-5">
-        <div className="card">
-          <div className="card-body text-center">
-            <div className="text-center mb-4">
-              <h2 className="text-uppercase mt-0 mb-4">{t("Profile")}</h2>
+    <div className='row'>
+      <div className='col-lg-5'>
+        <div className='card'>
+          <div className='card-body text-center'>
+            <div className='text-center mb-4'>
+              <h2 className='text-uppercase mt-0 mb-4'>{t("Profile")}</h2>
               <img
                 src={CrudProvider.documentPath(institution.path)}
-                alt="user-image"
-                className="img-fluid rounded"
+                alt='user-image'
+                className='img-fluid rounded'
                 style={{ maxWidth: "150px", maxHeight: "150px" }}
               />
-              <h4 className="text-muted my-4">{institution.institutionName}</h4>
+              <h4 className='text-muted my-4'>{institution.institutionName}</h4>
             </div>
 
             <form onSubmit={formik.handleSubmit}>
-              <div className="row mb-3">
-                <label className="col-4 col-form-label">Logo</label>
-                <div className="col-6">
+              <div className='row mb-3'>
+                <label className='col-4 col-form-label'>Logo</label>
+                <div className='col-6'>
                   <input
-                    className="form-control"
-                    type="file"
+                    className='form-control'
+                    type='file'
                     onChange={(e) => {
                       setModel({
                         ...model,
@@ -120,13 +118,15 @@ export default function Profile() {
                   />
                 </div>
               </div>
-              <div className="row mb-3">
-                <label className="col-4 col-form-label">{t("CurrentPassword")}</label>
-                <div className="col-6">
+              <div className='row mb-3'>
+                <label className='col-4 col-form-label'>
+                  {t("CurrentPassword")}
+                </label>
+                <div className='col-6'>
                   <input
-                    type="password"
+                    type='password'
                     placeholder={t("CurrentPassword")}
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => {
                       setModel({
                         ...model,
@@ -137,13 +137,15 @@ export default function Profile() {
                   />
                 </div>
               </div>
-              <div className="row mb-3">
-                <label className="col-4 col-form-label">{t("NewPassword")}</label>
-                <div className="col-6">
+              <div className='row mb-3'>
+                <label className='col-4 col-form-label'>
+                  {t("NewPassword")}
+                </label>
+                <div className='col-6'>
                   <input
-                    type="password"
+                    type='password'
                     placeholder={t("NewPassword")}
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => {
                       setModel({
                         ...model,
@@ -153,20 +155,22 @@ export default function Profile() {
                     }}
                   />
                   {formik.errors.Password && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.Password}
                     </span>
                   )}
                 </div>
               </div>
 
-              <div className="row mb-3">
-                <label className="col-4 col-form-label">{t("PasswordConfirmation")}</label>
-                <div className="col-6">
+              <div className='row mb-3'>
+                <label className='col-4 col-form-label'>
+                  {t("PasswordConfirmation")}
+                </label>
+                <div className='col-6'>
                   <input
-                    type="password"
+                    type='password'
                     placeholder={t("PasswordConfirmation")}
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => {
                       setModel({
                         ...model,
@@ -176,17 +180,17 @@ export default function Profile() {
                     }}
                   />
                   {formik.errors.ConfirmPassword && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.ConfirmPassword}
                     </span>
                   )}
                 </div>
               </div>
-              <div className="row mb-3">
-                <div className="col-12">
+              <div className='row mb-3'>
+                <div className='col-12'>
                   <button
-                    type="submit"
-                    className="btn btn-primary waves-effect waves-light"
+                    type='submit'
+                    className='btn btn-primary waves-effect waves-light'
                   >
                     {t("Edit")}
                   </button>

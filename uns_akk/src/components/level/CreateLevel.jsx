@@ -71,6 +71,7 @@ export default function CreateLevel() {
       ...model,
       LangId: e,
     });
+    formik.setFieldValue("LangId", e);
   };
 
   const langList = [
