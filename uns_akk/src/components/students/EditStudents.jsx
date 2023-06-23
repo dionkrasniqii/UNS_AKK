@@ -56,7 +56,6 @@ export default function EditStudents() {
         if (res) {
           if (res.statusCode === 200) {
             const obj = res.result;
-            console.log(obj)
             setCandidates({
               ...candidates,
               PersonId: obj.person.personId,
@@ -141,6 +140,7 @@ export default function EditStudents() {
       setLoad(false);
     });
   }, []);
+
   useEffect(() => {
     if (candidates.MunicipalityId !== "") {
       CrudProvider.getItemByIdLang(
@@ -231,6 +231,7 @@ export default function EditStudents() {
       })
       .sort((a, b) => a.label.localeCompare(b.label));
 
+
   const decisionList =
     decisions &&
     decisions.length > 0 &&
@@ -263,7 +264,6 @@ export default function EditStudents() {
       InstitutionGroupDecisionId: "",
     });
     setGroup(null);
-    // defaultSele
     formik.setFieldValue("ChooseDecision", e);
   }
   function changeGroup(e) {
@@ -281,6 +281,7 @@ export default function EditStudents() {
     formik.setFieldValue("Residence", e);
   }
   async function handleSubmit() {
+    setLoadSubmit(true);
     await CrudProvider.updateItem("PersonAPI/UpdatePerson", candidates).then(
       (res) => {
         if (res) {
@@ -291,6 +292,7 @@ export default function EditStudents() {
             toast.error(res.errorMessages[0]);
           }
         }
+        setLoadSubmit(false);
       }
     );
   }
@@ -354,20 +356,9 @@ export default function EditStudents() {
               <div className="tab-content b-0 mb-0 pt-0">
                 <div className="tab-pane active" id="account-2">
                   <div className="row">
-                  <div className="col-xxl-2 text-start mb-1">
-                    <Checkbox
-                      onChange={(e) => {
-                        setCandidates({
-                          ...candidates,
-                          Graduated: e.target.checked,
-                        });
-                      }}
-                    >
-                      {t("HasGraduated")}
-                    </Checkbox>
-                  </div>
-                    <div className="col-xxl-9 text-start mb-2">
+                    <div className="col-xxl-12 text-start mb-2">
                       <Checkbox
+                      checked={candidates.UnRegistered}
                         onChange={(e) => {
                           setCandidates({
                             ...candidates,
@@ -375,7 +366,7 @@ export default function EditStudents() {
                           });
                         }}
                       >
-                        Unregistered
+                        {t("Unregistered")}
                       </Checkbox>
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
@@ -692,7 +683,6 @@ export default function EditStudents() {
                         </span>
                       )}
                     </div>
-                    {candidates.Graduated ? (
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                       <label>{t("GraduationDate")}:</label>
                       <input
@@ -710,11 +700,8 @@ export default function EditStudents() {
                         }}
                       />
                     </div>
-                    ) : (
-                        ""
-                    )}
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                      <label>Valid From:</label>
+                      <label>{t("ValidFrom")}:</label>
                       <input
                         type="date"
                         autoComplete="off"
@@ -736,7 +723,7 @@ export default function EditStudents() {
                       )}
                     </div>
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                      <label>Valid To:</label>
+                      <label>{t("ValidTo")}:</label>
                       <input
                         type="date"
                         autoComplete="off"
@@ -759,7 +746,7 @@ export default function EditStudents() {
                     </div>
                     {candidates.UnRegistered ? (
                       <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                        <label>Remark:</label>
+                        <label>{t("Remark")}:</label>
                         <textarea
                           type="text"
                           rows={6}
@@ -777,19 +764,6 @@ export default function EditStudents() {
                     ) : (
                       ""
                     )}
-                    {/* <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3 d-flex align-items-center">
-                      <Checkbox
-                        className="mt-3"
-                        onChange={(e) => {
-                          setCandidates({
-                            ...candidates,
-                            Graduated: e.target.checked,
-                          });
-                        }}
-                      >
-                        {t("HasGraduated")}
-                      </Checkbox>
-                    </div> */}
                   </div>
                 </div>
               </div>

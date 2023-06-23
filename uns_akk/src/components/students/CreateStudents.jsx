@@ -19,6 +19,7 @@ export default function CreateStudents() {
   const [residences, setResidences] = useState([]);
   const [decisions, setDecisions] = useState([]);
   const [groups, setGroups] = useState([]);
+  const [subQualifications, setSubQualifications] = useState([]);
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const [loadSubmit, setLoadSubmit] = useState(false);
@@ -44,6 +45,8 @@ export default function CreateStudents() {
     Graduate: false,
     ValidFrom: "",
     ValidTo: "",
+    QualificationChildIds: "",
+    CertificateProtocolNr: "",
   });
   useEffect(() => {
     setLoad(true);
@@ -97,6 +100,18 @@ export default function CreateStudents() {
         }
       });
     }
+    if (model.InstitutionDecisionId !== "") {
+      CrudProvider.getItemByIdLang(
+        "PersonAPI/GetQualificationChildDecision",
+        model.InstitutionDecisionId
+      ).then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setSubQualifications(res.result);
+          }
+        }
+      });
+    }
   }, [model.MunicipalityId, model.InstitutionDecisionId]);
 
   const citiesList =
@@ -129,6 +144,7 @@ export default function CreateStudents() {
         };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
+
   const decisionList =
     decisions &&
     decisions.length > 0 &&
@@ -141,6 +157,7 @@ export default function CreateStudents() {
           obj.qualification.qualificationLanguage[0].qualificationName,
       }))
       .sort((a, b) => a.label.localeCompare(b.label));
+
   const groupsList =
     groups &&
     groups.length > 0 &&
@@ -152,6 +169,18 @@ export default function CreateStudents() {
         };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
+
+      const subQualificationList =
+      subQualifications &&
+      subQualifications.length > 0 &&
+      subQualifications
+        .map((obj) => {
+          return {
+            value: obj.qualificationChildId,
+            label: obj.qualificationChildName,
+          };
+        })
+        .sort((a, b) => a.label.localeCompare(b.label));
 
   function changeDecision(e) {
     setModel({
@@ -167,6 +196,15 @@ export default function CreateStudents() {
     });
     formik.setFieldValue("Group", e);
   }
+
+  function changeSubQualifications(e) {
+    setModel({
+      ...model,
+      QualificationChildIds: e,
+    });
+    formik.setFieldValue("QualificationChildIds", e);
+  }
+
   function changeResidence(e) {
     setModel({
       ...model,
@@ -187,13 +225,7 @@ export default function CreateStudents() {
     });
     formik.setFieldValue("BirthDate", dateString);
   }
-  // function changeRegisterDate(date, dateString) {
-  //   setModel({
-  //     ...model,
-  //     RegisteredDate: formatedDate(dateString),
-  //   });
-  //   formik.setFieldValue("RegisterDate", dateString);
-  // }
+
   function changeGraduationDate(date, dateString) {
     setModel({
       ...model,
@@ -222,7 +254,7 @@ export default function CreateStudents() {
     Surname: Yup.string().required(t("FillSurname")),
     PersonalNr: Yup.string()
       .required(t("FillPersonalNumber"))
-      .matches(/^\d{10}$/, "Numri personal duhet të përmbaj 10 numra!"),
+      .matches(/^\d{10}$/, t("PersonalNumberLimit")),
     BirthDate: Yup.string().required(t("FillBirthDate")),
     Municipality: Yup.string().required(t("ChooseMunicipality")),
     Residence: Yup.string().required(t("ChooseResidence")),
@@ -231,10 +263,10 @@ export default function CreateStudents() {
     Email: Yup.string().required(t("PleaseFillEmail")),
     Group: Yup.string().required(t("ChooseGroup")),
     ChooseDecision: Yup.string().required(t("ChooseDecision")),
-    ValidFrom: Yup.string().required("Plotësoni nga cila datë është valide"),
-    ValidTo: Yup.string().required("Plotësoni deri në cilën datë është valide"),
+    ValidFrom: Yup.string().required(t("PleaseFillFromDate")),
+    ValidTo: Yup.string().required(t("PleaseFillToDate")),
   });
-  console.log(model)
+  
   async function submitForm() {
     setLoadSubmit(true);
     await CrudProvider.createItem("PersonAPI/CreatePerson", model).then(
@@ -246,10 +278,10 @@ export default function CreateStudents() {
               navigate("/students");
               break;
             case 406:
-              toast.error("Ekziston personi me këtë numër personal apo email!")
+              toast.error(t("CandidateExists"))
             case 409:
               toast.error(
-                "Ju nuk mund të regjistroni kandidat ne grupin e zgjedhur sepse ska vende te lira"
+                t("NoVacancies")
               );
               break;
             case 500:
@@ -284,10 +316,6 @@ export default function CreateStudents() {
                   <div className="col-xxl-2 text-start mb-1">
                     <Checkbox
                       onChange={(e) => {
-                        // setModel({
-                        //   ...model,
-                        //   IsForeign: e.target.checked,
-                        // });
                         setIsForeign(e.target.checked);
                         formik.setFieldValue("Municipality", null);
                         formik.setFieldValue("Residence", null);
@@ -353,7 +381,6 @@ export default function CreateStudents() {
                       </span>
                     )}
                   </div>
-
                   <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("PersonalNr")}:</label>
                     <input
@@ -373,6 +400,27 @@ export default function CreateStudents() {
                       </span>
                     )}
                   </div>
+
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <label>{t("CertificateProtocolNr")}:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      onChange={(e) => {
+                        setModel({
+                          ...model,
+                          CertificateProtocolNr: e.target.value,
+                        });
+                        formik.setFieldValue("CertificateProtocolNr", e.target.value);
+                      }}
+                    />
+                    {formik.errors.Surname && (
+                      <span className="text-danger">
+                        {formik.errors.Surname}
+                      </span>
+                    )}
+                  </div>
+
                   <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                     <label>{t("BirthDate")}:</label>
                     <CustomDatePicker onChangeFunction={changeBirthDate} />
@@ -568,16 +616,34 @@ export default function CreateStudents() {
                     />
                     {!model.InstitutionDecisionId && (
                       <span className="text-info">
-                        Zgjedhni komunen per vendim per te ju shfaqur grupet
+                        {t("SelectMunicipalityToShowGroups")}
                       </span>
                     )}
                     {formik.errors.Group && (
                       <span className="text-danger">{formik.errors.Group}</span>
                     )}
                   </div>
+                  <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <label>{t("SubQualifications")}:</label>
+                    <CustomSelect
+                      onChangeFunction={changeSubQualifications}
+                      isMulti={true}
+                      optionsList={subQualificationList}
+                    />
+                    {!model.InstitutionDecisionId && (
+                      <span className="text-info">
+                        {t("SelectMunicipalityToShowSubqualifications")}
+                      </span>
+                    )}
+                    {formik.errors.QualificationChildIds && (
+                      <span className="text-danger">
+                        {formik.errors.QualificationChildIds}
+                      </span>
+                    )}
+                  </div>
                   {model.Graduate ? (
                     <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                      <label>Graduation Date:</label>
+                      <label>{t("GraduationDate")}:</label>
                       <CustomDatePicker
                         onChangeFunction={changeGraduationDate}
                       />
@@ -591,7 +657,7 @@ export default function CreateStudents() {
                     ""
                   )}
                   <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                    <label>Valid From:</label>
+                    <label>{t("ValidFrom")}:</label>
                     <CustomDatePicker onChangeFunction={changeValidFromDate} />
                     {formik.errors.ValidFrom && (
                       <span className="text-danger">
@@ -600,7 +666,7 @@ export default function CreateStudents() {
                     )}
                   </div>
                   <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                    <label>Valid To:</label>
+                    <label>{t("ValidTo")}:</label>
                     <CustomDatePicker onChangeFunction={changeValidToDate} />
                     {formik.errors.ValidTo && (
                       <span className="text-danger">
