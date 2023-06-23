@@ -11,13 +11,13 @@ export default function ProgressBar(props){
       
         const checkFilledFields = (obj) => {
           Object.values(obj).forEach((value) => {
-            if (value !== null && value !== undefined && value !== '') {
+            if (value != null && value !== undefined && value !== '') {
               filledFieldsCount++;
             } else if (Array.isArray(value)) {
               value.forEach((item) => {
                 checkFilledFields(item);
               });
-            } else if (typeof value === 'object') {
+            } else if (value && typeof value === 'object') {
               checkFilledFields(value);
             }
           });

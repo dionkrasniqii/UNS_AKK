@@ -68,7 +68,7 @@ export default function Sidebar() {
     },
     /* -----------INSTITUTION------------- */
     {
-      label: t("Students"),
+      label: t("Candidates"),
       roles: ["Institution"],
       path: "/students",
       hasMenu: false,

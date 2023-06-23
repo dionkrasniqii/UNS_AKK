@@ -14,6 +14,7 @@ export default function Students() {
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const [data, setData] = useState([]);
+  const [loadPrint, setLoadPrint] = useState(false);
 
   useEffect(() => {
     setLoad(true);
@@ -33,9 +34,24 @@ export default function Students() {
       setLoad(false);
     });
   }, []);
+
+  async function printCertificate(id) {
+    setLoadPrint(true);
+    try {
+      await CrudProvider.getReportRDLCWithLang(
+        `ReportsAPI/PrintPersonCertificate`,
+        `pdf`,
+        `${id}/${false}`,
+        `${t("Certificate")} ${data.nameSurname}`
+      );
+    } finally {
+      setLoadPrint(false);
+    }
+  }
+
   const columns = [
     {
-      title: t("CertificateNumber"),
+      title: t("NumberOfCertificate"),
       dataIndex: "certificateNumber",
       key: (item) => item,
     },
@@ -65,12 +81,12 @@ export default function Students() {
         return item === true ? (
           <a>
             {t("Yes")}
-            <i className='text-success ps-1 fas fa-circle-notch' />
+            <i className="text-success ps-1 fas fa-circle-notch" />
           </a>
         ) : (
           <a>
             {t("No")}
-            <i className='text-danger ps-1  fas fa-circle-notch' />
+            <i className="text-danger ps-1  fas fa-circle-notch" />
           </a>
         );
       },
@@ -80,20 +96,30 @@ export default function Students() {
       key: "personId",
       render: (value, record) => {
         return (
-          <div className='row d-flex justify-content-center'>
-            <div className='col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2'>
+          <div className="button-list">
               <Link
-                className='btn-secondary btn-sm'
+              type="button"
+                className="btn-secondary btn-sm"
                 to={`/editstudent/${record.personInstitutionId}`}
               >
-                <i className='fe-edit' />
+                <i className="fe-edit" />
               </Link>
-            </div>
-            <div className='col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2'>
-              <a className="btn-sm btn-danger" onClick={(e) => handleDelete(record.person.personId)}>
+              <a
+              type="button"
+                className="btn-sm btn-danger "
+                style={{marginLeft:"5px"}}
+                onClick={(e) => handleDelete(record.person.personId)}
+              >
                 <i className="fe-trash-2" />
               </a>
-            </div>
+              <a
+              type="button"
+                className="btn-sm btn-danger "
+                style={{marginLeft:"5px"}}
+                onClick={(e) => handleDelete(record.person.personId)}
+              >
+                <i className="fe-trash-2" />
+              </a>
           </div>
         );
       },
@@ -109,7 +135,20 @@ export default function Students() {
       if (res) {
         if (res.statusCode === 200) {
           toast.success(t("DataDeletedSuccessfully"));
-          window.location.reload();
+          CrudProvider.getItemById(
+            "PersonAPI/GetPersons",
+            decodedToken.groupsid
+          ).then((res) => {
+            if (res) {
+              switch (res.statusCode) {
+                case 200:
+                  setData(res.result);
+                  break;
+                default:
+                  break;
+              }
+            }
+          });
         }
       }
       setLoad(false);
@@ -117,30 +156,30 @@ export default function Students() {
   }
 
   return (
-    <div className='row'>
-      <div className='col-12 d-flex justify-content-end'>
+    <div className="row">
+      <div className="col-12 d-flex justify-content-end">
         <Link
-          className='btn btn-info waves-effect waves-light'
-          to='/createstudents'
+          className="btn btn-info waves-effect waves-light"
+          to="/createstudents"
         >
-          <span className='btn-label'>
-            <i className='fe-plus-circle'></i>
+          <span className="btn-label">
+            <i className="fe-plus-circle"></i>
           </span>
           {t("Add")}
         </Link>
       </div>
-      <div className='p-2 mt-2'>
+      <div className="p-2 mt-2">
         {!load ? (
           <DataTable
             columns={columns}
             dataSource={data}
-            title={"Lista e studenteve"}
+            title={t("CandidatesList")}
           />
         ) : (
-          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
             <div
-              className='spinner-border text-primary m-2 text-center'
-              role='status'
+              className="spinner-border text-primary m-2 text-center"
+              role="status"
             />
           </div>
         )}
