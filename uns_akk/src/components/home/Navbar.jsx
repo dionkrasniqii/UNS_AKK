@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import mainLogo from "./../../assets/images/logo_akk.png";
 import smallLogo from "./../../assets/images/sm.png";
 import i18next from "i18next";
@@ -16,30 +16,8 @@ export default function Navbar(props) {
   const [selectedLanguage, setSelectedLanguage] = useState(
     localStorage.getItem("i18nextLng")
   );
-  const [institution, setInstitution] = useState({});
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
-  useEffect(() => {
-    if (token) {
-      try {
-        if (decodedToken.role === "Institution") {
-          CrudProvider.getItemById(
-            "InstitutionAPI/GetInstitution",
-            decodedToken.groupsid
-          ).then((res) => {
-            if (res) {
-              if (res.statusCode === 200) {
-                setInstitution(res.result);
-              }
-            }
-          });
-        }
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
-    }
-  }, []);
-
   useEffect(() => {
     const bodyDiv = document.getElementById("body");
     isSidebarOpen
@@ -63,14 +41,12 @@ export default function Navbar(props) {
     i18next.changeLanguage(e);
     setSelectedLanguage(e);
   }
-  // useEffect(() => {
-  //   CrudProvider.changeLang();
-  //   CrudProvider.getAll("InstitutionGroupDecisionAPI/Test");
-  // }, [selectedLanguage]);
+
   return (
     <div
       className='navbar-custom bg-white border'
       style={{ backgroundColor: "white" }}
+      id='mainNavDiv'
     >
       <ul className='list-unstyled topnav-menu  float-end mb-0'>
         <li

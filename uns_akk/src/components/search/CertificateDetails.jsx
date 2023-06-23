@@ -9,6 +9,8 @@ export default function CertificateDetails() {
   const { t } = useTranslation();
   const [data, setData] = useState({});
   const [load, setLoad] = useState(false);
+  const [loadPrint, setLoadPrint] = useState(false);
+
   useEffect(() => {
     setLoad(true);
     CrudProvider.getItemByIdLang(
@@ -27,6 +29,19 @@ export default function CertificateDetails() {
       }
     });
   }, [id]);
+  async function printCertificate() {
+    setLoadPrint(true);
+    try {
+      await CrudProvider.getReportRDLCWithLang(
+        `ReportsAPI/PrintPersonCertificate`,
+        `pdf`,
+        `${id}/${false}`,
+        `${t("Certificate")} ${data.nameSurname}`
+      );
+    } finally {
+      setLoadPrint(false);
+    }
+  }
   return (
     <div className='content-page-landing content-custom  animation'>
       <div className='content'>
@@ -40,35 +55,59 @@ export default function CertificateDetails() {
                       <h3 className='title mb-3'>{t("CandidateDetails")}</h3>
                       <hr />
                       <div className='row text-start'>
+                        {data.canPrintCertificate && (
+                          <>
+                            <span className='ms-2 mb-2 font-20'>
+                              {!loadPrint ? (
+                                <button
+                                  type='button'
+                                  onClick={printCertificate}
+                                  className='btn btn-dark waves-effect waves-light'
+                                >
+                                  <i itemType='button' className='fe-printer' />
+                                  Print
+                                </button>
+                              ) : (
+                                <div
+                                  className='spinner-border text-dark m-2'
+                                  role='status'
+                                />
+                              )}
+                            </span>
+                            <hr />
+                          </>
+                        )}
+
                         <label className='text-uppercase text-muted font-13'>
                           {t("Name") + " " + t("Surname")}:
                         </label>
-                        <span className='ms-2 font-20'>
-                       {data.nameSurname}
-                        </span>
+                        <span className='ms-2 font-20'>{data.nameSurname}</span>
                         <hr />
-
                         <label className='text-uppercase text-muted font-13'>
                           {t("Institution")}:
                         </label>
-                        <span className='ms-2 font-20'>
-                   {data.institution}
+                        <span
+                          className='ms-2 font-20'
+                          href={`/institutiondetails/${data.institution.institutionId}`}
+                          target='_blank'
+                        >
+                          <a
+                            href={`/institutiondetails/${data.institutionId}`}
+                            target='_blank'
+                          >
+                            {data.institution}
+                          </a>
                         </span>
                         <hr />
-
                         <label className='text-uppercase text-muted font-13'>
                           {t("BirthDate")}:
                         </label>
-
                         <span className='ms-2 font-20'>
-                          
-                            {new Date(
-                              data.dateOfBirth.split("T")[0]
-                            ).toLocaleDateString("en-GB")}
-                          
+                          {new Date(
+                            data.dateOfBirth.split("T")[0]
+                          ).toLocaleDateString("en-GB")}
                         </span>
                         <hr />
-
                         <label className='text-uppercase text-muted font-13'>
                           {t("Level Description")}:
                         </label>
@@ -76,7 +115,6 @@ export default function CertificateDetails() {
                           {data.levelDescription}
                         </span>
                         <hr />
-
                         <label className='text-uppercase text-muted font-13'>
                           {t("QualificationName")}:
                         </label>
@@ -89,32 +127,46 @@ export default function CertificateDetails() {
                           </a>
                         </span>
                         <hr />
-
+                        {data.qualificationChilds.length > 0 && (
+                          <>
+                            <label className='text-uppercase text-muted font-13'>
+                              {t("SubQualifications")}:
+                            </label>
+                            <span className=' font-20'>
+                              {data.qualificationChilds.map((obj, index) => {
+                                return (
+                                  obj.qualificationChildName && (
+                                    <span className='ms-2 font-20 ' key={index}>
+                                      {obj.qualificationChildName}
+                                      <br />
+                                    </span>
+                                  )
+                                );
+                              })}
+                            </span>
+                            <hr />
+                          </>
+                        )}
                         <label className='text-uppercase text-muted font-13'>
                           {t("ValidFrom")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          
-                            {data.validFrom
-                              ? new Date(
-                                  data.validFrom.split("T")[0]
-                                ).toLocaleDateString("en-GB")
-                              : ""}
-                          
+                          {data.validFrom
+                            ? new Date(
+                                data.validFrom.split("T")[0]
+                              ).toLocaleDateString("en-GB")
+                            : ""}
                         </span>
                         <hr />
-
                         <label className='text-uppercase text-muted font-13'>
                           {t("ValidTo")}:
                         </label>
                         <span className='ms-2 font-20'>
-                          
-                            {data.validTo
-                              ? new Date(
-                                  data.validTo.split("T")[0]
-                                ).toLocaleDateString("en-GB")
-                              : t("NoLimit")}
-                          
+                          {data.validTo
+                            ? new Date(
+                                data.validTo.split("T")[0]
+                              ).toLocaleDateString("en-GB")
+                            : t("NoLimit")}
                         </span>
                         <hr />
                       </div>

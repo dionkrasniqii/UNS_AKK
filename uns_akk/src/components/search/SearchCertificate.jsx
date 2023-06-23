@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import DataTable from "../custom/DataTable";
 import CrudProvider from "../../provider/CrudProvider";
 import img_certification from "../../images/certification-img.png";
+import { toast } from "react-toastify";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function SearchCertificate() {
   const { t } = useTranslation();
@@ -18,71 +20,88 @@ export default function SearchCertificate() {
 
   const columns = [
     {
-      title: t("NumberOfCertificate"),
-      key: "certificateNr",
-      dataIndex: "certificateNr",
-      responsive: ["sm"],
-      render: (item) => {
+      name: t("NumberOfCertificate"),
+      cell: (row) => {
         return (
-          <a href={`certificationdetails/${item}`} target='_blank'>
-            {item}
+          <a href={`certificationdetails/${row.certificateNr}`} target='_blank'>
+            {row.certificateNr}
           </a>
         );
       },
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Level Description"),
-      dataIndex: "levelDescription",
-      key: "levelDescription",
-      responsive: ["sm"],
+      name: t("Level Description"),
+      selector: (row) => row.levelDescription,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("QualificationName"),
-      dataIndex: "qualificationName",
-      key: "qualificationName",
-      responsive: ["sm"],
+      name: t("QualificationName"),
+      selector: (row) => row.qualificationName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("ValidFrom"),
-      dataIndex: "validFrom",
-      key: "validFrom",
-      responsive: ["sm"],
-      render: (item) =>
-        item ? new Date(item.split("T")[0]).toLocaleDateString("en-GB") : "",
+      name: t("ValidFrom"),
+      sortable: true,
+      filterable: true,
+      cell: (row) =>
+        row.validFrom
+          ? new Date(row.validFrom.split("T")[0]).toLocaleDateString("en-GB")
+          : "",
     },
     {
-      title: t("ValidTo"),
-      dataIndex: "validTo",
-      key: "validTo",
-      responsive: ["sm"],
-      render: (item) =>
-        item
-          ? new Date(item.split("T")[0]).toLocaleDateString("en-GB")
-          : t("NoLimit"),
+      name: t("ValidTo"),
+      sortable: true,
+      filterable: true,
+      cell: (row) =>
+        row.validFrom
+          ? new Date(row.validTo.split("T")[0]).toLocaleDateString("en-GB")
+          : "",
     },
   ];
-  async function submitForm() {
-    setLoad(true);
-    await CrudProvider.createItem(
-      "CertificatesAPI/GetCertificates",
-      model
-    ).then((res) => {
-      if (res) {
-        switch (res.statusCode) {
-          case 200:
-            setData(res.result);
-            setLoad(false);
-            break;
-          default:
-            setLoad(false);
-            break;
-        }
+  async function checkNullAttributes(model) {
+    let count = 0;
+    Object.keys(model).forEach((key) => {
+      if (key !== "LangId") {
+        model[key] && count++;
       }
     });
+    return count > 0 ? false : true;
+  }
+
+  async function submitForm() {
+    try {
+      setLoad(true);
+      const check = await checkNullAttributes(model);
+      if (check) {
+        toast.info(t("FillOneOfSearchingFields"));
+        return;
+      }
+      await CrudProvider.createItem(
+        "CertificatesAPI/GetCertificates",
+        model
+      ).then((res) => {
+        if (res) {
+          switch (res.statusCode) {
+            case 200:
+              setData(res.result);
+              break;
+            default:
+              break;
+          }
+        }
+      });
+    } finally {
+      setLoad(false);
+    }
   }
 
   function clearInputs() {
     setModel({
+      ...model,
       PersonalNr: "",
       CertificateNr: "",
       NameSurname: "",
@@ -218,10 +237,10 @@ export default function SearchCertificate() {
         </div>
       </div>
 
-      <div className='col-xxl-12'>
+      <div className='col-12'>
         <hr />
         {!load ? (
-          <DataTable
+          <DataTablev2
             dataSource={data}
             columns={columns}
             title={t("ListOfCandidate")}

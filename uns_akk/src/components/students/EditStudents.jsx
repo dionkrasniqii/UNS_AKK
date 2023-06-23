@@ -135,7 +135,6 @@ export default function EditStudents() {
     });
   }, []);
 
-  console.log(candidates)
 
   useEffect(() => {
     if (candidates.MunicipalityId !== "") {

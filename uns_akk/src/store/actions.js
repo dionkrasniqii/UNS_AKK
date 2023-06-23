@@ -31,3 +31,7 @@ export const setToken = (token) => ({
 export const removeToken = () => ({
   type: "REMOVE_TOKEN",
 });
+export const showMobileLanding = (bool) => ({
+  type: "MOBILE_LANDING",
+  payload: bool,
+});
