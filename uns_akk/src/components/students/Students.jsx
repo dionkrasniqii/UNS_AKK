@@ -79,7 +79,6 @@ export default function Students() {
       title: t("Actions"),
       key: "personId",
       render: (value, record) => {
-        console.log(record)
         return (
           <div className='row d-flex justify-content-center'>
             <div className='col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2'>

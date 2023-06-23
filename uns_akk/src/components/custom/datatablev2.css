@@ -1,0 +1,11 @@
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-scroll {
+    display: inline-block;
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}

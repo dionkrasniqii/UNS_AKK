@@ -55,9 +55,7 @@ export default function LevelDetails() {
                         <label className='text-uppercase text-muted font-13'>
                           {t("Knowledge")}:
                         </label>
-                        <span className='ms-2 font-20'>
-                          {data.knowledge}
-                        </span>
+                        <span className='ms-2 font-20'>{data.knowledge}</span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Level Indicator")}:
@@ -69,9 +67,7 @@ export default function LevelDetails() {
                         <label className='text-uppercase text-muted font-13'>
                           {t("Skills")}:
                         </label>
-                        <span className='ms-2 font-20'>
-                          {data.skills}
-                        </span>
+                        <span className='ms-2 font-20'>{data.skills}</span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Descriptor")}:
@@ -83,16 +79,7 @@ export default function LevelDetails() {
                         <label className='text-uppercase text-muted font-13'>
                           {t("Type")}:
                         </label>
-                        <span className='ms-2 font-20'>
-                          {data.type}
-                        </span>
-                        <hr />
-                        <label className='text-uppercase text-muted font-13'>
-                          {t("Type")}:
-                        </label>
-                        <span className='ms-2 font-20'>
-                          {data.type}
-                        </span>
+                        <span className='ms-2 font-20'>{data.type}</span>
                         <hr />
                         <label className='text-uppercase text-muted font-13'>
                           {t("Detailed Description")}:

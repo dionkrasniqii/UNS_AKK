@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from "redux";
-import { ListReducers, TokenReducers } from "./ListReducers";
+import {  MobileReducers, TokenReducers } from "./ListReducers";
 
 const rootReducer = combineReducers({
-  reducersList: ListReducers,
   tokenList: TokenReducers,
+  mobileList: MobileReducers,
 });
 
 const store = createStore(rootReducer);

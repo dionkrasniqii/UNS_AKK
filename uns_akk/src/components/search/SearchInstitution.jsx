@@ -4,6 +4,8 @@ import DataTable from "../custom/DataTable";
 import CrudProvider from "../../provider/CrudProvider";
 import CustomSelect from "../custom/CustomSelect";
 import img_bus from "../../images/biz-img.png";
+import { toast } from "react-toastify";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function SearchInstitution() {
   const { t } = useTranslation();
@@ -19,55 +21,70 @@ export default function SearchInstitution() {
   });
   const columns = [
     {
-      title: t("Name"),
-      key: "institutionName",
-      dataIndex: "institutionName",
-      responsive: ["sm"],
-      render: (item, record) => {
-        console.log(record);
+      name: t("Name"),
+      cell: (row) => {
         return (
           <a
-            href={`/decisiondetails/${record.institutionDecisionDetailsId}`}
+            href={`/decisiondetails/${row.institutionDecisionDetailsId}`}
             target='_blank'
           >
-            {item}
+            {row.institutionName}
           </a>
         );
       },
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Municipality"),
-      dataIndex: "municipalityName",
-      key: "municipalityName",
-      responsive: ["sm"],
+      name: t("Municipality"),
+      selector: (row) => row.municipalityName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Qualification"),
-      dataIndex: "qualificationName",
-      key: "qualificationName",
-      responsive: ["sm"],
+      name: t("Qualification"),
+      selector: (row) => row.qualificationName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("DateIssuanceDecision"),
-      dataIndex: "decisionDate",
-      key: "decisionDate",
-      responsive: ["sm"],
-      render: (item) =>
-        item ? new Date(item.split("T")[0]).toLocaleDateString("en-GB") : "",
+      name: t("DateIssuanceDecision"),
+      sortable: true,
+      filterable: true,
+      cell: (row) =>
+        row.decisionDate
+          ? new Date(row.decisionDate.split("T")[0]).toLocaleDateString("en-GB")
+          : "",
     },
     {
-      title: t("DateExpirationDecision"),
-      dataIndex: "termDate",
-      key: "termDate",
-      responsive: ["sm"],
-      render: (item) =>
-        item ? new Date(item.split("T")[0]).toLocaleDateString("en-GB") : "",
+      name: t("DateExpirationDecision"),
+      sortable: true,
+      filterable: true,
+      cell: (row) =>
+        row.termDate
+          ? new Date(row.termDate.split("T")[0]).toLocaleDateString("en-GB")
+          : "",
     },
   ];
-  async function submitForm() {
-    console.log(model);
 
+  async function checkNullAttributes(model) {
+    let count = 0;
+    Object.entries(model).forEach((value) => {
+      if (value[0] !== "LangId" && value[0] !== "MunicipalityName") {
+        value[1] && count++;
+      }
+    });
+    return count > 0 ? false : true;
+  }
+
+  async function submitForm() {
+    const check = await checkNullAttributes(model);
     setLoad(true);
+    if (check) {
+      setLoad(false);
+      toast.info(t("FillOneOfSearchingFields"));
+      return;
+    }
     await CrudProvider.createItem(
       "InstitutionAPI/GetInstitutionDecision",
       model
@@ -83,6 +100,7 @@ export default function SearchInstitution() {
             break;
         }
       }
+      setLoad(false);
     });
   }
   useEffect(() => {
@@ -126,9 +144,11 @@ export default function SearchInstitution() {
 
   function clearInputs() {
     setModel({
+      ...model,
       UniqueNumber: "",
       MunicipalityId: "",
       InstitutionName: "",
+      MunicipalityName: "",
     });
     setData([]);
   }
@@ -190,9 +210,7 @@ export default function SearchInstitution() {
                 <CustomSelect
                   optionsList={citiesList}
                   hasDefaultValue={true}
-                  defaultValue={
-                    model.MunicipalityName ? model.MunicipalityName : ""
-                  }
+                  defaultValue={model.MunicipalityName}
                   onChangeFunction={changeCity}
                   isMulti={false}
                 />
@@ -232,7 +250,7 @@ export default function SearchInstitution() {
       <div className='col-xxl-12'>
         <hr />
         {!load ? (
-          <DataTable
+          <DataTablev2
             dataSource={data}
             columns={columns}
             title={t("InstitutionsList")}

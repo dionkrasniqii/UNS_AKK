@@ -35,7 +35,6 @@ export default function Editlevel() {
       if (res) {
         if (res.statusCode === 200) {
           const obj = res.result;
-          console.log(obj);
           setModel({
             LevelKKKLanguageId: obj.levelKKKLanguageId,
             LevelReferenceKEK: obj.levelKKK.levelReferenceKEK,
@@ -74,7 +73,6 @@ export default function Editlevel() {
     onSubmit: handleSubmit,
   });
 
-  console.log(level);
   return (
     <>
       {!load && (
