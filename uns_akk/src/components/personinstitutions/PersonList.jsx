@@ -7,7 +7,6 @@ import DataTable from "../custom/DataTable";
 import { useTranslation } from "react-i18next";
 
 export default function PersonList({ institutionId }) {
-  console.log(institutionId)
   const { t } = useTranslation();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -71,7 +70,6 @@ export default function PersonList({ institutionId }) {
     try {
       setLoading(true);
       const res = await CrudProvider.getItemById("PersonAPI/GetPersons", institutionId);
-      console.log(res)
       if (res) {
         switch (res.statusCode) {
           case 200:
@@ -83,7 +81,6 @@ export default function PersonList({ institutionId }) {
         }
       }
     } catch (error) {
-      console.log(error);
     } finally {
       setLoading(false);
     }

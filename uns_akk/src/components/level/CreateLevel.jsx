@@ -26,7 +26,6 @@ export default function CreateLevel() {
 
   const SubmitForm = async () => {
     await CrudProvider.createItem("LevelAPI/CreateLevel", model).then((res) => {
-      console.log(res);
       if (res) {
         if (res.statusCode === 200) {
           navigate("/level");

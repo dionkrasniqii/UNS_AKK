@@ -288,7 +288,8 @@ async function getReportRDLC(methodRoute, fileType, id, reportName) {
 
     const contentType = response.headers["content-type"];
     if (contentType === "application/pdf") {
-      window.open(url, "_blank");
+      const newWindow = window.open();
+      newWindow.location.href = url;
     } else if (contentType === "application/vnd.ms-excel") {
       const link = document.createElement("a");
       link.href = url;
@@ -317,7 +318,8 @@ async function getReportRDLCWithLang(methodRoute, fileType, id, reportName) {
 
     const contentType = response.headers["content-type"];
     if (contentType === "application/pdf") {
-      window.open(url, "_blank");
+      const newWindow = window.open();
+      newWindow.location.href = url;
     } else if (contentType === "application/vnd.ms-excel") {
       const link = document.createElement("a");
       link.href = url;

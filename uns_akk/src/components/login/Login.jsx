@@ -10,6 +10,7 @@ import { setToken } from "../../store/actions";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 export default function Login(props) {
   const { t } = useTranslation();
@@ -23,26 +24,23 @@ export default function Login(props) {
   const [showMultiRolesModal, setShowMultiRolesModal] = useState(false);
   const [roles, setRoles] = useState([]);
   const dispatch = useDispatch();
-  const token = localStorage.getItem("akktoken");
-
-  useEffect(() => {
-    if (token) {
-      navigate("/");
-    }
-  }, [token]);
 
   async function loginFunction() {
     setLoad(true);
     await CrudProvider.login("AccountController/login", model).then((res) => {
       if (res) {
-        console.log(res);
         switch (res.code) {
           case 200:
             toast.success(t("LoginSuccess"));
             props.setAuthState(true);
             localStorage.setItem("akktoken", res.token);
             dispatch(setToken(res.token));
-            navigate("/");
+            const decodedToken = jwtDecode(res.token);
+            if (decodedToken.role.includes("Institution")) {
+              navigate("/students");
+            } else {
+              navigate("/");
+            }
             break;
           case 207:
             setShowMultiRolesModal(true);
@@ -83,15 +81,14 @@ export default function Login(props) {
     />
   ) : (
     <div
-      className='account-pages pt-5 animation'
-      style={{ marginTop: "150px" }}
+      className='account-pages pt-5 animation '
+      style={{ marginTop: "100px" }}
     >
-      <div className='container'>
-        <div className='row justify-content-center'>
-          <div className='col-md-8 col-lg-6 col-xl-4'>
-            <form onSubmit={formik.handleSubmit}>
-              <div className='card'>
-                {/* <div className='text-center'>
+      <div className='container d-flex justify-content-center'>
+        <div className='col-md-8 col-lg-6 col-xl-4'>
+          <form onSubmit={formik.handleSubmit}>
+            <div className='card'>
+              {/* <div className='text-center'>
                     <img
                       src={logo}
                       alt=''
@@ -99,61 +96,61 @@ export default function Login(props) {
                       className='mx-auto mt-2'
                     />
                 </div> */}
-                <div className='card-body p-4'>
-                  <div className='text-center mb-4'>
-                    <h4 className='text-uppercase mt-0'>{t("Login")}</h4>
-                  </div>
-                  <div className='mb-3'>
-                    <label htmlFor='emailaddress' className='form-label'>
-                      {t("Username")}
-                    </label>
-                    <input
-                      className='form-control'
-                      autoComplete='off'
-                      type='text'
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          Username: e.target.value,
-                        });
-                        formik.setFieldValue("Username", e.target.value);
-                      }}
-                      id='emailaddress'
-                      required=''
-                      placeholder='Enter your email'
-                    />
-                    {formik.errors.Username && (
-                      <span className='text-danger'>
-                        {formik.errors.Username}
-                      </span>
-                    )}
-                  </div>
-                  <div className='mb-3'>
-                    <label htmlFor='password' className='form-label'>
-                      {t("Password")}
-                    </label>
-                    <input
-                      className='form-control'
-                      type='password'
-                      autoComplete='off'
-                      required=''
-                      onChange={(e) => {
-                        setModel({
-                          ...model,
-                          Password: e.target.value,
-                        });
-                        formik.setFieldValue("Password", e.target.value);
-                      }}
-                      id='password'
-                      placeholder='Enter your password'
-                    />
-                    {formik.errors.Password && (
-                      <span className='text-danger'>
-                        {formik.errors.Password}
-                      </span>
-                    )}
-                  </div>
-                  {/* <div className='mb-3'>
+              <div className='card-body p-4'>
+                <div className='text-center mb-4'>
+                  <h4 className='text-uppercase mt-0'>{t("Login")}</h4>
+                </div>
+                <div className='mb-3'>
+                  <label htmlFor='emailaddress' className='form-label'>
+                    {t("Username")}
+                  </label>
+                  <input
+                    className='form-control'
+                    autoComplete='off'
+                    type='text'
+                    onChange={(e) => {
+                      setModel({
+                        ...model,
+                        Username: e.target.value,
+                      });
+                      formik.setFieldValue("Username", e.target.value);
+                    }}
+                    id='emailaddress'
+                    required=''
+                    placeholder='Enter your email'
+                  />
+                  {formik.errors.Username && (
+                    <span className='text-danger'>
+                      {formik.errors.Username}
+                    </span>
+                  )}
+                </div>
+                <div className='mb-3'>
+                  <label htmlFor='password' className='form-label'>
+                    {t("Password")}
+                  </label>
+                  <input
+                    className='form-control'
+                    type='password'
+                    autoComplete='off'
+                    required=''
+                    onChange={(e) => {
+                      setModel({
+                        ...model,
+                        Password: e.target.value,
+                      });
+                      formik.setFieldValue("Password", e.target.value);
+                    }}
+                    id='password'
+                    placeholder='Enter your password'
+                  />
+                  {formik.errors.Password && (
+                    <span className='text-danger'>
+                      {formik.errors.Password}
+                    </span>
+                  )}
+                </div>
+                {/* <div className='mb-3'>
                     <div className='form-check'>
                       <input
                         type='checkbox'
@@ -170,24 +167,23 @@ export default function Login(props) {
                       </label>
                     </div>
                   </div> */}
-                  <div className='mb-3 d-grid text-center'>
-                    {!load ? (
-                      <button className='btn btn-primary' type='submit'>
-                        {t("Log-In")}
-                      </button>
-                    ) : (
-                      <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
-                        <div
-                          className='spinner-border text-primary m-2 text-center'
-                          role='status'
-                        />
-                      </div>
-                    )}
-                  </div>
+                <div className='mb-3 d-grid text-center'>
+                  {!load ? (
+                    <button className='btn btn-primary' type='submit'>
+                      {t("Log-In")}
+                    </button>
+                  ) : (
+                    <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                      <div
+                        className='spinner-border text-primary m-2 text-center'
+                        role='status'
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
           <div className='row mt-3'>
             <div className='col-12 text-center'>
               <p className='text-muted'>

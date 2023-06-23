@@ -37,11 +37,32 @@ export const AppRoutes = (props) => {
     ADMIN: "Admin",
     INSTITUTION: "Institution",
   };
-
   return (
-    <div className='content-page'>
+    <div
+      className={`content-page ${
+        props.authState ? "" : "content-page-no-margin "
+      }`}
+    >
       <div className='content mt-2'>
         <Routes>
+          <Route
+            path='*'
+            element={
+              props.authState ? (
+                <PrivateRoute
+                  setAuthState={props.setAuthState}
+                  authState={props.authState}
+                  allowedRoles={[ROLES.ADMIN]}
+                  component={Home}
+                />
+              ) : (
+                <Landing
+                  authState={props.authState}
+                  setAuthState={props.setAuthState}
+                />
+              )
+            }
+          />
           <Route
             path='/'
             element={
@@ -49,7 +70,7 @@ export const AppRoutes = (props) => {
                 <PrivateRoute
                   setAuthState={props.setAuthState}
                   authState={props.authState}
-                  allowedRoles={[ROLES.ADMIN, ROLES.INSTITUTION]}
+                  allowedRoles={[ROLES.ADMIN]}
                   component={Home}
                 />
               ) : (

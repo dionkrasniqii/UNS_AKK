@@ -1,5 +1,5 @@
 import jwtDecode from "jwt-decode";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -8,12 +8,11 @@ export default function Sidebar() {
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const role = decodedToken?.role;
-
   const SidebarItems = [
     //Admin
     {
       label: t("Home"),
-      roles: ["Admin", "Institution"],
+      roles: ["Admin"],
       path: "/",
       hasMenu: false,
       showLabel: false,
@@ -85,9 +84,29 @@ export default function Sidebar() {
       icon: "fas fa-layer-group",
     },
   ];
+  const navRef = useRef(null);
+  useEffect(() => {
+    const bodyDiv = document.getElementById("body");
+    const mainNav = document.getElementById("mainNavDiv");
+    const handleClickOutside = (event) => {
+      if (
+        navRef.current &&
+        !navRef.current.contains(event.target) &&
+        !mainNav.contains(event.target)
+      ) {
+        bodyDiv.classList.remove("sidebar-enable");
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className='left-side-menu menuitem-active '>
+    <div className='left-side-menu menuitem-active ' ref={navRef}>
       <div className='h-100 show' data-simplebar='init'>
         <div className='simplebar-wrapper' style={{ margin: 0 }}>
           <div className='simplebar-height-auto-observer-wrapper'>
