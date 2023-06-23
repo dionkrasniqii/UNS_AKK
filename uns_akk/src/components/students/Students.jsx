@@ -14,6 +14,7 @@ export default function Students() {
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const [data, setData] = useState([]);
+  const [loadPrint, setLoadPrint] = useState(false);
 
   useEffect(() => {
     setLoad(true);
@@ -33,6 +34,20 @@ export default function Students() {
       setLoad(false);
     });
   }, []);
+
+  async function printCertificate(id) {
+    setLoadPrint(true);
+    try {
+      await CrudProvider.getReportRDLCWithLang(
+        `ReportsAPI/PrintPersonCertificate`,
+        `pdf`,
+        `${id}/${false}`,
+        `${t("Certificate")} ${data.nameSurname}`
+      );
+    } finally {
+      setLoadPrint(false);
+    }
+  }
 
   const columns = [
     {
@@ -81,23 +96,30 @@ export default function Students() {
       key: "personId",
       render: (value, record) => {
         return (
-          <div className="row d-flex justify-content-center">
-            {/* <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
+          <div className="button-list">
               <Link
+              type="button"
                 className="btn-secondary btn-sm"
                 to={`/editstudent/${record.personInstitutionId}`}
               >
                 <i className="fe-edit" />
               </Link>
-            </div> */}
-            <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
               <a
-                className="btn-sm btn-danger"
+              type="button"
+                className="btn-sm btn-danger "
+                style={{marginLeft:"5px"}}
                 onClick={(e) => handleDelete(record.person.personId)}
               >
                 <i className="fe-trash-2" />
               </a>
-            </div>
+              <a
+              type="button"
+                className="btn-sm btn-danger "
+                style={{marginLeft:"5px"}}
+                onClick={(e) => handleDelete(record.person.personId)}
+              >
+                <i className="fe-trash-2" />
+              </a>
           </div>
         );
       },
