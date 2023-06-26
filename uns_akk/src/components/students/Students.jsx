@@ -14,7 +14,7 @@ export default function Students() {
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const [data, setData] = useState([]);
-  const [loadPrint, setLoadPrint] = useState(false);
+  const [loadPrint, setLoadPrint] = useState("");
 
   useEffect(() => {
     setLoad(true);
@@ -36,19 +36,18 @@ export default function Students() {
   }, []);
 
   async function printCertificate(id) {
-    setLoadPrint(true);
+    setLoadPrint(id);
     try {
       await CrudProvider.getReportRDLCWithLang(
         `ReportsAPI/PrintPersonCertificate`,
         `pdf`,
-        `${id}/${false}`,
+        `${id}/${true}`,
         `${t("Certificate")} ${data.nameSurname}`
       );
     } finally {
-      setLoadPrint(false);
+      setLoadPrint("");
     }
   }
-
   const columns = [
     {
       title: t("NumberOfCertificate"),
@@ -97,35 +96,37 @@ export default function Students() {
       render: (value, record) => {
         return (
           <div className="button-list">
-              <Link
+            <Link
               type="button"
-                className="btn-secondary btn-sm"
-                to={`/editstudent/${record.personInstitutionId}`}
-              >
-                <i className="fe-edit" />
-              </Link>
-              <a
+              className="btn btn-secondary btn-sm"
+              to={`/editstudent/${record.personInstitutionId}`}
+            >
+              <i className="fe-edit" />
+            </Link>
+            <a
               type="button"
-                className="btn-sm btn-danger "
-                style={{marginLeft:"5px"}}
-                onClick={(e) => handleDelete(record.person.personId)}
+              className="btn btn-sm btn-danger "
+              style={{ marginLeft: "5px" }}
+              onClick={(e) => handleDelete(record.person.personId)}
+            >
+              <i className="fe-trash-2" />
+            </a>
+            {loadPrint !== record.certificateNumber ? (
+              <button
+                style={{ marginLeft: "5px" }}
+                onClick={(e) => printCertificate(record.certificateNumber)}
+                className="btn btn-sm btn-dark waves-effect waves-light "
               >
-                <i className="fe-trash-2" />
-              </a>
-              <a
-              type="button"
-                className="btn-sm btn-danger "
-                style={{marginLeft:"5px"}}
-                onClick={(e) => handleDelete(record.person.personId)}
-              >
-                <i className="fe-trash-2" />
-              </a>
+                <i itemType="button" className="fe-printer" />
+              </button>
+            ) : (
+              <div className="spinner-border text-dark m-2" role="status" />
+            )}
           </div>
         );
       },
     },
   ];
-
   async function handleDelete(id) {
     setLoad(true);
     await CrudProvider.deleteItemById(
