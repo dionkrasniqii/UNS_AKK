@@ -190,5 +190,12 @@
   "CertificateProtocolNr": "Numri i protokollit të certifikatës",
   "Candidates": "Kandidatët",
   "Graduated": "I diplomuar",
-  "SelectMunicipalityToShowSubqualifications": "Zgjedhni komunën për vendim për të iu shfaqur nënkualifikimet!"
+  "SelectMunicipalityToShowSubqualifications": "Zgjedhni komunën për vendim për të iu shfaqur nënkualifikimet!",
+  "Accreditated": "Akredituar",
+  "UnAccreditated": "Pa-akredituar",
+  "AccreditatedUnAccreditatedInstitutions": "Institucione të akredituara dhe jo të akredituara",
+  "RegistredInstitutionsInYears": "Institucionet e regjistruara ndër vite",
+  "CandidatesRegistredInYears": "Kandidatët e regjistruara ndër vite",
+  "CandidatesBasedOnQualification": "Kandidatët e grupuar në bazë të kualifikimit",
+  "CandidatesRegistredMonths": "Kandidatët e regjistruara ndër muaj"
 }

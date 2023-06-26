@@ -195,5 +195,12 @@
   "CertificateProtocolNr": "Certificate Protocol Number",
   "Candidates": "Candidates",
   "Graduated": "Graduated",
-  "SelectMunicipalityToShowSubqualifications": "Select the municipality for decision to display the sub-qualifications!"
+  "SelectMunicipalityToShowSubqualifications": "Select the municipality for decision to display the sub-qualifications!",
+  "Accreditated": "Accreditated",
+  "UnAccreditated": "UnAccreditated",
+  "AccreditatedUnAccreditatedInstitutions": "Accredited and non-accredited institutions",
+  "RegistredInstitutionsInYears": "Institutions registered over the years",
+  "CandidatesRegistredInYears": "Candidates registered over the years",
+  "CandidatesBasedOnQualification": "Candidates grouped based on qualification",
+  "CandidatesRegistredMonths": "Candidates registered over the months"
 }
