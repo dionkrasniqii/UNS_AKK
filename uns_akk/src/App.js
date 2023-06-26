@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { lazy, useRef } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import "./assets/css/app.min.css";
 import "./assets/css/icons.min.css";
@@ -8,17 +8,15 @@ import { useLocation, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { AppRoutes } from "./routes/routes";
-import Sidebar from "./components/home/Sidebar";
-import Footer from "./components/home/Footer";
-import Navbar from "./components/home/Navbar";
 import jwtDecode from "jwt-decode";
 import { removeToken, setToken } from "./store/actions";
-import NavbarLanding from "./components/home/NavbarLanding";
-
+const Sidebar = lazy(() => import("./components/home/Sidebar"));
+const Footer = lazy(() => import("./components/home/Footer"));
+const Navbar = lazy(() => import("./components/home/Navbar"));
+const NavbarLanding = lazy(() => import("./components/home/NavbarLanding"));
+const Loading = lazy(() => import("./components/loading/Loading"));
 function App() {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const path = useLocation();
   const [oldSession, setOldSession] = useState(
     localStorage.getItem("akktoken")
   );
@@ -54,6 +52,11 @@ function App() {
   useEffect(() => {
     localStorage.setItem("i18nextLng", "1");
   }, []);
+
+  if (authState === null) {
+    return <Loading />;
+  }
+
   return (
     <>
       <ToastContainer
