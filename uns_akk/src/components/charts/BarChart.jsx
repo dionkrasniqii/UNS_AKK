@@ -56,6 +56,13 @@ export default function BarChart({ data }) {
       bar: {
         borderWidth: 1,
         borderRadius: 4,
+        barThickness: "flex", // Adjust th
+      },
+    },
+    datasets: {
+      bar: {
+        categoryPercentage: 0.8, // Increase the value to make the bars taller
+        barPercentage: 0.9, // Increase the value to make the bars taller
       },
     },
   };

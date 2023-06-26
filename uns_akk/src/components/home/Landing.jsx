@@ -92,92 +92,94 @@ export default function Landing() {
               }`}
               id='topnav-menu-content'
             >
-              <ul className='navbar-nav nav-item-end active'>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link arrow-none'
-                    onClick={(e) => setShowSearchForm(false)}
-                    id='topnav-dashboard'
-                    role='button'
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                  >
-                    <i className='mdi mdi-view-dashboard me-1' />
-                    {t("Home")}
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link arrow-none'
-                    id='topnav-dashboard'
-                    role='button'
-                    onClick={(e) => setShowSearchForm(true)}
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                  >
-                    <i className='fe-search me-1' />
-                    {t("SearchForms")}
-                  </a>
-                </li>
-                <li className='nav-item dropdown '>
-                  <a
-                    className='nav-link dropdown-toggle arrow-none'
-                    id='topnav-layout'
-                    role='button'
-                    data-bs-toggle='dropdown'
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                  >
-                    <i className='mdi mdi-card-bulleted-settings-outline me-1' />
-                    {t("Languages")} <div className='arrow-down' />
-                  </a>
-                  <div
-                    className='dropdown-menu active'
-                    aria-labelledby='topnav-layout'
-                  >
+              <ul className='d-flex justify-content-between active w-100'>
+                <div className='navbar-nav nav-item-end'>
+                  <li className='nav-item'>
                     <a
-                      className='dropdown-item '
-                      onClick={(e) => changeLang("1")}
+                      className='nav-link arrow-none'
+                      onClick={(e) => setShowSearchForm(false)}
+                      id='topnav-dashboard'
+                      role='button'
+                      aria-haspopup='true'
+                      aria-expanded='false'
                     >
-                      <label>AL</label>
+                      <i className='mdi mdi-view-dashboard me-1' />
+                      {t("Home")}
                     </a>
+                  </li>
+                  <li className='nav-item'>
                     <a
-                      className='dropdown-item '
-                      onClick={(e) => changeLang("2")}
+                      className='nav-link arrow-none'
+                      id='topnav-dashboard'
+                      role='button'
+                      onClick={(e) => setShowSearchForm(true)}
+                      aria-haspopup='true'
+                      aria-expanded='false'
                     >
-                      <label className='fs-6'>ENG</label>
+                      <i className='fe-search me-1' />
+                      {t("SearchForms")}
                     </a>
+                  </li>
+                </div>
+                <div className='navbar-nav nav-item-end active'>
+                  <div className='nav-item dropdown '>
+                    <a
+                      className='nav-link dropdown-toggle arrow-none'
+                      id='topnav-layout'
+                      role='button'
+                      data-bs-toggle='dropdown'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                    >
+                      <i className='mdi mdi-card-bulleted-settings-outline me-1' />
+                      {t("Languages")} <div className='arrow-down' />
+                    </a>
+                    <div
+                      className='dropdown-menu active'
+                      aria-labelledby='topnav-layout'
+                    >
+                      <a
+                        className='dropdown-item '
+                        onClick={(e) => changeLang("1")}
+                      >
+                        <label>AL</label>
+                      </a>
+                      <a
+                        className='dropdown-item '
+                        onClick={(e) => changeLang("2")}
+                      >
+                        <label className='fs-6'>ENG</label>
+                      </a>
+                    </div>
                   </div>
-                </li>
-                <li className='nav-item'>
-                  <Link
-                    className='nav-link arrow-none'
-                    to='/login'
-                    id='topnav-dashboard'
-                    role='button'
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                  >
-                    <i className='fe-log-in me-1' /> {t("Login")}
-                  </Link>
-                </li>
+                  <div className='nav-item'>
+                    <Link
+                      className='nav-link arrow-none'
+                      to='/login'
+                      id='topnav-dashboard'
+                      role='button'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                    >
+                      <i className='fe-log-in me-1' /> {t("Login")}
+                    </Link>
+                  </div>
+                </div>
               </ul>
             </div>
           </nav>
         </div>
       </div>
-      <div className='content-page-landing navbar-costum-padding '>
+      <div className='content-page-landing navbar-costum-padding'>
         <div className='content mb-5'>
           <div className='container-fluid d-flex justify-content-center '>
             {showSearchForm ? (
               <SearchingForms />
             ) : (
-              <div className='container'>
-                <div className='col-12'>
-                  <div className='card'>
-                    <div className='card-body'>
-                      <BarChart data={data2} />
-                    </div>
+              <div className='col-10'>
+                <div className='card'>
+                  <div className='card-body'>
+                    <BarChart data={data2} />
                   </div>
                 </div>
               </div>
@@ -185,15 +187,13 @@ export default function Landing() {
           </div>
         </div>
       </div>
-      <footer className='footer footer-landing mt-5'>
-        <div className='container-fluid m-0'>
-          <div className='row'>
-            <div className='col-md-6'>
-              {new Date().getFullYear()} © All rights reserved by{" "}
-              <a href='http://www.unisoft-rks.com/' target='_blank'>
-                UniSoft
-              </a>{" "}
-            </div>
+      <footer className='footer footer-landing  mt-5'>
+        <div className='container-fluid text-center m-0'>
+          <div className='col-12'>
+            {new Date().getFullYear()} © All rights reserved by{" "}
+            <a href='http://www.unisoft-rks.com/' target='_blank'>
+              UniSoft
+            </a>{" "}
           </div>
         </div>
       </footer>
