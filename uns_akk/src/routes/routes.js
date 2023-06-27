@@ -1,71 +1,38 @@
 import React, { lazy } from "react";
 import { Route, Routes } from "react-router";
-const Home = lazy(() => import("../components/home/Home"));
-const Login = lazy(() => import("../components/login/Login"));
-const PrivateRoute = lazy(() => import("../auth/PrivateRoute"));
-const Level = lazy(() => import("../components/level/Level"));
-const CreateLevel = lazy(() => import("../components/level/CreateLevel"));
-const EditLevel = lazy(() => import("../components/level/EditLevel"));
-const Institutions = lazy(() =>
-  import("../components/institutions/Institutions")
-);
-const CreateInstitutions = lazy(() =>
-  import("../components/institutions/CreateInstitutions")
-);
-const EditInstitution = lazy(() =>
-  import("../components/institutions/EditInstitutions")
-);
-const Qualifications = lazy(() =>
-  import("../components/qualifications/Qualifications")
-);
-const CreateQualifications = lazy(() =>
-  import("../components/qualifications/CreateQualifications")
-);
-const EditQualifications = lazy(() =>
-  import("../components/qualifications/EditQualifications")
-);
-const Decisions = lazy(() => import("../components/decisions/Decisions"));
-const CreateDecisions = lazy(() =>
-  import("../components/decisions/CreateDecisions")
-);
-const EditDecisions = lazy(() =>
-  import("../components/decisions/EditDecisions")
-);
-const SubQualifications = lazy(() =>
-  import("../components/subqualifications/SubQualifications")
-);
-const CreateSubQualification = lazy(() =>
-  import("../components/subqualifications/CreateSubQualification")
-);
-const EditSubQualification = lazy(() =>
-  import("../components/subqualifications/EditSubQualification")
-);
-const Profile = lazy(() => import("../components/profile/Profile"));
-const Students = lazy(() => import("../components/students/Students"));
-const CreateStudents = lazy(() =>
-  import("../components/students/CreateStudents")
-);
-const EditStudents = lazy(() => import("../components/students/EditStudents"));
-const Groups = lazy(() => import("../components/groups/Groups"));
-const CreateGroup = lazy(() => import("../components/groups/CreateGroup"));
-const Landing = lazy(() => import("../components/home/Landing"));
-const Person = lazy(() => import("../components/personinstitutions/Person"));
-const PersonList = lazy(() =>
-  import("../components/personinstitutions/PersonList")
-);
-const CertificateDetails = lazy(() =>
-  import("../components/search/CertificateDetails")
-);
-const LevelDetails = lazy(() => import("../components/search/LevelDetails"));
-const QualificationDetails = lazy(() =>
-  import("../components/search/QualificationDetails")
-);
-const DecisionDetails = lazy(() =>
-  import("../components/search/DecisionDetails")
-);
-const InstitutionDetails = lazy(() =>
-  import("../components/search/InstitutionDetails")
-);
+import Home from "../components/home/Home";
+import Login from "../components/login/Login";
+import PrivateRoute from "../auth/PrivateRoute";
+import Level from "../components/level/Level";
+import CreateLevel from "../components/level/CreateLevel";
+import EditLevel from "../components/level/EditLevel";
+import Institutions from "../components/institutions/Institutions";
+import CreateInstitutions from "../components/institutions/CreateInstitutions";
+import EditInstitution from "../components/institutions/EditInstitutions";
+import Qualifications from "../components/qualifications/Qualifications";
+import CreateQualifications from "../components/qualifications/CreateQualifications";
+import EditQualifications from "../components/qualifications/EditQualifications";
+import Decisions from "../components/decisions/Decisions";
+import CreateDecisions from "../components/decisions/CreateDecisions";
+import EditDecisions from "../components/decisions/EditDecisions";
+import SubQualifications from "../components/subqualifications/SubQualifications";
+import CreateSubQualification from "../components/subqualifications/CreateSubQualification";
+import EditSubQualification from "../components/subqualifications/EditSubQualification";
+import Profile from "../components/profile/Profile";
+import Students from "../components/students/Students";
+import CreateStudents from "../components/students/CreateStudents";
+import EditStudents from "../components/students/EditStudents";
+import Groups from "../components/groups/Groups";
+import CreateGroup from "../components/groups/CreateGroup";
+import Landing from "../components/home/Landing";
+import Person from "../components/personinstitutions/Person";
+import PersonList from "../components/personinstitutions/PersonList";
+import CertificateDetails from "../components/search/CertificateDetails";
+import LevelDetails from "../components/search/LevelDetails";
+import QualificationDetails from "../components/search/QualificationDetails";
+import DecisionDetails from "../components/search/DecisionDetails";
+import InstitutionDetails from "../components/search/InstitutionDetails";
+import Reports from "../components/reports/Reports";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -408,6 +375,18 @@ export const AppRoutes = (props) => {
                 authState={props.authState}
                 allowedRoles={[ROLES.ADMIN]}
                 component={PersonList}
+              />
+            }
+          />
+          {/* {/ Reports /} */}
+          <Route
+            path='/reports'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN]}
+                component={Reports}
               />
             }
           />

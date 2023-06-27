@@ -83,6 +83,14 @@ export default function Sidebar() {
       showLabel: true,
       icon: "fas fa-layer-group",
     },
+    {
+      label: "Reports",
+      roles: ["Admin"],
+      path: "/reports",
+      hasMenu: false,
+      showLabel: true,
+      icon: "mdi mdi-microsoft-excel",
+    },
   ];
   const navRef = useRef(null);
   useEffect(() => {

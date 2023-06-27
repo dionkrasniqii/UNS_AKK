@@ -276,7 +276,7 @@ async function getReportRDLC(methodRoute, fileType, id, reportName) {
   let token = localStorage.getItem("akktoken");
   try {
     const response = await axios.get(
-      `${API_BASE_URL}/${methodRoute}/${fileType}`,
+      `${API_BASE_URL}/${methodRoute}/${fileType}/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
