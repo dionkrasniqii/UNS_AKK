@@ -39,11 +39,12 @@ export default function InstitutionDetails() {
               <div className='card '>
                 {Object.keys(data).length > 0 && !load ? (
                   <>
-                    <img
-                      className='card-img-top img-fluid mt-2'
-                      src={CrudProvider.documentPath(data.path)}
-                      alt='Card image cap'
-                    />
+                    <div className='card-header bg-white'>
+                      <img
+                        className='card-img-top img-fluid mt-2'
+                        src={CrudProvider.documentPath(data.path)}
+                      />
+                    </div>
                     <div className='text-center card-body '>
                       <div>
                         {/* <h3 className='title mb-3'>{t("Institution")}</h3> */}

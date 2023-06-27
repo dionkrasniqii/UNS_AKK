@@ -24,6 +24,12 @@ export default function CreateGroup() {
     EndDate: "",
   });
 
+  function formatedDate(date) {
+    const [day, month, year] = date.split("/");
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  }
+
   useEffect(() => {
     setLoad(true);
     CrudProvider.getItemById(
@@ -44,9 +50,9 @@ export default function CreateGroup() {
     decisions.map((obj) => ({
       value: obj.institutionDecisionDetailsId,
       label:
-        obj.municipality.municipalityLanguages[0].municipalityName +
+        obj.municipality?.municipalityLanguages[0].municipalityName +
         " - " +
-        obj.qualification.qualificationLanguages[0].qualificationName,
+        obj.qualification?.qualificationLanguage[0].qualificationName,
     }));
 
   function changeDecision(e) {
@@ -59,17 +65,19 @@ export default function CreateGroup() {
   function changeStartDate(date, dateString) {
     setModel({
       ...model,
-      StartDate: dateString,
+      StartDate: formatedDate(dateString),
     });
     formik.setFieldValue("StartDate", dateString);
   }
   function changeEndDate(date, dateString) {
     setModel({
       ...model,
-      EndDate: dateString,
+      EndDate: formatedDate(dateString),
     });
     formik.setFieldValue("EndDate", dateString);
   }
+  console.log(model.StartDate);
+  console.log(model.EndDate);
   async function submitForm() {
     setLoad(true);
     if (model.StartDate >= model.EndDate) {

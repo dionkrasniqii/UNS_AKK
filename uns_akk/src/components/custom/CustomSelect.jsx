@@ -28,7 +28,7 @@ export default function CustomSelect({
   // };
   return hasDefaultValue && defaultValue !== null ? (
     <Select
-    key={defaultValue}
+      key={defaultValue}
       style={selectStyle}
       allowClear
       showSearch
@@ -36,7 +36,8 @@ export default function CustomSelect({
       onChange={onChangeFunction}
       options={optionsList}
       mode={isMulti ? "multiple" : "single"}
-      optionFilterProp="children"
+      maxTagCount='responsive'
+      optionFilterProp='children'
       filterOption={(input, option) =>
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
@@ -46,14 +47,14 @@ export default function CustomSelect({
       style={selectStyle}
       allowClear
       showSearch
+      maxTagCount='responsive'
       onChange={onChangeFunction}
       options={optionsList}
       mode={isMulti ? "multiple" : "single"}
-      optionFilterProp="children"
+      optionFilterProp='children'
       filterOption={(input, option) =>
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
     />
   );
-  
 }
