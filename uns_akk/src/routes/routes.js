@@ -1,4 +1,3 @@
-import React, { lazy } from "react";
 import { Route, Routes } from "react-router";
 import Home from "../components/home/Home";
 import Login from "../components/login/Login";
@@ -32,6 +31,7 @@ import LevelDetails from "../components/search/LevelDetails";
 import QualificationDetails from "../components/search/QualificationDetails";
 import DecisionDetails from "../components/search/DecisionDetails";
 import InstitutionDetails from "../components/search/InstitutionDetails";
+import PersonDetails from "../components/personinstitutions/PersonDetails";
 import Reports from "../components/reports/Reports";
 
 export const AppRoutes = (props) => {
@@ -368,7 +368,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/personlist/:id'
+            path='/personlist'
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -378,6 +378,19 @@ export const AppRoutes = (props) => {
               />
             }
           />
+          <Route
+            path='/persondetails/:id'
+             element={
+              <PrivateRoute
+            
+               setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN]}
+component={PersonDetails}
+   />
+            }
+          />
+
           {/* {/ Reports /} */}
           <Route
             path='/reports'

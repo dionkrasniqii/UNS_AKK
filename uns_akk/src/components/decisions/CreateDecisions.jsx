@@ -33,6 +33,12 @@ export default function CreateDecisions() {
     Document: "",
   });
 
+  function formatedDate(date) {
+    const [day, month, year] = date.split("/");
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  }
+
   useEffect(() => {
     Promise.all([
       CrudProvider.getAllWithLang("InstitutionAPI/GetAll").then((res) => {
@@ -118,13 +124,17 @@ export default function CreateDecisions() {
     });
     formik.setFieldValue("QualificationId", e);
   }
+
   const subQualificationsList =
     subQualifications.length > 0
-      ? subQualifications.map((obj) => ({
-          label: obj.description,
-          value: obj.qualificationChild.qualificationChildId,
-        }))
+      ? subQualifications.map((obj) => {
+          return {
+            label: obj.description,
+            value: obj.qualificationChild?.qualificationChildId,
+          };
+        })
       : [];
+
   function changeSubQualification(e) {
     setModel({
       ...model,
@@ -140,27 +150,26 @@ export default function CreateDecisions() {
   function changeProtocolDate(date, dateString) {
     setModel({
       ...model,
-      ProtocolDate: dateString,
+      ProtocolDate: formatedDate(dateString),
     });
     formik.setFieldValue("ProtocolDate", dateString);
   }
   function changeDecisionDate(date, dateString) {
     setModel({
       ...model,
-      DecisionDate: dateString,
+      DecisionDate: formatedDate(dateString),
     });
     formik.setFieldValue("DecisionDate", dateString);
   }
   function changeTermDate(date, dateString) {
     setModel({
       ...model,
-      TermDate: dateString,
+      TermDate: formatedDate(dateString),
     });
     formik.setFieldValue("TermDate", dateString);
   }
   async function submitForm() {
     setLoad(true);
-
     if (model.DecisionDate >= model.TermDate) {
       toast.error("Decision date cannot be greater than term date");
       setLoad(false);
@@ -210,7 +219,6 @@ export default function CreateDecisions() {
       });
     }
   }, [total]);
-
   const CreateDecisionSchema = Yup.object().shape({
     InstitutionId: Yup.string().required(t("ChooseInstitution")),
     MunicipalityId: Yup.string().required(t("ChooseMunicipality")),
@@ -241,17 +249,17 @@ export default function CreateDecisions() {
     onSubmit: () => submitForm(),
   });
   return (
-    <div className="col-xl-12">
-      <div className="card">
-        <div className="card-body">
-          <h3 className=" mb-3">{t("RegisterDecision")}</h3>
+    <div className='col-xl-12'>
+      <div className='card'>
+        <div className='card-body'>
+          <h3 className=' mb-3'>{t("RegisterDecision")}</h3>
           <form onSubmit={formik.handleSubmit}>
-            <div id="progressbarwizard">
-              <div className="tab-content b-0 mb-0 pt-0">
+            <div id='progressbarwizard'>
+              <div className='tab-content b-0 mb-0 pt-0'>
                 <ProgressBar model={model} />
-                <div className="tab-pane active" id="account-2">
-                  <div className="row">
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                <div className='tab-pane active' id='account-2'>
+                  <div className='row'>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Institution")}:</label>
                       <CustomSelect
                         onChangeFunction={changeInstitution}
@@ -259,12 +267,12 @@ export default function CreateDecisions() {
                         optionsList={institutionsList}
                       />
                       {formik.errors.InstitutionId && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.InstitutionId}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Municipality")}:</label>
                       <CustomSelect
                         onChangeFunction={changeMunicipality}
@@ -272,12 +280,12 @@ export default function CreateDecisions() {
                         optionsList={municipalitiesList}
                       />
                       {formik.errors.MunicipalityId && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.MunicipalityId}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Qualification")}:</label>
                       <CustomSelect
                         onChangeFunction={changeQualification}
@@ -285,13 +293,13 @@ export default function CreateDecisions() {
                         optionsList={qualificationsList}
                       />
                       {formik.errors.QualificationId && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.QualificationId}
                         </span>
                       )}
                     </div>
 
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("SubQualifications")}:</label>
                       <CustomSelect
                         onChangeFunction={changeSubQualification}
@@ -299,19 +307,19 @@ export default function CreateDecisions() {
                         optionsList={subQualificationsList}
                       />
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Credits")}:</label>
                       {total !== 0 ? (
                         <input
-                          type="number"
-                          className="form-control"
+                          type='number'
+                          className='form-control'
                           readOnly
                           defaultValue={model.Credits}
                         />
                       ) : (
                         <input
-                          type="number"
-                          className="form-control"
+                          type='number'
+                          className='form-control'
                           defaultValue={""}
                           onChange={(e) => {
                             setModel({
@@ -324,17 +332,45 @@ export default function CreateDecisions() {
                       )}
 
                       {formik.errors.Credits && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Credits}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("ProtocolDate")}:</label>
+                      <CustomDatePicker onChangeFunction={changeProtocolDate} />
+                      {formik.errors.ProtocolDate && (
+                        <span className='text-danger'>
+                          {formik.errors.ProtocolDate}
+                        </span>
+                      )}
+                    </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("DateIssuanceDecision")}:</label>
+                      <CustomDatePicker onChangeFunction={changeDecisionDate} />
+                      {formik.errors.DecisionDate && (
+                        <span className='text-danger'>
+                          {formik.errors.DecisionDate}
+                        </span>
+                      )}
+                    </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                      <label>{t("DateExpirationDecision")}:</label>
+                      <CustomDatePicker onChangeFunction={changeTermDate} />
+                      {formik.errors.TermDate && (
+                        <span className='text-danger'>
+                          {formik.errors.TermDate}
+                        </span>
+                      )}
+                    </div>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("ProtocolNumber")}:</label>
                       <input
-                        type="number"
+                        type='number'
                         min={1}
-                        className="form-control"
+                        className='form-control'
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -344,48 +380,21 @@ export default function CreateDecisions() {
                         }}
                       />
                       {formik.errors.ProtocolNr && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.ProtocolNr}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                      <label>{t("ProtocolDate")}:</label>
-                      <CustomDatePicker onChangeFunction={changeProtocolDate} />
-                      {formik.errors.ProtocolDate && (
-                        <span className="text-danger">
-                          {formik.errors.ProtocolDate}
-                        </span>
-                      )}
-                    </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                      <label>{t("DateIssuanceDecision")}:</label>
-                      <CustomDatePicker onChangeFunction={changeDecisionDate} />
-                      {formik.errors.DecisionDate && (
-                        <span className="text-danger">
-                          {formik.errors.DecisionDate}
-                        </span>
-                      )}
-                    </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                      <label>{t("DateExpirationDecision")}:</label>
-                      <CustomDatePicker onChangeFunction={changeTermDate} />
-                      {formik.errors.TermDate && (
-                        <span className="text-danger">
-                          {formik.errors.TermDate}
-                        </span>
-                      )}
-                    </div>
-                    <div className="col-xxl-2 col-md-3 col-lg-3 col-sm-12 mb-3">
-                      <div className="row">
+                    <div className='col-xxl-2 col-md-3 col-lg-3 col-sm-12 mb-3'>
+                      <div className='row'>
                         <label>{t("GroupLimits")}:</label>
-                        <div className="row col-12">
-                          <div className="col-4">
-                            <div className="form-check ps-4">
+                        <div className='row col-12'>
+                          <div className='col-4'>
+                            <div className='form-check ps-4'>
                               <input
-                                type="radio"
-                                id="customRadio1"
-                                name="customRadio"
+                                type='radio'
+                                id='customRadio1'
+                                name='customRadio'
                                 defaultChecked={
                                   !model.NoLimitGroups ? true : false
                                 }
@@ -401,26 +410,26 @@ export default function CreateDecisions() {
                                     null
                                   );
                                 }}
-                                className="form-check-input"
+                                className='form-check-input'
                               />
                               <label
-                                className="form-check-label"
-                                htmlFor="customRadio1"
+                                className='form-check-label'
+                                htmlFor='customRadio1'
                               >
                                 {t("Yes")}
                               </label>
                             </div>
                           </div>
-                          <div className="col-8">
-                            <div className="form-check ps-4">
+                          <div className='col-8'>
+                            <div className='form-check ps-4'>
                               <input
-                                type="radio"
-                                id="customRadio2"
-                                name="customRadio"
+                                type='radio'
+                                id='customRadio2'
+                                name='customRadio'
                                 defaultChecked={
                                   model.NoLimitGroups ? true : false
                                 }
-                                className="form-check-input"
+                                className='form-check-input'
                                 onChange={(e) => {
                                   setModel({
                                     ...model,
@@ -435,8 +444,8 @@ export default function CreateDecisions() {
                                 }}
                               />
                               <label
-                                className="form-check-label"
-                                htmlFor="customRadio2"
+                                className='form-check-label'
+                                htmlFor='customRadio2'
                               >
                                 {t("No")}
                               </label>
@@ -446,10 +455,10 @@ export default function CreateDecisions() {
                       </div>
                     </div>
                     {!model.NoLimitGroups && (
-                      <div className=" mb-3 col-xxl-1 col-lg-2 col-md-2 col-sm-12">
+                      <div className=' mb-3 col-xxl-1 col-lg-2 col-md-2 col-sm-12'>
                         <label>{t("NumberOfGroups")}:</label>
                         <input
-                          type="number"
+                          type='number'
                           onChange={(e) => {
                             setModel({
                               ...model,
@@ -457,19 +466,19 @@ export default function CreateDecisions() {
                             });
                             formik.setFieldValue("NumOfGroups", e.target.value);
                           }}
-                          className="form-control"
+                          className='form-control'
                         />
                         {formik.errors.NumOfGroups && (
-                          <span className="text-danger">
+                          <span className='text-danger'>
                             {formik.errors.NumOfGroups}
                           </span>
                         )}
                       </div>
                     )}
-                    <div className=" mb-3 col-xxl-3 col-lg-3 col-md-4 col-sm-12">
+                    <div className=' mb-3 col-xxl-3 col-lg-3 col-md-4 col-sm-12'>
                       <label>{t("MaxPersonsInGroup")}:</label>
                       <input
-                        type="number"
+                        type='number'
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -480,27 +489,27 @@ export default function CreateDecisions() {
                             e.target.value
                           );
                         }}
-                        className="form-control"
+                        className='form-control'
                       />
                       {formik.errors.MaximumPeoplePerGroup && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.MaximumPeoplePerGroup}
                         </span>
                       )}
                     </div>
-                    <div className=" mb-3 col-xxl-3 col-lg-4 col-md-4 col-sm-12">
+                    <div className=' mb-3 col-xxl-3 col-lg-4 col-md-4 col-sm-12'>
                       <label>{t("IsReaccrediation")}:</label>
-                      <div className="row col-12">
-                        <div className="col-3">
-                          <div className="form-check ps-4">
+                      <div className='row col-12'>
+                        <div className='col-3'>
+                          <div className='form-check ps-4'>
                             <input
-                              type="radio"
-                              id="customRadio3"
-                              name="customRadio2"
+                              type='radio'
+                              id='customRadio3'
+                              name='customRadio2'
                               defaultChecked={
                                 model.Reaccreditation === true ? true : false
                               }
-                              className="form-check-input"
+                              className='form-check-input'
                               onChange={(e) => {
                                 setModel({
                                   ...model,
@@ -513,23 +522,23 @@ export default function CreateDecisions() {
                               }}
                             />
                             <label
-                              className="form-check-label"
-                              htmlFor="customRadio3"
+                              className='form-check-label'
+                              htmlFor='customRadio3'
                             >
                               {t("Yes")}
                             </label>
                           </div>
                         </div>
-                        <div className="col-9">
-                          <div className="form-check ps-4">
+                        <div className='col-9'>
+                          <div className='form-check ps-4'>
                             <input
-                              type="radio"
-                              id="customRadio4"
-                              name="customRadio2"
+                              type='radio'
+                              id='customRadio4'
+                              name='customRadio2'
                               defaultChecked={
                                 model.Reaccreditation === false ? true : false
                               }
-                              className="form-check-input"
+                              className='form-check-input'
                               onChange={(e) => {
                                 setModel({
                                   ...model,
@@ -542,25 +551,25 @@ export default function CreateDecisions() {
                               }}
                             />
                             <label
-                              className="form-check-label"
-                              htmlFor="customRadio4"
+                              className='form-check-label'
+                              htmlFor='customRadio4'
                             >
                               {t("No")}
                             </label>
                           </div>
                         </div>
                         {formik.errors.Reaccreditation && (
-                          <span className="text-danger">
+                          <span className='text-danger'>
                             {formik.errors.Reaccreditation}
                           </span>
                         )}
                       </div>
                     </div>
-                    <div className="col-xxl-6 col-md-6 col-lg-6 col-sm-12 mb-3">
+                    <div className='col-xxl-6 col-md-6 col-lg-6 col-sm-12 mb-3'>
                       <label>{t("UploadDecision")}:</label>
                       <input
-                        type="file"
-                        accept="application/pdf"
+                        type='file'
+                        accept='application/pdf'
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -568,10 +577,10 @@ export default function CreateDecisions() {
                           });
                           formik.setFieldValue("Document", e.target.files[0]);
                         }}
-                        className="form-control"
+                        className='form-control'
                       />
                       {formik.errors.Document && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Document}
                         </span>
                       )}
@@ -579,31 +588,31 @@ export default function CreateDecisions() {
                   </div>
                 </div>
               </div>
-              <ul className="list-inline mb-0 wizard">
+              <ul className='list-inline mb-0 wizard'>
                 <Link
-                  to="/decisions"
-                  className="btn btn-danger waves-effect waves-light float-start"
+                  to='/decisions'
+                  className='btn btn-danger waves-effect waves-light float-start'
                 >
-                  <span className="btn-label">
-                    <i className="fe-arrow-left"></i>
+                  <span className='btn-label'>
+                    <i className='fe-arrow-left'></i>
                   </span>
                   {t("Discard")}
                 </Link>
-                <li className="next list-inline-item float-end">
+                <li className='next list-inline-item float-end'>
                   {!load ? (
                     <button
-                      type="submit"
-                      className="btn btn-success waves-effect waves-light"
+                      type='submit'
+                      className='btn btn-success waves-effect waves-light'
                     >
-                      <span className="btn-label">
-                        <i className="fe-check"></i>
+                      <span className='btn-label'>
+                        <i className='fe-check'></i>
                       </span>
                       {t("Save")}
                     </button>
                   ) : (
                     <div
-                      className="spinner-border text-primary m-2 text-center"
-                      role="status"
+                      className='spinner-border text-primary m-2 text-center'
+                      role='status'
                     />
                   )}
                 </li>

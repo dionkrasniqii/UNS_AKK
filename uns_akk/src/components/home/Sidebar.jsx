@@ -19,22 +19,6 @@ export default function Sidebar() {
       icon: "mdi mdi-view-dashboard-outline",
     },
     {
-      label: t("Institutions"),
-      roles: ["Admin"],
-      path: "/institutions",
-      hasMenu: false,
-      showLabel: true,
-      icon: "mdi mdi-calendar-blank-outline",
-    },
-    {
-      label: "Kandidatet",
-      roles: ["Admin"],
-      path: "/person",
-      hasMenu: false,
-      showLabel: true,
-      icon: "mdi mdi-calendar-blank-outline",
-    },
-    {
       label: "Level",
       roles: ["Admin"],
       path: "/level",
@@ -59,6 +43,14 @@ export default function Sidebar() {
       icon: "mdi mdi-book-settings",
     },
     {
+      label: t("Institutions"),
+      roles: ["Admin"],
+      path: "/institutions",
+      hasMenu: false,
+      showLabel: true,
+      icon: "mdi mdi-calendar-blank-outline",
+    },
+    {
       label: t("Decisions"),
       roles: ["Admin"],
       path: "/decisions",
@@ -66,15 +58,16 @@ export default function Sidebar() {
       showLabel: true,
       icon: "fas fa-file-archive",
     },
-    /* -----------INSTITUTION------------- */
     {
       label: t("Candidates"),
-      roles: ["Institution"],
-      path: "/students",
+      roles: ["Admin"],
+      path: "/person",
       hasMenu: false,
       showLabel: true,
-      icon: "fe-user",
+      icon: "mdi mdi-calendar-blank-outline",
     },
+
+    /* -----------INSTITUTION------------- */
     {
       label: t("Groups"),
       roles: ["Institution"],
@@ -84,7 +77,14 @@ export default function Sidebar() {
       icon: "fas fa-layer-group",
     },
     {
-      label: "Reports",
+      label: t("Candidates"),
+      roles: ["Institution"],
+      path: "/students",
+      hasMenu: false,
+      showLabel: true,
+      icon: "fe-user",
+},
+    {     label: "Reports",
       roles: ["Admin"],
       path: "/reports",
       hasMenu: false,
