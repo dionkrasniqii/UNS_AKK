@@ -83,6 +83,13 @@ export default function Sidebar() {
       hasMenu: false,
       showLabel: true,
       icon: "fe-user",
+},
+    {     label: "Reports",
+      roles: ["Admin"],
+      path: "/reports",
+      hasMenu: false,
+      showLabel: true,
+      icon: "mdi mdi-microsoft-excel",
     },
   ];
   const navRef = useRef(null);
