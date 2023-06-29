@@ -214,5 +214,8 @@
   "CandidatesRegistredInYears": "Candidates registered over the years",
   "CandidatesBasedOnQualification": "Candidates grouped based on qualification",
   "CandidatesRegistredMonths": "Candidates registered over the months",
-  "ApplyForm": "Apply"
+  "ApplyForm": "Apply",
+  "RaportList": "List of reports",
+  "GraduatedCandidatesList": "List of graduated candidates",
+  "Reports": "Reports"
 }
