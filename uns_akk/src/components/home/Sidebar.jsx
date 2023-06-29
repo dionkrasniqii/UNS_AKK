@@ -84,7 +84,8 @@ export default function Sidebar() {
       showLabel: true,
       icon: "fe-user",
 },
-    {     label: "Reports",
+    {     
+      label: t("Reports"),
       roles: ["Admin"],
       path: "/reports",
       hasMenu: false,

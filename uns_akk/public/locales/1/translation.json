@@ -213,5 +213,8 @@
   "CandidatesRegistredInYears": "Kandidatët e regjistruara ndër vite",
   "CandidatesBasedOnQualification": "Kandidatët e grupuar në bazë të kualifikimit",
   "CandidatesRegistredMonths": "Kandidatët e regjistruara ndër muaj",
-  "ApplyForm":"Aplikimi"
+  "ApplyForm":"Aplikimi",
+  "RaportList": "Lista e raporteve",
+  "GraduatedCandidatesList": "Lista e kandidatëve të diplomuar",
+  "Reports": "Raportet"
 }

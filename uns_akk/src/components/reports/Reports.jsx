@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import CustomSelect from "../custom/CustomSelect";
 import CrudProvider from "../../provider/CrudProvider";
+import { useTranslation } from "react-i18next";
 
 export default function Reports() {
+  const { t } = useTranslation();
   const [raportPrint, setRaportPrint] = useState({
     value: "",
     label: "",
   });
-  const reportsList = [{ value: 1, label: "Lista e kandidateve te diplomuar" }];
+  const reportsList = [{ value: 1, label: t("GraduatedCandidatesList") }];
   async function OnChange(e, record) {
     setRaportPrint(record);
   }
-  console.log(raportPrint);
 
   async function PrintRaport(e) {
-    await CrudProvider.getReportRDLC(
+    await CrudProvider.getReportRDLCWithLang(
       "ReportsAPI/PrintReportType",
       "excel",
       raportPrint.value,
@@ -22,19 +23,19 @@ export default function Reports() {
     );
   }
 
-  async function PrintPDF(e){
-    await CrudProvider.getReportRDLC(
-        "ReportsAPI/PrintReportType",
-        "pdf",
-        raportPrint.value,
-        raportPrint.label
-      ); 
+  async function PrintPDF(e) {
+    await CrudProvider.getReportRDLCWithLang(
+      "ReportsAPI/PrintReportType",
+      "pdf",
+      raportPrint.value,
+      raportPrint.label
+    );
   }
   return (
     <div className="card card-body">
       <div className="row">
         <div className="col-xxl-3 col-lg-3 col-sm-12">
-          <h3>Raports List</h3>
+          <h3>{t("RaportList")}</h3>
           <CustomSelect
             optionsList={reportsList}
             onChangeFunction={OnChange}
@@ -43,7 +44,7 @@ export default function Reports() {
         </div>
         <div className="col-xxl-2 col-lg-2 col-sm-12 mt-4 d-flex justify-content-between">
           <button
-           onClick={PrintRaport}
+            onClick={PrintRaport}
             type="button"
             class="btn btn-success waves-effect waves-light"
           >
@@ -53,7 +54,7 @@ export default function Reports() {
             Excel
           </button>
           <button
-           onClick={PrintPDF}
+            onClick={PrintPDF}
             type="button"
             class="btn btn-secondary waves-effect waves-light"
           >
