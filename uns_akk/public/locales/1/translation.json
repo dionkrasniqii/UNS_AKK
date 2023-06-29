@@ -200,7 +200,7 @@
   "OnlineCertificatePDF": "Certifikata online PDF",
   "OnlineCertificatePDFText": "Pas hapjes së faqes për të dhënat e kandidatit, mund të gjenerojmë një certifikatë online përmes sistemit!",
   "SearchResult": "Rezultati i kërkimit",
-  "Location": "Lokacioni:",
+  "Location": "Lokacioni",
   "AKKText": "Autoriteti Kombëtar i Kualifikimeve është një organ publik i pavarur, në pajtim me ligjin për Kualifikime Kombëtare në Kosovë. AKK është themeluar nga Ministria e Arsimit, Shkencës dhe Teknologjisë (MASHT), dhe to të veprojë në marrëveshje me Zyrën e Kryeministrit dhe ministritë tjera relevante.",
   "WriteOn": "Shkruani në:",
   "AKKSecondText": "AKK, gjithashtu, do të akreditojë institucionet për vlerësimin e nxënësve dhe lëshimin e certifikatave për kualifikimet e validuara në KKK",
@@ -213,5 +213,11 @@
   "CandidatesRegistredInYears": "Kandidatët e regjistruara ndër vite",
   "CandidatesBasedOnQualification": "Kandidatët e grupuar në bazë të kualifikimit",
   "CandidatesRegistredMonths": "Kandidatët e regjistruara ndër muaj",
+  "TextOne": "Njohjen më të mirë kombëtare dhe ndërkombëtare të kualifikimeve",
+  "TextTwo": "Pjesëmarrjen më të gjerë në mësimin gjatë gjithë jetës",
+  "TextThree": "Fleksibilitetin më të madh gjatë ofrimit të arsimit dhe aftësimit",
+  "TextFour": "Njohjen e mësimit të bazuar në punë",
+  "TextFive": "Progresin e përmirësuar për individ, nëpërmjet njohjes së mësimit paraprak dhe transferim të kredive",
+  "TextSix": "AKK, gjithashtu, do të akreditojë institucionet për vlerësimin e nxënësve dhe lëshimin e certifikatave për kualifikimet e validuara në KKK",
   "ApplyForm":"Aplikimi"
 }
