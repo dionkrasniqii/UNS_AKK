@@ -33,6 +33,8 @@ import DecisionDetails from "../components/search/DecisionDetails";
 import InstitutionDetails from "../components/search/InstitutionDetails";
 import PersonDetails from "../components/personinstitutions/PersonDetails";
 import Reports from "../components/reports/Reports";
+import ApplyForm from "../components/applicationforms/apply/ApplyForm";
+import SearchingForms from "../components/search/SearchingForms";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -380,18 +382,17 @@ export const AppRoutes = (props) => {
           />
           <Route
             path='/persondetails/:id'
-             element={
+            element={
               <PrivateRoute
-            
-               setAuthState={props.setAuthState}
+                setAuthState={props.setAuthState}
                 authState={props.authState}
                 allowedRoles={[ROLES.ADMIN]}
-component={PersonDetails}
-   />
+                component={PersonDetails}
+              />
             }
           />
 
-          {/* {/ Reports /} */}
+          {/* Reports */}
           <Route
             path='/reports'
             element={
@@ -402,6 +403,14 @@ component={PersonDetails}
                 component={Reports}
               />
             }
+          />
+          {/* Searching Forms */}
+          <Route path='/search-forms' element={<SearchingForms />} />
+          {/* Apply Forms */}
+          <Route
+            path='/application-form'
+            authState={props.authState}
+            element={<ApplyForm />}
           />
         </Routes>
       </div>

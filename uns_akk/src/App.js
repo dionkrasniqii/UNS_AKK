@@ -15,8 +15,7 @@ import jwtDecode from "jwt-decode";
 import { removeToken } from "./store/actions";
 import NavbarLanding from "./components/home/NavbarLanding";
 import Loading from "./components/loading/Loading";
-
-
+import PublicFooter from "./components/home/PublicFooter";
 
 function App() {
   const dispatch = useDispatch();
@@ -84,7 +83,7 @@ function App() {
         <NavbarLanding />
       )}
       <AppRoutes authState={authState} setAuthState={setAuthState} />
-      {authState && <Footer />}
+      {authState ? <Footer /> : <PublicFooter />}
     </>
   );
 }
