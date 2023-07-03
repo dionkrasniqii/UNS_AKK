@@ -9,7 +9,7 @@ export default function Reports() {
     value: "",
     label: "",
   });
-  const reportsList = [{ value: 1, label: "Lista e kandidateve te diplomuar" },
+  const reportsList = [{ value: 1, label: t("GraduatedCandidatesList")},
   {value: 2, label: "Lista e kandidateve te pa diplomuar"}, {value: 3, label: "Lista e instuticioneve"}];
   async function OnChange(e, record) {
     setRaportPrint(record);
