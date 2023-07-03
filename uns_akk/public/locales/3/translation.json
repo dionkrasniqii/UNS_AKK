@@ -173,5 +173,8 @@
   "CertificateProtocolNr": "Broj protokola sertifikata",
   "Candidates": "Kandidati",
   "Graduated": "Diplomirao",
-  "SelectMunicipalityToShowSubqualifications": "Izaberite opštinu za odluku o prikazivanju podkvalifikacija!"
+  "SelectMunicipalityToShowSubqualifications": "Izaberite opštinu za odluku o prikazivanju podkvalifikacija!",
+  "RaportList": "Spisak izveštaja",
+  "GraduatedCandidatesList": "Spisak diplomiranih kandidata",
+  "Reports": "Izveštaji"
 }
