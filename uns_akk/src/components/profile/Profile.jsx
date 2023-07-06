@@ -108,6 +108,7 @@ export default function Profile() {
                   <input
                     className='form-control'
                     type='file'
+                    accept='image/*'
                     onChange={(e) => {
                       setModel({
                         ...model,

@@ -14,6 +14,7 @@ export default function CreateInstitutions() {
   const { t } = useTranslation();
   const [showErrors, setShowErrors] = useState(false);
   const [cities, setCities] = useState([]);
+  const [status, setStatus] = useState([]);
   const [model, setModel] = useState({
     InstitutionName: "",
     UniqueNumber: "",
@@ -24,6 +25,7 @@ export default function CreateInstitutions() {
     Email: "",
     Web: "",
     Document: "",
+    StatusActivityId: "",
   });
 
   useEffect(() => {
@@ -36,6 +38,13 @@ export default function CreateInstitutions() {
         }
       }
     );
+    CrudProvider.getAll("GeneralAPI/GetInstitutionStatus").then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setStatus(res.result);
+        }
+      }
+    });
   }, []);
 
   const citiesList =
@@ -50,12 +59,32 @@ export default function CreateInstitutions() {
       })
       .sort((a, b) => a.label.localeCompare(b.label));
 
+  const statusList =
+    status &&
+    status.length > 0 &&
+    status
+      .map((obj) => {
+        return {
+          value: obj.institutionStatusId,
+          label: obj.description,
+        };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label));
+
   function changeCity(e) {
     setModel({
       ...model,
       MunicipalityId: e,
     });
     formik.setFieldValue("MunicipalityId", e);
+  }
+
+  function changeStatus(e) {
+    setModel({
+      ...model,
+      StatusActivityId: e,
+    });
+    formik.setFieldValue("StatusActivityId", e);
   }
 
   async function SubmitForm() {
@@ -76,29 +105,22 @@ export default function CreateInstitutions() {
   const CreateInstitutionSchema = Yup.object().shape({
     Name: Yup.string().required(t("PleaseFillInstitutionName")),
     UniqueNumber: Yup.number()
-      .test(
-        "is-valid",
-        t("UniqueNumberMustContain"),
-        (value) => /^8\d{8}$/.test(value)
+      .test("is-valid", t("UniqueNumberMustContain"), (value) =>
+        /^8\d{8}$/.test(value)
       )
       .required(t("PleaseFillUniqueNumber")),
-    MunicipalityId: Yup.string().required(
-      t("PleaseFillMunicipality")
-    ),
+    MunicipalityId: Yup.string().required(t("PleaseFillMunicipality")),
     Address: Yup.string().required(t("PleaseFillAddress")),
-    PostalCode: Yup.string().required(
-      t("PleaseFillPostalCode")
-    ).max(20, t("PostalCodeMustContainMax")),
-    PhoneNumber: Yup.string().required(
-      t("PleaseFillPhoneNumber")
-    ).max(20, t("PhoneNumberMustContainMax")),
+    PostalCode: Yup.string()
+      .required(t("PleaseFillPostalCode"))
+      .max(20, t("PostalCodeMustContainMax")),
+    PhoneNumber: Yup.string()
+      .required(t("PleaseFillPhoneNumber"))
+      .max(20, t("PhoneNumberMustContainMax")),
     Email: Yup.string().required(t("PleaseFillEmail")),
-    Web: Yup.string().required(
-      t("PleaseFillWeb")
-    ),
-    Documents: Yup.string().required(
-      t("PleaseFillDocument")
-    ),
+    Web: Yup.string().required(t("PleaseFillWeb")),
+    Documents: Yup.string().required(t("PleaseFillDocument")),
+    StatusActivityId: Yup.string().required(t("PleaseChooseStatusActivity")),
   });
   const formik = useFormik({
     initialValues: {},
@@ -108,25 +130,25 @@ export default function CreateInstitutions() {
     onSubmit: () => SubmitForm(),
   });
   return (
-    <div className="col-xl-12">
-      <div className="card">
-        <div className="card-body">
-          <h3 className=" mb-3">{t("RegisterInstitution")}</h3>
+    <div className='col-xl-12'>
+      <div className='card'>
+        <div className='card-body'>
+          <h3 className=' mb-3'>{t("RegisterInstitution")}</h3>
           <form onSubmit={formik.handleSubmit}>
-            <div id="progressbarwizard">
-              <div className="tab-content b-0 mb-0 pt-0">
+            <div id='progressbarwizard'>
+              <div className='tab-content b-0 mb-0 pt-0'>
                 <ProgressBar model={model} />
-                <div className="tab-pane active" id="account-2">
-                  <div className="row">
-                    <div className="col-12">
-                      <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">
+                <div className='tab-pane active' id='account-2'>
+                  <div className='row'>
+                    <div className='col-12'>
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
                           {t("InstitutionName")}
                         </label>
-                        <div className="col-md-9">
+                        <div className='col-md-9'>
                           <input
-                            type="text"
-                            className="form-control"
+                            type='text'
+                            className='form-control'
                             onChange={(e) => {
                               setModel({
                                 ...model,
@@ -136,19 +158,36 @@ export default function CreateInstitutions() {
                             }}
                           />
                           {formik.errors.Name && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.Name}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
+                          {t("InstitutionStatus")}
+                        </label>
+                        <div className='col-md-9'>
+                          <CustomSelect
+                            onChangeFunction={changeStatus}
+                            optionsList={statusList}
+                            isMulti={false}
+                          />
+                          {formik.errors.StatusActivityId && (
+                            <span className='text-danger'>
+                              {formik.errors.StatusActivityId}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
                           {t("UniqueNumber")}
                         </label>
-                        <div className="col-md-9">
+                        <div className='col-md-9'>
                           <input
-                            type="number"
+                            type='number'
                             onChange={(e) => {
                               setModel({
                                 ...model,
@@ -159,39 +198,39 @@ export default function CreateInstitutions() {
                                 e.target.value
                               );
                             }}
-                            className="form-control"
+                            className='form-control'
                           />
                           {formik.errors.UniqueNumber && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.UniqueNumber}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
                           {t("Municipality")}
                         </label>
-                        <div className="col-md-9">
+                        <div className='col-md-9'>
                           <CustomSelect
                             onChangeFunction={changeCity}
                             optionsList={citiesList}
                             isMulti={false}
                           />
                           {formik.errors.MunicipalityId && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.MunicipalityId}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
                           {t("Address")}
                         </label>
-                        <div className="col-md-9">
+                        <div className='col-md-9'>
                           <input
-                            type="text"
+                            type='text'
                             onChange={(e) => {
                               setModel({
                                 ...model,
@@ -199,23 +238,23 @@ export default function CreateInstitutions() {
                               });
                               formik.setFieldValue("Address", e.target.value);
                             }}
-                            className="form-control"
+                            className='form-control'
                           />
                           {formik.errors.Address && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.Address}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
                           {t("PostalCode")}
                         </label>
-                        <div className="col-md-9">
+                        <div className='col-md-9'>
                           <input
-                            type="number"
-                            className="form-control"
+                            type='number'
+                            className='form-control'
                             onChange={(e) => {
                               setModel({
                                 ...model,
@@ -228,20 +267,20 @@ export default function CreateInstitutions() {
                             }}
                           />
                           {formik.errors.PostalCode && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.PostalCode}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
                           {t("PhoneNumber")}
                         </label>
-                        <div className="col-md-9">
+                        <div className='col-md-9'>
                           <input
-                            type="text"
-                            className="form-control"
+                            type='text'
+                            className='form-control'
                             onChange={(e) => {
                               setModel({
                                 ...model,
@@ -254,17 +293,17 @@ export default function CreateInstitutions() {
                             }}
                           />
                           {formik.errors.PhoneNumber && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.PhoneNumber}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">Email</label>
-                        <div className="col-md-9">
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>Email</label>
+                        <div className='col-md-9'>
                           <input
-                            type="email"
+                            type='email'
                             onChange={(e) => {
                               setModel({
                                 ...model,
@@ -272,22 +311,22 @@ export default function CreateInstitutions() {
                               });
                               formik.setFieldValue("Email", e.target.value);
                             }}
-                            className="form-control"
+                            className='form-control'
                           />
                           {formik.errors.Email && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.Email}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
                           {t("Web")}
                         </label>
-                        <div className="col-md-9">
+                        <div className='col-md-9'>
                           <input
-                            type="text"
+                            type='text'
                             onChange={(e) => {
                               setModel({
                                 ...model,
@@ -295,20 +334,21 @@ export default function CreateInstitutions() {
                               });
                               formik.setFieldValue("Web", e.target.value);
                             }}
-                            className="form-control"
+                            className='form-control'
                           />
                           {formik.errors.Web && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.Web}
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="row mb-3">
-                        <label className="col-md-3 col-form-label">Logo</label>
-                        <div className="col-md-9">
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>Logo</label>
+                        <div className='col-md-9'>
                           <input
-                            type="file"
+                            type='file'
+                            accept='image/*'
                             onChange={(e) => {
                               setModel({
                                 ...model,
@@ -316,10 +356,10 @@ export default function CreateInstitutions() {
                               });
                               formik.setFieldValue("Documents", e.target.value);
                             }}
-                            className="form-control"
+                            className='form-control'
                           />
                           {formik.errors.Documents && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.Documents}
                             </span>
                           )}
@@ -328,23 +368,23 @@ export default function CreateInstitutions() {
                     </div>
                   </div>
                 </div>
-                <ul className="list-inline mb-0 wizard">
+                <ul className='list-inline mb-0 wizard'>
                   <Link
-                    to="/institutions"
-                    className="btn btn-danger waves-effect waves-light float-start"
+                    to='/institutions'
+                    className='btn btn-danger waves-effect waves-light float-start'
                   >
-                    <span className="btn-label">
-                      <i className="fe-arrow-left"></i>
+                    <span className='btn-label'>
+                      <i className='fe-arrow-left'></i>
                     </span>
                     {t("Discard")}
                   </Link>
-                  <li className="next list-inline-item float-end">
+                  <li className='next list-inline-item float-end'>
                     <button
-                      type="submit"
-                      className="btn btn-success waves-effect waves-light"
+                      type='submit'
+                      className='btn btn-success waves-effect waves-light'
                     >
-                      <span className="btn-label">
-                        <i className="fe-check"></i>
+                      <span className='btn-label'>
+                        <i className='fe-check'></i>
                       </span>
                       {t("Save")}
                     </button>

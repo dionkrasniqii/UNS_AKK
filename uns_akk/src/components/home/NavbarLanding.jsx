@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { showMobileLanding } from "../../store/actions";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
-import $ from "jquery";
 
 export default function NavbarLanding() {
   const dispatch = useDispatch();
@@ -16,7 +15,6 @@ export default function NavbarLanding() {
     ({ mobileList }) => mobileList.showmobile_landing
   );
   const navRef = useRef(null);
-  const [showSearchForm, setShowSearchForm] = useState(false);
 
   useEffect(() => {
     const hamburger = document.getElementById("hamburger");
@@ -103,7 +101,7 @@ export default function NavbarLanding() {
               }`}
               id='topnav-menu-content'
             >
-              <ul className='d-flex justify-content-between active w-100'>
+              <ul className='top-navbar-costume'>
                 <div className='navbar-nav nav-item-end'>
                   <li className='nav-item'>
                     <Link
@@ -144,7 +142,7 @@ export default function NavbarLanding() {
                     </Link>
                   </li>
                 </div>
-                <div className='navbar-nav nav-item-end active'>
+                <div className='navbar-end navbar-nav '>
                   <div className='nav-item dropdown '>
                     <a
                       className='nav-link dropdown-toggle arrow-none'

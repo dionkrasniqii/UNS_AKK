@@ -84,9 +84,7 @@ export default function Decisions() {
             to={`/editdecisions/${record.institutionDecisionDetailsId}`}
             className='btn btn-info btn-sm rounded-pill waves-effect waves-light'
           >
-            <span className='btn-label'>
-              <i className='mdi mdi-alert-circle-outline' />
-            </span>
+            <i className='mdi mdi-alert-circle-outline pe-1' />
             Shiko vendimin
           </Link>
         );

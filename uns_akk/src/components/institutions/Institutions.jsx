@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 export default function Institutions() {
   const [load, setLoad] = useState(false);
   const [data, setData] = useState([]);
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   const columns = [
     {
       title: t("InstitutionName"),
@@ -51,7 +51,17 @@ export default function Institutions() {
       title: t("Web"),
       dataIndex: "web",
       key: "web",
-      // className: "d-none d-lg-table-cell col-lg-2",
+      render: (value) => {
+        const url =
+          value.startsWith("http://") || value.startsWith("https://")
+            ? value
+            : `http://${value}`;
+        return (
+          <a target='_blank' rel='noopener noreferrer' href={url}>
+            {value}
+          </a>
+        );
+      },
     },
     {
       title: t("Actions"),
@@ -59,20 +69,19 @@ export default function Institutions() {
       className: "col-12 col-sm-4 col-md-2 col-lg-2 text-center",
       render: (value, record) => {
         return (
-          <div className="row d-flex justify-content-center">
-            <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
-              <Link
-                className="btn-secondary btn-sm"
-                to={`/editinstitutions/${record.institutionId}`}
-              >
-                <i className="fe-edit" />
-              </Link>
-            </div>
-            <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
-              <a className="btn-sm btn-danger" onClick={(e) => handleDelete(record.institutionId)}>
-                <i className="fe-trash-2" />
-              </a>
-            </div>
+          <div className='button-list'>
+            <Link
+              className='btn btn-secondary btn-sm'
+              to={`/editinstitutions/${record.institutionId}`}
+            >
+              <i className='fe-edit' />
+            </Link>
+            <a
+              className='btn btn-sm btn-danger me-2'
+              onClick={(e) => handleDelete(record.institutionId)}
+            >
+              <i className='fe-trash-2' />
+            </a>
           </div>
         );
       },
@@ -104,7 +113,6 @@ export default function Institutions() {
           toast.success(t("DataDeletedSuccessfully"));
           CrudProvider.getAllWithLang("InstitutionAPI/GetAll").then((res) => {
             if (res) {
-
               if (res.statusCode === 200) {
                 setData(res.result);
               } else if (res.statusCode === 400) {
@@ -118,26 +126,26 @@ export default function Institutions() {
     });
   }
   return (
-    <div className="col-xxl-12">
-      <div className="col-xxl-12 text-end"></div>
-      <div className="row">
-        <div className="col-12">
-          <div className="row">
-            <div className="col-12">
-              <div className="col-12 d-flex justify-content-end">
+    <div className='col-xxl-12'>
+      <div className='col-xxl-12 text-end'></div>
+      <div className='row'>
+        <div className='col-12'>
+          <div className='row'>
+            <div className='col-12'>
+              <div className='col-12 d-flex justify-content-end'>
                 <Link
-                  className="btn btn-info waves-effect waves-light"
-                  to="/createinstitutions"
+                  className='btn btn-info waves-effect waves-light'
+                  to='/createinstitutions'
                 >
-                  <span className="btn-label">
-                    <i className="fe-plus-circle"></i>
+                  <span className='btn-label'>
+                    <i className='fe-plus-circle'></i>
                   </span>
                   {t("Add")}
                 </Link>
               </div>
             </div>
           </div>
-          <div className="p-2 mt-2">
+          <div className='p-2 mt-2'>
             {!load ? (
               <DataTable
                 columns={columns}
@@ -145,10 +153,10 @@ export default function Institutions() {
                 title={t("InstitutionsList")}
               />
             ) : (
-              <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+              <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
                 <div
-                  className="spinner-border text-primary m-2 text-center"
-                  role="status"
+                  className='spinner-border text-primary m-2 text-center'
+                  role='status'
                 />
               </div>
             )}
