@@ -35,11 +35,16 @@ import PersonDetails from "../components/personinstitutions/PersonDetails";
 import Reports from "../components/reports/Reports";
 import ApplyForm from "../components/applicationforms/apply/ApplyForm";
 import SearchingForms from "../components/search/SearchingForms";
+import ApplicationsList from "../components/applicationforms/verification/ApplicationsList";
 
 export const AppRoutes = (props) => {
   const ROLES = {
     ADMIN: "Admin",
     INSTITUTION: "Institution",
+    MANAGER: "Manager",
+    MODERATOR: "Moderator",
+    KAAPR: "KAAPR",
+    CLIENT: "Client",
   };
   return (
     <div
@@ -409,8 +414,18 @@ export const AppRoutes = (props) => {
           {/* Apply Forms */}
           <Route
             path='/application-form'
-            authState={props.authState}
-            element={<ApplyForm />}
+            element={<ApplyForm authState={props.authState} />}
+          />
+          <Route
+            path='/applications'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN, ROLES.INSTITUTION]}
+                component={ApplicationsList}
+              />
+            }
           />
         </Routes>
       </div>

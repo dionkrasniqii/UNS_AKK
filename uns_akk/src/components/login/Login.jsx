@@ -24,7 +24,6 @@ export default function Login(props) {
   const [showMultiRolesModal, setShowMultiRolesModal] = useState(false);
   const [roles, setRoles] = useState([]);
   const dispatch = useDispatch();
-
   async function loginFunction() {
     setLoad(true);
     await CrudProvider.login("AccountController/login", model).then((res) => {
@@ -63,6 +62,7 @@ export default function Login(props) {
       setLoad(false);
     });
   }
+
   const LoginSchema = Yup.object().shape({
     Username: Yup.string().required(t("Fill") + " " + t("Username")),
     Password: Yup.string().required(t("Fill") + " " + t("Password")),

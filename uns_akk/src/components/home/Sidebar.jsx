@@ -66,7 +66,14 @@ export default function Sidebar() {
       showLabel: true,
       icon: "mdi mdi-calendar-blank-outline",
     },
-
+    {
+      label: "Reports",
+      roles: ["Admin"],
+      path: "/reports",
+      hasMenu: false,
+      showLabel: true,
+      icon: "mdi mdi-microsoft-excel",
+    },
     /* -----------INSTITUTION------------- */
     {
       label: t("Groups"),
@@ -83,14 +90,22 @@ export default function Sidebar() {
       hasMenu: false,
       showLabel: true,
       icon: "fe-user",
-},
-    {     
-      label: t("Reports"),
-      roles: ["Admin"],
-      path: "/reports",
+    },
+    {
+      label: t("Apply"),
+      roles: ["Institution"],
+      path: "/application-form",
       hasMenu: false,
       showLabel: true,
-      icon: "mdi mdi-microsoft-excel",
+      icon: "mdi mdi-form-select",
+    },
+    {
+      label: t("Applications"),
+      roles: ["Institution", "Admin"],
+      path: "/applications",
+      hasMenu: false,
+      showLabel: role === "Admin" ? true : false,
+      icon: "mdi mdi-form-select",
     },
   ];
   const navRef = useRef(null);
