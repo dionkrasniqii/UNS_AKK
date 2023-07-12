@@ -51,7 +51,7 @@ export default function Decisions() {
       responsive: ["sm"],
     },
     {
-      title: "Aktiv",
+      title: t("Active"),
       dataIndex: ["aktiv"],
       key: (item) => item,
       responsive: ["sm"],
@@ -59,14 +59,14 @@ export default function Decisions() {
         if (item === true) {
           return (
             <a>
-              Aktiv
+              {t("Active")}
               <i className='text-success ps-1 fas fa-circle-notch' />
             </a>
           );
         } else {
           return (
             <a>
-              Pasiv
+              {t("Inactive")}
               <i className='text-danger ps-1  fas fa-circle-notch' />
             </a>
           );

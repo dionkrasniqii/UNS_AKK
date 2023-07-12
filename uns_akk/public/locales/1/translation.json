@@ -272,5 +272,14 @@
   "EarilerQualifications": "Akreditimet e mëparshme",
   "PreviousDecisionDocs": "Vendimet e mëparshme",
   "InstitutionDetailsModal": "Të dhënat për institucionin",
-  "StaffDataModal":"Të dhënat për stafin"
+  "StaffDataModal":"Të dhënat për stafin",
+  "Active": "Aktiv",
+  "Inactive": "Pasiv",
+  "Role": "Roli",
+  "InstitutionUserList": "Lista e përdoruesve të institucionit",
+  "UserExists": "Përdoruesi me këtë email apo numër personal ekziston!",
+  "PleaseChooseRole": "Ju lutemi zgjedhni një rol!",
+  "RegisterInstitutionUser": "Regjistro përdorues të institucionit",
+  "ChooseRole": "Zgjedhni rolin",
+  "ModifyUser": "Modifiko përdoruesin e institucionit"
 }

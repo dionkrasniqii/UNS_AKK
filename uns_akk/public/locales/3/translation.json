@@ -176,5 +176,14 @@
   "WriteGroupName": "Unesite ime grupe",
   "Yes": "Da",
   "YouHaveExceededGroupLimit": "Prekoračili ste ograničenje grupe, ne možete se registrovati",
-  "YourAccountIsNotActive": "Vaš nalog nije aktivan"
+  "YourAccountIsNotActive": "Vaš nalog nije aktivan",
+  "Active": "Active",
+  "Inactive": "Neaktivno",
+  "Role": "Uloga",
+  "InstitutionUserList": "Lista korisnika ustanove",
+  "UserExists": "Korisnik sa ovim email ili ličnim brojem postoji!",
+  "PleaseChooseRole": "Molimo izaberite ulogu!",
+  "RegisterInstitutionUser": "Registrovati korisnike ustanove",
+  "ChooseRole": "Izaberite ulogu",
+  "ModifyUser": "Izmenite korisnika institucije"
 }
