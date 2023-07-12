@@ -171,6 +171,12 @@ export default function NavbarLanding() {
                       >
                         <label className='fs-6'>ENG</label>
                       </a>
+                      <a
+                        className='dropdown-item '
+                        onClick={(e) => changeLang("3")}
+                      >
+                        <label className='fs-6'>SR</label>
+                      </a>
                     </div>
                   </div>
                   <div className='nav-item'>

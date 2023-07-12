@@ -9,11 +9,13 @@ export default function DataTablev2({ dataSource, columns, title }) {
   let timeoutId;
 
   const { t } = useTranslation();
+
   const filteredData = dataSource.filter((item) => {
-    return Object.values(item).some((value) =>
-      String(value).toLowerCase().includes(searchInput.toLowerCase())
-    );
+    return Object.values(item).some((value) => {
+      return String(value).toLowerCase().includes(searchInput.toLowerCase());
+    });
   });
+
   useEffect(() => {
     setData(filteredData);
   }, [searchInput]);
@@ -27,6 +29,7 @@ export default function DataTablev2({ dataSource, columns, title }) {
       setLoad(false);
     }, 800);
   };
+  console.log(filteredData);
   return (
     <div className='card card-body'>
       <div className=' row align-items-center table-div'>

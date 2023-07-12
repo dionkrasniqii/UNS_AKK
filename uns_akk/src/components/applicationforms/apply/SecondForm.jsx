@@ -1,26 +1,14 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { Upload } from "antd";
 
 export default function SecondForm({ model, setModel, ...rest }) {
   const { t } = useTranslation();
-
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
-  };
+  useEffect(() => {
+    document.getElementById("form2").scrollIntoView();
+  }, []);
 
   async function changeLicenseMASHT(file) {
     const newArray = model.Docs.filter((item) => {
@@ -34,7 +22,18 @@ export default function SecondForm({ model, setModel, ...rest }) {
     });
     formik.setFieldValue("MASHTLicense", file);
   }
-
+  async function changeCertificateRegistration(file) {
+    const newArray = model.Docs.filter((item) => {
+      return item.Type != "CertificateRegisterDocA15";
+    });
+    file.status !== "removed" &&
+      newArray.push({ Type: "CertificateRegisterDocA15", Doc: file });
+    setModel({
+      ...model,
+      Docs: [...newArray],
+    });
+    formik.setFieldValue("CertificateRegisterDocA15", file);
+  }
   const schema = Yup.object().shape({
     RegistrationNumber: Yup.string().required(
       t("PleaseFillRegistartionNumber")
@@ -59,15 +58,14 @@ export default function SecondForm({ model, setModel, ...rest }) {
     <form
       onSubmit={formik.handleSubmit}
       className='animation animation-bot-top'
+      id='form2'
     >
       <div className='row'>
-        <h5 className='card-title text-start '>
-          A1.5 {t("LegalEntityStatus")}
-        </h5>
+        <h5 className='card-title text-start '>{t("LegalEntityStatus")}</h5>
         <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
           <label className='form-label'>{t("RegistrationNumber")}</label>
           <input
-            type='text'
+            type='number'
             className='form-control'
             onChange={(e) => {
               setModel({
@@ -86,7 +84,7 @@ export default function SecondForm({ model, setModel, ...rest }) {
         <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
           <label className='form-label'>{t("FiscalNumber")}</label>
           <input
-            type='text'
+            type='number'
             className='form-control'
             onChange={(e) => {
               setModel({
@@ -111,13 +109,7 @@ export default function SecondForm({ model, setModel, ...rest }) {
                 listType='picture-circle'
                 maxCount={1}
                 accept='.pdf'
-                onChange={(e) => {
-                  setModel({
-                    ...model,
-                    CertificateRegisterDocA15: e.file,
-                  });
-                  formik.setFieldValue("CertificateRegisterDocA15", e.file);
-                }}
+                onChange={(e) => changeCertificateRegistration(e.file)}
               >
                 {t("UploadDoc")}
               </Upload>
@@ -127,6 +119,7 @@ export default function SecondForm({ model, setModel, ...rest }) {
                 </span>
               )}
             </div>
+            {console.log(model.Docs)}
             <div className='col-xxl-2 col-lg-3 col-md-3 col-sm-12 mt-2 '>
               <label className='form-label text-start'>
                 {t("LicenseMASHT")}

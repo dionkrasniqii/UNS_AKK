@@ -1,16 +1,21 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
 export default function FourthForm({ model, setModel, ...rest }) {
   const { t } = useTranslation();
   const [checked, setChecked] = useState(0);
+
+
+  useEffect(() => {
+    document.getElementById("form4").scrollIntoView();
+  }, []);
+
   const schema = Yup.object().shape({
     TypeOfAccreditation: Yup.boolean().required(
       t("ChooseOneOfAccreditationType")
     ),
-    Text: Yup.string().required(t("PleaseFillAdditionalData")),
   });
   const formik = useFormik({
     initialValues: {},
@@ -25,12 +30,11 @@ export default function FourthForm({ model, setModel, ...rest }) {
   return (
     <form
       onSubmit={formik.handleSubmit}
+      id="form4"
       className='animation animation-bot-top'
     >
       <div className='row'>
-        <h5 className='card-title text-start '>
-          A1.8 {t("TypeOfAccredication")}
-        </h5>
+        <h5 className='card-title text-start '>{t("TypeOfAccredication")}</h5>
         <div className='col-xxl-3 col-lg-4 col-sm-12'>
           <div className='form-check text-start'>
             <input
@@ -51,7 +55,7 @@ export default function FourthForm({ model, setModel, ...rest }) {
               }}
             />
             <label className='form-check-label ps-1' htmlFor='customRadio1'>
-              Për ofrim, jo vlerësim dhe certifikim
+              {t("ForDeliveryNotEvaluationAndCertification")}
             </label>
           </div>
         </div>
@@ -75,7 +79,7 @@ export default function FourthForm({ model, setModel, ...rest }) {
               }}
             />
             <label className='form-check-label ps-1' htmlFor='customRadio2'>
-              Për vlerësim dhe certifikim, jo ofrim
+              {t("ForAssessmentAndCertificatioNotDelivery")}
             </label>
           </div>
         </div>
@@ -99,7 +103,7 @@ export default function FourthForm({ model, setModel, ...rest }) {
               }}
             />
             <label className='form-check-label ps-1' htmlFor='customRadio3'>
-              Për ofrim, vlerësim dhe certifikim
+              {t("ForAssessmentAndCertificatioDelivery")}
             </label>
           </div>
         </div>
@@ -109,7 +113,7 @@ export default function FourthForm({ model, setModel, ...rest }) {
           </span>
         )}
         <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
-          <label className='form-label'>Ofroni të dhëna shtesë</label>
+          <label className='form-label'>{t("OfferAdditionalData")}</label>
           <textarea
             className='form-control'
             rows={5}
@@ -118,14 +122,8 @@ export default function FourthForm({ model, setModel, ...rest }) {
                 ...model,
                 TextA18: e.target.value,
               });
-              formik.setFieldValue("Text", e.target.value);
             }}
           />
-          {formik.errors.Text && (
-            <span className='text-danger text-center mt-2 fs-5'>
-              {formik.errors.Text}
-            </span>
-          )}
         </div>
         {!rest.showFourthForm && (
           <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>

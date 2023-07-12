@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import CustomFileInput from "../../custom/CustomFileInput";
 export default function ThirdForm({ model, setModel, ...rest }) {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.getElementById("form2").scrollIntoView();
+  }, []);
+
   async function setFiles(files) {
     const newArray = model.Docs.filter(
       (file) => file.Type != "QualificatinDocsA17"
@@ -33,10 +38,27 @@ export default function ThirdForm({ model, setModel, ...rest }) {
     <form
       onSubmit={formik.handleSubmit}
       className='animation animation-bot-top'
+      id='form3'
     >
       <div className='row'>
-        <h5 className='card-title text-start'>A1.7 {t("EarlierDecisions")}</h5>
+        <h5 className='card-title text-start'> {t("EarlierDecisions")}</h5>
         <p className='text-muted'>{t("NecessaryDateForEarlierDecisions")}</p>
+        <div className='col-xxl-12 col-lg-12 col-sm-12'>
+          <div className='col-xxl-4 col-lg-6 col-sm-12'>
+            <div className='form-group'>
+              <label>{t("NotePeriod")}</label>
+              <input
+                type='text'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    QualificationPeriodA17: e.target.value,
+                  });
+                }}
+              />
+            </div>
+          </div>
+        </div>
         <CustomFileInput
           onChangeFunction={setFiles}
           acceptType={".pdf"}

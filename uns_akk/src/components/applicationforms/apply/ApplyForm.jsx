@@ -40,8 +40,6 @@ export default function ApplyForm({ authState }) {
     ValidationCertificationNotOfferA18: false,
     OfferValidationCertificationA18: false,
     TextA18: "",
-    EquipmentMaterialsQualificationA22: "",
-    EquipmentMaterialsQualificationA22: "",
     TargetNumberOfCandidatesA24: "",
     NumOfGroupsA24: "",
     CertificateRegisterDocA15: "",
@@ -49,8 +47,8 @@ export default function ApplyForm({ authState }) {
     FiscalNrA15: "",
     InstitutionStatusId: "",
     Docs: [],
+    IsLoggedIn: authState,
   });
-
   async function SubmitApplication() {
     try {
       setLoad(true);
@@ -58,11 +56,12 @@ export default function ApplyForm({ authState }) {
         "ApplicationAPI/ApplicationPost",
         model
       ).then((res) => {
+        console.log(res);
         if (res) {
           switch (res.statusCode) {
             case 200:
               toast.success("Aplikimi u regjistrua me sukses");
-
+              return navigate("/");
             default:
               toast.error(res.errorMessages[0]);
               break;
@@ -88,7 +87,7 @@ export default function ApplyForm({ authState }) {
             setShowSecondForm={setShowSecondForm}
             showSecondForm={showSecondForm}
           />
-          {showSecondForm && (
+          {!showSecondForm && (
             <SecondForm
               model={model}
               setModel={setModel}
@@ -96,7 +95,7 @@ export default function ApplyForm({ authState }) {
               showThirdForm={showThirdForm}
             />
           )}
-          {showThirdForm && (
+          {!showThirdForm && (
             <ThirdForm
               model={model}
               setModel={setModel}
@@ -104,7 +103,7 @@ export default function ApplyForm({ authState }) {
               showFourthForm={showFourthForm}
             />
           )}
-          {showFourthForm && (
+          {!showFourthForm && (
             <FourthForm
               model={model}
               setModel={setModel}
@@ -112,11 +111,12 @@ export default function ApplyForm({ authState }) {
               setShowFifthForm={setShowFifthForm}
             />
           )}
-          {showFifthForm && (
+          {!showFifthForm && (
             <FifthForm
               model={model}
               setModel={setModel}
               submit={SubmitApplication}
+              load={load}
             />
           )}
         </div>

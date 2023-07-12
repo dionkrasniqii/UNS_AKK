@@ -15,6 +15,10 @@ export default function Landing() {
   const { t } = useTranslation();
   const [data, setData] = useState({});
 
+  // useEffect(() => {
+  //   document.getElementById("top").scrollIntoView();
+  // }, []);
+
   useEffect(() => {
     CrudProvider.getAll("StatisticsAPI/GetStatisticsForLanding").then((res) => {
       if (res) {
@@ -46,7 +50,7 @@ export default function Landing() {
   });
 
   return (
-    <div className='content-page-landing navbar-costum-padding'>
+    <div className='content-page-landing navbar-costum-padding' id='top'>
       <div className='content mb-3'>
         <div className='container-fluid d-flex justify-content-center '>
           <div className='col-10'>
