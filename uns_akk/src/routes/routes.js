@@ -36,6 +36,8 @@ import Reports from "../components/reports/Reports";
 import ApplyForm from "../components/applicationforms/apply/ApplyForm";
 import SearchingForms from "../components/search/SearchingForms";
 import ApplicationsList from "../components/applicationforms/verification/ApplicationsList";
+import EditApplicationInstitution from "../components/applicationforms/verification/ViewApplication";
+import EditApplicationAdmin from "../components/applicationforms/verification/ViewApplication";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -424,6 +426,28 @@ export const AppRoutes = (props) => {
                 authState={props.authState}
                 allowedRoles={[ROLES.ADMIN, ROLES.INSTITUTION]}
                 component={ApplicationsList}
+              />
+            }
+          />
+          <Route
+            path='/editapplication/:id'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.INSTITUTION]}
+                component={EditApplicationInstitution}
+              />
+            }
+          />
+          <Route
+            path='/view-application/:id'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN,]}
+                component={EditApplicationAdmin}
               />
             }
           />

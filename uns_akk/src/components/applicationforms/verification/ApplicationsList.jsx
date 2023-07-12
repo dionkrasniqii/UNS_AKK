@@ -1,56 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataTablev2 from "../../custom/DataTablev2";
 import { useTranslation } from "react-i18next";
-
+import CrudProvider from "../../../provider/CrudProvider";
+import { Link } from "react-router-dom";
 export default function ApplicationsList() {
   const { t } = useTranslation();
-  const [data, setData] = useState([
-    { municipalityName: "Test", status: "proces" },
-    { municipalityName: "asdasd", status: "verfikuar" },
-    { municipalityName: "asdasd", status: "refuzuar" },
-    { municipalityName: "asdasd", status: "rikthim" },
-    { municipalityName: "asdasd", status: "aprovuar" },
-  ]);
+  const [data, setData] = useState([]);
+  const [load, setLoad] = useState(false);
   const columns = [
     {
-      name: t("Municipality"),
-      selector: (row) => row.municipalityName,
+      name: t("UniqueNumber"),
       sortable: true,
       filterable: true,
+      selector: (row) => row.uniqueNumber,
     },
     {
-      name: t("Municipality"),
-      selector: (row) => row.municipalityName,
+      name: t("InstitutionName"),
       sortable: true,
       filterable: true,
+      selector: (row) => row.institutionName,
     },
     {
-      name: t("Municipality"),
-      selector: (row) => row.municipalityName,
+      name: t("Email"),
       sortable: true,
       filterable: true,
+      selector: (row) => row.email,
     },
     {
-      name: t("Municipality"),
-      selector: (row) => row.municipalityName,
+      name: t("PhoneNumber"),
       sortable: true,
       filterable: true,
+      selector: (row) => row.phoneNum,
     },
     {
-      name: t("Municipality"),
-      selector: (row) => row.municipalityName,
-      sortable: true,
-      filterable: true,
-    },
-    {
-      name: t("Name"),
+      name: t("Status"),
       sortable: true,
       filterable: true,
       cell: (row) => {
-        switch (row.status) {
-          case "aprovuar":
+        switch (row.statusDescription) {
+          case "Proces":
             return (
-              <button
+              <span
                 type='button'
                 className='btn btn-white rounded-pill waves-effect'
               >
@@ -68,8 +58,8 @@ export default function ApplicationsList() {
                   </svg>
                 </i>
 
-                {row.status}
-              </button>
+                {row.statusDescription}
+              </span>
             );
           case "refuzuar":
             return (
@@ -91,7 +81,7 @@ export default function ApplicationsList() {
                   </svg>
                 </i>
 
-                {row.status}
+                {row.applicationDTO.statusDescription}
               </button>
             );
           default:
@@ -100,17 +90,51 @@ export default function ApplicationsList() {
       },
     },
     {
-      name: t("Municipality"),
-      selector: (row) => row.municipalityName,
+      name: t("Actions"),
       sortable: true,
       filterable: true,
+      cell: (row) => {
+        return (
+          <Link
+            to={`/view-application/${row.applicationId}`}
+            className='btn btn-dark waves-effect waves-light'
+          >
+            <i className='fe-edit' />
+          </Link>
+        );
+      },
     },
   ];
-  return (
+
+  useEffect(() => {
+    try {
+      setLoad(true);
+      CrudProvider.getAll("ApplicationAPI/GetAll").then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            const test = res.result.map((obj) => obj.applicationDTO);
+            setData(test);
+          }
+        }
+      });
+    } finally {
+      setLoad(false);
+    }
+  }, []);
+  return data.length > 0 ? (
     <DataTablev2
       dataSource={data}
       columns={columns}
       title={"Lista aplikimeve"}
     />
+  ) : (
+    !load && (
+      <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+        <div
+          className='spinner-border text-primary m-2 text-center'
+          role='status'
+        />
+      </div>
+    )
   );
 }

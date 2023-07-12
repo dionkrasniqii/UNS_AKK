@@ -162,9 +162,17 @@ export default function FirstForm({ model, setModel, ...rest }) {
         ),
         ActivityId: Yup.string().required(t("PleaseChooseActivity")),
         QualificationId: Yup.string().required(t("ChooseQualification")),
+        NumOfGroupsA24: Yup.string().required(t("ChooseNumber")),
+        TargetNumberOfCandidatesA24: Yup.string().required(
+          t("SetNumberOfMembers")
+        ),
       })
     : Yup.object().shape({
         QualificationId: Yup.string().required(t("ChooseQualification")),
+        NumOfGroupsA24: Yup.string().required(t("ChooseNumber")),
+        TargetNumberOfCandidatesA24: Yup.string().required(
+          t("SetNumberOfMembers")
+        ),
       });
   const formik = useFormik({
     initialValues: {},
@@ -184,224 +192,267 @@ export default function FirstForm({ model, setModel, ...rest }) {
       <div className='row'>
         {!rest.authState && (
           <>
-            <>
-              <h5 className='card-title text-start '>
-                A1.1 {t("InstitutionsDetails")}
-              </h5>
-              <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                <label className='form-label'>{t("InstitutionName")}</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  onChange={(e) => {
-                    setModel({ ...model, InstitutionName: e.target.value });
-                    formik.setFieldValue("Name", e.target.value);
-                  }}
-                />
-                {formik.errors.Name && (
-                  <span className='text-danger'>{formik.errors.Name}</span>
-                )}
-              </div>
-              <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                <label className='form-label'>{t("UniqueNumber")}</label>
-                <input
-                  type='number'
-                  className='form-control'
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      UniqueNumber: e.target.value,
-                    });
-                    formik.setFieldValue("UniqueNumber", e.target.value);
-                  }}
-                />
-                {formik.errors.UniqueNumber && (
-                  <span className='text-danger'>
-                    {formik.errors.UniqueNumber}
-                  </span>
-                )}
-              </div>
-              <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                <label className='form-label'>{t("Municipality")}</label>
-                <CustomSelect
-                  onChangeFunction={changeCity}
-                  optionsList={citiesList}
-                  isMulti={false}
-                />
-                {formik.errors.MunicipalityId && (
-                  <span className='text-danger'>
-                    {formik.errors.MunicipalityId}
-                  </span>
-                )}
-              </div>
-              <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                <label className='form-label'>{t("Address")}</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      Address: e.target.value,
-                    });
-                    formik.setFieldValue("Address", e.target.value);
-                  }}
-                />
-                {formik.errors.Address && (
-                  <span className='text-danger'>{formik.errors.Address}</span>
-                )}
-              </div>
-              <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                <label className='form-label'>{t("PostalCode")}</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      PostalCode: e.target.value,
-                    });
-                    formik.setFieldValue("PostalCode", e.target.value);
-                  }}
-                />
-                {formik.errors.PostalCode && (
-                  <span className='text-danger'>
-                    {formik.errors.PostalCode}
-                  </span>
-                )}
-              </div>
-              <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                <label className='form-label'>{t("PhoneNumber")}</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      PhoneNum: e.target.value,
-                    });
-                    formik.setFieldValue("PhoneNumber", e.target.value);
-                  }}
-                />
-                {formik.errors.PhoneNumber && (
-                  <span className='text-danger'>
-                    {formik.errors.PhoneNumber}
-                  </span>
-                )}
-              </div>
-              <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                <label className='form-label'>{t("Email")}</label>
-                <input
-                  type='email'
-                  className='form-control'
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      Email: e.target.value,
-                    });
-                    formik.setFieldValue("Email", e.target.value);
-                  }}
-                />
-                {formik.errors.Email && (
-                  <span className='text-danger'>{formik.errors.Email}</span>
-                )}
-              </div>
-              <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                <label className='form-label'>{t("Web")}</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      Web: e.target.value,
-                    });
-                    formik.setFieldValue("Web", e.target.value);
-                  }}
-                />
-                {formik.errors.Web && (
-                  <span className='text-danger'>{formik.errors.Web}</span>
-                )}
-              </div>
-              <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                <label className='form-label'>{t("Logo")}</label>
-                <input
-                  type='file'
-                  accept='image/*'
-                  className='form-control'
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      InstitutionLogo: e.target.files[0],
-                    });
-                    console.log(e.target.files[0]);
-                    formik.setFieldValue("Documents", e.target.value);
-                  }}
-                />
-                {formik.errors.Documents && (
-                  <span className='text-danger'>{formik.errors.Documents}</span>
-                )}
-              </div>
-              <hr className='mt-2' />
-              <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 '>
-                <h5 className='card-title text-start'>
-                  A1.3 {t("InstitutionStatus")}
-                </h5>
-                <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-                  <label className='form-label'>{t("InstitutionStatus")}</label>
-                  <CustomSelect
-                    onChangeFunction={changeStatus}
-                    optionsList={statusList}
-                    isMulti={false}
-                  />
-                  {formik.errors.StatusActivityId && (
-                    <span className='text-danger'>
-                      {formik.errors.StatusActivityId}
-                    </span>
-                  )}
+            <h5 className='card-title text-start '>
+              {t("InstitutionsDetails")}
+            </h5>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("InstitutionName")}</label>
+              <input
+                type='text'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({ ...model, InstitutionName: e.target.value });
+                  formik.setFieldValue("Name", e.target.value);
+                }}
+              />
+              {formik.errors.Name && (
+                <span className='text-danger'>{formik.errors.Name}</span>
+              )}
+            </div>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("UniqueNumber")}</label>
+              <input
+                type='number'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    UniqueNumber: e.target.value,
+                  });
+                  formik.setFieldValue("UniqueNumber", e.target.value);
+                }}
+              />
+              {formik.errors.UniqueNumber && (
+                <span className='text-danger'>
+                  {formik.errors.UniqueNumber}
+                </span>
+              )}
+            </div>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("Municipality")}</label>
+              <CustomSelect
+                onChangeFunction={changeCity}
+                optionsList={citiesList}
+                isMulti={false}
+              />
+              {formik.errors.MunicipalityId && (
+                <span className='text-danger'>
+                  {formik.errors.MunicipalityId}
+                </span>
+              )}
+            </div>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("Address")}</label>
+              <input
+                type='text'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    Address: e.target.value,
+                  });
+                  formik.setFieldValue("Address", e.target.value);
+                }}
+              />
+              {formik.errors.Address && (
+                <span className='text-danger'>{formik.errors.Address}</span>
+              )}
+            </div>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("PostalCode")}</label>
+              <input
+                type='text'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    PostalCode: e.target.value,
+                  });
+                  formik.setFieldValue("PostalCode", e.target.value);
+                }}
+              />
+              {formik.errors.PostalCode && (
+                <span className='text-danger'>{formik.errors.PostalCode}</span>
+              )}
+            </div>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("PhoneNumber")}</label>
+              <input
+                type='text'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    PhoneNum: e.target.value,
+                  });
+                  formik.setFieldValue("PhoneNumber", e.target.value);
+                }}
+              />
+              {formik.errors.PhoneNumber && (
+                <span className='text-danger'>{formik.errors.PhoneNumber}</span>
+              )}
+            </div>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("Email")}</label>
+              <input
+                type='email'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    Email: e.target.value,
+                  });
+                  formik.setFieldValue("Email", e.target.value);
+                }}
+              />
+              {formik.errors.Email && (
+                <span className='text-danger'>{formik.errors.Email}</span>
+              )}
+            </div>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("Web")}</label>
+              <input
+                type='text'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    Web: e.target.value,
+                  });
+                  formik.setFieldValue("Web", e.target.value);
+                }}
+              />
+              {formik.errors.Web && (
+                <span className='text-danger'>{formik.errors.Web}</span>
+              )}
+            </div>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("Logo")}</label>
+              <input
+                type='file'
+                accept='image/*'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    InstitutionLogo: e.target.files[0],
+                  });
+                  console.log(e.target.files[0]);
+                  formik.setFieldValue("Documents", e.target.value);
+                }}
+              />
+              {formik.errors.Documents && (
+                <span className='text-danger'>{formik.errors.Documents}</span>
+              )}
+            </div>
+            <hr className='mt-2' />
+            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 '>
+              <div className='row'>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
+                  <h5 className='card-title text-start'>
+                    {t("InstitutionStatus")}
+                  </h5>
+                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
+                    <label className='form-label'>
+                      {t("InstitutionStatus")}
+                    </label>
+                    <CustomSelect
+                      onChangeFunction={changeStatus}
+                      optionsList={statusList}
+                      isMulti={false}
+                    />
+                    {formik.errors.StatusActivityId && (
+                      <span className='text-danger'>
+                        {formik.errors.StatusActivityId}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <hr className='mt-2' />
-              <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
-                <h5 className='card-title text-start'>
-                  A1.4 {t("InstitutionActivity")}
-                </h5>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <label className='form-label'>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
+                  <h5 className='card-title text-start'>
                     {t("InstitutionActivity")}
-                  </label>
-                  <CustomSelect
-                    isMulti={false}
-                    onChangeFunction={changeActivity}
-                    optionsList={activityList}
-                  />
-                  {formik.errors.ActivityId && (
-                    <span className='text-danger'>
-                      {formik.errors.ActivityId}
-                    </span>
-                  )}
+                  </h5>
+                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
+                    <label className='form-label'>
+                      {t("InstitutionActivity")}
+                    </label>
+                    <CustomSelect
+                      isMulti={false}
+                      onChangeFunction={changeActivity}
+                      optionsList={activityList}
+                    />
+                    {formik.errors.ActivityId && (
+                      <span className='text-danger'>
+                        {formik.errors.ActivityId}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </>
+            </div>
             <hr className='mt-3' />
           </>
         )}
-        <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-          <h5 className='card-title text-start'>
-            A1.2 {t("ChooseQualificationApplication")}
-          </h5>
-          <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-            <label className='form-label'>{t("ChooseQualification")}</label>
-            <CustomSelect
-              isMulti={false}
-              onChangeFunction={changeQualification}
-              optionsList={qualificationsList}
-            />
-            {formik.errors.QualificationId && (
-              <span className='text-danger'>
-                {formik.errors.QualificationId}
-              </span>
-            )}
+        <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
+          <div className='row'>
+            <h5 className='card-title text-start'>
+              A1.2 {t("ChooseQualificationApplication")}
+            </h5>
+            <div className='col-xxl-4 col-lg-4 col-sm-12 mt-2'>
+              <label className='form-label'>{t("ChooseQualification")}</label>
+              <CustomSelect
+                isMulti={false}
+                onChangeFunction={changeQualification}
+                optionsList={qualificationsList}
+              />
+              {formik.errors.QualificationId && (
+                <span className='text-danger'>
+                  {formik.errors.QualificationId}
+                </span>
+              )}
+            </div>
+
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("NumOfGroups")}</label>
+              <input
+                type='number'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    NumOfGroupsA24: e.target.value,
+                  });
+                  formik.setFieldValue("NumOfGroupsA24", e.target.value);
+                }}
+              />
+              {formik.errors.NumOfGroupsA24 && (
+                <span className='text-danger'>
+                  {formik.errors.NumOfGroupsA24}
+                </span>
+              )}
+            </div>
+            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+              <label className='form-label'>{t("TargetOfCandidates")}</label>
+              <input
+                type='number'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    TargetNumberOfCandidatesA24: e.target.value,
+                  });
+                  formik.setFieldValue(
+                    "TargetNumberOfCandidatesA24",
+                    e.target.value
+                  );
+                }}
+              />
+              {formik.errors.TargetNumberOfCandidatesA24 && (
+                <span className='text-danger'>
+                  {formik.errors.TargetNumberOfCandidatesA24}
+                </span>
+              )}
+            </div>
           </div>
         </div>
         {!rest.showSecondForm && (

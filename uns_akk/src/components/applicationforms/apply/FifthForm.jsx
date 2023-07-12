@@ -1,16 +1,19 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import CustomFileInput from "../../custom/CustomFileInput";
 
 export default function FifthForm({ model, setModel, ...rest }) {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.getElementById("form5").scrollIntoView();
+  }, []);
   const schema = Yup.object().shape({
     InstitutionsDocs: Yup.mixed().required(t("UploadDocuments")),
     Tools: Yup.mixed().required(t("UploadDocuments")),
     Staff: Yup.mixed().required(t("UploadDocuments")),
-    Candidates: Yup.mixed().required(t("UploadDocuments")),
   });
   const formik = useFormik({
     initialValues: {},
@@ -61,18 +64,7 @@ export default function FifthForm({ model, setModel, ...rest }) {
     });
     formik.setFieldValue("Staff", 1);
   }
-  async function changeCandidates(files) {
-    const newArray = model.Docs.filter((file) => file.Type != "CandidatesA24");
-    const updatedDocs = Array.from(files).map((file) => ({
-      Type: "CandidatesA24",
-      Doc: file,
-    }));
-    setModel({
-      ...model,
-      Docs: [...newArray, ...updatedDocs],
-    });
-    formik.setFieldValue("Candidates", 1);
-  }
+
   async function changeOtherRequests(files) {
     const newArray = model.Docs.filter(
       (file) => file.Type != "OtherRequestsA25"
@@ -88,33 +80,33 @@ export default function FifthForm({ model, setModel, ...rest }) {
   }
   return (
     <form
+      id='form5'
       onSubmit={formik.handleSubmit}
       className='animation animation-bot-top'
     >
       <div className='row'>
         <h4 className='card-title text-start '>
-          A2 Të dhënat mbi resurset për plotësimin e kritereve për
-          kualifikimin/modulin
+          {t(
+            "Data on resources for fulfilling the criteria for the qualification/module"
+          )}
         </h4>
         <h5 className='card-title'>
-          A2.1 Të dhënat për institucionin, përfshirë menaxhimin dhe gjendjen
-          financiare
+          {t(
+            "Data on the institution, including management and financial status"
+          )}
         </h5>
         <p className='text-muted'>
-          Shënim: Kriteret për akreditim kërkojnë që institucionet të kenë
-          strukturë të përshtatshme e cila funksionon në baza të qëndrueshme
-          financiare. Të dhënat përfshijnë:,
+          {t("FirstDesc5")}
           <br />
-          • Dëshmitë për pronësinë/ marrjen në shfrytëzim (objektit, pajisjeve,
-          etj.), kohëzgjatja t’i përgjigjet periudhës së akreditimit.
-          <br />• Hapësirat,
-          <br /> • Strukturën organizative dhe numrin e të punësuarve,
-          <br /> • Rregulloren e punës,
-          <br />• Kopjen e kontratës ndërmjet institucionit, kandidatit/prindit
-          <br /> • Portfolio e kandidatit nga regjistrimi deri ne certifikim
-          <br />• Raportet financiare për tri vitet e fundit,
-          <br />• Planin strategjik për tri vitet e fundit,
-          <br />• Planin e biznesit.
+          {t("SecondDesc5")}
+          <br />• {t("Spaces")},
+          <br /> • {t("StructureAndNumberOfEmployees")},
+          <br /> • {t("WorkRegulations")},
+          <br />• {t("CopyContrant")},
+          <br /> • {t("CandidatePortofolio")}
+          <br />• {t("FinancialReports")},
+          <br />• {t("StrategicPlan")},
+          <br />• {t("BusinessPlan")}.
         </p>
 
         <CustomFileInput
@@ -128,13 +120,8 @@ export default function FifthForm({ model, setModel, ...rest }) {
           </span>
         )}
         <hr className='mt-2' />
-        <h5 className='card-title text-start '>
-          A2.2 Pajisjet dhe materialet për kualifikim/modul
-        </h5>
-        <p className='text-muted'>
-          Paraqit të dhënat për pajisjet dhe materialet në dispozicion për
-          ofrimin, vlerësimin dhe certifikimin e kualifikimit/modulit.
-        </p>
+        <h5 className='card-title text-start '>{t("ToolsForQualification")}</h5>
+        <p className='text-muted'>{t("ToolsDesc")}</p>
         <CustomFileInput
           onChangeFunction={changeTools}
           acceptType={".pdf"}
@@ -144,19 +131,12 @@ export default function FifthForm({ model, setModel, ...rest }) {
           <span className='text-danger mt-2'>{formik.errors.Tools}</span>
         )}
         <hr className='mt-2' />
-        <h5 className='card-title text-start '>
-          A2.3 Të dhënat për stafin, për ofrim, vlerësim dhe certifikim të
-          kualifikimit/modulit
-        </h5>
+        <h5 className='card-title text-start '>{t("StaffData")}.</h5>
         <p className='text-muted'>
-          Paraqit:
-          <br />• Listën e stafit menaxhues dhe profesional që përfshihen në
-          ofrimin, vlerësimin dhe certifikimin e kualifikimit/modulit (CV-të
-          sipas formatit Europass),
-          <br />• Kontratat e punës kohëzgjatja e së cilës përputhet me kohën e
-          kërkuar për akreditim
-          <br />• Vendimin për përcaktimin e koordinatorit për sigurimin e
-          cilësisë.
+          {t("Append")}:
+          <br />• {t("StaffDesc1")},
+          <br />• {t("StaffDesc2")}
+          <br />• {t("StaffDesc3")}.
         </p>
         <CustomFileInput
           onChangeFunction={changeStaff}
@@ -167,45 +147,28 @@ export default function FifthForm({ model, setModel, ...rest }) {
           <span className='text-danger mt-2'>{formik.errors.Staff}</span>
         )}
         <hr className='mt-2' />
-        <h5 className='card-title text-start '>
-          A2.4 Të dhënat për kandidatët/nxënësit të përfshirë në ketë kualifikim
-        </h5>
-        <p className='text-muted'>
-          Paraqit:
-          <br />
-          •• Paraqit numrin e synuar për kandidatët/nxënësit brenda një grupi
-          <br />• Paraqit numrin e grupeve brenda një cikli të certifikimeve
-        </p>
-        <CustomFileInput
-          onChangeFunction={changeCandidates}
-          acceptType={".pdf"}
-          isMultiple={true}
-        />
-        {formik.errors.Candidates && (
-          <span className='text-danger mt-2'>{formik.errors.Candidates}</span>
-        )}
-        <hr className='mt-2' />
-        <h5 className='card-title text-start '>A2.5 Kërkesat tjera</h5>
-        <p className='text-muted'>
-          Paraqit memorandumet e bashkëpunimit, projektet, detyrat dhe praktikat
-          e realizuara nga kandidatët, brenda dhe jashtë institucionit (kompani,
-          organizatë, etj.)
-        </p>
+        <h5 className='card-title text-start '>{t("OtherRequest")}</h5>
+        <p className='text-muted'>{t("OtherRequestDesc")}</p>
         <CustomFileInput
           onChangeFunction={changeOtherRequests}
           acceptType={".pdf"}
           isMultiple={true}
         />
-        {!rest.showFourthForm && (
-          <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
+        <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
+          {!rest.load ? (
             <button
               type='submit'
               className='btn btn btn-primary btn-soft-blue rounded-pill '
             >
               {t("Apply")}
             </button>
-          </div>
-        )}
+          ) : (
+            <div
+              className='spinner-border text-primary m-2 text-center'
+              role='status'
+            />
+          )}
+        </div>
       </div>
       <hr />
     </form>

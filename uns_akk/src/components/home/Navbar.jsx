@@ -94,6 +94,13 @@ export default function Navbar(props) {
             >
               <label className='fs-6'>ENG</label>
             </a>
+            <div className='dropdown-divider' />
+            <a
+              className='dropdown-item notify-item'
+              onClick={(e) => changeLang("3")}
+            >
+              <label className='fs-6'>SR</label>
+            </a>
           </div>
         </li>
         <li
