@@ -76,6 +76,14 @@ export default function Sidebar() {
     },
     /* -----------INSTITUTION------------- */
     {
+      label: t("Users"),
+      roles: ["Institution"],
+      path: "/institution-user",
+      hasMenu: false,
+      showLabel: true,
+      icon: "fas fa-layer-group",
+    },
+    {
       label: t("Groups"),
       roles: ["Institution"],
       path: "/groups",

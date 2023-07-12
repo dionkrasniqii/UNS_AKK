@@ -16,7 +16,6 @@ const PrivateRoute = ({
   const decodedToken = token && jwtDecode(token);
   const role = decodedToken?.role;
   const isAuthorized = role && allowedRoles.includes(role);
-
   useEffect(() => {
     if (token === null) {
       setAuthState(false);
