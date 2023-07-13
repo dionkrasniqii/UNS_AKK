@@ -137,7 +137,7 @@ export default function Navbar(props) {
             )}
             <a onClick={logout} className='dropdown-item notify-item'>
               <i className='fe-log-out'></i>
-              Dilni
+              {t("Logout")}
             </a>
           </div>
         </li>

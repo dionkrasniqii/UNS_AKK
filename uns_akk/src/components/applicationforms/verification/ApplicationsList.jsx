@@ -125,7 +125,7 @@ export default function ApplicationsList() {
     <DataTablev2
       dataSource={data}
       columns={columns}
-      title={"Lista aplikimeve"}
+      title={t("ApplicationList")}
     />
   ) : (
     !load && (

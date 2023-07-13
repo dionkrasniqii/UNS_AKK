@@ -1,12 +1,9 @@
 // Person.js
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import CrudProvider from "../../provider/CrudProvider";
-import ProgressBar from "../custom/ProgressBar";
 import CustomSelect from "../custom/CustomSelect";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
 import PersonList from "../personinstitutions/PersonList";
 
 export default function Person() {
@@ -65,7 +62,7 @@ export default function Person() {
           <div className="col-md-5">
             <div className="card mb-3">
               <div className="card-body">
-                <h5 className="card-title">{t("Instuticionet")}</h5>
+                <h5 className="card-title">{t("Institution")}</h5>
                 <div className="form-row align-items-center">
                   <div
                     className="col-sm-6 mb-3"

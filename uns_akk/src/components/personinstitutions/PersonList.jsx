@@ -1,7 +1,7 @@
 // PersonList.js
 
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CrudProvider from "../../provider/CrudProvider";
 import DataTable from "../custom/DataTable";
 import { useTranslation } from "react-i18next";
@@ -112,7 +112,7 @@ export default function PersonList({ institutionId }) {
                 <DataTable
                   columns={columns}
                   dataSource={data}
-                  title={t("Kandidatet")}
+                  title={t("Candidates")}
                 />
               ) : (
                 <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
