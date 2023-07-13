@@ -93,11 +93,10 @@ export default function Landing() {
                   </a>
                 </p>
                 <p className='text-center'>
-                  <span className='h5'> {t("Location")}:</span>
+                  <span className='h5'> {t("Location")}</span>
                   <br />
                   <span className='h5'>
-                    Rr. Agim Ramadani p.n, Qendra e Studentëve, Prishtinë,
-                    Kosovë
+                    {t("LandingAddress")}
                   </span>
                 </p>
                 <hr></hr>
@@ -111,32 +110,27 @@ export default function Landing() {
                 <ul className='text-center list-unstyled'>
                   <li>
                     <FaCheck className='me-2' />
-                    Njohjen më të mirë kombëtare dhe ndërkombëtare të
-                    kualifikimeve
+                    {t("LandingInfo1")}
                   </li>
                   <li>
                     <FaCheck className='me-2' />
-                    Pjesëmarrjen më të gjerë në mësimin gjatë gjithë jetës
+                    {t("LandingInfo2")}
                   </li>
                   <li>
                     <FaCheck className='me-2' />
-                    Fleksibilitetin më të madh gjatë ofrimit të arsimit dhe
-                    aftësimit
+                    {t("LandingInfo3")}
                   </li>
                   <li>
                     <FaCheck className='me-2' />
-                    Njohjen e mësimit të bazuar në punë
+                    {t("LandingInfo4")}
                   </li>
                   <li>
                     <FaCheck className='me-2' />
-                    Progresin e përmirësuar për individ, nëpërmjet njohjes së
-                    mësimit paraprak dhe transferim të kredive
+                    {t("LandingInfo5")}
                   </li>
                   <li>
                     <FaCheck className='me-2' />
-                    AKK, gjithashtu, do të akreditojë institucionet për
-                    vlerësimin e nxënësve dhe lëshimin e certifikatave për
-                    kualifikimet e validuara në KKK
+                    {t("LandingInfo6")}
                   </li>
                 </ul>
                 <hr></hr>
