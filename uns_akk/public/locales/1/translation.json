@@ -95,6 +95,7 @@
   "Institucion1": "Institucion",
   "Institution": "Institucioni",
   "InstitutionActivity": "Veprimtaria e institucionit",
+  "InstitutionExists": "Ka një institucion me këto të dhëna!",
   "InstitutionName": "Emri i institucionit",
   "InstitutionRegistredInCurrentYear": "Institucionet e regjistruara në vitin aktual",
   "Institutions": "Institucionet",
@@ -281,5 +282,6 @@
   "PleaseChooseRole": "Ju lutemi zgjedhni një rol!",
   "RegisterInstitutionUser": "Regjistro përdorues të institucionit",
   "ChooseRole": "Zgjedhni rolin",
-  "ModifyUser": "Modifiko përdoruesin e institucionit"
+  "ModifyUser": "Modifiko përdoruesin e institucionit",
+  "Users":"Përdoruesit"
 }

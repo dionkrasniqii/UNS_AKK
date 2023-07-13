@@ -298,5 +298,7 @@
   "PleaseChooseRole": "Please choose a role!",
   "RegisterInstitutionUser": "Register users of the institution",
   "ChooseRole": "Choose a role",
-  "ModifyUser": "Modify the institution user"
+  "ModifyUser": "Modify the institution user",
+  "Users":"Users"
+
 }
