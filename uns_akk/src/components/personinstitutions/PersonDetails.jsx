@@ -21,6 +21,8 @@ export default function PersonDetails() {
               setCandidate(res.result);
               setLoad(false);
               break;
+              default:
+                break;
           }
         }
       }

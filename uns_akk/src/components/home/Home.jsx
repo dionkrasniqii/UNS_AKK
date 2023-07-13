@@ -126,10 +126,10 @@ export default function Home() {
           <div className='col-xxl-3 col-lg-5 col-md-5  col-sm-12 ps-2'>
             <StatisticWidget1
               data={reaccreditatedInstitutions}
-              title={"Institucione të ri-akredituara"}
+              title={t("ReAccreditatedInstitutions")}
               color={"#0047AB"}
               stats={reaccreditatedInstitutions}
-              subTitle={"Institucione të ri-akredituara"}
+              subTitle={t("ReAccreditatedInstitutions")}
             />
           </div>
           <div className='col-xxl-6 col-lg-6 col-md-6 col-sm-12 ps-2'>
