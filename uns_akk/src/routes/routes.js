@@ -33,6 +33,7 @@ import DecisionDetails from "../components/search/DecisionDetails";
 import InstitutionDetails from "../components/search/InstitutionDetails";
 import PersonDetails from "../components/personinstitutions/PersonDetails";
 import Reports from "../components/reports/Reports";
+import StatisticReports from "../components/reports/StatisticReports";
 import ApplyForm from "../components/applicationforms/apply/ApplyForm";
 import SearchingForms from "../components/search/SearchingForms";
 import ApplicationsList from "../components/applicationforms/verification/ApplicationsList";
@@ -411,6 +412,17 @@ export const AppRoutes = (props) => {
                 authState={props.authState}
                 allowedRoles={[ROLES.ADMIN]}
                 component={Reports}
+              />
+            }
+          />
+          <Route
+            path="/statisticsReports"
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN]}
+                component={StatisticReports}
               />
             }
           />

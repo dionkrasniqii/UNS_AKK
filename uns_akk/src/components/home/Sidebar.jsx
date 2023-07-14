@@ -74,6 +74,14 @@ export default function Sidebar() {
       showLabel: true,
       icon: "mdi mdi-microsoft-excel",
     },
+    {
+      label: t("StatisticsReports"),
+      roles: ["Admin"],
+      path: "/statisticsReports",
+      hasMenu: false,
+      showLabel: false,
+      icon: "mdi mdi-microsoft-excel",
+    },
     /* -----------INSTITUTION------------- */
     {
       label: t("Users"),
