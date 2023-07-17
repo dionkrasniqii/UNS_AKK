@@ -23,12 +23,11 @@ export default function CreateInstitutionUser() {
     PersonalNumber: "",
     PhoneNumber: "",
     BirthDate: "",
-    InstitutionId: decodedToken.groupsid,
+    InstitutionId: decodedToken && decodedToken.role ==="Admin" ? null :decodedToken.groupsid,
     Role: "",
   });
-
   useEffect(() => {
-    CrudProvider.getAll("InstitutionUserAPI/GetRoles").then((res) => {
+    CrudProvider.getItemById("InstitutionUserAPI/GetRoles", decodedToken.UserId).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
           setRoles(res.result);
@@ -64,7 +63,8 @@ export default function CreateInstitutionUser() {
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          navigate("/institution-user");
+          decodedToken && decodedToken.role ==="Admin" ? navigate("/users") : navigate("/institution-user")
+          ;
           toast.success(t("DataSavedSuccessfully"));
         } else if (res.statusCode === 409) {
           toast.error(t("UserExists"));
