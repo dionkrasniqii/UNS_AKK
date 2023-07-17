@@ -353,5 +353,8 @@
   "NoticePeriod": "Periudha",
   "DeleteOldDocs": "Për të fshirë dokumente e mëparshme klikoni tek butoni",
   "ToUploadNewDocs": "Për të ngarkuar dokumente të reja klikoni tek butoni",
-  "ChooseStatus": "Zgjedhni një status"
+  "ChooseStatus": "Zgjedhni një status",
+  "CityForAccreditation": "Qyteti për akreditim",
+  "ApplicationNotApprovedYet": "Aplikimi nuk është aprovuar ende",
+  "ChooseAnReport":"Zgjedhni një raport"
 }

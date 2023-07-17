@@ -9,10 +9,11 @@ import * as Yup from "yup";
 export default function Profile() {
   const [institution, setInstitution] = useState({});
   const { t } = useTranslation();
+  const [load, setLoad] = useState(false);
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
-
   const [model, setModel] = useState({
+    UserId: decodedToken.UserId,
     Img: "",
     OldPassword: "",
     Password: "",
@@ -41,29 +42,34 @@ export default function Profile() {
   }, []);
 
   async function SubmitForm() {
-    await CrudProvider.createItemWithFile(
-      "UserProfileAPI/ChangeImage",
-      model
-    ).then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          toast.success(t("DataSavedSuccessfully"));
-          if (model.Img !== "" && model.Password !== "") {
-            localStorage.removeItem("akktoken");
-            window.location.href = "/";
-          } else if (model.Img !== "" && model.Password === "") {
-            window.location.reload();
-          } else if (model.Password !== "") {
-            localStorage.removeItem("akktoken");
-            window.location.href = "/";
+    setLoad(true);
+    try {
+      await CrudProvider.createItemWithFile(
+        "UserProfileAPI/ChangeImage",
+        model
+      ).then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            toast.success(t("DataSavedSuccessfully"));
+            if (model.Img !== "" && model.Password !== "") {
+              localStorage.removeItem("akktoken");
+              window.location.href = "/";
+            } else if (model.Img !== "" && model.Password === "") {
+              window.location.reload();
+            } else if (model.Password !== "") {
+              localStorage.removeItem("akktoken");
+              window.location.href = "/";
+            }
+          } else if (res.statusCode === 400) {
+            toast.error(t("OldPasswordNotValid"));
+          } else if (res.statusCode === 401) {
+            toast.error(t("PasswordsDoNotMatch"));
           }
-        } else if (res.statusCode === 400) {
-          toast.error(t("OldPasswordNotValid"));
-        } else if (res.statusCode === 401) {
-          toast.error(t("PasswordsDoNotMatch"));
         }
-      }
-    });
+      });
+    } finally {
+      setLoad(false);
+    }
   }
 
   const ProfileSchema = Yup.object().shape({
@@ -90,35 +96,41 @@ export default function Profile() {
       <div className='col-lg-5'>
         <div className='card'>
           <div className='card-body text-center'>
-            <div className='text-center mb-4'>
-              <h2 className='text-uppercase mt-0 mb-4'>{t("Profile")}</h2>
-              <img
-                src={CrudProvider.documentPath(institution.path)}
-                alt='user-image'
-                className='img-fluid rounded'
-                style={{ maxWidth: "150px", maxHeight: "150px" }}
-              />
-              <h4 className='text-muted my-4'>{institution.institutionName}</h4>
-            </div>
-
             <form onSubmit={formik.handleSubmit}>
-              <div className='row mb-3'>
-                <label className='col-4 col-form-label'>Logo</label>
-                <div className='col-6'>
-                  <input
-                    className='form-control'
-                    type='file'
-                    accept='image/*'
-                    onChange={(e) => {
-                      setModel({
-                        ...model,
-                        Img: e.target.files[0],
-                      });
-                      formik.setFieldValue("Img", e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
+              {decodedToken?.role === "Institution" && (
+                <>
+                  <div className='text-center mb-4'>
+                    <h2 className='text-uppercase mt-0 mb-4'>{t("Profile")}</h2>
+                    <img
+                      src={CrudProvider.documentPath(institution.path)}
+                      alt='user-image'
+                      className='img-fluid rounded'
+                      style={{ maxWidth: "150px", maxHeight: "150px" }}
+                    />
+                    <h4 className='text-muted my-4'>
+                      {institution.institutionName}
+                    </h4>
+                  </div>
+                  <div className='row mb-3'>
+                    <label className='col-4 col-form-label'>Logo</label>
+                    <div className='col-6'>
+                      <input
+                        className='form-control'
+                        type='file'
+                        accept='image/*'
+                        onChange={(e) => {
+                          setModel({
+                            ...model,
+                            Img: e.target.files[0],
+                          });
+                          formik.setFieldValue("Img", e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+
               <div className='row mb-3'>
                 <label className='col-4 col-form-label'>
                   {t("CurrentPassword")}
@@ -188,14 +200,23 @@ export default function Profile() {
                 </div>
               </div>
               <div className='row mb-3'>
-                <div className='col-12'>
-                  <button
-                    type='submit'
-                    className='btn btn-primary waves-effect waves-light'
-                  >
-                    {t("Edit")}
-                  </button>
-                </div>
+                {!load ? (
+                  <div className='col-12'>
+                    <button
+                      type='submit'
+                      className='btn btn-primary waves-effect waves-light'
+                    >
+                      {t("Edit")}
+                    </button>
+                  </div>
+                ) : (
+                  <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                    <div
+                      className='spinner-border text-primary m-2 text-center'
+                      role='status'
+                    />
+                  </div>
+                )}
               </div>
             </form>
           </div>

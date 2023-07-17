@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import mainLogo from "./../../assets/images/logo_akk.png";
+import { Link, useNavigate } from "react-router-dom";
 import smallLogo from "./../../assets/images/sm.png";
 import i18next from "i18next";
-import CrudProvider from "../../provider/CrudProvider";
 import jwtDecode from "jwt-decode";
 import { useTranslation } from "react-i18next";
 
@@ -31,7 +29,6 @@ export default function Navbar(props) {
 
   function logout() {
     localStorage.removeItem("akktoken");
-    // localStorage.removeItem("role");
     localStorage.removeItem("hasShownToast");
     props.setAuthState(false);
     navigate("/");
@@ -144,7 +141,10 @@ export default function Navbar(props) {
       </ul>
       {/* LOGO */}
       <div className='logo-box' style={{ height: "66px" }}>
-        <Link to='/home' className='logo logo-dark text-center'>
+        <Link
+          to={decodedToken?.role !== "Institution" && "/home"}
+          className='logo logo-dark text-center'
+        >
           <span className='logo-lg text-start'>
             <img src={smallLogo} alt='' height={50} loading='lazy' />
           </span>

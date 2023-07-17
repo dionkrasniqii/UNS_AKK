@@ -10,7 +10,6 @@ export default function PersonDetails() {
   const [candidate, setCandidate] = useState({});
   const [load, setLoad] = useState(false);
   const navigate = useNavigate();
-  console.log(candidate);
   useEffect(() => {
     setLoad(true);
     CrudProvider.getItemById("PersonAPI/GetPersonByPersonId", id).then(

@@ -42,6 +42,9 @@ export default function BarApexChart({ data, colors, title }) {
         style: {
           colors: "#adb5bd",
         },
+        formatter: function (value) {
+          return Number.isInteger(value) ? value : null; // Return only integer values
+        },
       },
     },
     grid: {
@@ -69,7 +72,6 @@ export default function BarApexChart({ data, colors, title }) {
       data: [obj[1]],
     });
   });
-
   return (
     <div className='card card-body'>
       <h4 className='header-title mt-0'>{title}</h4>

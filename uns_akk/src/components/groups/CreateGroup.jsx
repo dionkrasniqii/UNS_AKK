@@ -76,8 +76,6 @@ export default function CreateGroup() {
     });
     formik.setFieldValue("EndDate", dateString);
   }
-  console.log(model.StartDate);
-  console.log(model.EndDate);
   async function submitForm() {
     setLoad(true);
     if (model.StartDate >= model.EndDate) {

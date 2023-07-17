@@ -9,29 +9,6 @@ const API_BASE_URL_DOC = process.env.REACT_APP_API_BASE_URL_LOCAL_DOCS;
 // const API_BASE_URL_DOC = process.env.REACT_APP_API_BASE_URL_PRODUCTION_DOCS;
 
 const appendToFormData = (key, value, formData) => {
-  // const appendArrayValue = (formDataKey, arr) => {
-  //   arr.forEach((obj) => {
-  //     if (Array.isArray(obj)) {
-  //       appendArrayValue(formDataKey, obj); // Recursive call for nested arrays
-  //     } else if (obj instanceof File) {
-  //       formData.append(`${formDataKey}[]`, obj);
-  //     } else if (typeof obj === "object" && obj !== null) {
-  //       Object.entries(obj).forEach(([objKey, objValue]) => {
-  //         if (objValue instanceof File) {
-  //           formData.append(`${formDataKey}.${objKey}`, objValue);
-  //         } else if (Array.isArray(objValue)) {
-  //           appendArrayValue(`${formDataKey}.${objKey}`, objValue);
-  //         } else if (typeof objValue === "object" && objValue !== null) {
-  //           appendToFormData(`${formDataKey}.${objKey}`, objValue, formData);
-  //         } else {
-  //           formData.append(`${formDataKey}.${objKey}`, objValue.toString());
-  //         }
-  //       });
-  //     } else {
-  //       formData.append(`${formDataKey}[]`, obj.toString());
-  //     }
-  //   });
-  // };
   if (value instanceof File) {
     formData.append(key, value);
   } else if (Array.isArray(value)) {
@@ -290,6 +267,7 @@ async function getReportRDLC(methodRoute, fileType, id, reportName) {
     if (contentType === "application/pdf") {
       const newWindow = window.open();
       newWindow.location.href = url;
+      console.log(url);
     } else if (contentType === "application/vnd.ms-excel") {
       const link = document.createElement("a");
       link.href = url;

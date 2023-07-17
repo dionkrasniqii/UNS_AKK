@@ -59,7 +59,6 @@ export default function PersonList({ institutionId }) {
       dataIndex: "person",
       key: (item) => item.personId,
       render: (item) => {
-        console.log(item);
         return (
           <Link
             className='btn btn-dark btn-sm'

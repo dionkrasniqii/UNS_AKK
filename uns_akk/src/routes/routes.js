@@ -338,7 +338,13 @@ export const AppRoutes = (props) => {
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.INSTITUTION]}
+                allowedRoles={[
+                  ROLES.INSTITUTION,
+                  ROLES.KAAPR,
+                  ROLES.ZYRTAR,
+                  ROLES.MANAGER,
+                  ROLES.MODERATOR,
+                ]}
                 component={Profile}
               />
             }
@@ -418,7 +424,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path="/statisticsReports"
+            path='/statisticsReports'
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}

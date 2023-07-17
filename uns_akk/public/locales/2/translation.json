@@ -351,5 +351,8 @@
   "NoticePeriod": "Notice period",
   "DeleteOldDocs": "To delete previous documents click on the button",
   "ToUploadNewDocs": "To upload new documents click on the button",
-  "ChooseStatus": "Choose status"
+  "ChooseStatus": "Choose status",
+  "CityForAccreditation": "City for accreditation",
+  "ApplicationNotApprovedYet": "The application has not been approved yet",
+  "ChooseAnReport": "Choose an report"
 }

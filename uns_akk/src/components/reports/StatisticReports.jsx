@@ -3,6 +3,7 @@ import CustomSelect from "../custom/CustomSelect";
 import CrudProvider from "../../provider/CrudProvider";
 import { useTranslation } from "react-i18next";
 import { Button, Row, Col, Card, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 export default function Reports() {
   const { t } = useTranslation();
@@ -86,7 +87,6 @@ export default function Reports() {
   }, [model.InstitutionId]);
 
   const municipalityList =
-    municipality &&
     municipality.length > 0 &&
     municipality
       .map((obj) => {
@@ -98,7 +98,6 @@ export default function Reports() {
       .sort((a, b) => a.label.localeCompare(b.label));
 
   const institutionList =
-    institution &&
     institution.length > 0 &&
     institution
       .map((obj) => {
@@ -139,37 +138,7 @@ export default function Reports() {
       InstitutionId: e,
     }));
   }
-
-  async function PrintWithFilterPDF(e) {
-    let url = "ReportsAPI/GetInstitutionFromCityReport";
-    let filters = "";
-
-    const values = [];
-
-    if (model.MunicipalityId) {
-      values.push(model.MunicipalityId);
-    }
-
-    if (model.InstitutionId) {
-      let institutionValue = model.InstitutionId;
-
-      if (qualification.selectedOption !== null) {
-        institutionValue += `&isGraduated=${qualification.value}`;
-      }
-
-      values.push(`?institutionId=${institutionValue}`);
-    }
-
-    filters += `${values.join("/")}`;
-
-    await CrudProvider.getReportRDLCWithLang(
-      url,
-      "pdf",
-      filters,
-      raportPrint.label
-    );
-  }
-  async function PrintWithFilterExcel(e) {
+  async function PrintReport(fileType) {
     let url = "ReportsAPI/GetInstitutionFromCityReport";
     let filters = "";
 
@@ -186,22 +155,22 @@ export default function Reports() {
         institutionValue += `=${qualification.selectedOption}`;
       }
 
-      
       values.push(`?institutionId=${institutionValue}`);
-    }     
+    }
     filters += `${values.join("/")}`;
-
+    if (!model.MunicipalityId) {
+      return toast.info(t("ChooseMunicipality"));
+    }
     await CrudProvider.getReportRDLCWithLang(
       url,
-      "excel",
+      fileType,
       filters,
       raportPrint.label
     );
   }
-
   const handleQualificationChange = (event) => {
     const { value } = event.target;
-    const selectedValue = value === 'graduated' ? true : false;
+    const selectedValue = value === "graduated" ? true : false;
 
     setQualification((prevValues) => ({
       ...prevValues,
@@ -210,16 +179,9 @@ export default function Reports() {
     }));
   };
 
-  useEffect(() => {
-  }, [qualification.value]);
-
-  async function OnChange(e, record) {
-    setRaportPrint(record);
-  }
-
   return (
     <div>
-      <Card className="card-body">
+      <Card className='card-body'>
         <Row>
           <Col xs={12} lg={3}>
             <h4>{t("ChooseMunicipality")}</h4>
@@ -239,50 +201,44 @@ export default function Reports() {
               />
             </Col>
           )}
-          {model.InstitutionId !== null &&
-            model.InstitutionId !== undefined &&
-            model.InstitutionId !== "" && (
-              <Col xs={12} lg={3}>
-                <h4>{t("ChooseStatus")}</h4>
-                <Form>
-                  <Form.Check
-                    type="radio"
-                    label={t("UnderGraduated")}
-                    name="qualification"
-                    value="nongraduated"
-                    checked={qualification.selectedOption === "nongraduated"}
-                    onChange={handleQualificationChange}
-                  />
-                  <Form.Check
-                    type="radio"
-                    label={t("Graduated")}
-                    name="qualification"
-                    value="graduated"
-                    checked={qualification.selectedOption === "graduated"}
-                    onChange={handleQualificationChange}
-                  />
-                </Form>
-              </Col>
-            )}
+          {model.InstitutionId && (
+            <Col xs={12} lg={3}>
+              <h4>{t("ChooseStatus")}</h4>
+              <Form>
+                <Form.Check
+                  type='radio'
+                  label={t("UnderGraduated")}
+                  name='qualification'
+                  value='nongraduated'
+                  checked={qualification.selectedOption === "nongraduated"}
+                  onChange={handleQualificationChange}
+                />
+                <Form.Check
+                  type='radio'
+                  label={t("Graduated")}
+                  name='qualification'
+                  value='graduated'
+                  checked={qualification.selectedOption === "graduated"}
+                  onChange={handleQualificationChange}
+                />
+              </Form>
+            </Col>
+          )}
           <Col
             xs={12}
             lg={3}
-            className="mt-4 pt-1 pb-1 d-flex justify-content-lg-start justify-content-center"
+            className='mt-4 pt-1 pb-1 d-flex justify-content-lg-start justify-content-center'
           >
             <Button
-              variant="danger"
-              onClick={PrintWithFilterPDF}
-              className="me-lg-2 mx-2 mx-lg-0"
+              variant='danger'
+              onClick={(e) => PrintReport("pdf")}
+              className='me-lg-2 mx-2 mx-lg-0'
             >
-              <span className="btn-label">
-                <i className="mdi mdi-pdf-box"></i>
-              </span>
+              <i className='mdi mdi-pdf-box'></i>
               PDF
             </Button>
-            <Button variant="success" onClick={PrintWithFilterExcel}>
-              <span className="btn-label">
-                <i className="mdi mdi-microsoft-excel"></i>
-              </span>
+            <Button variant='success' onClick={(e) => PrintReport("excel")}>
+              <i className='mdi mdi-microsoft-excel'></i>
               Excel
             </Button>
           </Col>

@@ -75,7 +75,7 @@ export default function Sidebar() {
       icon: "mdi mdi-calendar-blank-outline",
     },
     {
-      label: "Reports",
+      label: t("Reports"),
       roles: ["Admin"],
       path: "/reports",
       hasMenu: false,
@@ -128,7 +128,7 @@ export default function Sidebar() {
       roles: ["Admin", "KAAPR", "Zyrtar"],
       path: "/applications",
       hasMenu: false,
-      showLabel: role === "Admin" ? true : false,
+      showLabel: role === "Institution" ? false : true,
       icon: "mdi mdi-form-select",
     },
     {

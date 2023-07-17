@@ -38,6 +38,9 @@ export default function BarChart({ data }) {
             size: 12,
             weight: "bold",
           },
+          callback: function (value) {
+            return Number.isInteger(value) ? value : null; // Return only integer values
+          },
         },
       },
     },

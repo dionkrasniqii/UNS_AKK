@@ -22,7 +22,7 @@ export default function ApplyForm({ authState }) {
   const [showFourthForm, setShowFourthForm] = useState(false);
   const [showFifthForm, setShowFifthForm] = useState(false);
   const [model, setModel] = useState({
-    InstitutionId: authState ? decodedToken.groupsid : null,
+    InstitutionId: authState ? decodedToken.groupsid : "",
     InstitutionName: "",
     UniqueNumber: "",
     MunicipalityName: "",
@@ -62,7 +62,7 @@ export default function ApplyForm({ authState }) {
           switch (res.statusCode) {
             case 200:
               toast.success("Aplikimi u regjistrua me sukses");
-              return navigate("/");
+              return authState ? navigate("/applications-list") : navigate("/");
             default:
               toast.error(res.errorMessages[0]);
               break;

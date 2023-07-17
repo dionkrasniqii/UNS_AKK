@@ -3,21 +3,15 @@ import CustomSelect from "../custom/CustomSelect";
 import CrudProvider from "../../provider/CrudProvider";
 import { useTranslation } from "react-i18next";
 import { Button, Row, Col, Card } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 export default function Reports() {
   const { t } = useTranslation();
+  const [load, setLoad] = useState(false);
   const [raportPrint, setRaportPrint] = useState({
-    value: [],
+    value: "",
     label: "",
   });
-  const [municipality, setMunicipality] = useState([]);
-  const [institution, setInstitution] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [model, setModel] = useState({
-    MunicipalityId: "",
-    InstitutionId: "",
-  });
-
   const reportsList = [
     { value: 1, label: t("GraduatedCandidatesList") },
     { value: 2, label: t("UnderGraduatedCandidatesList") },
@@ -28,93 +22,33 @@ export default function Reports() {
     { value: 7, label: t("InstitutionDecisionDetailsList") },
   ];
 
-  useEffect(() => {
-    setLoading(true);
-    CrudProvider.getAllWithLang("MunicipalityAPI/GetAll").then((res) => {
-      if (res) {
-        switch (res.statusCode) {
-          case 200:
-            setMunicipality(res.result);
-            setLoading(false);
-            break;
-          default:
-            setLoading(false);
-            break;
-        }
+  async function checkModel(model) {
+    return model ? Object.values(model).some((value) => !!value) : false;
+  }
+  async function PrintReport(fileType, id, value) {
+    try {
+      setLoad(true);
+
+      const check = await checkModel(raportPrint);
+      if (!check) {
+        return toast.info(t("ChooseAnReport"));
       }
-    });
-  }, []);
-
-  useEffect(() => {
-    if (model.MunicipalityId) {
-      CrudProvider.getAll(
-        `InstitutionAPI/GetInstitutions/${model.MunicipalityId}`
-      ).then((res) => {
-        if (res) {
-          switch (res.statusCode) {
-            case 200:
-              setInstitution(res.result);
-              setLoading(false);
-              break;
-            default:
-              setInstitution([]);
-              setLoading(false);
-              break;
-          }
-        }
-      });
-    } else {
-      setInstitution([]);
+      await CrudProvider.getReportRDLCWithLang(
+        "ReportsAPI/PrintReportType",
+        fileType,
+        raportPrint.value,
+        raportPrint.label
+      );
+    } finally {
+      setLoad(false);
     }
-  }, [model.MunicipalityId]);
-
-  useEffect(() => {
-    if (model.InstitutionId) {
-      CrudProvider.getAll(
-        `InstitutionAPI/GetInstitutions/${model.MunicipalityId}`
-      ).then((res) => {
-        if (res) {
-          switch (res.statusCode) {
-            case 200:
-              setInstitution(res.result);
-              setLoading(false);
-              break;
-            default:
-              setInstitution([]);
-              setLoading(false);
-              break;
-          }
-        }
-      });
-    } else {
-      setInstitution([]);
-    }
-  }, [model.InstitutionId]);
-
-  async function PrintRaport(e) {
-    await CrudProvider.getReportRDLCWithLang(
-      "ReportsAPI/PrintReportType",
-      "excel",
-      raportPrint.value,
-      raportPrint.label
-    );
   }
-
-  async function PrintPDF(e) {
-    await CrudProvider.getReportRDLCWithLang(
-      "ReportsAPI/PrintReportType",
-      "pdf",
-      raportPrint.value,
-      raportPrint.label
-    );
-  }
-
   async function OnChange(e, record) {
     setRaportPrint(record);
   }
   return (
     <div>
-      <Card className="card-body">
+      <Card className='card-body'>
         <Row>
           <Col xs={12} lg={6}>
             <h4>{t("RaportList")}</h4>
@@ -124,28 +58,33 @@ export default function Reports() {
               isMulti={false}
             />
           </Col>
-          <Col
-            xs={12}
-            lg={6}
-            className="mt-4 d-flex justify-content-lg-start justify-content-center"
-          >
-            <Button
-              variant="danger"
-              onClick={PrintPDF}
-              className="me-lg-2 mx-2 mx-lg-0"
+          {!load ? (
+            <Col
+              xs={12}
+              lg={6}
+              className='mt-4 d-flex justify-content-lg-start justify-content-center'
             >
-              <span className="btn-label">
-                <i className="mdi mdi-pdf-box"></i>
-              </span>
-              PDF
-            </Button>
-            <Button variant="success" onClick={PrintRaport}>
-              <span className="btn-label">
-                <i className="mdi mdi-microsoft-excel"></i>
-              </span>
-              Excel
-            </Button>
-          </Col>
+              <Button
+                variant='danger'
+                onClick={(e) => PrintReport("pdf")}
+                className='me-lg-2 mx-2 mx-lg-0'
+              >
+                <i className='mdi mdi-pdf-box'></i>
+                PDF
+              </Button>
+              <Button variant='success' onClick={(e) => PrintReport("excel")}>
+                <i className='mdi mdi-microsoft-excel'></i>
+                Excel
+              </Button>
+            </Col>
+          ) : (
+            <div className='col-xxl-12 col-lg-12 col-sm-12 text-center mt-5'>
+              <div
+                className='spinner-border text-primary m-2 text-center'
+                role='status'
+              />
+            </div>
+          )}
         </Row>
       </Card>
     </div>

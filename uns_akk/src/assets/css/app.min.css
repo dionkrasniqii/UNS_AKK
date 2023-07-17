@@ -24721,8 +24721,30 @@ body[data-layout-color=dark] .datepicker tfoot tr th:hover {
 
 
 .ant-modal-content {
-    width: 850px;
+    /* min-width: 850px; */
     z-index: 9999;
+}
+
+.responsive-modal {
+    @media (max-width: 768px) {
+        width: 90% !important;
+        padding-top: 15px;
+    }
+
+    @media (min-width: 769px) and (max-width: 992px) {
+        width: 80% !important;
+        padding-top: 15px;
+    }
+
+    @media (min-width: 993px) and (max-width: 1200px) {
+        width: 80% !important;
+        padding-top: 15px;
+    }
+
+    @media (min-width: 1201px) {
+        width: 80% !important;
+        padding-top: 15px;
+    }
 }
 
 .topnav_landing {

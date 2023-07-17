@@ -311,5 +311,8 @@
   "NoticePeriod": "Period obaveštenja",
   "DeleteOldDocs": "Za brisanje prethodnih dokumenata kliknite na dugme",
   "ToUploadNewDocs": "Da biste otpremili nove dokumente kliknite na dugme",
-  "ChooseStatus": "Izaberite status"
+  "ChooseStatus": "Izaberite status",
+  "CityForAccreditation": "Grad za akreditaciju",
+  "ApplicationNotApprovedYet": "Aplikacija još nije odobrena",
+  "ChooseAnReport": "Izaberite izveštaj"
 }
