@@ -3,8 +3,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "./assets/css/app.min.css";
 import "./assets/css/icons.min.css";
 import { useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { AppRoutes } from "./routes/routes";
@@ -16,6 +14,7 @@ import { removeToken } from "./store/actions";
 import NavbarLanding from "./components/home/NavbarLanding";
 import Loading from "./components/loading/Loading";
 import PublicFooter from "./components/home/PublicFooter";
+import { useNavigate } from "react-router";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,7 +56,6 @@ function App() {
   if (authState === null) {
     return <Loading />;
   }
-
   return (
     <>
       <ToastContainer

@@ -22,6 +22,7 @@ export default function ApplyForm({ authState }) {
   const [showFourthForm, setShowFourthForm] = useState(false);
   const [showFifthForm, setShowFifthForm] = useState(false);
   const [model, setModel] = useState({
+    InstitutionId: authState ? decodedToken.groupsid : null,
     InstitutionName: "",
     UniqueNumber: "",
     MunicipalityName: "",
@@ -39,6 +40,7 @@ export default function ApplyForm({ authState }) {
     OfferNoValidationCertificationA18: false,
     ValidationCertificationNotOfferA18: false,
     OfferValidationCertificationA18: false,
+    EquipmentMaterialsQualificationA22: "",
     TextA18: "",
     TargetNumberOfCandidatesA24: "",
     NumOfGroupsA24: "",
@@ -56,7 +58,6 @@ export default function ApplyForm({ authState }) {
         "ApplicationAPI/ApplicationPost",
         model
       ).then((res) => {
-        console.log(res);
         if (res) {
           switch (res.statusCode) {
             case 200:

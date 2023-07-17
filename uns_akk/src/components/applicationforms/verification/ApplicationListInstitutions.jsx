@@ -5,24 +5,20 @@ import CrudProvider from "../../../provider/CrudProvider";
 import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { Alert, Space } from "antd";
-export default function ApplicationsList() {
+
+export default function ApplicationListInstitutions() {
   const { t } = useTranslation();
   const [data, setData] = useState([]);
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const [load, setLoad] = useState(false);
+
   const columns = [
     {
       name: t("UniqueNumber"),
       sortable: true,
       filterable: true,
       selector: (row) => row.uniqueNumber,
-    },
-    {
-      name: t("InstitutionName"),
-      sortable: true,
-      filterable: true,
-      selector: (row) => row.institutionName,
     },
     {
       name: t("Qualification"),
@@ -175,38 +171,25 @@ export default function ApplicationsList() {
       filterable: true,
       cell: (row) => {
         return (
-          <Link
-            to={`/view-application/${row.applicationId}`}
-            className='btn btn-dark waves-effect waves-light'
-          >
-            <i className='fe-edit' />
-          </Link>
+          row.status === "Rikthim" && (
+            <Link
+              to={`/editapplication/${row.applicationId}`}
+              className='btn btn-dark waves-effect waves-light'
+            >
+              <i className='fe-edit' />
+            </Link>
+          )
         );
       },
     },
   ];
-
-  const statusToSearch =
-    decodedToken &&
-    (() => {
-      switch (decodedToken.role) {
-        case "Zyrtar":
-          return "a05fff28-087c-4063-3409-08db77102452";
-        case "KAAPR":
-          return "a05fff28-087c-4063-3409-08db67102415";
-        case "Admin":
-          return "00000000-0000-0000-0000-000000000000";
-        default:
-          return null;
-      }
-    })();
   useEffect(() => {
     try {
       setLoad(true);
-      if (statusToSearch) {
+      if (decodedToken) {
         CrudProvider.getItemByIdLang(
-          "ApplicationAPI/GetAppByStatus",
-          statusToSearch
+          "ApplicationAPI/GetAppByInstitution",
+          decodedToken.groupsid
         ).then((res) => {
           if (res) {
             if (res.statusCode === 200) {
@@ -224,7 +207,7 @@ export default function ApplicationsList() {
     <DataTablev2
       dataSource={data}
       columns={columns}
-      title={t("ApplicationList")}
+      title={"Lista aplikimeve"}
     />
   ) : load ? (
     <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>

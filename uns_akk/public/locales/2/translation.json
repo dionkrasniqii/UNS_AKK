@@ -341,5 +341,15 @@
   "RegisterInstitutionUser": "Register users of the institution",
   "ChooseRole": "Choose a role",
   "ModifyUser": "Modify the institution user",
-  "UserList": "List of users"
+  "UserList": "List of users",
+  "NoNewApplications": "There are no new applications",
+  "ApplicationDate": "Application date",
+  "JuridicPersonDetails": "Data of the juridic person",
+  "InstitutionDetails": "Data of the institution",
+  "ApplicationByInstitution": "Application for accreditation by the institution",
+  "DataForAccreditation": "Data for accreditation",
+  "NoticePeriod": "Notice period",
+  "DeleteOldDocs": "To delete previous documents click on the button",
+  "ToUploadNewDocs": "To upload new documents click on the button",
+  "ChooseStatus": "Choose status"
 }

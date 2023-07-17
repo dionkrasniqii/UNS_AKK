@@ -62,6 +62,7 @@ export default function SecondForm({ model, setModel, ...rest }) {
     >
       <div className='row'>
         <h5 className='card-title text-start '>{t("LegalEntityStatus")}</h5>
+
         <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
           <label className='form-label'>{t("RegistrationNumber")}</label>
           <input
@@ -119,7 +120,6 @@ export default function SecondForm({ model, setModel, ...rest }) {
                 </span>
               )}
             </div>
-            {console.log(model.Docs)}
             <div className='col-xxl-2 col-lg-3 col-md-3 col-sm-12 mt-2 '>
               <label className='form-label text-start'>
                 {t("LicenseMASHT")}

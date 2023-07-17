@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import CrudProvider from "../../../provider/CrudProvider";
 import { useTranslation } from "react-i18next";
-import { Button, Modal } from "antd";
+import { Button, Checkbox, Modal } from "antd";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export default function ViewApplication() {
   const { id } = useParams();
@@ -17,20 +19,21 @@ export default function ViewApplication() {
   const [certificateModal, setCertificateModal] = useState(false);
   const [previousDecisionModal, setPreviousDecisionModal] = useState(false);
   const [instituonDetailsModal, setInstitutionDetailsModal] = useState(false);
-  const [equipmentModal, setEquipmentModal] = useState(false);
   const [staffModal, setStaffModal] = useState(false);
   const [otherRequestModal, setOtherRequestModal] = useState(false);
+  const [statuses, setStatuses] = useState([]);
   const navigate = useNavigate();
-  const [showRemark, setShowRemark] = useState(false);
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
-  console.log(decodedToken);
   const [model, setModel] = useState({
     ApplicationId: "",
     StatusId: "",
-    ApplicationUserId: decodedToken.groupsId,
+    ApplicationUserId: decodedToken.UserId,
     Remark: "",
+    StatusName: "",
   });
+  const [postLoad, setPostLoad] = useState(false);
+  const [isSelected, setIsSelected] = useState("");
   useEffect(() => {
     try {
       setLoad(true);
@@ -45,7 +48,22 @@ export default function ViewApplication() {
               });
               break;
             case "ERR_NETWORK":
-              navigate("/applications");
+              // navigate("/applications");
+              toast.error(t("ServerProblems"));
+              break;
+            default:
+              break;
+          }
+        }
+      });
+      CrudProvider.getAll("GeneralAPI/GetStatuses").then((res) => {
+        if (res) {
+          switch (res.statusCode) {
+            case 200:
+              setStatuses(res.result);
+              break;
+            case "ERR_NETWORK":
+              // navigate("/applications");
               toast.error(t("ServerProblems"));
               break;
             default:
@@ -57,8 +75,88 @@ export default function ViewApplication() {
       setLoad(false);
     }
   }, []);
+  async function checkModel(model) {
+    if (model.StatusName === "Rikthim") {
+      if (model.Remark) {
+        return true;
+      } else {
+        toast.error("Plotësoni vërejtjen");
+        return false;
+      }
+    }
+  }
 
-  console.log(data);
+  async function SubmitApplication() {
+    await checkModel(model);
+    setPostLoad(true);
+    await CrudProvider.createItem(
+      "ApplicationAPI/UpdateApplicationStatus",
+      model
+    ).then((res) => {
+      if (res) {
+        switch (res.statusCode) {
+          case 200:
+            toast.success(t("DataUpdatedSuccessfully"));
+            navigate("/applications");
+            setPostLoad(false);
+            break;
+          default:
+            setPostLoad(false);
+            break;
+        }
+      }
+    });
+  }
+  const statusesList =
+    statuses.length > 0 &&
+    decodedToken &&
+    statuses
+      .filter((status) => {
+        if (decodedToken.role === "KAAPR") {
+          if (
+            status.description === "Aprovuar" ||
+            status.description === "Refuzuar"
+          ) {
+            return status;
+          }
+        } else if (decodedToken.role === "Zyrtar") {
+          if (
+            status.description === "Rikthim" ||
+            status.description === "Verifikuar"
+          ) {
+            return status;
+          }
+        }
+      })
+      .sort((a, b) => b.description.localeCompare(a.description));
+
+  const onChange = (e) => {
+    if (e.target.checked) {
+      !isSelected && setIsSelected(e.target.name);
+      setModel({
+        ...model,
+        StatusId: e.target.value,
+        StatusName: e.target.name,
+      });
+      formik.setFieldValue("StatusId", e.target.value);
+    } else {
+      setIsSelected(null);
+      setModel({
+        ...model,
+        StatusId: "",
+        StatusName: "",
+      });
+      formik.setFieldValue("StatusId", "");
+    }
+  };
+  const schema = Yup.object().shape({
+    StatusId: Yup.string().required(t("ChooseStatus")),
+  });
+  const formik = useFormik({
+    initialValues: {},
+    validationSchema: schema,
+    onSubmit: () => SubmitApplication(),
+  });
   return Object.keys(data).length > 0 ? (
     <div className='container'>
       <div className='card'>
@@ -89,7 +187,7 @@ export default function ViewApplication() {
             </div>
             <div className='col-xxl-8 col-lg-8 col-md-12 col-sm-10'>
               <h4 className='card-title text-start'>
-                Aplikimi për akreditim nga institucioni:
+                {t("ApplicationByInstitution")}:
                 <span className='font-20 ms-1 text-primary '>
                   {data.applicationDTO.institutionName}
                 </span>
@@ -97,7 +195,7 @@ export default function ViewApplication() {
             </div>
             <div className='col-xxl-2 col-lg-2 col-md-12 col-sm-12'>
               <div className='row'>
-                <span className='text-muted'>Data aplikimit:</span>
+                <span className='text-muted'>{t("ApplicationDate")}:</span>
                 <span className='text-success'>
                   {new Date(
                     data.applicationDTO.applicationDate.split("T")[0]
@@ -108,7 +206,7 @@ export default function ViewApplication() {
           </div>
           <hr />
           <div className='row '>
-            <h5>Te dhenat e institucionit:</h5>
+            <h5>{t("InstitutionDetails")}:</h5>
             <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
               <div className='form-group'>
                 <label className='text-muted'>{t("UniqueNumber")}:</label>
@@ -248,7 +346,7 @@ export default function ViewApplication() {
           </div>
           <hr />
           <div className='row'>
-            <h5>Të dhënat e personit juridik:</h5>
+            <h5>{t("JuridicPersonDetails")}:</h5>
             <div className='col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
               <div className='form-group'>
                 <label className='text-muted'>{t("FiscalNumber")}:</label>
@@ -405,7 +503,23 @@ export default function ViewApplication() {
           )}
           <hr />
           <div className='row'>
-            <h5>Të dhënat për akreditim:</h5>
+            <h5>{t("DataForAccreditation")}:</h5>
+            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-1 '>
+              <div className='form-group'>
+                <label className='text-muted'>
+                  {t("ToolsForQualification")}:
+                </label>
+                <textarea
+                  readOnly
+                  className='mt-2'
+                  rows={5}
+                  defaultValue={
+                    data.applicationDTO.equipmentMaterialsQualificationA22
+                  }
+                />
+                <span className='focus-border'></span>
+              </div>
+            </div>
             <div className='col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
               <div className='form-group'>
                 <label className='text-muted'>{t("Qualification")}:</label>
@@ -541,44 +655,7 @@ export default function ViewApplication() {
                 })}
               </Modal>
             </div>
-            <div className='col-xxl-3 col-lg-5 col-md-4 col-sm-12 mt-2 text-center'>
-              <Button
-                className='btn-dark'
-                onClick={() => setEquipmentModal(true)}
-              >
-                {t("ToolsForQualification")}
-              </Button>
-              <Modal
-                title={t("ToolsForQualification")}
-                centered
-                style={{ width: "700px" }}
-                open={equipmentModal}
-                okButtonProps={{ style: { display: "none" } }}
-                onCancel={() => setEquipmentModal(false)}
-              >
-                {data.docs.map((document) => {
-                  if (document.type === "ToolsA22") {
-                    return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                      <iframe
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='800px'
-                        loading='lazy'
-                      />
-                    ) : (
-                      <img
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='700px'
-                        loading='lazy'
-                      />
-                    );
-                  }
-                })}
-              </Modal>
-            </div>
+
             <div className='col-xxl-2 col-lg-3 col-sm-12 mt-2 text-center'>
               <Button className=' btn-dark' onClick={() => setStaffModal(true)}>
                 {t("StaffDataModal")}
@@ -614,7 +691,7 @@ export default function ViewApplication() {
                 })}
               </Modal>
             </div>
-            <div className='col-xxl-2 col-lg-4 col-sm-12 mt-2'>
+            <div className='col-xxl-2 col-lg-3 col-sm-12 mt-2 text-center'>
               <Button
                 onClick={() => setOtherRequestModal(true)}
                 className=' btn-dark'
@@ -654,45 +731,66 @@ export default function ViewApplication() {
             </div>
           </div>
           <hr />
-          <div className='row'>
-            {showRemark && (
-              <div className='col-xxl-12 col-lg-12 col-sm-12'>
-                <div className='form-group'>
-                  <label>Vërejtje</label>
-                  <textarea rows={5} className='mt-2' />
+          <form onSubmit={formik.handleSubmit}>
+            <div className='row'>
+              {model.StatusName === "Rikthim" && (
+                <div className='col-xxl-12 col-lg-12 col-sm-12'>
+                  <div className='form-group'>
+                    <label>Vërejtje</label>
+                    <textarea
+                      rows={5}
+                      className='mt-2'
+                      onChange={(e) =>
+                        setModel({
+                          ...model,
+                          Remark: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            <div className='col-xxl-12 col-lg-12 col-sm-12 text-end'>
-              <div className='button-list'>
-                <button
-                  type='button'
-                  className='btn btn-soft-danger waves-effect waves-light'
-                  onClick={(e) => {
-                    setShowRemark(true);
-                  }}
-                >
-                  Rikthim
-                </button>
+              <div className='col-xxl-12 col-lg-12 col-sm-12 text-end'>
+                {statusesList.map((item) => (
+                  <Checkbox
+                    disabled={
+                      isSelected ? isSelected !== item.description : false
+                    }
+                    value={item.statusId}
+                    name={item.description}
+                    key={item.statusId}
+                    onChange={onChange}
+                  >
+                    {item.description}
+                  </Checkbox>
+                ))}
 
-                <button
-                  type='button'
-                  className='btn btn-soft-primary waves-effect waves-light'
-                  onClick={(e) => {
-                    setShowRemark(false);
-                  }}
-                >
-                  Verifiko
-                </button>
+                {decodedToken.role !== "Admin" &&
+                  isSelected &&
+                  (postLoad ? (
+                    <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                      <div
+                        className='spinner-border text-primary m-2 text-center'
+                        role='status'
+                      />
+                    </div>
+                  ) : (
+                    <button
+                      type='submit'
+                      className='btn btn-soft-primary waves-effect '
+                    >
+                      {t("Save")}
+                    </button>
+                  ))}
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
   ) : (
-    !load && (
+    load && (
       <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
         <div
           className='spinner-border text-primary m-2 text-center'

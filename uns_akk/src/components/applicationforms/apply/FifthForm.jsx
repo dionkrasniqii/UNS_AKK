@@ -12,7 +12,6 @@ export default function FifthForm({ model, setModel, ...rest }) {
   }, []);
   const schema = Yup.object().shape({
     InstitutionsDocs: Yup.mixed().required(t("UploadDocuments")),
-    Tools: Yup.mixed().required(t("UploadDocuments")),
     Staff: Yup.mixed().required(t("UploadDocuments")),
   });
   const formik = useFormik({
@@ -40,18 +39,7 @@ export default function FifthForm({ model, setModel, ...rest }) {
     });
     formik.setFieldValue("InstitutionsDocs", 1);
   }
-  async function changeTools(files) {
-    const newArray = model.Docs.filter((file) => file.Type != "ToolsA22");
-    const updatedDocs = Array.from(files).map((file) => ({
-      Type: "ToolsA22",
-      Doc: file,
-    }));
-    setModel({
-      ...model,
-      Docs: [...newArray, ...updatedDocs],
-    });
-    formik.setFieldValue("Tools", 1);
-  }
+
   async function changeStaff(files) {
     const newArray = model.Docs.filter((file) => file.Type != "StaffA23");
     const updatedDocs = Array.from(files).map((file) => ({
@@ -118,17 +106,6 @@ export default function FifthForm({ model, setModel, ...rest }) {
           <span className='text-danger mt-2 '>
             {formik.errors.InstitutionsDocs}
           </span>
-        )}
-        <hr className='mt-2' />
-        <h5 className='card-title text-start '>{t("ToolsForQualification")}</h5>
-        <p className='text-muted'>{t("ToolsDesc")}</p>
-        <CustomFileInput
-          onChangeFunction={changeTools}
-          acceptType={".pdf"}
-          isMultiple={true}
-        />
-        {formik.errors.Tools && (
-          <span className='text-danger mt-2'>{formik.errors.Tools}</span>
         )}
         <hr className='mt-2' />
         <h5 className='card-title text-start '>{t("StaffData")}.</h5>

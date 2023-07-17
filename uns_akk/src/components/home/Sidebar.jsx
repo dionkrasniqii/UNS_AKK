@@ -12,7 +12,7 @@ export default function Sidebar() {
     //Admin
     {
       label: t("Home"),
-      roles: ["Admin"],
+      roles: ["Admin", "KAAPR", "Zyrtar"],
       path: "/",
       hasMenu: false,
       showLabel: false,
@@ -125,10 +125,18 @@ export default function Sidebar() {
     },
     {
       label: t("Applications"),
-      roles: ["Institution", "Admin"],
+      roles: ["Admin", "KAAPR", "Zyrtar"],
       path: "/applications",
       hasMenu: false,
       showLabel: role === "Admin" ? true : false,
+      icon: "mdi mdi-form-select",
+    },
+    {
+      label: t("Applications"),
+      roles: ["Institution"],
+      path: "/applications-list",
+      hasMenu: false,
+      showLabel: false,
       icon: "mdi mdi-form-select",
     },
   ];

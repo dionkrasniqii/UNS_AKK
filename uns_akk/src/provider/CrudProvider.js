@@ -9,43 +9,51 @@ const API_BASE_URL_DOC = process.env.REACT_APP_API_BASE_URL_LOCAL_DOCS;
 // const API_BASE_URL_DOC = process.env.REACT_APP_API_BASE_URL_PRODUCTION_DOCS;
 
 const appendToFormData = (key, value, formData) => {
-  const appendArrayValue = (formDataKey, arr) => {
-    arr.forEach((obj) => {
-      if (Array.isArray(obj)) {
-        appendArrayValue(formDataKey, obj); // Recursive call for nested arrays
-      } else if (obj instanceof File) {
-        formData.append(`${formDataKey}[]`, obj);
-      } else if (typeof obj === "object" && obj !== null) {
-        Object.entries(obj).forEach(([objKey, objValue]) => {
-          if (objValue instanceof File) {
-            formData.append(`${formDataKey}.${objKey}`, objValue);
-          } else if (Array.isArray(objValue)) {
-            appendArrayValue(`${formDataKey}.${objKey}`, objValue);
-          } else if (typeof objValue === "object" && objValue !== null) {
-            appendToFormData(`${formDataKey}.${objKey}`, objValue, formData);
-          } else {
-            formData.append(`${formDataKey}.${objKey}`, objValue.toString());
-          }
-        });
-      } else {
-        formData.append(`${formDataKey}[]`, obj.toString());
-      }
-    });
-  };
-
+  // const appendArrayValue = (formDataKey, arr) => {
+  //   arr.forEach((obj) => {
+  //     if (Array.isArray(obj)) {
+  //       appendArrayValue(formDataKey, obj); // Recursive call for nested arrays
+  //     } else if (obj instanceof File) {
+  //       formData.append(`${formDataKey}[]`, obj);
+  //     } else if (typeof obj === "object" && obj !== null) {
+  //       Object.entries(obj).forEach(([objKey, objValue]) => {
+  //         if (objValue instanceof File) {
+  //           formData.append(`${formDataKey}.${objKey}`, objValue);
+  //         } else if (Array.isArray(objValue)) {
+  //           appendArrayValue(`${formDataKey}.${objKey}`, objValue);
+  //         } else if (typeof objValue === "object" && objValue !== null) {
+  //           appendToFormData(`${formDataKey}.${objKey}`, objValue, formData);
+  //         } else {
+  //           formData.append(`${formDataKey}.${objKey}`, objValue.toString());
+  //         }
+  //       });
+  //     } else {
+  //       formData.append(`${formDataKey}[]`, obj.toString());
+  //     }
+  //   });
+  // };
   if (value instanceof File) {
     formData.append(key, value);
   } else if (Array.isArray(value)) {
     value.forEach((doc, index) => {
-      formData.append(`Docs[${index}].Type`, doc.Type);
-      formData.append(`Docs[${index}].Doc`, doc.Doc);
+      if (typeof doc === "object" && doc !== null) {
+        appendToFormData(`${key}[${index}]`, doc, formData);
+      } else {
+        formData.append(`${key}[${index}]`, doc);
+      }
     });
   } else if (typeof value === "object" && value !== null) {
     Object.entries(value).forEach(([subKey, subValue]) => {
       if (subValue instanceof File) {
         formData.append(`${key}.${subKey}`, subValue);
       } else if (Array.isArray(subValue)) {
-        appendArrayValue(`${key}.${subKey}`, subValue);
+        subValue.forEach((item, index) => {
+          if (typeof item === "object" && item !== null) {
+            appendToFormData(`${key}.${subKey}[${index}]`, item, formData);
+          } else {
+            formData.append(`${key}.${subKey}[${index}]`, item);
+          }
+        });
       } else if (typeof subValue === "object" && subValue !== null) {
         appendToFormData(`${key}.${subKey}`, subValue, formData);
       } else {
@@ -180,7 +188,6 @@ async function createItemWithFile(controller, model) {
     });
 
     await Promise.all(promises);
-
     // for (let item of formData.entries()) {
     //   console.log(item[0] + "=" + item[1]);
     // }

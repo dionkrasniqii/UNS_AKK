@@ -301,5 +301,15 @@
   "Yes": "Da",
   "YouHaveExceededGroupLimit": "Prekoračili ste ograničenje grupe, ne možete se registrovati",
   "YourAccountIsNotActive": "Vaš nalog nije aktivan",
-  "UserList": "Spisak korisnika"
+  "UserList": "Spisak korisnika",
+  "NoNewApplications": "Nema novih aplikacija",
+  "ApplicationDate": "Datum aplikacija",
+  "JuridicPersonDetails": "Podaci o pravnom licu",
+  "InstitutionDetails": "Podaci ustanove",
+  "ApplicationByInstitution": "Zahtev za akreditaciju od strane institucije",
+  "DataForAccreditation": "Podaci za akreditaciju",
+  "NoticePeriod": "Period obaveštenja",
+  "DeleteOldDocs": "Za brisanje prethodnih dokumenata kliknite na dugme",
+  "ToUploadNewDocs": "Da biste otpremili nove dokumente kliknite na dugme",
+  "ChooseStatus": "Izaberite status"
 }

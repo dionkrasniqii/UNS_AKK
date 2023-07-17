@@ -337,7 +337,6 @@ export default function FirstForm({ model, setModel, ...rest }) {
                     ...model,
                     InstitutionLogo: e.target.files[0],
                   });
-                  console.log(e.target.files[0]);
                   formik.setFieldValue("Documents", e.target.value);
                 }}
               />
@@ -398,6 +397,25 @@ export default function FirstForm({ model, setModel, ...rest }) {
             <h5 className='card-title text-start'>
               A1.2 {t("ChooseQualificationApplication")}
             </h5>
+            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
+              <h5 className='card-title text-start '>
+                {t("ToolsForQualification")}
+              </h5>
+              <div className='form-group'>
+                <p className='text-muted'>{t("ToolsDesc")}</p>
+                <textarea
+                  rows={5}
+                  className='mt-2'
+                  onChange={(e) =>
+                    setModel({
+                      ...model,
+                      EquipmentMaterialsQualificationA22: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </div>
+
             <div className='col-xxl-4 col-lg-4 col-sm-12 mt-2'>
               <label className='form-label'>{t("ChooseQualification")}</label>
               <CustomSelect

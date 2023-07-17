@@ -25,7 +25,7 @@ export default function CustomFileInput({
         id={id}
       />
 
-      <div className='main-div-upload'>
+      <div className='main-div-upload '>
         <div className='upload-card'>
           <div
             className='main-box'

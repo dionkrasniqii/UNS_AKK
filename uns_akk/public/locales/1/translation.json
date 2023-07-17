@@ -343,5 +343,15 @@
   "RegisterInstitutionUser": "Regjistro përdorues të institucionit",
   "ChooseRole": "Zgjedhni rolin",
   "ModifyUser": "Modifiko përdoruesin e institucionit",
-  "UserList": "Lista e përdoruesve"
+  "UserList": "Lista e përdoruesve",
+  "NoNewApplications": "Nuk ka aplikime të reja",
+  "ApplicationDate": "Data aplikimit",
+  "JuridicPersonDetails": "Të dhënat e personit juridik",
+  "InstitutionDetails": "Të dhënat e institucionit",
+  "ApplicationByInstitution": "Aplikimi për akreditim nga institucioni",
+  "DataForAccreditation": "Të dhënat për akreditim",
+  "NoticePeriod": "Periudha",
+  "DeleteOldDocs": "Për të fshirë dokumente e mëparshme klikoni tek butoni",
+  "ToUploadNewDocs": "Për të ngarkuar dokumente të reja klikoni tek butoni",
+  "ChooseStatus": "Zgjedhni një status"
 }

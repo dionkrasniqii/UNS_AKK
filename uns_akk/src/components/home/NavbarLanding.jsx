@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showMobileLanding } from "../../store/actions";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import usePagination from "@mui/material/usePagination/usePagination";
 
 export default function NavbarLanding() {
   const dispatch = useDispatch();
@@ -17,10 +18,19 @@ export default function NavbarLanding() {
   const navRef = useRef(null);
 
   useEffect(() => {
+    const mainNavDiv = document.getElementById("mainNavLanding");
+    const secondNav = document.getElementById("secondNav");
     const hamburger = document.getElementById("hamburger");
-    location.pathname === "/login"
-      ? hamburger.classList.add("d-none")
-      : hamburger.classList.remove("d-none");
+
+    if (location.pathname === "/login") {
+      mainNavDiv.classList.add("d-none");
+      secondNav.classList.add("d-none");
+      hamburger.classList.add("d-none");
+    } else {
+      mainNavDiv.classList.remove("d-none");
+      secondNav.classList.remove("d-none");
+      hamburger.classList.remove("d-none");
+    }
   }, [location]);
   async function changeLang(e) {
     i18next.changeLanguage(e);
@@ -89,7 +99,7 @@ export default function NavbarLanding() {
         </ul>
         <div className='clearfix' />
       </div>
-      <div className='topnav navbar-costum-padding'>
+      <div className='topnav navbar-costum-padding' id='secondNav'>
         <div className='container-fluid'>
           <nav
             className='navbar navbar-light navbar-expand-lg topnav-menu'
