@@ -29,7 +29,6 @@ export default function DataTablev2({ dataSource, columns, title }) {
       setLoad(false);
     }, 800);
   };
-  console.log(filteredData);
   return (
     <div className='card card-body'>
       <div className=' row align-items-center table-div'>

@@ -300,5 +300,6 @@
   "WriteOn": "Pisati:",
   "Yes": "Da",
   "YouHaveExceededGroupLimit": "Prekoračili ste ograničenje grupe, ne možete se registrovati",
-  "YourAccountIsNotActive": "Vaš nalog nije aktivan"
+  "YourAccountIsNotActive": "Vaš nalog nije aktivan",
+  "UserList": "Spisak korisnika"
 }

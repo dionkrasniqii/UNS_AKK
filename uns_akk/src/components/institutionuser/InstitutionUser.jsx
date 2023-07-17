@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function InstitutionUser() {
   const [load, setLoad] = useState(false);
@@ -15,42 +16,48 @@ export default function InstitutionUser() {
 
   const columns = [
     {
-      title: t("Name"),
-      dataIndex: "name",
-      key: "name",
+      name: t("Name"),
+      selector: (row) => row.name,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Surname"),
-      dataIndex: "surname",
-      key: "surname",
+      name: t("Surname"),
+      selector: (row) => row.surname,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      name: "Email",
+      selector: (row) => row.email,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("PersonalNr"),
-      dataIndex: "personalNumber",
-      key: "personalNumber",
+      name: t("PersonalNr"),
+      selector: (row) => row.personalNumber,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("PhoneNumber"),
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
+      name: t("PhoneNumber"),
+      selector: (row) => row.phoneNumber,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Role"),
-      dataIndex: "role",
-      key: "role",
+      name: t("Role"),
+      selector: (row) => row.role,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Active"),
-      dataIndex: "active",
-      key: "active",
-      responsive: ["sm"],
-      render: (item) => {
-        if (item === true) {
+      name: t("Active"),
+      selector: (row) => row.active,
+      sortable: true,
+      filterable: true,
+      cell: (row) => {
+        if (row.active === true) {
           return (
             <a>
               {t("Active")}
@@ -68,24 +75,26 @@ export default function InstitutionUser() {
       },
     },
     {
-      title: t("Actions"),
+      name: t("Actions"),
       key: "userId",
       className: "col-12 col-sm-4 col-md-2 col-lg-2 text-center",
-      render: (value, record) => {
+      cell: (row) => {
         return (
           <div className="button-list">
+          {(row.role === "Zyrtar" || row.role === "KAAPR") && (
             <Link
               type="button"
               className="btn-secondary btn-sm"
-              to={`/editinstitutionuser/${record.userId}`}
+              to={`/editinstitutionuser/${row.userId}`}
             >
               <i className="fe-edit" />
             </Link>
+            )}
             <a
               type="button"
               className="btn-sm btn-danger"
               style={{ marginLeft: "10px" }}
-              onClick={(e) => handleDelete(record.userId)}
+              onClick={(e) => handleDelete(row.userId)}
             >
               <i className="fe-trash-2" />
             </a>
@@ -99,7 +108,7 @@ export default function InstitutionUser() {
     setLoad(true);
     CrudProvider.getItemById(
       "InstitutionUserAPI/GetAll",
-      decodedToken.groupsid
+      decodedToken.UserId
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
@@ -123,7 +132,7 @@ export default function InstitutionUser() {
           toast.success(t("DataDeletedSuccessfully"));
           CrudProvider.getItemById(
             "InstitutionUserAPI/GetAll",
-            decodedToken.groupsid
+            decodedToken.UserId
           ).then((res) => {
             if (res) {
               if (res.statusCode === 200) {
@@ -161,10 +170,10 @@ export default function InstitutionUser() {
           </div>
           <div className="p-2 mt-2">
             {!load ? (
-              <DataTable
+              <DataTablev2
                 columns={columns}
                 dataSource={data}
-                title={t("InstitutionUserList")}
+                title={t("UserList")}
               />
             ) : (
               <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">

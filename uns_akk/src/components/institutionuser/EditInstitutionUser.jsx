@@ -18,12 +18,13 @@ export default function EditInstitutionUser() {
   const [load, setLoad] = useState(false);
   const [institutionUser, setInstitutionUser] = useState({});
   const [roles, setRoles] = useState([]);
-
+  const token = localStorage.getItem("akktoken");
+  const decodedToken = token && jwtDecode(token);
   useEffect(() => {
     try {
       setLoad(true);
       Promise.all([
-        CrudProvider.getAll("InstitutionUserAPI/GetRoles").then((res) => {
+        CrudProvider.getItemById("InstitutionUserAPI/GetRoles", decodedToken.UserId).then((res) => {
           if (res) {
             if (res.statusCode === 200) {
               setRoles(res.result);
@@ -40,12 +41,12 @@ export default function EditInstitutionUser() {
             }
           }
         }),
-      ]);
+       ]);
     } finally {
       setLoad(false);
     }
   }, [id]);
-
+  
   const rolesList =
     roles &&
     roles.length > 0 &&
@@ -73,13 +74,13 @@ export default function EditInstitutionUser() {
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          navigate("/institution-user");
+          decodedToken && decodedToken.role ==="Admin" ? navigate("/users") : navigate("/institution-user")
+          ;
           toast.success(t("DataSavedSuccessfully"));
         }
       }
     });
   }
-
   const defaultSelectValue =
     roles.length > 0 && roles.find((obj) => obj.name === institutionUser.role);
 
@@ -280,7 +281,7 @@ export default function EditInstitutionUser() {
             </ul>
           </form>
         </div>
-      ) : (
+      ) :load && (
         <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
           <div
             className="spinner-border text-primary m-2 text-center"

@@ -484,7 +484,7 @@ export const AppRoutes = (props) => {
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.INSTITUTION]}
+                allowedRoles={[ROLES.INSTITUTION, ROLES.ADMIN]}
                 component={CreateInstitutionUser}
               />
             }
@@ -495,8 +495,20 @@ export const AppRoutes = (props) => {
               <PrivateRoute
               setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.INSTITUTION]}
+                allowedRoles={[ROLES.INSTITUTION, ROLES.ADMIN]}
                 component={EditInstitutionUser}
+              />
+            }
+          />
+          {/* Admin User */}
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN]}
+                component={InstitutionUser}
               />
             }
           />
