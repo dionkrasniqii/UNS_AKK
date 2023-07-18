@@ -23,11 +23,17 @@ export default function CreateInstitutionUser() {
     PersonalNumber: "",
     PhoneNumber: "",
     BirthDate: "",
-    InstitutionId: decodedToken && decodedToken.role ==="Admin" ? null :decodedToken.groupsid,
+    InstitutionId:
+      decodedToken && decodedToken.role === "Admin"
+        ? null
+        : decodedToken.groupsid,
     Role: "",
   });
   useEffect(() => {
-    CrudProvider.getItemById("InstitutionUserAPI/GetRoles", decodedToken.UserId).then((res) => {
+    CrudProvider.getItemById(
+      "InstitutionUserAPI/GetRoles",
+      decodedToken.UserId
+    ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
           setRoles(res.result);
@@ -63,8 +69,9 @@ export default function CreateInstitutionUser() {
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          decodedToken && decodedToken.role ==="Admin" ? navigate("/users") : navigate("/institution-user")
-          ;
+          decodedToken && decodedToken.role === "Admin"
+            ? navigate("/users")
+            : navigate("/institution-user");
           toast.success(t("DataSavedSuccessfully"));
         } else if (res.statusCode === 409) {
           toast.error(t("UserExists"));
@@ -82,7 +89,7 @@ export default function CreateInstitutionUser() {
       .matches(/^\d{10}$/, t("PersonalNumberLimit")),
     PhoneNumber: Yup.string().required(t("PleaseFillPhoneNumber")),
     BirthDate: Yup.string().required(t("FillBirthDate")),
-    Role: Yup.string().required(t("PleaseChooseRole")),
+    Role: Yup.array().required(t("PleaseChooseRole")),
   });
 
   function formatedDate(date) {
@@ -124,7 +131,7 @@ export default function CreateInstitutionUser() {
                       <label>{t("ChooseRole")}:</label>
                       <CustomSelect
                         onChangeFunction={changeRoles}
-                        isMulti={false}
+                        isMulti={true}
                         optionsList={rolesList}
                       />
                       {formik.errors.Role && (

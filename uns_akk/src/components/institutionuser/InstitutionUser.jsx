@@ -47,7 +47,7 @@ export default function InstitutionUser() {
     },
     {
       name: t("Role"),
-      selector: (row) => row.role,
+      selector: (row) => row.role.length > 1 ? row.role.join(" , ") : `${row.role} `,
       sortable: true,
       filterable: true,
     },
@@ -81,7 +81,7 @@ export default function InstitutionUser() {
       cell: (row) => {
         return (
           <div className="button-list">
-          {(row.role === "Zyrtar" || row.role === "KAAPR") && (
+          {(row.role.includes("Zyrtar") || row.role.includes("KAAPR")) && (
             <Link
               type="button"
               className="btn-secondary btn-sm"
