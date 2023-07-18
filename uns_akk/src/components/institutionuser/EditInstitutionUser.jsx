@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import CustomDatePicker from "../custom/CustomDatePicker";
 import CustomSelect from "../custom/CustomSelect";
 import jwtDecode from "jwt-decode";
 import CrudProvider from "../../provider/CrudProvider";
 import { setIn, useFormik } from "formik";
 import { toast } from "react-toastify";
-import { defaultThemes } from "react-data-table-component";
 import { Checkbox } from "antd";
 
 export default function EditInstitutionUser() {
@@ -24,7 +22,10 @@ export default function EditInstitutionUser() {
     try {
       setLoad(true);
       Promise.all([
-        CrudProvider.getItemById("InstitutionUserAPI/GetRoles", decodedToken.UserId).then((res) => {
+        CrudProvider.getItemById(
+          "InstitutionUserAPI/GetRoles",
+          decodedToken.UserId
+        ).then((res) => {
           if (res) {
             if (res.statusCode === 200) {
               setRoles(res.result);
@@ -41,12 +42,12 @@ export default function EditInstitutionUser() {
             }
           }
         }),
-       ]);
+      ]);
     } finally {
       setLoad(false);
     }
   }, [id]);
-  
+
   const rolesList =
     roles &&
     roles.length > 0 &&
@@ -74,23 +75,26 @@ export default function EditInstitutionUser() {
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
-          decodedToken && decodedToken.role ==="Admin" ? navigate("/users") : navigate("/institution-user")
-          ;
+          decodedToken && decodedToken.role === "Admin"
+            ? navigate("/users")
+            : navigate("/institution-user");
           toast.success(t("DataSavedSuccessfully"));
         }
       }
     });
   }
+
   const defaultSelectValue =
-    roles.length > 0 && roles.find((obj) => obj.name === institutionUser.role);
+    roles &&
+    roles.length > 0 &&
+    roles.filter((obj) => institutionUser.role.includes(obj.name));
 
-  const defaultLabel = defaultSelectValue?.name ?? "";
-  const defaultValue = defaultSelectValue?.id ?? "";
-
-  const defaultOption = {
-    label: defaultLabel,
-    value: defaultValue,
-  };
+  const defaultOptions = Array.isArray(defaultSelectValue)
+    ? defaultSelectValue.map((value) => ({
+        label: value.name,
+        value: value.id,
+      }))
+    : [];
 
   const dateString3 = institutionUser.birthDate;
   const date3 = new Date(dateString3);
@@ -103,7 +107,6 @@ export default function EditInstitutionUser() {
     initialValues: {},
     onSubmit: () => SubmitForm(),
   });
-
   return (
     <div className="card">
       <div className="card-header">
@@ -117,9 +120,9 @@ export default function EditInstitutionUser() {
                 <label>{t("ChooseRole")}:</label>
                 <CustomSelect
                   hasDefaultValue={true}
-                  defaultValue={defaultOption.value}
+                  defaultValue={defaultOptions}
                   onChangeFunction={changeRoles}
-                  isMulti={false}
+                  isMulti={true}
                   optionsList={rolesList}
                 />
                 {formik.errors.Role && (
@@ -259,7 +262,11 @@ export default function EditInstitutionUser() {
             </div>
             <ul className="list-inline mb-0 wizard mt-3 mb-2">
               <Link
-                to="/institution-user"
+                to={
+                  decodedToken && decodedToken.role === "Admin"
+                    ? "/users"
+                    : "/institution-user"
+                }
                 className="btn btn-danger waves-effect waves-light float-start"
               >
                 <span className="btn-label">
@@ -281,13 +288,15 @@ export default function EditInstitutionUser() {
             </ul>
           </form>
         </div>
-      ) :load && (
-        <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
-          <div
-            className="spinner-border text-primary m-2 text-center"
-            role="status"
-          />
-        </div>
+      ) : (
+        load && (
+          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+            <div
+              className="spinner-border text-primary m-2 text-center"
+              role="status"
+            />
+          </div>
+        )
       )}
     </div>
   );

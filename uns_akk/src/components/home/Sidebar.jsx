@@ -19,7 +19,7 @@ export default function Sidebar() {
       icon: "mdi mdi-view-dashboard-outline",
     },
     {
-      label: "Users",
+      label: t("Users"),
       roles: ["Admin"],
       path: "/users",
       hasMenu: false,
@@ -27,7 +27,7 @@ export default function Sidebar() {
       icon: "fas fa-layer-group",
     },
     {
-      label: "Level",
+      label: t("Level"),
       roles: ["Admin"],
       path: "/level",
       hasMenu: false,
