@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import DataTable from "../custom/DataTable";
 import CrudProvider from "../../provider/CrudProvider";
 import CustomSelect from "../custom/CustomSelect";
 import img_bus from "../../assets/images/institution.png";

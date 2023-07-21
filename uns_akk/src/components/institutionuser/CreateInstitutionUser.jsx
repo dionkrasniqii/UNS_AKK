@@ -16,6 +16,7 @@ export default function CreateInstitutionUser() {
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const [roles, setRoles] = useState([]);
+  const [load, setLoad] = useState(false);
   const [model, setModel] = useState({
     Name: "",
     Surname: "",
@@ -63,21 +64,26 @@ export default function CreateInstitutionUser() {
   }
 
   async function SubmitForm() {
-    await CrudProvider.createItem(
-      "InstitutionUserAPI/CreateInstitutionUser",
-      model
-    ).then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          decodedToken && decodedToken.role === "Admin"
-            ? navigate("/users")
-            : navigate("/institution-user");
-          toast.success(t("DataSavedSuccessfully"));
-        } else if (res.statusCode === 409) {
-          toast.error(t("UserExists"));
+    try {
+      setLoad(true);
+      await CrudProvider.createItem(
+        "InstitutionUserAPI/CreateInstitutionUser",
+        model
+      ).then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            decodedToken && decodedToken.role === "Admin"
+              ? navigate("/users")
+              : navigate("/institution-user");
+            toast.success(t("DataSavedSuccessfully"));
+          } else if (res.statusCode === 409) {
+            toast.error(t("UserExists"));
+          }
         }
-      }
-    });
+      });
+    } finally {
+      setLoad(false);
+    }
   }
 
   const CreateInstitutionUser = Yup.object().shape({
@@ -111,23 +117,23 @@ export default function CreateInstitutionUser() {
     validationSchema: CreateInstitutionUser,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: () => SubmitForm(),
+    onSubmit: async () => SubmitForm(),
   });
 
   return (
     <>
       <ProgressBar model={model} />
-      <div className="main-content">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="card">
-              <div className="card-header">
-                <h4 className="card-title">{t("RegisterInstitutionUser")}</h4>
+      <div className='main-content'>
+        <div className='row'>
+          <div className='col-lg-12'>
+            <div className='card'>
+              <div className='card-header'>
+                <h4 className='card-title'>{t("RegisterInstitutionUser")}</h4>
               </div>
-              <div className="card-body">
+              <div className='card-body'>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="row">
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                  <div className='row'>
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("ChooseRole")}:</label>
                       <CustomSelect
                         onChangeFunction={changeRoles}
@@ -135,16 +141,16 @@ export default function CreateInstitutionUser() {
                         optionsList={rolesList}
                       />
                       {formik.errors.Role && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Role}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Name")}:</label>
                       <input
-                        type="text"
-                        className="form-control"
+                        type='text'
+                        className='form-control'
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -154,16 +160,16 @@ export default function CreateInstitutionUser() {
                         }}
                       />
                       {formik.errors.Name && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Name}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Surname")}:</label>
                       <input
-                        type="text"
-                        className="form-control"
+                        type='text'
+                        className='form-control'
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -173,16 +179,16 @@ export default function CreateInstitutionUser() {
                         }}
                       />
                       {formik.errors.Surname && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Surname}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("PersonalNr")}:</label>
                       <input
-                        type="number"
-                        className="form-control"
+                        type='number'
+                        className='form-control'
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -195,25 +201,25 @@ export default function CreateInstitutionUser() {
                         }}
                       />
                       {formik.errors.PersonalNumber && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.PersonalNumber}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("BirthDate")}:</label>
                       <CustomDatePicker onChangeFunction={changeBirthDate} />
                       {formik.errors.BirthDate && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.BirthDate}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Email")}:</label>
                       <input
-                        type="email"
-                        className="form-control"
+                        type='email'
+                        className='form-control'
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -223,16 +229,16 @@ export default function CreateInstitutionUser() {
                         }}
                       />
                       {formik.errors.Email && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Email}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("PhoneNumber")}:</label>
                       <input
-                        type="text"
-                        className="form-control"
+                        type='text'
+                        className='form-control'
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -242,33 +248,42 @@ export default function CreateInstitutionUser() {
                         }}
                       />
                       {formik.errors.PhoneNumber && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.PhoneNumber}
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <ul className="list-inline mb-0 wizard mt-3 mb-2">
+                  <ul className='list-inline mb-0 wizard mt-3 mb-2'>
                     <Link
-                      to="/institution-user"
-                      className="btn btn-danger waves-effect waves-light float-start"
+                      to='/institution-user'
+                      className='btn btn-danger waves-effect waves-light float-start'
                     >
-                      <span className="btn-label">
-                        <i className="fe-arrow-left"></i>
+                      <span className='btn-label'>
+                        <i className='fe-arrow-left'></i>
                       </span>
                       {t("Discard")}
                     </Link>
-                    <li className="next list-inline-item float-end">
-                      <button
-                        type="submit"
-                        className="btn btn-success waves-effect waves-light"
-                      >
-                        <span className="btn-label">
-                          <i className="fe-check"></i>
-                        </span>
-                        {t("Save")}
-                      </button>
+                    <li className='next list-inline-item float-end'>
+                      {!load ? (
+                        <button
+                          type='submit'
+                          className='btn btn-success waves-effect waves-light'
+                        >
+                          <span className='btn-label'>
+                            <i className='fe-check'></i>
+                          </span>
+                          {t("Save")}
+                        </button>
+                      ) : (
+                        <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                          <div
+                            className='spinner-border text-primary m-2 text-center'
+                            role='status'
+                          />
+                        </div>
+                      )}
                     </li>
                   </ul>
                 </form>

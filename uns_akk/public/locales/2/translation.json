@@ -314,5 +314,17 @@
   "ChooseStatus": "Choose status",
   "CityForAccreditation": "City for accreditation",
   "ApplicationNotApprovedYet": "The application has not been approved yet",
-  "ChooseAnReport": "Choose an report"
+  "ChooseAnReport": "Choose an report",
+  "ReportStatsDesc1": "If you select only the municipality, it will be printed only for you",
+  "ReportStatsDesc2": "in that municipality, if you then select the institution, it will be printed for you",
+  "InThatInstitution": "in that institution",
+  "QualificationTypes": "Qualification types",
+  "QualificationType": "Qualification type",
+  "RegisterQualificationType": "Register qualification type",
+  "FillField": "Fill field",
+  "CreatedAt": "Created at",
+  "NoData": "No records to display",
+  "EditQualificationType": "Modify the qualification type",
+  "FirstTimeLogin": "Please change your password",
+  "StartDateEndDateGroup": "The start date cannot be less than the end date"
 }

@@ -231,7 +231,6 @@ export default function EditStudents() {
       })
       .sort((a, b) => a.label.localeCompare(b.label));
 
-
   const decisionList =
     decisions &&
     decisions.length > 0 &&
@@ -347,18 +346,18 @@ export default function EditStudents() {
     onSubmit: () => handleSubmit(),
   });
   return (
-    <div className="card">
+    <div className='card'>
       {Object.keys(candidates).length > 0 && !load ? (
-        <div className="card-body">
-          <h3 className=" mb-3">{"Modifiko Kandidatin"}</h3>
+        <div className='card-body'>
+          <h3 className=' mb-3'>{"Modifiko Kandidatin"}</h3>
           <form onSubmit={formik.handleSubmit}>
-            <div id="progressbarwizard">
-              <div className="tab-content b-0 mb-0 pt-0">
-                <div className="tab-pane active" id="account-2">
-                  <div className="row">
-                    <div className="col-xxl-12 text-start mb-2">
+            <div id='progressbarwizard'>
+              <div className='tab-content b-0 mb-0 pt-0'>
+                <div className='tab-pane active' id='account-2'>
+                  <div className='row'>
+                    <div className='col-xxl-12 text-start mb-2'>
                       <Checkbox
-                      checked={candidates.UnRegistered}
+                        checked={candidates.UnRegistered}
                         onChange={(e) => {
                           setCandidates({
                             ...candidates,
@@ -369,11 +368,11 @@ export default function EditStudents() {
                         {t("Unregistered")}
                       </Checkbox>
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Name")}:</label>
                       <input
-                        type="text"
-                        className="form-control"
+                        type='text'
+                        className='form-control'
                         defaultValue={candidates.Name}
                         onChange={(e) => {
                           setCandidates({
@@ -384,16 +383,16 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.Name && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Name}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Surname")}:</label>
                       <input
-                        type="text"
-                        className="form-control"
+                        type='text'
+                        className='form-control'
                         defaultValue={candidates.Surname}
                         onChange={(e) => {
                           setCandidates({
@@ -404,16 +403,16 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.Surname && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Surname}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Email")}:</label>
                       <input
-                        type="email"
-                        className="form-control"
+                        type='email'
+                        className='form-control'
                         defaultValue={candidates.Email}
                         onChange={(e) => {
                           setCandidates({
@@ -424,16 +423,16 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.Email && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Email}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("PersonalNr")}:</label>
                       <input
-                        type="text"
-                        className="form-control"
+                        type='text'
+                        className='form-control'
                         defaultValue={candidates.PersonalNr}
                         onChange={(e) => {
                           setCandidates({
@@ -444,18 +443,18 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.PersonalNr && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.PersonalNr}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("BirthDate")}:</label>
                       <input
-                        type="date"
-                        autoComplete="off"
-                        id="basic-datepicker"
-                        className="form-control flatpickr-input active"
+                        type='date'
+                        autoComplete='off'
+                        id='basic-datepicker'
+                        className='form-control flatpickr-input active'
                         value={candidates.BirthDate}
                         onChange={(e) => {
                           setCandidates({
@@ -466,20 +465,20 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.BirthDate && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.BirthDate}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Country")}:</label>
                       {candidates.CountryForeign !== null ? (
                         <input
-                          key="1"
-                          type="text"
-                          className="form-control"
+                          key='1'
+                          type='text'
+                          className='form-control'
                           defaultValue={candidates.CountryForeign}
-                          placeholder="...."
+                          placeholder='....'
                           onChange={(e) =>
                             setCandidates({
                               ...candidates,
@@ -489,23 +488,23 @@ export default function EditStudents() {
                         />
                       ) : (
                         <input
-                          key="2"
-                          type="text"
-                          className="form-control"
-                          defaultValue="Kosovë"
+                          key='2'
+                          type='text'
+                          className='form-control'
+                          defaultValue='Kosovë'
                         />
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Municipality")}:</label>
                       {candidates.MunicipalityForeign !== null ? (
                         <>
                           <input
-                            key="1"
-                            type="text"
-                            className="form-control"
+                            key='1'
+                            type='text'
+                            className='form-control'
                             defaultValue={candidates.MunicipalityForeign}
-                            placeholder="...."
+                            placeholder='....'
                             onChange={(e) => {
                               setCandidates({
                                 ...candidates,
@@ -519,7 +518,7 @@ export default function EditStudents() {
                           />
                           <>
                             {formik.errors.Municipality && (
-                              <span className="text-danger">
+                              <span className='text-danger'>
                                 {formik.errors.Municipality}
                               </span>
                             )}
@@ -535,23 +534,23 @@ export default function EditStudents() {
                             isMulti={false}
                           />
                           {formik.errors.Municipality && (
-                            <span className="text-danger">
+                            <span className='text-danger'>
                               {formik.errors.Municipality}
                             </span>
                           )}
                         </>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Residence")}:</label>
                       {candidates.ResidenceForeign !== null ? (
                         <>
                           <input
-                            key="1"
-                            type="text"
-                            placeholder="...."
+                            key='1'
+                            type='text'
+                            placeholder='....'
                             defaultValue={candidates.ResidenceForeign}
-                            className="form-control"
+                            className='form-control'
                             onChange={(e) => {
                               setCandidates({
                                 ...candidates,
@@ -565,7 +564,7 @@ export default function EditStudents() {
                           />
                           <>
                             {formik.errors.ResidenceForeign && (
-                              <span className="text-danger">
+                              <span className='text-danger'>
                                 {formik.errors.ResidenceForeign}
                               </span>
                             )}
@@ -583,7 +582,7 @@ export default function EditStudents() {
                               isMulti={false}
                             />
                             {formik.errors.Residence && (
-                              <span className="text-danger">
+                              <span className='text-danger'>
                                 {formik.errors.Residence}
                               </span>
                             )}
@@ -591,11 +590,11 @@ export default function EditStudents() {
                         )
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("Address")}:</label>
                       <input
-                        type="text"
-                        className="form-control"
+                        type='text'
+                        className='form-control'
                         defaultValue={candidates.Address}
                         onChange={(e) => {
                           setCandidates({
@@ -606,16 +605,16 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.Address && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Address}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("PhoneNumber")}:</label>
                       <input
-                        type="text"
-                        className="form-control"
+                        type='text'
+                        className='form-control'
                         defaultValue={candidates.PhoneNum}
                         onChange={(e) => {
                           setCandidates({
@@ -626,12 +625,12 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.Phonenumber && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Phonenumber}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("ChooseDecision")}:</label>
                       <CustomSelect
                         hasDefaultValue={true}
@@ -641,12 +640,12 @@ export default function EditStudents() {
                         optionsList={decisionList}
                       />
                       {formik.errors.ChooseDecision && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.ChooseDecision}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("ChooseGroup")}:</label>
                       <CustomSelect
                         onChangeFunction={changeGroup}
@@ -656,18 +655,18 @@ export default function EditStudents() {
                         optionsList={groupsList}
                       />
                       {formik.errors.Group && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.Group}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("RegisterDate")}:</label>
                       <input
-                        type="date"
-                        autoComplete="off"
-                        id="basic-datepicker"
-                        className="form-control flatpickr-input active"
+                        type='date'
+                        autoComplete='off'
+                        id='basic-datepicker'
+                        className='form-control flatpickr-input active'
                         value={registeredDate}
                         onChange={(e) => {
                           setCandidates({
@@ -678,19 +677,19 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.RegisterDate && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.RegisterDate}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("GraduationDate")}:</label>
                       <input
-                        type="date"
-                        autoComplete="off"
-                        id="basic-datepicker"
-                        className="form-control flatpickr-input active"
-                        value={dateString4}
+                        type='date'
+                        autoComplete='off'
+                        id='basic-datepicker'
+                        className='form-control flatpickr-input active'
+                        defaultValue={dateString4}
                         onChange={(e) => {
                           setCandidates({
                             ...candidates,
@@ -700,13 +699,13 @@ export default function EditStudents() {
                         }}
                       />
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("ValidFrom")}:</label>
                       <input
-                        type="date"
-                        autoComplete="off"
-                        id="basic-datepicker"
-                        className="form-control flatpickr-input active"
+                        type='date'
+                        autoComplete='off'
+                        id='basic-datepicker'
+                        className='form-control flatpickr-input active'
                         value={validFrom}
                         onChange={(e) => {
                           setCandidates({
@@ -717,18 +716,18 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.ValidFrom && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.ValidFrom}
                         </span>
                       )}
                     </div>
-                    <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("ValidTo")}:</label>
                       <input
-                        type="date"
-                        autoComplete="off"
-                        id="basic-datepicker"
-                        className="form-control flatpickr-input active"
+                        type='date'
+                        autoComplete='off'
+                        id='basic-datepicker'
+                        className='form-control flatpickr-input active'
                         value={validTo}
                         onChange={(e) => {
                           setCandidates({
@@ -739,19 +738,19 @@ export default function EditStudents() {
                         }}
                       />
                       {formik.errors.ValidTo && (
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           {formik.errors.ValidTo}
                         </span>
                       )}
                     </div>
                     {candidates.UnRegistered ? (
-                      <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                      <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                         <label>{t("Remark")}:</label>
                         <textarea
-                          type="text"
+                          type='text'
                           rows={6}
                           defaultValue={candidates.Remark}
-                          className="form-control"
+                          className='form-control'
                           onChange={(e) => {
                             setCandidates({
                               ...candidates,
@@ -767,31 +766,31 @@ export default function EditStudents() {
                   </div>
                 </div>
               </div>
-              <ul className="list-inline mb-0 wizard">
+              <ul className='list-inline mb-0 wizard'>
                 <Link
-                  to="/students"
-                  className="btn btn-danger waves-effect waves-light float-start"
+                  to='/students'
+                  className='btn btn-danger waves-effect waves-light float-start'
                 >
-                  <span className="btn-label">
-                    <i className="fe-arrow-left"></i>
+                  <span className='btn-label'>
+                    <i className='fe-arrow-left'></i>
                   </span>
                   {t("Discard")}
                 </Link>
-                <li className="next list-inline-item float-end">
+                <li className='next list-inline-item float-end'>
                   {!loadSubmit ? (
                     <button
-                      type="submit"
-                      className="btn btn-success waves-effect waves-light"
+                      type='submit'
+                      className='btn btn-success waves-effect waves-light'
                     >
-                      <span className="btn-label">
-                        <i className="fe-check"></i>
+                      <span className='btn-label'>
+                        <i className='fe-check'></i>
                       </span>
                       {t("Edit")}
                     </button>
                   ) : (
                     <div
-                      className="spinner-border text-primary m-2 text-center"
-                      role="status"
+                      className='spinner-border text-primary m-2 text-center'
+                      role='status'
                     />
                   )}
                 </li>
@@ -800,10 +799,10 @@ export default function EditStudents() {
           </form>
         </div>
       ) : (
-        <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+        <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
           <div
-            className="spinner-border text-primary m-2 text-center"
-            role="status"
+            className='spinner-border text-primary m-2 text-center'
+            role='status'
           />
         </div>
       )}

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Table, Input, Alert, Row, Col } from "antd";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
-import DataTable from "../custom/DataTable";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function Level() {
   const [load, setLoad] = useState(false);
@@ -17,43 +15,45 @@ export default function Level() {
   );
   const columns = [
     {
-      title: t("Level Description"),
-      dataIndex: "levelKKKDescription",
-      key: "levelKKKDescription",
-      responsive: ["sm"],
+      name: t("Level Description"),
+      selector: (row) => row.levelKKKDescription,
+      sortable: true,
+      filterable: true,
+      width: "380px",
     },
     {
-      title: t("Type"),
-      dataIndex: "type",
-      key: "type",
-      responsive: ["sm"],
+      name: t("Type"),
+      selector: (row) => row.type,
+      sortable: true,
+      filterable: true,
+      width: "80px",
     },
     {
-      title: t("Detailed Description"),
-      dataIndex: "detailedDescription",
-      key: "detailedDescription",
-      responsive: ["sm"],
+      name: t("Detailed Description"),
+      selector: (row) => row.detailedDescription,
+      width: "980px",
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Actions"),
-      key: "levelKKKLanguageId",
-      className: "col-12 col-sm-4 col-md-2 col-lg-2 text-center",
-      render: (value, record) => {
+      name: t("Actions"),
+      width: "150px",
+
+      cell: (record) => {
         return (
-          <div className="row d-flex justify-content-center">
-            <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
-              <Link
-                className="btn-secondary btn-sm"
-                to={`/editlevel/${record.levelKKKId}`}
-              >
-                <i className="fe-edit" />
-              </Link>
-            </div>
-            <div className="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-6 mt-2">
-              <a className="btn-sm btn-danger" onClick={(e) => handleDelete(record.levelKKKId)}>
-                <i className="fe-trash-2" />
-              </a>
-            </div>
+          <div className='button-list'>
+            <Link
+              className='btn btn-secondary btn-sm'
+              to={`/editlevel/${record.levelKKKId}`}
+            >
+              <i className='fe-edit' />
+            </Link>
+            <a
+              className='btn btn-sm btn-danger'
+              onClick={(e) => handleDelete(record.levelKKKId)}
+            >
+              <i className='fe-trash-2' />
+            </a>
           </div>
         );
       },
@@ -82,60 +82,58 @@ export default function Level() {
 
   async function handleDelete(id) {
     setLoad(true);
-    await CrudProvider.deleteItemById(
-      "LevelAPI/DeleteLevel",
-      id
-    ).then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          toast.success(t("DataDeletedSuccessfully"));
-          CrudProvider.getAllWithLang("LevelAPI/GetAll").then((res) => {
-            if (res) {
-
-              if (res.statusCode === 200) {
-                setData(res.result);
-              } else if (res.statusCode === 400) {
-                toast.error(t("ServerProblems"));
+    await CrudProvider.deleteItemById("LevelAPI/DeleteLevel", id).then(
+      (res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            toast.success(t("DataDeletedSuccessfully"));
+            CrudProvider.getAllWithLang("LevelAPI/GetAll").then((res) => {
+              if (res) {
+                if (res.statusCode === 200) {
+                  setData(res.result);
+                } else if (res.statusCode === 400) {
+                  toast.error(t("ServerProblems"));
+                }
               }
-            }
-          });
+            });
+          }
         }
+        setLoad(false);
       }
-      setLoad(false);
-    });
+    );
   }
   return (
-    <div className="col-xxl-12">
-      <div className="col-xxl-12 text-end"></div>
-      <div className="row">
-        <div className="col-12">
-          <div className="row">
-            <div className="col-12">
-              <div className="col-12 d-flex justify-content-end">
+    <div className='col-xxl-12'>
+      <div className='col-xxl-12 text-end'></div>
+      <div className='row'>
+        <div className='col-12'>
+          <div className='row'>
+            <div className='col-12'>
+              <div className='col-12 d-flex justify-content-end'>
                 <Link
-                  className="btn btn-info waves-effect waves-light"
-                  to="/createlevel"
+                  className='btn btn-info waves-effect waves-light'
+                  to='/createlevel'
                 >
-                  <span className="btn-label">
-                    <i className="fe-plus-circle"></i>
+                  <span className='btn-label'>
+                    <i className='fe-plus-circle'></i>
                   </span>
                   {t("AddLevel")}
                 </Link>
               </div>
             </div>
           </div>
-          <div className="p-2 mt-2">
+          <div className='p-2 mt-2'>
             {!load ? (
-              <DataTable
+              <DataTablev2
                 columns={columns}
                 dataSource={data}
                 title={t("LevelList")}
               />
             ) : (
-              <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+              <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
                 <div
-                  className="spinner-border text-primary m-2 text-center"
-                  role="status"
+                  className='spinner-border text-primary m-2 text-center'
+                  role='status'
                 />
               </div>
             )}

@@ -49,6 +49,9 @@ export default function Person() {
       ...model,
       InstitutionId: e,
     });
+    if (!e) {
+      setShowPersonList(false);
+    }
   }
 
   const handleSearch = () => {
@@ -57,33 +60,30 @@ export default function Person() {
 
   return (
     <>
-      <div className="card-body">
-        <div className="row">
-          <div className="col-md-5">
-            <div className="card mb-3">
-              <div className="card-body">
-                <h5 className="card-title">{t("Institution")}</h5>
-                <div className="form-row align-items-center">
-                  <div
-                    className="col-sm-6 mb-3"
-                    style={{ display: "inline-block", marginRight: "3px" }}
-                  >
-                    <CustomSelect
-                      onChangeFunction={changeInstitution}
-                      optionsList={institutionPersonList}
-                      isMulti={false}
-                      placeholder="Choose"
-                    />
-                  </div>
-                  <div
-                    className="col-sm-3"
-                    style={{ display: "inline-block", marginLeft: "5px" }}
-                  >
-                    <button className="btn btn-primary" onClick={handleSearch}>
-                      {t("Search")}
-                    </button>
-                  </div>
+      <div className='card'>
+        <div className='card-body'>
+          <div className='row'>
+            <div className='col-md-5'>
+              <h5 className='card-title'>{t("Institution")}</h5>
+              <div className='form-row align-items-center'>
+                <div
+                  className='col-sm-6 mb-3'
+                  style={{ display: "inline-block", marginRight: "3px" }}
+                >
+                  <CustomSelect
+                    onChangeFunction={changeInstitution}
+                    optionsList={institutionPersonList}
+                    isMulti={false}
+                    placeholder='Choose'
+                  />
                 </div>
+
+                <button
+                  className='btn btn-sm btn-primary'
+                  onClick={handleSearch}
+                >
+                  {t("Search")}
+                </button>
               </div>
             </div>
           </div>

@@ -43,6 +43,9 @@ import EditInstitutionUser from "../components/institutionuser/EditInstitutionUs
 import ApplicationListInstitutions from "../components/applicationforms/verification/ApplicationListInstitutions";
 import ViewApplication from "../components/applicationforms/verification/ViewApplication";
 import EditApplicationInstitution from "../components/applicationforms/verification/EditApplicationInstitution";
+import QualificationType from "../components/qualificationtype/QualificationType";
+import CreateQualificationType from "../components/qualificationtype/CreateQualificationType";
+import EditQualificationType from "../components/qualificationtype/EditQualificationType";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -131,7 +134,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* Levels */}
           <Route
             path='/level'
@@ -166,7 +168,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* Decisions */}
           <Route
             path='/decisions'
@@ -201,7 +202,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* Qualifications */}
           <Route
             path='/qualifications'
@@ -236,7 +236,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* QualificationChildren */}
           <Route
             path='/subqualifications'
@@ -271,7 +270,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* Students */}
           <Route
             path='/students'
@@ -306,7 +304,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* Groups */}
           <Route
             path='/groups'
@@ -330,7 +327,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* Profile */}
           <Route
             path='/profile'
@@ -410,7 +406,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* Reports */}
           <Route
             path='/reports'
@@ -490,7 +485,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* Institution User */}
           <Route
             path='/institution-user'
@@ -527,13 +521,48 @@ export const AppRoutes = (props) => {
           />
           {/* Admin User */}
           <Route
-            path="/users"
+            path='/users'
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
                 allowedRoles={[ROLES.ADMIN]}
                 component={InstitutionUser}
+              />
+            }
+          />
+          {/* qualifications-types */}
+
+          <Route
+            path='/qualifications-type'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN]}
+                component={QualificationType}
+              />
+            }
+          />
+          <Route
+            path='/createqualifications-type'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN]}
+                component={CreateQualificationType}
+              />
+            }
+          />
+          <Route
+            path='/qualificationtype-edit/:id'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN]}
+                component={EditQualificationType}
               />
             }
           />

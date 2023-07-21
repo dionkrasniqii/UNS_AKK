@@ -1,10 +1,8 @@
-// PersonList.js
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CrudProvider from "../../provider/CrudProvider";
-import DataTable from "../custom/DataTable";
 import { useTranslation } from "react-i18next";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function PersonList({ institutionId }) {
   const { t } = useTranslation();
@@ -13,57 +11,50 @@ export default function PersonList({ institutionId }) {
 
   const columns = [
     {
-      title: t("Personal Number"),
-      dataIndex: "person",
-      key: (item) => item.personalNr,
-      responsive: ["sm"],
-      render: (item) => item.personalNr,
+      name: t("Personal Number"),
+      selector: (row) => row.person.personalNr,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Name"),
-      dataIndex: "person",
-      key: (item) => item.name,
-      responsive: ["sm"],
-      render: (item) => item.name,
+      name: t("Name"),
+      selector: (row) => row.person.name,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Surname"),
-      dataIndex: "person",
-      key: (item) => item.surname,
-      responsive: ["sm"],
-      render: (item) => item.surname,
+      name: t("Surname"),
+      selector: (row) => row.person.surname,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Email"),
-      dataIndex: "person",
-      key: (item) => item.email,
-      responsive: ["sm"],
-      render: (item) => item.email,
+      name: "Email",
+      selector: (row) => row.person.email,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Address"),
-      dataIndex: "person",
-      key: (item) => item.address,
-      responsive: ["sm"],
-      render: (item) => item.address,
+      name: t("Address"),
+      selector: (row) => row.person.address,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Phone Number"),
-      dataIndex: "person",
-      key: (item) => item.phoneNum,
-      responsive: ["sm"],
-      render: (item) => item.phoneNum,
+      name: t("PhoneNumber"),
+      selector: (row) => row.person.phoneNum,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Actions"),
-      dataIndex: "person",
-      key: (item) => item.personId,
-      render: (item) => {
+      name: t("Actions"),
+
+      cell: (record) => {
         return (
           <Link
             className='btn btn-dark btn-sm'
             target='_blank'
-            to={`/persondetails/${item.personId}`}
+            to={`/persondetails/${record.person.personId}`}
           >
             <i className='dripicons-user' />
           </Link>
@@ -101,30 +92,14 @@ export default function PersonList({ institutionId }) {
     }
   }
 
-  return (
-    <>
-      <div className='col-xxl-12'>
-        <div className='row'>
-          <div className='col-12'>
-            <div className='p-2 mt-2'>
-              {!loading ? (
-                <DataTable
-                  columns={columns}
-                  dataSource={data}
-                  title={t("Candidates")}
-                />
-              ) : (
-                <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
-                  <div
-                    className='spinner-border text-primary m-2 text-center'
-                    role='status'
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+  return !loading ? (
+    <DataTablev2 columns={columns} dataSource={data} title={t("Candidates")} />
+  ) : (
+    <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+      <div
+        className='spinner-border text-primary m-2 text-center'
+        role='status'
+      />
+    </div>
   );
 }

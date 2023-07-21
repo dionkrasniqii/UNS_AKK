@@ -3,10 +3,9 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import CrudProvider from "../../provider/CrudProvider";
 import jwtDecode from "jwt-decode";
-import DataTable from "../custom/DataTable";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { use } from "i18next";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function Groups() {
   const { t } = useTranslation();
@@ -18,39 +17,34 @@ export default function Groups() {
   const langId = localStorage.getItem("i18nextLng");
   const columns = [
     {
-      title: t("GroupName"),
-      dataIndex: ["groupName"],
-      key: (item) => item,
-      responsive: ["sm"],
+      name: t("GroupName"),
+      selector: (row) => row.groupName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Municipality"),
-      dataIndex: ["municipalityNameQualification"],
-      key: (item) => item,
-      responsive: ["sm"],
+      name: t("Municipality"),
+      selector: (row) => row.municipalityNameQualification,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("StartDate"),
-      dataIndex: ["startDate"],
-      key: (item) => item,
-      responsive: ["sm"],
-      render: (item) =>
-        new Date(item.split("T")[0]).toLocaleDateString("en-GB"),
+      name: t("StartDate"),
+      selector: (row) =>
+        new Date(row.startDate.split("T")[0]).toLocaleDateString("en-GB"),
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("EndDate"),
-      dataIndex: ["endDate"],
-      key: (item) => item,
-      responsive: ["sm"],
-      render: (item) =>
-        new Date(item.split("T")[0]).toLocaleDateString("en-GB"),
+      name: t("EndDate"),
+      selector: (row) =>
+        new Date(row.endDate.split("T")[0]).toLocaleDateString("en-GB"),
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Actions"),
-      key: (item, index) => index,
-      responsive: ["sm"],
-      width: "2%",
-      render: (value, record) => {
+      name: t("Actions"),
+      cell: (record) => {
         return (
           <button
             className='btn-danger btn-sm'
@@ -117,7 +111,7 @@ export default function Groups() {
       </div>
       <div className='p-2 mt-2'>
         {!load ? (
-          <DataTable
+          <DataTablev2
             columns={columns}
             dataSource={data}
             title={t("GroupList")}

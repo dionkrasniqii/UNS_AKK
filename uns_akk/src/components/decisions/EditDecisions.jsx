@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import CrudProvider from "../../provider/CrudProvider";
-import DataTable from "../custom/DataTable";
 import { Link } from "react-router-dom";
 import CustomSelect from "../custom/CustomSelect";
 import { Button, Modal } from "antd";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function EditDecisions() {
   const { id } = useParams();
@@ -27,16 +27,16 @@ export default function EditDecisions() {
   });
   const columns = [
     {
-      title: t("SubQualifications"),
-      dataIndex: "qualificationChildName",
-      key: "qualificationChildName",
-      responsive: ["sm"],
+      name: t("SubQualifications"),
+      selector: (row) => row.qualificationChildName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Credits"),
-      dataIndex: "credits",
-      key: "credits",
-      responsive: ["sm"],
+      name: t("Credits"),
+      selector: (row) => row.credits,
+      sortable: true,
+      filterable: true,
     },
   ];
   useEffect(() => {
@@ -194,7 +194,7 @@ export default function EditDecisions() {
                     <Modal
                       title={t("Decision")}
                       centered
-                      style={{ width: "700px" }}
+                      className='responsive-modal'
                       okButtonProps={{ style: { display: "none" } }}
                       open={documentModal}
                       onCancel={(e) => setDocumentModal(false)}
@@ -205,8 +205,6 @@ export default function EditDecisions() {
                           src={CrudProvider.documentPath(
                             decision.documents.docPath
                           )}
-                          width='800px'
-                          height='700px'
                           loading='lazy'
                         ></iframe>
                       ) : (
@@ -224,7 +222,7 @@ export default function EditDecisions() {
               <hr />
               {subQualifications.length > 0 && (
                 <>
-                  <DataTable
+                  <DataTablev2
                     columns={columns}
                     dataSource={subQualifications}
                     title={t("SubQualifications")}

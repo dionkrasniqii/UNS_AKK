@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import CustomSelect from "../custom/CustomSelect";
 import CrudProvider from "../../provider/CrudProvider";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,6 @@ export default function Reports() {
     { value: 6, label: t("QualificationChildList") },
     { value: 7, label: t("InstitutionDecisionDetailsList") },
   ];
-
   async function checkModel(model) {
     return model ? Object.values(model).some((value) => !!value) : false;
   }

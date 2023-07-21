@@ -314,5 +314,17 @@
   "ChooseStatus": "Izaberite status",
   "CityForAccreditation": "Grad za akreditaciju",
   "ApplicationNotApprovedYet": "Aplikacija još nije odobrena",
-  "ChooseAnReport": "Izaberite izveštaj"
+  "ChooseAnReport": "Izaberite izveštaj",
+  "ReportStatsDesc1": "Ako izaberete samo opštinu, ona će biti štampana samo za vas",
+  "ReportStatsDesc2": "u toj opštini, ako tada izaberete instituciju, ona će vam biti odštampana",
+  "InThatInstitution": "u toj ustanovi",
+  "QualificationTypes": "Vrste kvalifikacija",
+  "QualificationType": "Vrsta kvalifikacija",
+  "RegisterQualificationType": "Registrirajte vrstu kvalifikacije",
+  "FillField": "Popunite polje",
+  "CreatedAt": "Kreirano",
+  "NoData": "Nema zabeleženih podataka",
+  "EditQualificationType": "Izmenite tip kvalifikacije",
+  "FirstTimeLogin": "Molimo promenite lozinku",
+  "StartDateEndDateGroup": "Datum početka ne može biti manji od datuma završetka"
 }

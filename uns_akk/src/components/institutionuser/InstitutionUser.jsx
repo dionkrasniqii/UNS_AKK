@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import DataTable from "../custom/DataTable";
 import { useTranslation } from "react-i18next";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
@@ -13,7 +12,6 @@ export default function InstitutionUser() {
   const { t } = useTranslation();
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
-
   const columns = [
     {
       name: t("Name"),
@@ -47,7 +45,8 @@ export default function InstitutionUser() {
     },
     {
       name: t("Role"),
-      selector: (row) => row.role.length > 1 ? row.role.join(" , ") : `${row.role} `,
+      selector: (row) =>
+        row.role.length > 1 ? row.role.join(" , ") : `${row.role} `,
       sortable: true,
       filterable: true,
     },
@@ -80,23 +79,23 @@ export default function InstitutionUser() {
       className: "col-12 col-sm-4 col-md-2 col-lg-2 text-center",
       cell: (row) => {
         return (
-          <div className="button-list">
-          {(row.role.includes("Zyrtar") || row.role.includes("KAAPR")) && (
-            <Link
-              type="button"
-              className="btn-secondary btn-sm"
-              to={`/editinstitutionuser/${row.userId}`}
-            >
-              <i className="fe-edit" />
-            </Link>
+          <div className='button-list'>
+            {(row.role.includes("Zyrtar") || row.role.includes("KAAPR")) && (
+              <Link
+                type='button'
+                className='btn-secondary btn-sm'
+                to={`/editinstitutionuser/${row.userId}`}
+              >
+                <i className='fe-edit' />
+              </Link>
             )}
             <a
-              type="button"
-              className="btn-sm btn-danger"
+              type='button'
+              className='btn-sm btn-danger'
               style={{ marginLeft: "10px" }}
               onClick={(e) => handleDelete(row.userId)}
             >
-              <i className="fe-trash-2" />
+              <i className='fe-trash-2' />
             </a>
           </div>
         );
@@ -147,28 +146,27 @@ export default function InstitutionUser() {
       setLoad(false);
     });
   }
-
   return (
-    <div className="col-xxl-12">
-      <div className="col-xxl-12 text-end"></div>
-      <div className="row">
-        <div className="col-12">
-          <div className="row">
-            <div className="col-12">
-              <div className="col-12 d-flex justify-content-end">
+    <div className='col-xxl-12'>
+      <div className='col-xxl-12 text-end'></div>
+      <div className='row'>
+        <div className='col-12'>
+          <div className='row'>
+            <div className='col-12'>
+              <div className='col-12 d-flex justify-content-end'>
                 <Link
-                  className="btn btn-info waves-effect waves-light"
-                  to="/createinstitutionuser"
+                  className='btn btn-info waves-effect waves-light'
+                  to='/createinstitutionuser'
                 >
-                  <span className="btn-label">
-                    <i className="fe-plus-circle"></i>
+                  <span className='btn-label'>
+                    <i className='fe-plus-circle'></i>
                   </span>
                   {t("Add")}
                 </Link>
               </div>
             </div>
           </div>
-          <div className="p-2 mt-2">
+          <div className='p-2 mt-2'>
             {!load ? (
               <DataTablev2
                 columns={columns}
@@ -176,10 +174,10 @@ export default function InstitutionUser() {
                 title={t("UserList")}
               />
             ) : (
-              <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+              <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
                 <div
-                  className="spinner-border text-primary m-2 text-center"
-                  role="status"
+                  className='spinner-border text-primary m-2 text-center'
+                  role='status'
                 />
               </div>
             )}

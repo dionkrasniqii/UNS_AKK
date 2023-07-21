@@ -51,6 +51,7 @@ export default function ApplyForm({ authState }) {
     Docs: [],
     IsLoggedIn: authState,
   });
+
   async function SubmitApplication() {
     try {
       setLoad(true);
@@ -58,6 +59,7 @@ export default function ApplyForm({ authState }) {
         "ApplicationAPI/ApplicationPost",
         model
       ).then((res) => {
+        console.log(res);
         if (res) {
           switch (res.statusCode) {
             case 200:
@@ -80,6 +82,7 @@ export default function ApplyForm({ authState }) {
           <h4 className='card-title text-center'>
             {t("FirstApplicationName")}
           </h4>
+          {/* <ProgressBar model={model} /> */}
           <hr />
           <FirstForm
             authState={authState}
@@ -88,7 +91,7 @@ export default function ApplyForm({ authState }) {
             setShowSecondForm={setShowSecondForm}
             showSecondForm={showSecondForm}
           />
-          {!showSecondForm && (
+          {showSecondForm && (
             <SecondForm
               model={model}
               setModel={setModel}
@@ -96,7 +99,7 @@ export default function ApplyForm({ authState }) {
               showThirdForm={showThirdForm}
             />
           )}
-          {!showThirdForm && (
+          {showThirdForm && (
             <ThirdForm
               model={model}
               setModel={setModel}
@@ -104,7 +107,7 @@ export default function ApplyForm({ authState }) {
               showFourthForm={showFourthForm}
             />
           )}
-          {!showFourthForm && (
+          {showFourthForm && (
             <FourthForm
               model={model}
               setModel={setModel}
@@ -112,7 +115,7 @@ export default function ApplyForm({ authState }) {
               setShowFifthForm={setShowFifthForm}
             />
           )}
-          {!showFifthForm && (
+          {showFifthForm && (
             <FifthForm
               model={model}
               setModel={setModel}

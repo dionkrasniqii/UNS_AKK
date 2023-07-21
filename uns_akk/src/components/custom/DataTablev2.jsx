@@ -12,13 +12,24 @@ export default function DataTablev2({ dataSource, columns, title }) {
 
   const filteredData = dataSource.filter((item) => {
     return Object.values(item).some((value) => {
-      return String(value).toLowerCase().includes(searchInput.toLowerCase());
+      if (value !== null && typeof value === "object") {
+        return Object.values(value).some((item) => {
+          return String(item).toLowerCase().includes(searchInput.toLowerCase());
+        });
+      } else if (typeof value === "string") {
+        return value.toLowerCase().includes(searchInput.toLowerCase());
+      }
+      return false;
     });
   });
 
   useEffect(() => {
     setData(filteredData);
   }, [searchInput]);
+
+  useEffect(() => {
+    setData(dataSource);
+  }, [dataSource]);
 
   const handleChange = (e) => {
     setLoad(true);

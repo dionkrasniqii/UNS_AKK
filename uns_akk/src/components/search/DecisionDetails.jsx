@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CrudProvider from "../../provider/CrudProvider";
 import { Button, Modal } from "antd";
-import DataTable from "../custom/DataTable";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function DecisionDetails() {
   const { id } = useParams();
@@ -14,16 +14,16 @@ export default function DecisionDetails() {
   const [decision, setDecision] = useState({});
   const columns = [
     {
-      title: t("SubQualifications"),
-      dataIndex: "qualificationChildName",
-      key: "qualificationChildName",
-      responsive: ["sm"],
+      name: t("SubQualifications"),
+      selector: (row) => row.qualificationChildName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Credits"),
-      dataIndex: "credits",
-      key: "credits",
-      responsive: ["sm"],
+      name: t("Credits"),
+      selector: (row) => row.credits,
+      sortable: true,
+      filterable: true,
     },
   ];
 
@@ -148,7 +148,7 @@ export default function DecisionDetails() {
                         <Modal
                           title={t("Decision")}
                           centered
-                          style={{ width: "700px" }}
+                          className='responsive-modal'
                           okButtonProps={{ style: { display: "none" } }}
                           open={documentModal}
                           onCancel={(e) => setDocumentModal(false)}
@@ -160,8 +160,6 @@ export default function DecisionDetails() {
                               src={CrudProvider.documentPath(
                                 decision.documents.docPath
                               )}
-                              width='800px'
-                              height='700px'
                               loading='lazy'
                             ></iframe>
                           ) : (
@@ -179,7 +177,7 @@ export default function DecisionDetails() {
                   <hr />
                   {subQualifications.length > 0 && (
                     <>
-                      <DataTable
+                      <DataTablev2
                         columns={columns}
                         dataSource={subQualifications}
                         title={t("SubQualifications")}

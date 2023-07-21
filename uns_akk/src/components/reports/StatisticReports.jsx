@@ -139,34 +139,39 @@ export default function Reports() {
     }));
   }
   async function PrintReport(fileType) {
-    let url = "ReportsAPI/GetInstitutionFromCityReport";
-    let filters = "";
+    try {
+      setLoading(true);
+      let url = "ReportsAPI/GetInstitutionFromCityReport";
+      let filters = "";
 
-    const values = [];
+      const values = [];
 
-    if (model.MunicipalityId) {
-      values.push(model.MunicipalityId);
-    }
-
-    if (model.InstitutionId !== null) {
-      let institutionValue = model.InstitutionId;
-
-      if (qualification.selectedOption !== null) {
-        institutionValue += `=${qualification.selectedOption}`;
+      if (model.MunicipalityId) {
+        values.push(model.MunicipalityId);
       }
 
-      values.push(`?institutionId=${institutionValue}`);
+      if (model.InstitutionId !== null) {
+        let institutionValue = model.InstitutionId;
+
+        if (qualification.selectedOption !== null) {
+          institutionValue += `=${qualification.selectedOption}`;
+        }
+
+        values.push(`?institutionId=${institutionValue}`);
+      }
+      filters += `${values.join("/")}`;
+      if (!model.MunicipalityId) {
+        return toast.info(t("ChooseMunicipality"));
+      }
+      await CrudProvider.getReportRDLCWithLang(
+        url,
+        fileType,
+        filters,
+        raportPrint.label
+      );
+    } finally {
+      setLoading(false);
     }
-    filters += `${values.join("/")}`;
-    if (!model.MunicipalityId) {
-      return toast.info(t("ChooseMunicipality"));
-    }
-    await CrudProvider.getReportRDLCWithLang(
-      url,
-      fileType,
-      filters,
-      raportPrint.label
-    );
   }
   const handleQualificationChange = (event) => {
     const { value } = event.target;
@@ -183,6 +188,13 @@ export default function Reports() {
     <div>
       <Card className='card-body'>
         <Row>
+          <div className='alert alert-info text-dark border-0' role='alert'>
+            {t("ReportStatsDesc1")}{" "}
+            <strong className='text-uppercase'>{t("InstitutionList")}</strong>{" "}
+            {t("ReportStatsDesc2")}{" "}
+            <strong className='text-uppercase'>{t("CandidatesList")}</strong>{" "}
+            {t("InThatInstitution")}
+          </div>
           <Col xs={12} lg={3}>
             <h4>{t("ChooseMunicipality")}</h4>
             <CustomSelect
@@ -227,20 +239,31 @@ export default function Reports() {
           <Col
             xs={12}
             lg={3}
-            className='mt-4 pt-1 pb-1 d-flex justify-content-lg-start justify-content-center'
+            className='mt-4  d-flex justify-content-lg-start justify-content-center'
           >
-            <Button
-              variant='danger'
-              onClick={(e) => PrintReport("pdf")}
-              className='me-lg-2 mx-2 mx-lg-0'
-            >
-              <i className='mdi mdi-pdf-box'></i>
-              PDF
-            </Button>
-            <Button variant='success' onClick={(e) => PrintReport("excel")}>
-              <i className='mdi mdi-microsoft-excel'></i>
-              Excel
-            </Button>
+            {!loading ? (
+              <>
+                <Button
+                  variant='danger'
+                  onClick={(e) => PrintReport("pdf")}
+                  className='me-lg-2 mx-2 mx-lg-0'
+                >
+                  <i className='mdi mdi-pdf-box'></i>
+                  PDF
+                </Button>
+                <Button variant='success' onClick={(e) => PrintReport("excel")}>
+                  <i className='mdi mdi-microsoft-excel'></i>
+                  Excel
+                </Button>
+              </>
+            ) : (
+              <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                <div
+                  className='spinner-border text-primary m-2 text-center'
+                  role='status'
+                />
+              </div>
+            )}
           </Col>
         </Row>
       </Card>

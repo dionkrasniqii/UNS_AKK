@@ -35,6 +35,14 @@ export default function Sidebar() {
       icon: "mdi mdi-share-variant",
     },
     {
+      label: t("QualificationTypes"),
+      roles: ["Admin"],
+      path: "/qualifications-type",
+      hasMenu: false,
+      showLabel: true,
+      icon: "mdi mdi-book-edit-outline",
+    },
+    {
       label: t("Qualifications"),
       roles: ["Admin"],
       path: "/qualifications",
@@ -82,14 +90,14 @@ export default function Sidebar() {
       showLabel: true,
       icon: "mdi mdi-microsoft-excel",
     },
-    {
-      label: t("StatisticsReports"),
-      roles: ["Admin"],
-      path: "/statisticsReports",
-      hasMenu: false,
-      showLabel: false,
-      icon: "mdi mdi-microsoft-excel",
-    },
+    // {
+    //   label: t("StatisticsReports"),
+    //   roles: ["Admin"],
+    //   path: "/statisticsReports",
+    //   hasMenu: false,
+    //   showLabel: false,
+    //   icon: "mdi mdi-microsoft-excel",
+    // },
     /* -----------INSTITUTION------------- */
     {
       label: t("Users"),

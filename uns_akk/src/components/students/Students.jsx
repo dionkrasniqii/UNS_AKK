@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import CrudProvider from "../../provider/CrudProvider";
 import jwtDecode from "jwt-decode";
-import DataTable from "../custom/DataTable";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function Students() {
   const { t } = useTranslation();
@@ -17,22 +17,25 @@ export default function Students() {
   const [loadPrint, setLoadPrint] = useState("");
 
   useEffect(() => {
-    setLoad(true);
-    CrudProvider.getItemById(
-      "PersonAPI/GetPersons",
-      decodedToken.groupsid
-    ).then((res) => {
-      if (res) {
-        switch (res.statusCode) {
-          case 200:
-            setData(res.result);
-            break;
-          default:
-            break;
+    try {
+      setLoad(true);
+      CrudProvider.getItemById(
+        "PersonAPI/GetPersons",
+        decodedToken.groupsid
+      ).then((res) => {
+        if (res) {
+          switch (res.statusCode) {
+            case 200:
+              setData(res.result);
+              break;
+            default:
+              break;
+          }
         }
-      }
+      });
+    } finally {
       setLoad(false);
-    });
+    }
   }, []);
 
   async function printCertificate(id) {
@@ -50,77 +53,76 @@ export default function Students() {
   }
   const columns = [
     {
-      title: t("NumberOfCertificate"),
-      dataIndex: "certificateNumber",
-      key: (item) => item,
+      name: t("NumberOfCertificate"),
+      selector: (row) => row.certificateNumber,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Name") + " " + t("Surname"),
-      dataIndex: "person",
-      key: (item) => item.name,
-      render: (item) => item.name + " " + item.surname,
+      name: t("Name") + " " + t("Surname"),
+      selector: (row) => row.person.name + " " + row.person.surname,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Email"),
-      dataIndex: "person",
-      key: (item) => item.email,
-      render: (item) => item.email,
+      name: t("Email"),
+      selector: (row) => row.person.email,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("GroupName"),
-      dataIndex: "institutionGroupDecision",
-      key: (item) => item.groupName,
-      render: (item) => item.groupName,
+      name: t("GroupName"),
+      selector: (row) => row.institutionGroupDecision.groupName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Graduated"),
-      dataIndex: "graduated",
-      key: "graduated",
-      render: (item) => {
-        return item === true ? (
+      name: t("Graduated"),
+      cell: (row) => {
+        return row.graduated === true ? (
           <a>
             {t("Yes")}
-            <i className="text-success ps-1 fas fa-circle-notch" />
+            <i className='text-success ps-1 fas fa-circle-notch' />
           </a>
         ) : (
           <a>
             {t("No")}
-            <i className="text-danger ps-1  fas fa-circle-notch" />
+            <i className='text-danger ps-1  fas fa-circle-notch' />
           </a>
         );
       },
     },
     {
-      title: t("Actions"),
-      key: "personId",
-      render: (value, record) => {
+      name: t("Actions"),
+      width: "200px",
+      cell: (record) => {
         return (
-          <div className="button-list">
+          <div className='button-list'>
             <Link
-              type="button"
-              className="btn btn-secondary btn-sm"
+              type='button'
+              className='btn btn-secondary btn-sm'
               to={`/editstudent/${record.personInstitutionId}`}
             >
-              <i className="fe-edit" />
+              <i className='fe-edit' />
             </Link>
             <a
-              type="button"
-              className="btn btn-sm btn-danger "
+              type='button'
+              className='btn btn-sm btn-danger '
               style={{ marginLeft: "5px" }}
               onClick={(e) => handleDelete(record.person.personId)}
             >
-              <i className="fe-trash-2" />
+              <i className='fe-trash-2' />
             </a>
             {loadPrint !== record.certificateNumber ? (
               <button
                 style={{ marginLeft: "5px" }}
                 onClick={(e) => printCertificate(record.certificateNumber)}
-                className="btn btn-sm btn-dark waves-effect waves-light "
+                className='btn btn-sm btn-dark waves-effect waves-light '
               >
-                <i itemType="button" className="fe-printer" />
+                <i itemType='button' className='fe-printer' />
               </button>
             ) : (
-              <div className="spinner-border text-dark m-2" role="status" />
+              <div className='spinner-border text-dark m-2' role='status' />
             )}
           </div>
         );
@@ -157,30 +159,30 @@ export default function Students() {
   }
 
   return (
-    <div className="row">
-      <div className="col-12 d-flex justify-content-end">
+    <div className='row'>
+      <div className='col-12 d-flex justify-content-end'>
         <Link
-          className="btn btn-info waves-effect waves-light"
-          to="/createstudents"
+          className='btn btn-info waves-effect waves-light'
+          to='/createstudents'
         >
-          <span className="btn-label">
-            <i className="fe-plus-circle"></i>
+          <span className='btn-label'>
+            <i className='fe-plus-circle'></i>
           </span>
           {t("Add")}
         </Link>
       </div>
-      <div className="p-2 mt-2">
+      <div className='p-2 mt-2'>
         {!load ? (
-          <DataTable
+          <DataTablev2
             columns={columns}
             dataSource={data}
             title={t("CandidatesList")}
           />
         ) : (
-          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
             <div
-              className="spinner-border text-primary m-2 text-center"
-              role="status"
+              className='spinner-border text-primary m-2 text-center'
+              role='status'
             />
           </div>
         )}

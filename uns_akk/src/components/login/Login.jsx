@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import FirstTimeLogin from "./FirstTimeLogin";
 
 export default function Login(props) {
   const { t } = useTranslation();
@@ -22,7 +23,9 @@ export default function Login(props) {
     SelectedRole: 0,
   });
   const [showMultiRolesModal, setShowMultiRolesModal] = useState(false);
+  const [firstTimeLogin, setFirstTimeLogin] = useState(false);
   const [roles, setRoles] = useState([]);
+  const [userId, setUserId] = useState("");
   const dispatch = useDispatch();
   async function loginFunction() {
     setLoad(true);
@@ -50,6 +53,10 @@ export default function Login(props) {
             break;
           case 405:
             toast.error(t("YourAccountIsNotActive"));
+            break;
+          case 423:
+            setFirstTimeLogin(true);
+            setUserId(res.userId);
             break;
           case "ERR_NETWORK":
             toast.info(t("ServerProblems"));
@@ -79,6 +86,8 @@ export default function Login(props) {
       setModel={setModel}
       setAuthState={props.setAuthState}
     />
+  ) : firstTimeLogin ? (
+    <FirstTimeLogin UserId={userId} setFirstTimeLogin={setFirstTimeLogin} />
   ) : (
     <div
       className='account-pages pt-5 animation '

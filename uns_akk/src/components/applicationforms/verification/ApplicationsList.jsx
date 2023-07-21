@@ -11,7 +11,7 @@ export default function ApplicationsList() {
   const [data, setData] = useState([]);
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   let columns = [
     {
       name: t("UniqueNumber"),
@@ -105,7 +105,7 @@ export default function ApplicationsList() {
       name: t("RegisterDecision"),
       sortable: true,
       filterable: true,
-      cell: (row) => {
+      cell: (row, index) => {
         switch (row.status) {
           case "Aprovuar":
             return (
@@ -163,46 +163,43 @@ export default function ApplicationsList() {
       }
     })();
   useEffect(() => {
-    try {
-      setLoad(true);
-      if (statusToSearch) {
-        CrudProvider.getItemByIdLang(
-          "ApplicationAPI/GetAppByStatus",
-          statusToSearch
-        ).then((res) => {
-          if (res) {
-            if (res.statusCode === 200) {
-              setData(res.result);
-            }
-          }
-        });
-      }
-    } finally {
-      setLoad(false);
-    }
-  }, []);
+    const fetchData = async () => {
+      try {
+        if (statusToSearch) {
+          const res = await CrudProvider.getItemByIdLang(
+            "ApplicationAPI/GetAppByStatus",
+            statusToSearch
+          );
 
-  return data.length > 0 ? (
-    <DataTablev2
-      dataSource={data}
-      columns={columns}
-      title={t("ApplicationList")}
-    />
-  ) : load ? (
+          if (res.statusCode === 200) {
+            setData(res.result);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoad(false);
+      }
+    };
+
+    fetchData();
+  }, [statusToSearch]);
+  return load ? (
     <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
       <div
         className='spinner-border text-primary m-2 text-center'
         role='status'
       />
     </div>
+  ) : data.length > 0 ? (
+    <DataTablev2
+      dataSource={data}
+      columns={columns}
+      title={t("ApplicationList")}
+    />
   ) : (
     <div className='card card-body'>
-      <Space
-        direction='vertical'
-        style={{
-          width: "100%",
-        }}
-      >
+      <Space direction='vertical' style={{ width: "100%" }}>
         <Alert message={t("NoNewApplications")} type='info' />
       </Space>
     </div>

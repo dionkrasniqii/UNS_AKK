@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import CrudProvider from "../../provider/CrudProvider";
-import DataTable from "../custom/DataTable";
 import { Link } from "react-router-dom";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function Decisions() {
   const { t } = useTranslation();
@@ -22,41 +22,35 @@ export default function Decisions() {
       setLoad(false);
     });
   }, []);
-
   const columns = [
     {
-      title: t("UniqueNumber"),
-      dataIndex: ["institution"],
-      key: (item) => item.uniqueNumber,
-      responsive: ["sm"],
-      render: (item) => item.uniqueNumber,
+      name: t("UniqueNumber"),
+      selector: (item) => item.institution.uniqueNumber,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("InstitutionName"),
-      dataIndex: ["institution"],
-      key: (item) => item.institutionName,
-      responsive: ["sm"],
-      render: (item) => item.institutionName,
+      name: t("InstitutionName"),
+      selector: (item) => item.institution.institutionName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Municipality"),
-      dataIndex: ["municipalityName"],
-      key: (item) => item,
-      responsive: ["sm"],
+      name: t("Municipality"),
+      selector: (item) => item.municipalityName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Qualification"),
-      dataIndex: ["qualificationName"],
-      key: (item) => item,
-      responsive: ["sm"],
+      name: t("Qualification"),
+      selector: (item) => item.qualificationName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Active"),
-      dataIndex: ["aktiv"],
-      key: (item) => item,
-      responsive: ["sm"],
-      render: (item) => {
-        if (item === true) {
+      name: t("Active"),
+      cell: (item) => {
+        if (item.aktiv === true) {
           return (
             <a>
               {t("Active")}
@@ -72,13 +66,12 @@ export default function Decisions() {
           );
         }
       },
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Actions"),
-      key: (item, index) => index,
-      responsive: ["sm"],
-      width: "20%",
-      render: (value, record) => {
+      name: t("Actions"),
+      cell: (record) => {
         return (
           <Link
             to={`/editdecisions/${record.institutionDecisionDetailsId}`}
@@ -106,7 +99,7 @@ export default function Decisions() {
       </div>
       <div className='p-2 mt-2'>
         {!load ? (
-          <DataTable
+          <DataTablev2
             columns={columns}
             dataSource={data}
             title={t("ListOfAllDecisions")}

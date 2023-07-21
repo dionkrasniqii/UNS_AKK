@@ -22,7 +22,6 @@ export default function Home() {
     []
   );
   const [candidatesByMonth, setCandidatesByMonth] = useState([]);
-
   useEffect(() => {
     setLoad(true);
     Promise.all([
@@ -45,28 +44,27 @@ export default function Home() {
       ]) => {
         // Process each response directly
         if (institutionsRes && institutionsRes.statusCode === 200) {
-          setInstitutionByYear(institutionsRes.result);
+          setInstitutionByYear(Array.from(institutionsRes.result));
         }
         if (candidatesRes && candidatesRes.statusCode === 200) {
-          setCandidatesByYear(candidatesRes.result);
+          setCandidatesByYear(Array.from(candidatesRes.result));
         }
         if (accreditedRes && accreditedRes.statusCode === 200) {
-          setAccreditatedInstitutions(accreditedRes.result);
+          setAccreditatedInstitutions(Array.from(accreditedRes.result));
         }
         if (reaccreditedRes && reaccreditedRes.statusCode === 200) {
-          setReaccreditatedInstitutions(reaccreditedRes.result);
+          setReaccreditatedInstitutions(Array.from(reaccreditedRes.result));
         }
         if (qualificationsRes && qualificationsRes.statusCode === 200) {
-          setCandidatesByQualification(qualificationsRes.result);
+          setCandidatesByQualification(Array.from(qualificationsRes.result));
         }
         if (candidatesByMonthRes && candidatesByMonthRes.statusCode === 200) {
-          setCandidatesByMonth(candidatesByMonthRes.result);
+          setCandidatesByMonth(Array.from(candidatesByMonthRes.result));
         }
         setLoad(false);
       }
     );
   }, []);
-
   const generateColorsByObjectLength = (obj) => {
     const startColor = [0, 0, 255]; // Blue color (RGB values)
     const endColor = [205, 127, 50]; // Bronze color (RGB values)

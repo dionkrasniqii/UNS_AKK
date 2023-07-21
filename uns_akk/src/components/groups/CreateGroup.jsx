@@ -13,7 +13,6 @@ export default function CreateGroup() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [load, setLoad] = useState(false);
-  const [loadSubmit, setLoadSubmit] = useState(false);
   const [decisions, setDecisons] = useState([]);
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
@@ -79,7 +78,7 @@ export default function CreateGroup() {
   async function submitForm() {
     setLoad(true);
     if (model.StartDate >= model.EndDate) {
-      toast.error(t("DecisionDateCannotBeGreaterThanTermDate"));
+      toast.error(t("StartDateEndDateGroup"));
       setLoad(false);
       return;
     }
@@ -130,94 +129,88 @@ export default function CreateGroup() {
         <div className='card-body'>
           <h3 className=' mb-3'>{t("RegisterGroup")}</h3>
           <form onSubmit={formik.handleSubmit}>
-            <div id='progressbarwizard'>
-              <div className='tab-content b-0 mb-0 pt-0'>
-                <ProgressBar model={model} />
-                <div className='tab-pane active' id='account-2'>
-                  <div className='row'>
-                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                      <label>{t("GroupName")}:</label>
-                      <input
-                        type='text'
-                        className='form-control'
-                        onChange={(e) => {
-                          setModel({
-                            ...model,
-                            GroupName: e.target.value,
-                          });
-                          formik.setFieldValue("GroupName", e.target.value);
-                        }}
-                      />
-                      {formik.errors.GroupName && (
-                        <span className='text-danger'>
-                          {formik.errors.GroupName}
-                        </span>
-                      )}
-                    </div>
-                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                      <label>{t("Municipality")}:</label>
-                      <CustomSelect
-                        onChangeFunction={changeDecision}
-                        isMulti={false}
-                        optionsList={decisionList}
-                      />
-                      {formik.errors.Decision && (
-                        <span className='text-danger'>
-                          {formik.errors.Decision}
-                        </span>
-                      )}
-                    </div>
-                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                      <label>{t("StartDate")}:</label>
-                      <CustomDatePicker onChangeFunction={changeStartDate} />
-                      {formik.errors.StartDate && (
-                        <span className='text-danger'>
-                          {formik.errors.StartDate}
-                        </span>
-                      )}
-                    </div>
-                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                      <label>{t("EndDate")}:</label>
-                      <CustomDatePicker onChangeFunction={changeEndDate} />
-                      {formik.errors.EndDate && (
-                        <span className='text-danger'>
-                          {formik.errors.EndDate}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+            <ProgressBar model={model} />
+            <div className='tab-pane active' id='account-2'>
+              <div className='row'>
+                <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <label>{t("GroupName")}:</label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    onChange={(e) => {
+                      setModel({
+                        ...model,
+                        GroupName: e.target.value,
+                      });
+                      formik.setFieldValue("GroupName", e.target.value);
+                    }}
+                  />
+                  {formik.errors.GroupName && (
+                    <span className='text-danger'>
+                      {formik.errors.GroupName}
+                    </span>
+                  )}
+                </div>
+                <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <label>{t("Municipality")}:</label>
+                  <CustomSelect
+                    onChangeFunction={changeDecision}
+                    isMulti={false}
+                    optionsList={decisionList}
+                  />
+                  {formik.errors.Decision && (
+                    <span className='text-danger'>
+                      {formik.errors.Decision}
+                    </span>
+                  )}
+                </div>
+                <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <label>{t("StartDate")}:</label>
+                  <CustomDatePicker onChangeFunction={changeStartDate} />
+                  {formik.errors.StartDate && (
+                    <span className='text-danger'>
+                      {formik.errors.StartDate}
+                    </span>
+                  )}
+                </div>
+                <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  <label>{t("EndDate")}:</label>
+                  <CustomDatePicker onChangeFunction={changeEndDate} />
+                  {formik.errors.EndDate && (
+                    <span className='text-danger'>{formik.errors.EndDate}</span>
+                  )}
                 </div>
               </div>
-              <ul className='list-inline mb-0 wizard'>
-                <Link
-                  to='/groups'
-                  className='btn btn-danger waves-effect waves-light float-start'
-                >
-                  <span className='btn-label'>
-                    <i className='fe-arrow-left'></i>
-                  </span>
-                  {t("Discard")}
-                </Link>
-                <li className='next list-inline-item float-end'>
-                  {!loadSubmit ? (
-                    <button
-                      type='submit'
-                      className='btn btn-success waves-effect waves-light'
-                    >
-                      <span className='btn-label'>
-                        <i className='fe-check'></i>
-                      </span>
-                      {t("Save")}
-                    </button>
-                  ) : (
-                    <div
-                      className='spinner-border text-primary m-2 text-center'
-                      role='status'
-                    />
-                  )}
-                </li>
-              </ul>
             </div>
+            <ul className='list-inline mb-0 wizard'>
+              <Link
+                to='/groups'
+                className='btn btn-danger waves-effect waves-light float-start'
+              >
+                <span className='btn-label'>
+                  <i className='fe-arrow-left'></i>
+                </span>
+                {t("Discard")}
+              </Link>
+              <li className='next list-inline-item float-end'>
+                {!load ? (
+                  <button
+                    type='submit'
+                    className='btn btn-success waves-effect waves-light'
+                  >
+                    <span className='btn-label'>
+                      <i className='fe-check'></i>
+                    </span>
+                    {t("Save")}
+                  </button>
+                ) : (
+                  <div
+                    className='spinner-border text-primary m-2 text-center'
+                    role='status'
+                  />
+                )}
+              </li>
+            </ul>
           </form>
         </div>
       </div>

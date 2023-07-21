@@ -291,7 +291,7 @@
   "EarilerQualifications": "Akreditimet e mëparshme",
   "PreviousDecisionDocs": "Vendimet e mëparshme",
   "InstitutionDetailsModal": "Të dhënat për institucionin",
-  "StaffDataModal":"Të dhënat për stafin",
+  "StaffDataModal": "Të dhënat për stafin",
   "Active": "Aktiv",
   "Inactive": "Pasiv",
   "Role": "Roli",
@@ -314,5 +314,17 @@
   "ChooseStatus": "Zgjedhni një status",
   "CityForAccreditation": "Qyteti për akreditim",
   "ApplicationNotApprovedYet": "Aplikimi nuk është aprovuar ende",
-  "ChooseAnReport":"Zgjedhni një raport"
+  "ChooseAnReport": "Zgjedhni një raport",
+  "ReportStatsDesc1": "Nëse zgjedhni vetëm komunën juve do të ju printohet vetëm",
+  "ReportStatsDesc2": "në atë komunë, nëse zgjedhni pastaj institucionin do të ju printohet",
+  "InThatInstitution": "në atë institucion",
+  "QualificationTypes": "Llojet e kualifikimeve",
+  "QualificationType": "Llojet i kualifikimit",
+  "RegisterQualificationType": "Regjistro llojin e kualifikimit",
+  "FillField": "Plotësoni fushën",
+  "CreatedAt": "Data regjistrimit",
+  "NoData": "Nuk ka të dhëna për tu shfaqur",
+  "EditQualificationType": "Modifiko llojin e kualifikimit",
+  "FirstTimeLogin": "Ju lutemi ndryshoni fjalëkalimin tuaj",
+  "StartDateEndDateGroup": "Data fillimit nuk mund të jetë më e vogël se data e mbarimit"
 }

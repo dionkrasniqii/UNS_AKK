@@ -77,26 +77,31 @@ export default function EditInstitution() {
   }
 
   async function handleSubmit() {
-    await CrudProvider.updateItemWithFile(
-      "InstitutionAPI/UpdateInstitution",
-      institution
-    ).then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          toast.success(t("DataUpdatedSuccessfully"));
-          navigate("/institutions");
-        } else {
-          toast.error(res.errorMessages[0]);
+    try {
+      setLoad(true);
+      await CrudProvider.updateItemWithFile(
+        "InstitutionAPI/UpdateInstitution",
+        institution
+      ).then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            toast.success(t("DataUpdatedSuccessfully"));
+            navigate("/institutions");
+          } else {
+            toast.error(res.errorMessages[0]);
+          }
         }
-      }
-    });
+      });
+    } finally {
+      setLoad(false);
+    }
   }
 
   const formik = useFormik({
     initialValues: {},
     validateOnBlur: false,
     validateOnMount: false,
-    onSubmit: () => handleSubmit(),
+    onSubmit: async () => handleSubmit(),
   });
   return (
     <div className='col-xl-12'>
@@ -105,276 +110,272 @@ export default function EditInstitution() {
           <div className='card-body'>
             <h3 className=' mb-3'>{t("ModifyInstitution")}</h3>
             <form onSubmit={formik.handleSubmit}>
-              <div id='progressbarwizard'>
-                <div className='tab-content b-0 mb-0 pt-0'>
-                  <div className='tab-pane active' id='account-2'>
-                    <div className='row'>
-                      <div className='col-12'>
-                        <div className='row mb-3'>
-                          <div className='col-12 text-center'>
-                            <img
-                              src={CrudProvider.documentPath(institution.path)}
-                              alt='image'
-                              className='img-fluid rounded'
-                              style={{ width: "250px", height: "150px" }}
-                            />
-                          </div>
-                        </div>
-                        <div className='row mb-3'>
-                          <label className='col-md-3 col-form-label'>
-                            {t("InstitutionName")}
-                          </label>
-                          <div className='col-md-9'>
-                            <input
-                              type='text'
-                              defaultValue={institution.institutionName}
-                              className='form-control'
-                              onChange={(e) => {
-                                setInstitution({
-                                  ...institution,
-                                  institutionName: e.target.value,
-                                });
-                                formik.setFieldValue("Name", e.target.value);
-                              }}
-                            />
-                            {formik.errors.Name && (
-                              <span className='text-danger'>
-                                {" "}
-                                {formik.errors.Name}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className='row mb-3'>
-                          <label className='col-md-3 col-form-label'>
-                            {t("InstitutionStatus")}
-                          </label>
-                          <div className='col-md-9'>
-                            <input
-                              type='text'
-                              defaultValue={
-                                institution.institutionStatusDescription
-                              }
-                              className='form-control'
-                              readOnly
-                            />
-                            {formik.errors.MunicipalityId && (
-                              <span className='text-danger'>
-                                {" "}
-                                {formik.errors.MunicipalityId}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className='row mb-3'>
-                          <label className='col-md-3 col-form-label'>
-                            {t("UniqueNumber")}
-                          </label>
-                          <div className='col-md-9'>
-                            <input
-                              type='number'
-                              defaultValue={institution.uniqueNumber}
-                              onChange={(e) => {
-                                setInstitution({
-                                  ...institution,
-                                  uniqueNumber: e.target.value,
-                                });
-                                formik.setFieldValue(
-                                  "UniqueNumber",
-                                  e.target.value
-                                );
-                              }}
-                              className='form-control'
-                            />
-                            {formik.errors.UniqueNumber && (
-                              <span className='text-danger'>
-                                {" "}
-                                {formik.errors.UniqueNumber}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className='row mb-3'>
-                          <label className='col-md-3 col-form-label'>
-                            {t("Municipality")}
-                          </label>
-                          <div className='col-md-9'>
-                            <CustomSelect
-                              hasDefaultValue={true}
-                              defaultValue={defaultOption}
-                              onChangeFunction={changeCity}
-                              optionsList={citiesList}
-                              isMulti={false}
-                            />
-                            {formik.errors.MunicipalityId && (
-                              <span className='text-danger'>
-                                {" "}
-                                {formik.errors.MunicipalityId}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className='row mb-3'>
-                          <label className='col-md-3 col-form-label'>
-                            {t("Address")}
-                          </label>
-                          <div className='col-md-9'>
-                            <input
-                              type='text'
-                              defaultValue={institution.address}
-                              onChange={(e) => {
-                                setInstitution({
-                                  ...institution,
-                                  address: e.target.value,
-                                });
-                                formik.setFieldValue("Address", e.target.value);
-                              }}
-                              className='form-control'
-                            />
-                            {formik.errors.Address && (
-                              <span className='text-danger'>
-                                {" "}
-                                {formik.errors.Address}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className='row mb-3'>
-                          <label className='col-md-3 col-form-label'>
-                            {t("PostalCode")}
-                          </label>
-                          <div className='col-md-9'>
-                            <input
-                              type='number'
-                              defaultValue={institution.postalCode}
-                              className='form-control'
-                              onChange={(e) => {
-                                setInstitution({
-                                  ...institution,
-                                  postalCode: e.target.value,
-                                });
-                                formik.setFieldValue(
-                                  "PostalCode",
-                                  e.target.value
-                                );
-                              }}
-                            />
-                            {formik.errors.PostalCode && (
-                              <span className='text-danger'>
-                                {" "}
-                                {formik.errors.PostalCode}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className='row mb-3'>
-                          <label className='col-md-3 col-form-label'>
-                            {t("PhoneNumber")}
-                          </label>
-                          <div className='col-md-9'>
-                            <input
-                              type='text'
-                              defaultValue={institution.phoneNum}
-                              className='form-control'
-                              onChange={(e) => {
-                                setInstitution({
-                                  ...institution,
-                                  phoneNum: e.target.value,
-                                });
-                                formik.setFieldValue(
-                                  "PhoneNumber",
-                                  e.target.value
-                                );
-                              }}
-                            />
-                            {formik.errors.PhoneNumber && (
-                              <span className='text-danger'>
-                                {" "}
-                                {formik.errors.PhoneNumber}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className='row mb-3'>
-                          <label className='col-md-3 col-form-label'>
-                            Email
-                          </label>
-                          <div className='col-md-9'>
-                            <input
-                              type='email'
-                              defaultValue={institution.email}
-                              onChange={(e) => {
-                                setInstitution({
-                                  ...institution,
-                                  email: e.target.value,
-                                });
-                                formik.setFieldValue("Email", e.target.value);
-                              }}
-                              className='form-control'
-                            />
-                            {formik.errors.Email && (
-                              <span className='text-danger'>
-                                {" "}
-                                {formik.errors.Email}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className='row mb-3'>
-                          <label className='col-md-3 col-form-label'>
-                            {t("Web")}
-                          </label>
-                          <div className='col-md-9'>
-                            <input
-                              type='text'
-                              defaultValue={institution.web}
-                              onChange={(e) => {
-                                setInstitution({
-                                  ...institution,
-                                  web: e.target.value,
-                                });
-                                formik.setFieldValue("Web", e.target.value);
-                              }}
-                              className='form-control'
-                            />
-                            {formik.errors.Web && (
-                              <span className='text-danger'>
-                                {" "}
-                                {formik.errors.Web}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>{" "}
-                      {/* end col */}
-                    </div>{" "}
-                    {/* end row */}
-                  </div>
-                  <ul className='list-inline mb-0 wizard'>
-                    <Link
-                      to='/institutions'
-                      className='btn btn-danger waves-effect waves-light float-start'
+              <div className='tab-pane active' id='account-2'>
+                <div className='row'>
+                  <div className='col-12'>
+                    <div className='row mb-3'>
+                      <div className='col-12 text-center'>
+                        <img
+                          src={CrudProvider.documentPath(institution.path)}
+                          alt='image'
+                          className='img-fluid rounded'
+                          style={{ width: "250px", height: "150px" }}
+                        />
+                      </div>
+                    </div>
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>
+                        {t("InstitutionName")}
+                      </label>
+                      <div className='col-md-9'>
+                        <input
+                          type='text'
+                          defaultValue={institution.institutionName}
+                          className='form-control'
+                          onChange={(e) => {
+                            setInstitution({
+                              ...institution,
+                              institutionName: e.target.value,
+                            });
+                            formik.setFieldValue("Name", e.target.value);
+                          }}
+                        />
+                        {formik.errors.Name && (
+                          <span className='text-danger'>
+                            {" "}
+                            {formik.errors.Name}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>
+                        {t("InstitutionStatus")}
+                      </label>
+                      <div className='col-md-9'>
+                        <input
+                          type='text'
+                          defaultValue={
+                            institution.institutionStatusDescription
+                          }
+                          className='form-control'
+                          readOnly
+                        />
+                        {formik.errors.MunicipalityId && (
+                          <span className='text-danger'>
+                            {" "}
+                            {formik.errors.MunicipalityId}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>
+                        {t("UniqueNumber")}
+                      </label>
+                      <div className='col-md-9'>
+                        <input
+                          type='number'
+                          defaultValue={institution.uniqueNumber}
+                          onChange={(e) => {
+                            setInstitution({
+                              ...institution,
+                              uniqueNumber: e.target.value,
+                            });
+                            formik.setFieldValue(
+                              "UniqueNumber",
+                              e.target.value
+                            );
+                          }}
+                          className='form-control'
+                        />
+                        {formik.errors.UniqueNumber && (
+                          <span className='text-danger'>
+                            {" "}
+                            {formik.errors.UniqueNumber}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>
+                        {t("Municipality")}
+                      </label>
+                      <div className='col-md-9'>
+                        <CustomSelect
+                          hasDefaultValue={true}
+                          defaultValue={defaultOption}
+                          onChangeFunction={changeCity}
+                          optionsList={citiesList}
+                          isMulti={false}
+                        />
+                        {formik.errors.MunicipalityId && (
+                          <span className='text-danger'>
+                            {" "}
+                            {formik.errors.MunicipalityId}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>
+                        {t("Address")}
+                      </label>
+                      <div className='col-md-9'>
+                        <input
+                          type='text'
+                          defaultValue={institution.address}
+                          onChange={(e) => {
+                            setInstitution({
+                              ...institution,
+                              address: e.target.value,
+                            });
+                            formik.setFieldValue("Address", e.target.value);
+                          }}
+                          className='form-control'
+                        />
+                        {formik.errors.Address && (
+                          <span className='text-danger'>
+                            {" "}
+                            {formik.errors.Address}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>
+                        {t("PostalCode")}
+                      </label>
+                      <div className='col-md-9'>
+                        <input
+                          type='number'
+                          defaultValue={institution.postalCode}
+                          className='form-control'
+                          onChange={(e) => {
+                            setInstitution({
+                              ...institution,
+                              postalCode: e.target.value,
+                            });
+                            formik.setFieldValue("PostalCode", e.target.value);
+                          }}
+                        />
+                        {formik.errors.PostalCode && (
+                          <span className='text-danger'>
+                            {" "}
+                            {formik.errors.PostalCode}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>
+                        {t("PhoneNumber")}
+                      </label>
+                      <div className='col-md-9'>
+                        <input
+                          type='text'
+                          defaultValue={institution.phoneNum}
+                          className='form-control'
+                          onChange={(e) => {
+                            setInstitution({
+                              ...institution,
+                              phoneNum: e.target.value,
+                            });
+                            formik.setFieldValue("PhoneNumber", e.target.value);
+                          }}
+                        />
+                        {formik.errors.PhoneNumber && (
+                          <span className='text-danger'>
+                            {" "}
+                            {formik.errors.PhoneNumber}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>Email</label>
+                      <div className='col-md-9'>
+                        <input
+                          type='email'
+                          defaultValue={institution.email}
+                          onChange={(e) => {
+                            setInstitution({
+                              ...institution,
+                              email: e.target.value,
+                            });
+                            formik.setFieldValue("Email", e.target.value);
+                          }}
+                          className='form-control'
+                        />
+                        {formik.errors.Email && (
+                          <span className='text-danger'>
+                            {" "}
+                            {formik.errors.Email}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>
+                        {t("Web")}
+                      </label>
+                      <div className='col-md-9'>
+                        <input
+                          type='text'
+                          defaultValue={institution.web}
+                          onChange={(e) => {
+                            setInstitution({
+                              ...institution,
+                              web: e.target.value,
+                            });
+                            formik.setFieldValue("Web", e.target.value);
+                          }}
+                          className='form-control'
+                        />
+                        {formik.errors.Web && (
+                          <span className='text-danger'>
+                            {" "}
+                            {formik.errors.Web}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>{" "}
+                  {/* end col */}
+                </div>{" "}
+                {/* end row */}
+              </div>
+              <ul className='list-inline mb-0 wizard'>
+                <Link
+                  to='/institutions'
+                  className='btn btn-danger waves-effect waves-light float-start'
+                >
+                  <span className='btn-label'>
+                    <i className='fe-arrow-left'></i>
+                  </span>
+                  {t("Discard")}
+                </Link>
+                <li className='next list-inline-item float-end'>
+                  {!load ? (
+                    <button
+                      type='submit'
+                      className='btn btn-success waves-effect waves-light'
                     >
                       <span className='btn-label'>
-                        <i className='fe-arrow-left'></i>
+                        <i className='fe-check'></i>
                       </span>
-                      {t("Discard")}
-                    </Link>
-                    <li className='next list-inline-item float-end'>
-                      <button
-                        type='submit'
-                        className='btn btn-success waves-effect waves-light'
-                      >
-                        <span className='btn-label'>
-                          <i className='fe-check'></i>
-                        </span>
-                        {t("Edit")}
-                      </button>
-                    </li>
-                  </ul>
-                </div>{" "}
-                {/* tab-content */}
-              </div>
+                      {t("Edit")}
+                    </button>
+                  ) : (
+                    <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                      <div
+                        className='spinner-border text-primary m-2 text-center'
+                        role='status'
+                      />
+                    </div>
+                  )}
+                </li>
+              </ul>
             </form>
           </div>
         ) : (

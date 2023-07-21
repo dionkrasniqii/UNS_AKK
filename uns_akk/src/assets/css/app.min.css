@@ -25428,3 +25428,64 @@ span.rbt-btn-link-reverse.color-white:hover {
 .divForUpload {
     z-index: 999;
 }
+
+.responsive-modal .ant-modal-content {
+    max-width: auto;
+    width: auto;
+    margin: 0 auto;
+    /* Center the modal content */
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .responsive-modal .ant-modal-content {
+        max-width: auto;
+    }
+}
+
+/* Media query for taller content */
+@media screen and (min-height: 500px) {
+    .responsive-modal .ant-modal-content {
+        height: auto;
+    }
+}
+
+/* Exclude the title and footer from the custom styles */
+
+
+
+.responsive-modal .ant-modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90%;
+    width: auto;
+}
+
+iframe {
+    /* Set initial width and height of the iframe */
+    width: 100%;
+    height: 400px;
+    /* Set an initial height for the iframe */
+
+    /* Add other styles for the iframe as needed */
+    border: none;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    iframe {
+        /* Adjust the width and height for smaller screens */
+        height: 250px;
+        /* Set a different height for smaller screens */
+    }
+}
+
+/* Media query for larger screens */
+@media screen and (min-width: 1200px) {
+    iframe {
+        /* Adjust the width and height for larger screens */
+        height: 600px;
+        /* Set a different height for larger screens */
+    }
+}

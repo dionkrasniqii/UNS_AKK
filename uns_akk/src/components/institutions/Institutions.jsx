@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Table, Input, Alert, Row, Col } from "antd";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
-import DataTable from "../custom/DataTable";
 import { useTranslation } from "react-i18next";
+import DataTablev2 from "../custom/DataTablev2";
 
 export default function Institutions() {
   const [load, setLoad] = useState(false);
@@ -12,62 +11,60 @@ export default function Institutions() {
   const { t } = useTranslation();
   const columns = [
     {
-      title: t("InstitutionName"),
-      dataIndex: "institutionName",
-      key: "institutionName",
-      // className: "col-lg-2 col-md-2 col-sm-4",
+      name: t("InstitutionName"),
+      selector: (row) => row.institutionName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("UniqueNumber"),
-      dataIndex: "uniqueNumber",
-      key: "uniqueNumber",
-      // className: "col-lg-2 col-md-2 col-sm-4",
+      name: t("UniqueNumber"),
+      selector: (row) => row.uniqueNumber,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Municipality"),
-      dataIndex: "municipalityName",
-      key: "municipalityName",
-      // className: "col-lg-2 col-md-2 col-sm-4",
+      name: t("Municipality"),
+      selector: (row) => row.municipalityName,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Address"),
-      dataIndex: "address",
-      key: "address",
-      // className: "d-none d-md-table-cell col-md-2",
+      name: t("Address"),
+      selector: (row) => row.address,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("PostalCode"),
-      dataIndex: "postalCode",
-      key: "postalCode",
-      // className: "d-none d-md-table-cell col-md-2",
+      name: t("PostalCode"),
+      selector: (row) => row.postalCode,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      // className: "d-none d-lg-table-cell col-lg-2",
+      name: t("Email"),
+      selector: (row) => row.email,
+      sortable: true,
+      filterable: true,
     },
     {
-      title: t("Web"),
-      dataIndex: "web",
-      key: "web",
-      render: (value) => {
+      name: t("Web"),
+      sortable: true,
+      filterable: true,
+      cell: (record) => {
         const url =
-          value.startsWith("http://") || value.startsWith("https://")
-            ? value
-            : `http://${value}`;
+          record.web.startsWith("http://") || record.web.startsWith("https://")
+            ? record.web
+            : `http://${record.web}`;
         return (
           <a target='_blank' rel='noopener noreferrer' href={url}>
-            {value}
+            {record.web}
           </a>
         );
       },
     },
     {
-      title: t("Actions"),
-      key: "institutionId",
-      className: "col-12 col-sm-4 col-md-2 col-lg-2 text-center",
-      render: (value, record) => {
+      name: t("Actions"),
+      cell: (record) => {
         return (
           <div className='button-list'>
             <Link
@@ -147,7 +144,7 @@ export default function Institutions() {
           </div>
           <div className='p-2 mt-2'>
             {!load ? (
-              <DataTable
+              <DataTablev2
                 columns={columns}
                 dataSource={data}
                 title={t("InstitutionsList")}

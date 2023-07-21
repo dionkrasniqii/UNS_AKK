@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import DataTable from "../custom/DataTable";
 import CrudProvider from "../../provider/CrudProvider";
 import img_certification from "../../assets/images/certificate.png";
 import { toast } from "react-toastify";

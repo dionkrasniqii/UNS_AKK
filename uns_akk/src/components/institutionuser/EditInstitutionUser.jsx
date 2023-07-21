@@ -69,19 +69,25 @@ export default function EditInstitutionUser() {
   }
 
   async function SubmitForm() {
-    await CrudProvider.updateItem(
-      "InstitutionUserAPI/UpdateInstitutionUser",
-      institutionUser
-    ).then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          decodedToken && decodedToken.role === "Admin"
-            ? navigate("/users")
-            : navigate("/institution-user");
-          toast.success(t("DataSavedSuccessfully"));
+    try {
+      setLoad(true);
+
+      await CrudProvider.updateItem(
+        "InstitutionUserAPI/UpdateInstitutionUser",
+        institutionUser
+      ).then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            decodedToken && decodedToken.role === "Admin"
+              ? navigate("/users")
+              : navigate("/institution-user");
+            toast.success(t("DataSavedSuccessfully"));
+          }
         }
-      }
-    });
+      });
+    } finally {
+      setLoad(false);
+    }
   }
 
   const defaultSelectValue =
@@ -105,18 +111,18 @@ export default function EditInstitutionUser() {
 
   const formik = useFormik({
     initialValues: {},
-    onSubmit: () => SubmitForm(),
+    onSubmit: async () => SubmitForm(),
   });
   return (
-    <div className="card">
-      <div className="card-header">
-        <h4 className="card-title">{t("ModifyUser")}</h4>
+    <div className='card'>
+      <div className='card-header'>
+        <h4 className='card-title'>{t("ModifyUser")}</h4>
       </div>
       {Object.keys(institutionUser).length > 0 && !load ? (
-        <div className="card-body">
+        <div className='card-body'>
           <form onSubmit={formik.handleSubmit}>
-            <div className="row">
-              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+            <div className='row'>
+              <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                 <label>{t("ChooseRole")}:</label>
                 <CustomSelect
                   hasDefaultValue={true}
@@ -126,14 +132,14 @@ export default function EditInstitutionUser() {
                   optionsList={rolesList}
                 />
                 {formik.errors.Role && (
-                  <span className="text-danger">{formik.errors.Role}</span>
+                  <span className='text-danger'>{formik.errors.Role}</span>
                 )}
               </div>
-              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+              <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                 <label>{t("Name")}:</label>
                 <input
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   defaultValue={institutionUser.name}
                   onChange={(e) => {
                     setInstitutionUser({
@@ -144,14 +150,14 @@ export default function EditInstitutionUser() {
                   }}
                 />
                 {formik.errors.name && (
-                  <span className="text-danger">{formik.errors.name}</span>
+                  <span className='text-danger'>{formik.errors.name}</span>
                 )}
               </div>
-              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+              <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                 <label>{t("Surname")}:</label>
                 <input
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   defaultValue={institutionUser.surname}
                   onChange={(e) => {
                     setInstitutionUser({
@@ -162,14 +168,14 @@ export default function EditInstitutionUser() {
                   }}
                 />
                 {formik.errors.surname && (
-                  <span className="text-danger">{formik.errors.surname}</span>
+                  <span className='text-danger'>{formik.errors.surname}</span>
                 )}
               </div>
-              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+              <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                 <label>{t("PersonalNr")}:</label>
                 <input
-                  type="number"
-                  className="form-control"
+                  type='number'
+                  className='form-control'
                   defaultValue={institutionUser.personalNumber}
                   onChange={(e) => {
                     setInstitutionUser({
@@ -180,18 +186,18 @@ export default function EditInstitutionUser() {
                   }}
                 />
                 {formik.errors.personalNumber && (
-                  <span className="text-danger">
+                  <span className='text-danger'>
                     {formik.errors.personalNumber}
                   </span>
                 )}
               </div>
-              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+              <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                 <label>{t("BirthDate")}:</label>
                 <input
-                  type="date"
-                  autoComplete="off"
-                  id="basic-datepicker"
-                  className="form-control flatpickr-input active"
+                  type='date'
+                  autoComplete='off'
+                  id='basic-datepicker'
+                  className='form-control flatpickr-input active'
                   value={birthDate}
                   onChange={(e) => {
                     setInstitutionUser({
@@ -202,14 +208,14 @@ export default function EditInstitutionUser() {
                   }}
                 />
                 {formik.errors.birthDate && (
-                  <span className="text-danger">{formik.errors.birthDate}</span>
+                  <span className='text-danger'>{formik.errors.birthDate}</span>
                 )}
               </div>
-              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+              <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                 <label>{t("Email")}:</label>
                 <input
-                  type="email"
-                  className="form-control"
+                  type='email'
+                  className='form-control'
                   defaultValue={institutionUser.email}
                   onChange={(e) => {
                     setInstitutionUser({
@@ -220,14 +226,14 @@ export default function EditInstitutionUser() {
                   }}
                 />
                 {formik.errors.email && (
-                  <span className="text-danger">{formik.errors.email}</span>
+                  <span className='text-danger'>{formik.errors.email}</span>
                 )}
               </div>
-              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+              <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                 <label>{t("PhoneNumber")}:</label>
                 <input
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   defaultValue={institutionUser.phoneNumber}
                   onChange={(e) => {
                     setInstitutionUser({
@@ -238,17 +244,17 @@ export default function EditInstitutionUser() {
                   }}
                 />
                 {formik.errors.phoneNumber && (
-                  <span className="text-danger">
+                  <span className='text-danger'>
                     {formik.errors.phoneNumber}
                   </span>
                 )}
               </div>
-              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
-                <label htmlFor="activeCheckbox" style={{ display: "block" }}>
+              <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                <label htmlFor='activeCheckbox' style={{ display: "block" }}>
                   {t("Active")}:
                 </label>
                 <Checkbox
-                  id="activeCheckbox"
+                  id='activeCheckbox'
                   checked={institutionUser.active}
                   onChange={(e) => {
                     setInstitutionUser({
@@ -260,27 +266,27 @@ export default function EditInstitutionUser() {
                 />
               </div>
             </div>
-            <ul className="list-inline mb-0 wizard mt-3 mb-2">
+            <ul className='list-inline mb-0 wizard mt-3 mb-2'>
               <Link
                 to={
                   decodedToken && decodedToken.role === "Admin"
                     ? "/users"
                     : "/institution-user"
                 }
-                className="btn btn-danger waves-effect waves-light float-start"
+                className='btn btn-danger waves-effect waves-light float-start'
               >
-                <span className="btn-label">
-                  <i className="fe-arrow-left"></i>
+                <span className='btn-label'>
+                  <i className='fe-arrow-left'></i>
                 </span>
                 {t("Discard")}
               </Link>
-              <li className="next list-inline-item float-end">
+              <li className='next list-inline-item float-end'>
                 <button
-                  type="submit"
-                  className="btn btn-success waves-effect waves-light"
+                  type='submit'
+                  className='btn btn-success waves-effect waves-light'
                 >
-                  <span className="btn-label">
-                    <i className="fe-check"></i>
+                  <span className='btn-label'>
+                    <i className='fe-check'></i>
                   </span>
                   {t("Edit")}
                 </button>
@@ -290,10 +296,10 @@ export default function EditInstitutionUser() {
         </div>
       ) : (
         load && (
-          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
             <div
-              className="spinner-border text-primary m-2 text-center"
-              role="status"
+              className='spinner-border text-primary m-2 text-center'
+              role='status'
             />
           </div>
         )

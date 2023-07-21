@@ -12,21 +12,23 @@ export default function PersonDetails() {
   const navigate = useNavigate();
   useEffect(() => {
     setLoad(true);
-    CrudProvider.getItemById("PersonAPI/GetPersonByPersonId", id).then(
-      (res) => {
-        if (res) {
-          switch (res.statusCode) {
-            case 200:
-              setCandidate(res.result);
-              setLoad(false);
-              break;
+    if (id) {
+      CrudProvider.getItemById("PersonAPI/GetPersonByPersonId", id).then(
+        (res) => {
+          if (res) {
+            switch (res.statusCode) {
+              case 200:
+                setCandidate(res.result);
+                setLoad(false);
+                break;
               default:
                 break;
+            }
           }
         }
-      }
-    );
-  }, []);
+      );
+    }
+  }, [id]);
   return (
     <div className='card'>
       {Object.keys(candidate).length > 0 && !load ? (
@@ -65,7 +67,7 @@ export default function PersonDetails() {
                       type='text'
                       className='form-control'
                       defaultValue={new Date(
-                        candidate.person.birthDate.split("T")[0]
+                        candidate?.person?.birthDate?.split("T")[0]
                       ).toLocaleDateString("en-GB")}
                       readOnly
                     />
@@ -99,8 +101,8 @@ export default function PersonDetails() {
                       <input
                         className='form-control'
                         defaultValue={
-                          candidate.person.municipality.municipalityLanguages[0]
-                            .municipalityName
+                          candidate.person?.municipality
+                            ?.municipalityLanguages[0].municipalityName
                         }
                         readOnly
                       />
@@ -118,7 +120,7 @@ export default function PersonDetails() {
                       <input
                         type='text'
                         defaultValue={
-                          candidate.person.residence.residenceLanguages[0]
+                          candidate?.person?.residence?.residenceLanguage[0]
                             .residenceName
                         }
                         className='form-control'
@@ -148,7 +150,7 @@ export default function PersonDetails() {
                       readOnly
                       className='form-control'
                       defaultValue={new Date(
-                        candidate.registeredDate.split("T")[0]
+                        candidate?.registeredDate.split("T")[0]
                       ).toLocaleDateString("en-GB")}
                     />
                   </div>
@@ -160,7 +162,7 @@ export default function PersonDetails() {
                         readOnly
                         className='form-control'
                         defaultValue={new Date(
-                          candidate.graduationDate.split("T")[0]
+                          candidate?.graduationDate.split("T")[0]
                         ).toLocaleDateString("en-GB")}
                       />
                     </div>
@@ -173,7 +175,7 @@ export default function PersonDetails() {
                         <input
                           type='text'
                           defaultValue={new Date(
-                            candidate.unregisteredDate.split("T")[0]
+                            candidate?.unregisteredDate.split("T")[0]
                           ).toLocaleDateString("en-GB")}
                           className='form-control'
                           readOnly

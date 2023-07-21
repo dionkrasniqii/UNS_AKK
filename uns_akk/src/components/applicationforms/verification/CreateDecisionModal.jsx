@@ -242,11 +242,23 @@ export default function CreateDecisionModal({
         centered
         open={showModal}
         className='responsive-modal'
-        okText={t("Save")}
+        okText={
+          !load ? (
+            t("Save")
+          ) : (
+            <div
+              className='spinner-border text-primary m-2 text-center'
+              role='status'
+            />
+          )
+        }
         cancelText={t("Discard")}
         onOk={formik.handleSubmit}
-        // okButtonProps={{ style: { display: "none" } }}
-        onCancel={() => setShowModal(false)}
+        forceRender={true}
+        onCancel={() => {
+          setShowModal(false);
+          formik.resetForm();
+        }}
       >
         {Object.keys(application).length > 0 ? (
           <div className='tab-pane active' id='account-2'>
@@ -369,7 +381,7 @@ export default function CreateDecisionModal({
                   </span>
                 )}
               </div>
-              <div className=' mb-3 col-xxl-1 col-lg-2 col-md-2 col-sm-12'>
+              <div className=' mb-3 col-xxl-2 col-lg-2 col-md-2 col-sm-12'>
                 <label>{t("NumberOfGroups")}:</label>
                 <input
                   type='number'
@@ -397,7 +409,7 @@ export default function CreateDecisionModal({
                   className='form-control'
                 />
               </div>
-              <div className=' mb-3 col-xxl-3 col-lg-4 col-md-4 col-sm-12'>
+              <div className='col-xxl-2 col-lg-4 col-md-4 col-sm-12'>
                 <label>{t("IsReaccrediation")}:</label>
                 <div className='row col-12'>
                   <div className='col-3'>
@@ -452,7 +464,7 @@ export default function CreateDecisionModal({
                   </div>
                 </div>
               </div>
-              <div className='col-xxl-6 col-md-6 col-lg-6 col-sm-12 mb-3'>
+              <div className='col-xxl-4 col-lg-6 col-sm-12 mb-3'>
                 <label>{t("UploadDecision")}:</label>
                 <input
                   type='file'
@@ -473,12 +485,10 @@ export default function CreateDecisionModal({
             </div>
           </div>
         ) : (
-          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
-            <div
-              className='spinner-border text-primary m-2 text-center'
-              role='status'
-            />
-          </div>
+          <div
+            className='spinner-border text-primary m-2 text-center'
+            role='status'
+          />
         )}
       </Modal>
     </>

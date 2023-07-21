@@ -397,7 +397,7 @@ export default function EditApplicationInstitution() {
               <Modal
                 title={t("Logo")}
                 centered
-                style={{ width: "700px" }}
+                className='responsive-modal'
                 okButtonProps={{ style: { display: "none" } }}
                 open={logoModal}
                 onCancel={(e) => setLogoModal(false)}
@@ -408,8 +408,6 @@ export default function EditApplicationInstitution() {
                     src={CrudProvider.documentPath(
                       data.applicationDTO.institutionLogo
                     )}
-                    width='800px'
-                    height='800px'
                     loading='lazy'
                     title='Logo'
                   ></iframe>
@@ -418,8 +416,6 @@ export default function EditApplicationInstitution() {
                     src={CrudProvider.documentPath(
                       data.applicationDTO.institutionLogo
                     )}
-                    width='800px'
-                    height='700px'
                     loading='lazy'
                     alt='logo'
                   ></img>
@@ -565,7 +561,7 @@ export default function EditApplicationInstitution() {
               <Modal
                 title={t("LicenseMASHT")}
                 centered
-                style={{ width: "700px" }}
+                className='responsive-modal'
                 open={mashtModal}
                 okButtonProps={{ style: { display: "none" } }}
                 onCancel={() => setMashtModal(false)}
@@ -577,16 +573,12 @@ export default function EditApplicationInstitution() {
                         key={document.applicationDocsId}
                         id={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='800px'
                         loading='lazy'
                       />
                     ) : (
                       <img
                         key={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='700px'
                         loading='lazy'
                       />
                     );
@@ -657,7 +649,7 @@ export default function EditApplicationInstitution() {
               <Modal
                 title={t("RegistrationCertificate")}
                 centered
-                style={{ width: "700px" }}
+                className='responsive-modal'
                 open={certificateModal}
                 okButtonProps={{ style: { display: "none" } }}
                 onCancel={() => setCertificateModal(false)}
@@ -668,16 +660,12 @@ export default function EditApplicationInstitution() {
                       <iframe
                         key={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='800px'
                         loading='lazy'
                       />
                     ) : (
                       <img
                         key={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='700px'
                         loading='lazy'
                       />
                     );
@@ -770,7 +758,7 @@ export default function EditApplicationInstitution() {
                   <Modal
                     title={t("PreviousDecisionDocs")}
                     centered
-                    style={{ width: "700px" }}
+                    className='responsive-modal'
                     open={previousDecisionModal}
                     okButtonProps={{ style: { display: "none" } }}
                     onCancel={() => setPreviousDecisionModal(false)}
@@ -782,16 +770,12 @@ export default function EditApplicationInstitution() {
                           <iframe
                             key={document.applicationDocsId}
                             src={CrudProvider.documentPath(document.docPath)}
-                            width='800px'
-                            height='800px'
                             loading='lazy'
                           />
                         ) : (
                           <img
                             key={document.applicationDocsId}
                             src={CrudProvider.documentPath(document.docPath)}
-                            width='800px'
-                            height='700px'
                             loading='lazy'
                           />
                         );
@@ -997,8 +981,8 @@ export default function EditApplicationInstitution() {
               <Modal
                 title={t("InstitutionDetailsModal")}
                 centered
-                style={{ width: "700px" }}
                 open={instituonDetailsModal}
+                className='responsive-modal'
                 okButtonProps={{ style: { display: "none" } }}
                 onCancel={() => setInstitutionDetailsModal(false)}
               >
@@ -1008,16 +992,12 @@ export default function EditApplicationInstitution() {
                       <iframe
                         key={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='800px'
                         loading='lazy'
                       />
                     ) : (
                       <img
                         key={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='700px'
                         loading='lazy'
                       />
                     );
@@ -1086,7 +1066,7 @@ export default function EditApplicationInstitution() {
               <Modal
                 title={t("StaffDataModal")}
                 centered
-                style={{ width: "700px" }}
+                className='responsive-modal'
                 open={staffModal}
                 okButtonProps={{ style: { display: "none" } }}
                 onCancel={() => setStaffModal(false)}
@@ -1097,16 +1077,12 @@ export default function EditApplicationInstitution() {
                       <iframe
                         key={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='800px'
                         loading='lazy'
                       />
                     ) : (
                       <img
                         key={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='700px'
                         loading='lazy'
                       />
                     );
@@ -1176,7 +1152,7 @@ export default function EditApplicationInstitution() {
               <Modal
                 title={t("OtherRequest")}
                 centered
-                style={{ width: "700px" }}
+                className='responsive-modal'
                 open={otherRequestModal}
                 okButtonProps={{ style: { display: "none" } }}
                 onCancel={() => setOtherRequestModal(false)}
@@ -1187,16 +1163,12 @@ export default function EditApplicationInstitution() {
                       <iframe
                         key={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='800px'
                         loading='lazy'
                       />
                     ) : (
                       <img
                         key={document.applicationDocsId}
                         src={CrudProvider.documentPath(document.docPath)}
-                        width='800px'
-                        height='700px'
                         loading='lazy'
                       />
                     );

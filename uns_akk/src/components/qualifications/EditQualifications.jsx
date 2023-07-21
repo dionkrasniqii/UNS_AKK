@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CustomSelect from "../custom/CustomSelect";
 import { useTranslation } from "react-i18next";
-import { setNestedObjectValues, useFormik } from "formik";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
 
@@ -12,6 +11,7 @@ export default function EditQualifications() {
   const navigate = useNavigate();
   const [load, setLoad] = useState(false);
   const langId = localStorage.getItem("i18nextLng");
+  const [qualificationTypes, setQualificationTypes] = useState([]);
   const [qualification, setQualification] = useState({
     QualificationId: id,
     LevelKKKId: "",
@@ -21,28 +21,43 @@ export default function EditQualifications() {
     QualificationNameAL: "",
     QualificationNameEN: "",
     QualificationNameSR: "",
+    QualificationTypeId: "",
   });
   const [levels, setLevels] = useState([]);
   const [subQualification, setSubQualification] = useState([]);
 
-  async function getAllLevelsWithLang(){
+  async function getAllLevelsWithLang() {
     CrudProvider.getAllWithLang("GeneralAPI/GetAllLevels").then((res) => {
       if (res) {
         if (res.statusCode === 200) {
           setLevels(res.result);
         }
       }
-    })
+    });
+  }
+  async function GetQualificationTypesWithLang() {
+    await CrudProvider.getAllWithLang("QualificationTypeAPI/GetAll").then(
+      (res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setQualificationTypes(res.result);
+          }
+        }
+      }
+    );
   }
 
-  async function getAllSubQualificationsWithLang(){
-    CrudProvider.getItemByIdLang("GeneralAPI/GetAllSubQualificationsByQualificationId", id).then((res) => {
+  async function getAllSubQualificationsWithLang() {
+    CrudProvider.getItemByIdLang(
+      "GeneralAPI/GetAllSubQualificationsByQualificationId",
+      id
+    ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
           setSubQualification(res.result);
         }
       }
-    })
+    });
   }
 
   useEffect(() => {
@@ -53,14 +68,16 @@ export default function EditQualifications() {
           if (res.statusCode === 200) {
             const obj = res.result;
             setQualification({
-                ...qualification,
-                LevelKKKId:obj[0].qualification.levelKKK.levelKKKId,
-                CodeAL:obj[1].code,
-                CodeEN:obj[2].code,
-                CodeSR:obj[0].code,
-                QualificationNameAL:obj[1].qualificationName,
-                QualificationNameEN:obj[2].qualificationName,
-                QualificationNameSR:obj[0].qualificationName
+              ...qualification,
+              LevelKKKId: obj[0].qualification.levelKKK.levelKKKId,
+              CodeAL: obj[1].code,
+              CodeEN: obj[2].code,
+              CodeSR: obj[0].code,
+              QualificationNameAL: obj[1].qualificationName,
+              QualificationNameEN: obj[2].qualificationName,
+              QualificationNameSR: obj[0].qualificationName,
+              QualificationTypeId:
+                obj[0].qualification?.qualificationType?.qualificationTypeId,
             });
           } else {
             toast.error(res.errorMessages[0]);
@@ -70,6 +87,7 @@ export default function EditQualifications() {
       }),
       getAllLevelsWithLang(),
       getAllSubQualificationsWithLang(),
+      GetQualificationTypesWithLang(),
     ]).then((res) => {
       setLoad(false);
     });
@@ -77,13 +95,19 @@ export default function EditQualifications() {
 
   useEffect(() => {
     getAllLevelsWithLang();
-  },[langId])
-
-  useEffect(() => {
+    GetQualificationTypesWithLang();
     getAllSubQualificationsWithLang();
-  },[langId])
+  }, [langId]);
 
-
+  const qualificationTypeList =
+    qualificationTypes &&
+    qualificationTypes.length > 0 &&
+    qualificationTypes.map((obj) => {
+      return {
+        value: obj.qualificationType?.qualificationTypeId,
+        label: obj.qualificationTypeName,
+      };
+    });
   const levelList =
     levels &&
     levels.length > 0 &&
@@ -99,15 +123,11 @@ export default function EditQualifications() {
       ...qualification,
       LevelKKKId: e,
     });
-    formik.setFieldValue("LevelKKKId", e);
   }
-
 
   const defaultSelectValue =
     levels.length > 0 &&
-    levels.find( 
-      (obj) =>  obj.levelKKK.levelKKKId === qualification.LevelKKKId
-    );
+    levels.find((obj) => obj.levelKKK.levelKKKId === qualification.LevelKKKId);
 
   const defaultLabel = defaultSelectValue?.levelKKKDescription ?? "";
   const defaultValue = defaultSelectValue?.levelKKK?.levelKKKId ?? "";
@@ -117,7 +137,6 @@ export default function EditQualifications() {
     value: defaultValue,
   };
 
-  
   const subQualificationList =
     subQualification &&
     subQualification.length > 0 &&
@@ -128,14 +147,20 @@ export default function EditQualifications() {
       };
     });
 
-    let textareaValue = "";
-    if (Array.isArray(subQualificationList) && subQualificationList.length > 0) {
-      textareaValue = subQualificationList
-        .map((option) => option.value)
-        .join(",\n");
-    }
-
-  async function handleSubmit() {
+  let textareaValue = "";
+  if (Array.isArray(subQualificationList) && subQualificationList.length > 0) {
+    textareaValue = subQualificationList
+      .map((option) => option.value)
+      .join(",");
+  }
+  function changeType(e) {
+    setQualification({
+      ...qualification,
+      QualificationTypeId: e,
+    });
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
     await CrudProvider.updateItem(
       "QualificationAPI/UpdateQualification",
       qualification
@@ -150,339 +175,188 @@ export default function EditQualifications() {
       }
     });
   }
-  const formik = useFormik({
-    initialValues: {},
-    validateOnBlur: false,
-    validateOnChange: false,
-    onSubmit: () => handleSubmit(),
-  });
+
   return (
-    <div className="col-xl-12">
-      <div className="card">
-        { !load ? (
-          <div className="card-body">
-            <h3 className="mb-3">{t("ModifyQualification")}</h3>
-            <form onSubmit={formik.handleSubmit}>
-              <div id="progressbarwizard">
-                <div className="tab-content b-0 mb-0 pt-0">
-                  <div className="row">
-                    <div className="col-md-4">
-                      <div className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">{t("Code")} (AL)</h5>
-                          <div className="row">
-                            <div className="col-md-5">
-                              <label className="col-form-label">
-                              {t("Code")} (AL)
-                              </label>
-                            </div>
-                            <div className="col-md-7">
-                              <input
-                                type="text"
-                                defaultValue={qualification.CodeAL}
-                                className="form-control"
-                                onChange={(e) => {
-                                  setQualification({
-                                    ...qualification,
-                                    codeAL: e.target.value,
-                                  });
-                                  formik.setFieldValue(
-                                    "CodeAL",
-                                    e.target.value
-                                  );
-                                }}
-                              />
-                              {formik.errors.CodeAL && (
-                                <span className="text-danger">
-                                  {formik.errors.CodeAL}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <div className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">{t("Code")} (EN)</h5>
-                          <div className="row">
-                            <label className="col-md-5 col-form-label">
-                            {t("Code")} (EN)
-                            </label>
-                            <div className="col-md-7">
-                              <input
-                                type="text"
-                                defaultValue={qualification.CodeEN}
-                                className="form-control"
-                                onChange={(e) => {
-                                  setQualification({
-                                    ...qualification,
-                                    CodeEN: e.target.value,
-                                  });
-                                  formik.setFieldValue(
-                                    "CodeEN",
-                                    e.target.value
-                                  );
-                                }}
-                              />
-                              {formik.errors.CodeEN && (
-                                <span className="text-danger">
-                                  {formik.errors.CodeEN}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-md-4">
-                      <div className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">{t("Code")} (SR)</h5>
-                          <div className="row">
-                            <label className="col-md-5 col-form-label">
-                            {t("Code")} (SR)
-                            </label>
-                            <div className="col-md-7">
-                              <input
-                                type="text"
-                                defaultValue={qualification.CodeSR}
-                                className="form-control"
-                                onChange={(e) => {
-                                  setQualification({
-                                    ...qualification,
-                                    CodeSR: e.target.value,
-                                  });
-                                  formik.setFieldValue(
-                                    "CodeSR",
-                                    e.target.value
-                                  );
-                                }}
-                              />
-                              {formik.errors.CodeSR && (
-                                <span className="text-danger">
-                                  {formik.errors.CodeSR}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">
-                          {t("QualificationName")} (AL)
-                          </h5>
-                          <div className="row">
-                            <label className="col-md-2 col-form-label">
-                            {t("QualificationName")} (AL)
-                            </label>
-                            <div className="col-md-9">
-                              <textarea
-                                type="text"
-                                rows={6}
-                                defaultValue={
-                                  qualification.QualificationNameAL
-                                }
-                                className="form-control"
-                                onChange={(e) => {
-                                  setQualification({
-                                    ...qualification,
-                                    QualificationNameAL: e.target.value,
-                                  });
-                                  formik.setFieldValue(
-                                    "QualificationNameAL",
-                                    e.target.value
-                                  );
-                                }}
-                              />
-                              {formik.errors.QualificationNameAL && (
-                                <span className="text-danger">
-                                  {formik.errors.QualificationNameAL}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-md-12">
-                      <div className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">
-                          {t("QualificationName")} (EN)
-                          </h5>
-                          <div className="row">
-                            <label className="col-md-2 col-form-label">
-                            {t("QualificationName")} (EN)
-                            </label>
-                            <div className="col-md-9">
-                              <textarea
-                                type="text"
-                                rows={6}
-                                defaultValue={
-                                  qualification.QualificationNameEN
-                                }
-                                className="form-control"
-                                onChange={(e) => {
-                                  setQualification({
-                                    ...qualification,
-                                    QualificationNameEN: e.target.value,
-                                  });
-                                  formik.setFieldValue(
-                                    "QualificationNameEN",
-                                    e.target.value
-                                  );
-                                }}
-                              />
-                              {formik.errors.QualificationNameEN && (
-                                <span className="text-danger">
-                                  {formik.errors.QualificationNameEN}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-md-12">
-                      <div className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">
-                          {t("QualificationName")} (SR)
-                          </h5>
-                          <div className="row">
-                            <label className="col-md-2 col-form-label">
-                            {t("QualificationName")} (SR)
-                            </label>
-                            <div className="col-md-9">
-                              <textarea
-                                type="text"
-                                rows={6}
-                                defaultValue={
-                                  qualification.QualificationNameSR
-                                }
-                                className="form-control"
-                                onChange={(e) => {
-                                  setQualification({
-                                    ...qualification,
-                                    QualificationNameSR: e.target.value,
-                                  });
-                                  formik.setFieldValue(
-                                    "QualificationNameSR",
-                                    e.target.value
-                                  );
-                                }}
-                              />
-                              {formik.errors.QualificationNameSR && (
-                                <span className="text-danger">
-                                  {formik.errors.QualificationNameSR}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-md-4">
-                      <div className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">{t("Level")}</h5>
-                          <div className="row">
-                            <label className="col-md-5 col-form-label">
-                            {t("Level")}
-                            </label>
-                            <div className="col-md-7">
-                              <CustomSelect
-                                hasDefaultValue={true}
-                                onChangeFunction={changeLevel}
-                                optionsList={levelList}
-                                defaultValue={defaultOption}
-                                isMulti={false}
-                              />
-                              {formik.errors.LevelKKKId && (
-                                <span className="text-danger">
-                                  {" "}
-                                  {formik.errors.LevelKKKId}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-md-8">
-                      <div className="card mb-3">
-                        <div className="card-body">
-                          <h5 className="card-title">{t("SubQualifications")}</h5>
-                          <div className="row">
-                            <div className="col-md-2">
-                              <label className="col-form-label">
-                              {t("SubQualifications")}
-                              </label>
-                            </div>
-                            <div className="col-md-9">
-                              <textarea
-                                type="text"
-                                rows={6}
-                                colums={100}
-                                readOnly
-                                value={textareaValue}
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <ul className="list-inline mb-0 wizard">
-                    <Link
-                      to="/qualifications"
-                      className="btn btn-danger waves-effect waves-light float-start"
-                    >
-                      <span className="btn-label">
-                        <i className="fe-arrow-left"></i>
-                      </span>
-                      {t("Discard")}
-                    </Link>
-                    <li className="next list-inline-item float-end">
-                      <button
-                        type="submit"
-                        className="btn btn-success waves-effect waves-light"
-                      >
-                        <span className="btn-label">
-                          <i className="fe-check"></i>
-                        </span>
-                        {t("Edit")}
-                      </button>
-                    </li>
-                  </ul>
-                </div>
+    <div className='card'>
+      {!load ? (
+        <div className='card-body'>
+          <h3 className='mb-3'>{t("ModifyQualification")}</h3>
+          <hr />
+          <form onSubmit={handleSubmit}>
+            <div className='row'>
+              <div className='col-md-4'>
+                <label className='col-form-label'>{t("Code")} (AL)</label>
+                <input
+                  type='text'
+                  defaultValue={qualification.CodeAL}
+                  className='form-control'
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      codeAL: e.target.value,
+                    });
+                  }}
+                />
               </div>
-            </form>
-          </div>
-        ) : (
-          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
-            <div
-              className="spinner-border text-primary m-2 text-center"
-              role="status"
-            />
-          </div>
-        )}
-      </div>
+              <div className='col-md-4'>
+                <label className='col-md-5 col-form-label'>
+                  {t("Code")} (EN)
+                </label>
+                <input
+                  type='text'
+                  defaultValue={qualification.CodeEN}
+                  className='form-control'
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      CodeEN: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className='col-md-4'>
+                <label className='col-md-5 col-form-label'>
+                  {t("Code")} (SR)
+                </label>
+                <input
+                  type='text'
+                  defaultValue={qualification.CodeSR}
+                  className='form-control'
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      CodeSR: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+              <div className='col-md-12'>
+                <label className='col-md-2 col-form-label'>
+                  {t("QualificationName")} (AL)
+                </label>
+                <textarea
+                  type='text'
+                  rows={6}
+                  defaultValue={qualification.QualificationNameAL}
+                  className='form-control'
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      QualificationNameAL: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className='col-md-12'>
+                <label className='col-md-2 col-form-label'>
+                  {t("QualificationName")} (EN)
+                </label>
+                <textarea
+                  type='text'
+                  rows={6}
+                  defaultValue={qualification.QualificationNameEN}
+                  className='form-control'
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      QualificationNameEN: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className='col-md-12'>
+                <label className='col-md-2 col-form-label'>
+                  {t("QualificationName")} (SR)
+                </label>
+                <textarea
+                  type='text'
+                  rows={6}
+                  defaultValue={qualification.QualificationNameSR}
+                  className='form-control'
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      QualificationNameSR: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+              <div className='col-md-12'>
+                <label className='col-form-label'>
+                  {t("SubQualifications")}
+                </label>
+                <textarea
+                  type='text'
+                  rows={3}
+                  readOnly
+                  value={textareaValue}
+                  className='form-control'
+                />
+              </div>
+              <div className='col-md-4'>
+                <label className='col-md-5 col-form-label'>{t("Level")}</label>
+                <CustomSelect
+                  hasDefaultValue={true}
+                  onChangeFunction={changeLevel}
+                  optionsList={levelList}
+                  defaultValue={defaultOption}
+                  isMulti={false}
+                />
+              </div>
+              <div className='col-md-4'>
+                <label className='col-md-5 col-form-label'>
+                  {t("QualificationType")}
+                </label>
+                <CustomSelect
+                  hasDefaultValue={true}
+                  onChangeFunction={changeType}
+                  optionsList={qualificationTypeList}
+                  defaultValue={
+                    qualificationTypeList &&
+                    qualificationTypeList.find(
+                      (obj) => obj.value === qualification.QualificationTypeId
+                    )
+                  }
+                  isMulti={false}
+                />
+              </div>
+            </div>
+
+            <ul className='list-inline mt-2 mb-0 wizard'>
+              <Link
+                to='/qualifications'
+                className='btn btn-danger waves-effect waves-light float-start'
+              >
+                <span className='btn-label'>
+                  <i className='fe-arrow-left'></i>
+                </span>
+                {t("Discard")}
+              </Link>
+              <li className='next list-inline-item float-end'>
+                <button
+                  type='submit'
+                  className='btn btn-success waves-effect waves-light'
+                >
+                  <span className='btn-label'>
+                    <i className='fe-check'></i>
+                  </span>
+                  {t("Edit")}
+                </button>
+              </li>
+            </ul>
+          </form>
+        </div>
+      ) : (
+        <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+          <div
+            className='spinner-border text-primary m-2 text-center'
+            role='status'
+          />
+        </div>
+      )}
     </div>
   );
 }
