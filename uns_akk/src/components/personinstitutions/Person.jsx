@@ -31,7 +31,7 @@ export default function Person() {
       }
     });
   }, []);
-
+  
   const institutionPersonList =
     institution &&
     institution.length > 0 &&
@@ -43,6 +43,7 @@ export default function Person() {
         };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
+
 
   function changeInstitution(e) {
     setModel({

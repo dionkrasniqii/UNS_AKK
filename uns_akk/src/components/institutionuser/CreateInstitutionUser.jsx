@@ -257,7 +257,7 @@ export default function CreateInstitutionUser() {
 
                   <ul className='list-inline mb-0 wizard mt-3 mb-2'>
                     <Link
-                      to='/institution-user'
+                      to={decodedToken && decodedToken.role === 'Admin' ? '/users' : '/institution-user'}
                       className='btn btn-danger waves-effect waves-light float-start'
                     >
                       <span className='btn-label'>

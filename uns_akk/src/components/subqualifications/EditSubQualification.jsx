@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import CustomSelect from "../custom/CustomSelect";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import CrudProvider from "../../provider/CrudProvider";
@@ -11,7 +10,6 @@ export default function EditSubQualification() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [load, setLoad] = useState(false);
-  const langId = localStorage.getItem("i18nextLng");
   const [subqualification, setSubQualification] = useState({
     QualificationChildId: id,
     QualificationId: "",
@@ -22,19 +20,6 @@ export default function EditSubQualification() {
     DescriptionEN: "",
     DescriptionSR: "",
   });
-  const [qualifications, setQualifications] = useState([]);
-
-  async function GetAllQualificationsWithLang() {
-    CrudProvider.getAllWithLang("GeneralAPI/GetAllQualifications").then(
-      (res) => {
-        if (res) {
-          if (res.statusCode === 200) {
-            setQualifications(res.result);
-          }
-        }
-      }
-    );
-  }
 
   useEffect(() => {
     setLoad(true);
@@ -63,48 +48,11 @@ export default function EditSubQualification() {
           }
         }
       ),
-      GetAllQualificationsWithLang(),
     ]).then((res) => {
       setLoad(false);
     });
   }, [id]);
 
-  useEffect(() => {
-    GetAllQualificationsWithLang();
-  }, [langId]);
-
-  const qualificationList =
-    qualifications &&
-    qualifications.length > 0 &&
-    qualifications.map((obj) => {
-      return {
-        value: obj.qualification.qualificationId,
-        label: obj.qualificationName,
-      };
-    });
-
-  function changeQualification(e) {
-    setSubQualification({
-      ...subqualification,
-      QualificationId: e,
-    });
-    formik.setFieldValue("QualificationId", e);
-  }
-
-  const defaultSelectValue =
-    qualifications.length > 0 &&
-    qualifications.find(
-      (obj) =>
-        obj.qualification.qualificationId === subqualification.QualificationId
-    );
-
-  const defaultLabel = defaultSelectValue?.qualificationName ?? "";
-  const defaultValue = defaultSelectValue?.qualification?.qualificationId ?? "";
-
-  const defaultOption = {
-    label: defaultLabel,
-    value: defaultValue,
-  };
   async function handleSubmit() {
     await CrudProvider.updateItem(
       "QualificationChildAPI/UpdateQualificationChild",
@@ -113,7 +61,7 @@ export default function EditSubQualification() {
       if (res) {
         if (res.statusCode === 200) {
           toast.success(t("DataUpdatedSuccessfully"));
-          navigate("/subqualifications");
+          navigate(`/subqualifications/${subqualification.QualificationId}`);
         } else {
           toast.error(res.errorMessages[0]);
         }
@@ -130,7 +78,7 @@ export default function EditSubQualification() {
     <div className='card'>
       {!load ? (
         <div className='card-body'>
-          <h3 className='mb-3'>{t("ModifySubQualification")}</h3>
+          <h3 className='mb-3'>{t("ModifyModule")}</h3>
           <hr />
           <form onSubmit={formik.handleSubmit}>
             <div className='row'>
@@ -190,7 +138,7 @@ export default function EditSubQualification() {
               </div>
               <div className='col-md-12'>
                 <label className='col-form-label'>
-                  {t("SubQualificationName")} (AL)
+                  {t("ModuleName")} (AL)
                 </label>
                 <textarea
                   type='text'
@@ -213,7 +161,7 @@ export default function EditSubQualification() {
               </div>
               <div className='col-md-12'>
                 <label className='col-form-label'>
-                  {t("SubQualificationName")} (EN)
+                  {t("ModuleName")} (EN)
                 </label>
                 <textarea
                   type='text'
@@ -237,7 +185,7 @@ export default function EditSubQualification() {
 
               <div className='col-md-12'>
                 <label className='col-form-label'>
-                  {t("SubQualificationName")} (SR)
+                  {t("ModuleName")} (SR)
                 </label>
                 <textarea
                   type='text'
@@ -258,46 +206,11 @@ export default function EditSubQualification() {
                   </span>
                 )}
               </div>
-              <div className='col-md-5'>
-                <label className='col-form-label'>{t("Qualifications")}</label>
-                <CustomSelect
-                  hasDefaultValue={true}
-                  onChangeFunction={changeQualification}
-                  optionsList={qualificationList}
-                  defaultValue={defaultOption}
-                  isMulti={false}
-                />
-                {formik.errors.QualificationId && (
-                  <span className='text-danger'>
-                    {" "}
-                    {formik.errors.QualificationId}
-                  </span>
-                )}
-              </div>
-
-              <div className='col-md-4'>
-                <label className=' col-form-label'>{t("Credits")}</label>
-                <input
-                  type='number'
-                  className='form-control'
-                  defaultValue={subqualification.Credits}
-                  onChange={(e) => {
-                    setSubQualification({
-                      ...subqualification,
-                      Credits: e.target.value,
-                    });
-                    formik.setFieldValue("Credits", e.target.value);
-                  }}
-                />
-                {formik.errors.Credits && (
-                  <span className='text-danger'>{formik.errors.Credits}</span>
-                )}
-              </div>
-            </div>
+             </div>
 
             <ul className='list-inline mb-0 wizard mt-2'>
               <Link
-                to='/subqualifications'
+                to={`/subqualifications/${subqualification.QualificationId}`}
                 className='btn btn-danger waves-effect waves-light float-start'
               >
                 <span className='btn-label'>

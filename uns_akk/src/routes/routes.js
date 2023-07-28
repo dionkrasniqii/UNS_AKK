@@ -238,7 +238,7 @@ export const AppRoutes = (props) => {
           />
           {/* QualificationChildren */}
           <Route
-            path='/subqualifications'
+            path='/subqualifications/:id'
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -249,7 +249,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createsubqualifications'
+            path='/createsubqualifications/:id'
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
