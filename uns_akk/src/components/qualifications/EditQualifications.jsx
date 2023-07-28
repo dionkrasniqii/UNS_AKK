@@ -4,6 +4,7 @@ import CustomSelect from "../custom/CustomSelect";
 import { useTranslation } from "react-i18next";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
+import CustomDatePicker from "../custom/CustomDatePicker";
 
 export default function EditQualifications() {
   const { id } = useParams();
@@ -12,16 +13,28 @@ export default function EditQualifications() {
   const [load, setLoad] = useState(false);
   const langId = localStorage.getItem("i18nextLng");
   const [qualificationTypes, setQualificationTypes] = useState([]);
+  const [qualificationStatus, setQualificationStatus] = useState([]);
   const [qualification, setQualification] = useState({
     QualificationId: id,
     LevelKKKId: "",
-    CodeAL: "",
-    CodeEN: "",
-    CodeSR: "",
-    QualificationNameAL: "",
-    QualificationNameEN: "",
-    QualificationNameSR: "",
+    Code: "",
+    Credits: "",
+    QualificationName: "",
     QualificationTypeId: "",
+    QualificationStatusId: "",
+    AccreditedProvider: "",
+    EntryRequirements: "",
+    ExpiryDate: "",
+    ExternalQualityAssurance: "",
+    FurtherInformationOnQualification: "",
+    LanguageOfProvision: "",
+    LearningOutcomesKnowledge: "",
+    LinkToRelevantSupplements: "",
+    OfficialLengthOfQualification: "",
+    Other: "",
+    RecognitionOfPriorLearning: "",
+    SectorField: "",
+    OccupationalStandartCode: "",
   });
   const [levels, setLevels] = useState([]);
   const [subQualification, setSubQualification] = useState([]);
@@ -31,6 +44,8 @@ export default function EditQualifications() {
       if (res) {
         if (res.statusCode === 200) {
           setLevels(res.result);
+        } else if(res.statusCode === 204) {
+          toast.error(t("NoDataInThisLanguageForLevel"));
         }
       }
     });
@@ -60,6 +75,18 @@ export default function EditQualifications() {
     });
   }
 
+  async function GetQualificationStatusWithLang() {
+    await CrudProvider.getAllWithLang(
+      "QualificationAPI/GetQualificationStatus"
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setQualificationStatus(res.result);
+        }
+      }
+    });
+  }
+
   useEffect(() => {
     setLoad(true);
     Promise.all([
@@ -70,14 +97,29 @@ export default function EditQualifications() {
             setQualification({
               ...qualification,
               LevelKKKId: obj[0].qualification.levelKKK.levelKKKId,
-              CodeAL: obj[1].code,
-              CodeEN: obj[2].code,
-              CodeSR: obj[0].code,
-              QualificationNameAL: obj[1].qualificationName,
-              QualificationNameEN: obj[2].qualificationName,
-              QualificationNameSR: obj[0].qualificationName,
+              Code: obj[0].qualification.code,
+              Credits: obj[0].qualification.credits,
+              QualificationName: obj[0].qualificationName,
               QualificationTypeId:
-                obj[0].qualification?.qualificationType?.qualificationTypeId,
+                obj[0].qualification.qualificationType?.qualificationTypeId,
+              QualificationStatusId:
+                obj[0].qualification.qualificationStatus?.qualificationStatusId,
+              AccreditedProvider: obj[0].accreditedProvider,
+              EntryRequirements: obj[0].entryRequirements,
+              ExpiryDate: obj[0].expiryDate,
+              ExternalQualityAssurance: obj[0].externalQualityAssurance,
+              FurtherInformationOnQualification:
+                obj[0].furtherInformationOnQualification,
+              LanguageOfProvision: obj[0].languageOfProvision,
+              LearningOutcomesKnowledge: obj[0].learningOutcomesKnowledge,
+              LinkToRelevantSupplements: obj[0].linkToRelevantSupplements,
+              OfficialLengthOfQualification:
+                obj[0].officialLengthOfQualification,
+              Other: obj[0].other,
+              RecognitionOfPriorLearning: obj[0].recognitionOfPriorLearning,
+              SectorField: obj[0].sectorField,
+              OccupationalStandartCode:
+                obj[0].qualification.occupationalStandartCode,
             });
           } else {
             toast.error(res.errorMessages[0]);
@@ -88,15 +130,19 @@ export default function EditQualifications() {
       getAllLevelsWithLang(),
       getAllSubQualificationsWithLang(),
       GetQualificationTypesWithLang(),
+      GetQualificationStatusWithLang(),
     ]).then((res) => {
       setLoad(false);
     });
   }, [id]);
 
   useEffect(() => {
-    getAllLevelsWithLang();
-    GetQualificationTypesWithLang();
-    getAllSubQualificationsWithLang();
+    Promise.all([
+      getAllLevelsWithLang(),
+      GetQualificationTypesWithLang(),
+      getAllSubQualificationsWithLang(),
+      GetQualificationStatusWithLang(),
+    ]);
   }, [langId]);
 
   const qualificationTypeList =
@@ -108,12 +154,23 @@ export default function EditQualifications() {
         label: obj.qualificationTypeName,
       };
     });
+
+  const qualificationStatusList =
+    qualificationStatus &&
+    qualificationStatus.length > 0 &&
+    qualificationStatus.map((obj) => {
+      return {
+        value: obj.qualificationStatus?.qualificationStatusId,
+        label: obj.description,
+      };
+    });
+
   const levelList =
     levels &&
     levels.length > 0 &&
     levels.map((obj) => {
       return {
-        value: obj.levelKKK.levelKKKId,
+        value: obj.levelKKK?.levelKKKId,
         label: obj.levelKKKDescription,
       };
     });
@@ -125,16 +182,53 @@ export default function EditQualifications() {
     });
   }
 
+  const dateString3 = qualification.ExpiryDate;
+  const date3 = new Date(dateString3);
+  const year3 = date3.getFullYear();
+  const month3 = String(date3.getMonth() + 1).padStart(2, "0");
+  const day3 = String(date3.getDate()).padStart(2, "0");
+  const expiryDate = `${year3}-${month3}-${day3}`;
+
   const defaultSelectValue =
     levels.length > 0 &&
-    levels.find((obj) => obj.levelKKK.levelKKKId === qualification.LevelKKKId);
+    levels.find((obj) => obj.levelKKK.levelKKKId === qualification?.LevelKKKId);
+  const defaultLevelValue = defaultSelectValue && {
+    label: defaultSelectValue.levelKKKDescription,
+    value: defaultSelectValue.levelKKK.levelKKKId,
+  };
 
-  const defaultLabel = defaultSelectValue?.levelKKKDescription ?? "";
-  const defaultValue = defaultSelectValue?.levelKKK?.levelKKKId ?? "";
+  const defaultSelectValueType =
+    qualificationTypes.length > 0 &&
+    qualificationTypes.find(
+      (obj) =>
+        obj.qualificationType.qualificationTypeId ===
+        qualification.QualificationTypeId
+    );
 
-  const defaultOption = {
-    label: defaultLabel,
-    value: defaultValue,
+  const defaultLabelType = defaultSelectValueType?.qualificationTypeName ?? "";
+  const defaultValueType =
+    defaultSelectValueType?.qualificationType?.qualificationTypeId ?? "";
+
+  const defaultOptionType = {
+    label: defaultLabelType,
+    value: defaultValueType,
+  };
+
+  const defaultSelectValueStatus =
+    qualificationStatus.length > 0 &&
+    qualificationStatus.find(
+      (obj) =>
+        obj.qualificationStatus.qualificationStatusId ===
+        qualification.QualificationStatusId
+    );
+
+  const defaultLabelStatus = defaultSelectValueStatus?.description ?? "";
+  const defaultValueStatus =
+    defaultSelectValueStatus?.qualificationStatus?.qualificationStatusId ?? "";
+
+  const defaultOptionStatus = {
+    label: defaultLabelStatus,
+    value: defaultValueStatus,
   };
 
   const subQualificationList =
@@ -159,6 +253,27 @@ export default function EditQualifications() {
       QualificationTypeId: e,
     });
   }
+
+  function changeStatus(e) {
+    setQualification({
+      ...qualification,
+      QualificationStatusId: e,
+    });
+  }
+
+  function formatedDate(date) {
+    const [day, month, year] = date.split("/");
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  }
+
+  function changeExpiryDate(date, dateString) {
+    setQualification({
+      ...qualification,
+      ExpiryDate: formatedDate(dateString),
+    });
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     await CrudProvider.updateItem(
@@ -177,171 +292,319 @@ export default function EditQualifications() {
   }
 
   return (
-    <div className='card'>
+    <div className="card">
       {!load ? (
-        <div className='card-body'>
-          <h3 className='mb-3'>{t("ModifyQualification")}</h3>
+        <div className="card-body">
+          <h3 className="mb-3">{t("ModifyQualification")}</h3>
           <hr />
           <form onSubmit={handleSubmit}>
-            <div className='row'>
-              <div className='col-md-4'>
-                <label className='col-form-label'>{t("Code")} (AL)</label>
+            <div className="row">
+              <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
+                <label>{t("Code")}</label>
                 <input
-                  type='text'
-                  defaultValue={qualification.CodeAL}
-                  className='form-control'
+                  type="text"
+                  className="form-control"
+                  defaultValue={qualification.Code}
                   onChange={(e) => {
                     setQualification({
                       ...qualification,
-                      codeAL: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-              <div className='col-md-4'>
-                <label className='col-md-5 col-form-label'>
-                  {t("Code")} (EN)
-                </label>
-                <input
-                  type='text'
-                  defaultValue={qualification.CodeEN}
-                  className='form-control'
-                  onChange={(e) => {
-                    setQualification({
-                      ...qualification,
-                      CodeEN: e.target.value,
+                      Code: e.target.value,
                     });
                   }}
                 />
               </div>
 
-              <div className='col-md-4'>
-                <label className='col-md-5 col-form-label'>
-                  {t("Code")} (SR)
-                </label>
-                <input
-                  type='text'
-                  defaultValue={qualification.CodeSR}
-                  className='form-control'
-                  onChange={(e) => {
-                    setQualification({
-                      ...qualification,
-                      CodeSR: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-              <div className='col-md-12'>
-                <label className='col-md-2 col-form-label'>
-                  {t("QualificationName")} (AL)
-                </label>
-                <textarea
-                  type='text'
-                  rows={6}
-                  defaultValue={qualification.QualificationNameAL}
-                  className='form-control'
-                  onChange={(e) => {
-                    setQualification({
-                      ...qualification,
-                      QualificationNameAL: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-
-              <div className='col-md-12'>
-                <label className='col-md-2 col-form-label'>
-                  {t("QualificationName")} (EN)
-                </label>
-                <textarea
-                  type='text'
-                  rows={6}
-                  defaultValue={qualification.QualificationNameEN}
-                  className='form-control'
-                  onChange={(e) => {
-                    setQualification({
-                      ...qualification,
-                      QualificationNameEN: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-
-              <div className='col-md-12'>
-                <label className='col-md-2 col-form-label'>
-                  {t("QualificationName")} (SR)
-                </label>
-                <textarea
-                  type='text'
-                  rows={6}
-                  defaultValue={qualification.QualificationNameSR}
-                  className='form-control'
-                  onChange={(e) => {
-                    setQualification({
-                      ...qualification,
-                      QualificationNameSR: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-              <div className='col-md-12'>
-                <label className='col-form-label'>
-                  {t("SubQualifications")}
-                </label>
-                <textarea
-                  type='text'
-                  rows={3}
-                  readOnly
-                  value={textareaValue}
-                  className='form-control'
-                />
-              </div>
-              <div className='col-md-4'>
-                <label className='col-md-5 col-form-label'>{t("Level")}</label>
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("QualificationType")}</label>
                 <CustomSelect
                   hasDefaultValue={true}
-                  onChangeFunction={changeLevel}
-                  optionsList={levelList}
-                  defaultValue={defaultOption}
-                  isMulti={false}
-                />
-              </div>
-              <div className='col-md-4'>
-                <label className='col-md-5 col-form-label'>
-                  {t("QualificationType")}
-                </label>
-                <CustomSelect
-                  hasDefaultValue={true}
+                  defaultValue={defaultOptionType}
                   onChangeFunction={changeType}
                   optionsList={qualificationTypeList}
-                  defaultValue={
-                    qualificationTypeList &&
-                    qualificationTypeList.find(
-                      (obj) => obj.value === qualification.QualificationTypeId
-                    )
-                  }
                   isMulti={false}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("Level")}</label>
+                <CustomSelect
+                  hasDefaultValue={true}
+                  defaultValue={defaultLevelValue}
+                  onChangeFunction={changeLevel}
+                  optionsList={levelList}
+                  isMulti={false}
+                />
+              </div>
+
+              <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
+                <label>{t("ExpiryDate")}:</label>
+                <input
+                  type="date"
+                  autoComplete="off"
+                  id="basic-datepicker"
+                  className="form-control flatpickr-input active"
+                  value={expiryDate}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      ExpiryDate: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("QualificationName")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  defaultValue={qualification.QualificationName}
+                  className="form-control"
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      QualificationName: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("AccreditedProvider")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.AccreditedProvider}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      AccreditedProvider: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("EntryRequirements")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.EntryRequirements}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      EntryRequirements: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("ExternalQualityAssurance")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.ExternalQualityAssurance}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      ExternalQualityAssurance: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("FurtherInformationOnQualification")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.FurtherInformationOnQualification}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      FurtherInformationOnQualification: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("LanguageOfProvision")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.LanguageOfProvision}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      LanguageOfProvision: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("LearningOutcomesKnowledge")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.LearningOutcomesKnowledge}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      LearningOutcomesKnowledge: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("LinkToRelevantSupplements")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.LinkToRelevantSupplements}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      LinkToRelevantSupplements: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("OfficialLengthOfQualification")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.OfficialLengthOfQualification}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      OfficialLengthOfQualification: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("Other")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.Other}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      Other: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("RecognitionOfPriorLearning")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.RecognitionOfPriorLearning}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      RecognitionOfPriorLearning: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("SectorField")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.SectorField}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      SectorField: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("OccupationalStandartCode")}</label>
+                <textarea
+                  type="text"
+                  rows={3}
+                  className="form-control"
+                  defaultValue={qualification.OccupationalStandartCode}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      OccupationalStandartCode: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("QualificationStatus")}</label>
+                <CustomSelect
+                  hasDefaultValue={true}
+                  defaultValue={defaultOptionStatus}
+                  onChangeFunction={changeStatus}
+                  optionsList={qualificationStatusList}
+                  isMulti={false}
+                />
+              </div>
+
+              <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
+                <label>{t("Credits")}</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  defaultValue={qualification.Credits}
+                  onChange={(e) => {
+                    setQualification({
+                      ...qualification,
+                      Credits: e.target.value,
+                    });
+                  }}
                 />
               </div>
             </div>
 
-            <ul className='list-inline mt-2 mb-0 wizard'>
+            <ul className="list-inline mt-2 mb-0 wizard">
               <Link
-                to='/qualifications'
-                className='btn btn-danger waves-effect waves-light float-start'
+                to="/qualifications"
+                className="btn btn-danger waves-effect waves-light float-start"
               >
-                <span className='btn-label'>
-                  <i className='fe-arrow-left'></i>
+                <span className="btn-label">
+                  <i className="fe-arrow-left"></i>
                 </span>
                 {t("Discard")}
               </Link>
-              <li className='next list-inline-item float-end'>
+              <li className="next list-inline-item float-end">
                 <button
-                  type='submit'
-                  className='btn btn-success waves-effect waves-light'
+                  type="submit"
+                  className="btn btn-success waves-effect waves-light"
                 >
-                  <span className='btn-label'>
-                    <i className='fe-check'></i>
+                  <span className="btn-label">
+                    <i className="fe-check"></i>
                   </span>
                   {t("Edit")}
                 </button>
@@ -350,10 +613,10 @@ export default function EditQualifications() {
           </form>
         </div>
       ) : (
-        <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+        <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
           <div
-            className='spinner-border text-primary m-2 text-center'
-            role='status'
+            className="spinner-border text-primary m-2 text-center"
+            role="status"
           />
         </div>
       )}

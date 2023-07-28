@@ -80,7 +80,7 @@ export default function InstitutionUser() {
       cell: (row) => {
         return (
           <div className='button-list'>
-            {(row.role.includes("Zyrtar") || row.role.includes("KAAPR")) && (
+            {(!row.role.includes("Institution") && !row.role.includes("Admin")) && (
               <Link
                 type='button'
                 className='btn-secondary btn-sm'

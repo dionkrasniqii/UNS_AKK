@@ -27,7 +27,7 @@ export default function EditDecisions() {
   });
   const columns = [
     {
-      name: t("SubQualifications"),
+      name: t("Modules"),
       selector: (row) => row.qualificationChildName,
       sortable: true,
       filterable: true,
@@ -225,7 +225,7 @@ export default function EditDecisions() {
                   <DataTablev2
                     columns={columns}
                     dataSource={subQualifications}
-                    title={t("SubQualifications")}
+                    title={t("Modules")}
                   />
                   <hr />
                 </>

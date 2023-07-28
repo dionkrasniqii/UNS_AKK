@@ -30,21 +30,43 @@ export default function Qualifications() {
       filterable: true,
     },
     {
+      name: t("Modules"),
+      cell: (record) => {
+        return (
+          <div className="button-list d-flex justify-content-between">
+            <Link
+              className="btn btn-sm btn-info waves-effect waves-light"
+              to={`/createsubqualifications/${record.qualificationId}`}
+            >
+              + {t("AddModule")}
+            </Link>
+            <Link
+              className="btn btn-sm btn-secondary"
+              type="button"
+              to={`/subqualifications/${record.qualificationId}`}
+            >
+              {t("ModuleList")}
+            </Link>
+          </div>
+        );
+      },
+    },
+    {
       name: t("Actions"),
       cell: (record) => {
         return (
-          <div className='button-list'>
+          <div className="button-list">
             <Link
-              className=' btn btn-secondary btn-sm'
+              className=" btn btn-secondary btn-sm"
               to={`/editqualifications/${record.qualificationId}`}
             >
-              <i className='fe-edit' />
+              <i className="fe-edit" />
             </Link>
             <a
-              className='btn btn-sm btn-danger'
+              className="btn btn-sm btn-danger"
               onClick={(e) => handleDelete(record.qualificationId)}
             >
-              <i className='fe-trash-2' />
+              <i className="fe-trash-2" />
             </a>
           </div>
         );
@@ -93,32 +115,34 @@ export default function Qualifications() {
               }
             }
           });
+        } else if (res.statusCode === 409) {
+          toast.error(t("CannotDeleteQualification"));
         }
       }
       setLoad(false);
     });
   }
   return (
-    <div className='col-xxl-12'>
-      <div className='col-xxl-12 text-end'></div>
-      <div className='row'>
-        <div className='col-12'>
-          <div className='row'>
-            <div className='col-12'>
-              <div className='col-12 d-flex justify-content-end'>
+    <div className="col-xxl-12">
+      <div className="col-xxl-12 text-end"></div>
+      <div className="row">
+        <div className="col-12">
+          <div className="row">
+            <div className="col-12">
+              <div className="col-12 d-flex justify-content-end">
                 <Link
-                  className='btn btn-info waves-effect waves-light'
-                  to='/createqualifications'
+                  className="btn btn-info waves-effect waves-light"
+                  to="/createqualifications"
                 >
-                  <span className='btn-label'>
-                    <i className='fe-plus-circle'></i>
+                  <span className="btn-label">
+                    <i className="fe-plus-circle"></i>
                   </span>
                   {t("Add")}
                 </Link>
               </div>
             </div>
           </div>
-          <div className='p-2 mt-2'>
+          <div className="p-2 mt-2">
             {!load ? (
               <DataTablev2
                 columns={columns}
@@ -126,10 +150,10 @@ export default function Qualifications() {
                 title={t("QualificationList")}
               />
             ) : (
-              <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+              <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
                 <div
-                  className='spinner-border text-primary m-2 text-center'
-                  role='status'
+                  className="spinner-border text-primary m-2 text-center"
+                  role="status"
                 />
               </div>
             )}

@@ -78,7 +78,7 @@ export default function Decisions() {
             className='btn btn-info btn-sm rounded-pill waves-effect waves-light'
           >
             <i className='mdi mdi-alert-circle-outline pe-1' />
-            Shiko vendimin
+            {t("SeeDecision")}
           </Link>
         );
       },
