@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CrudProvider from "../../provider/CrudProvider";
+import jwtDecode from "jwt-decode";
 
 export default function MultiRoles(props) {
   const navigate = useNavigate();
@@ -14,7 +15,14 @@ export default function MultiRoles(props) {
       ).then((res) => {
         if (res) {
           localStorage.setItem("akktoken", res.token);
-          navigate("/");
+          const decodedToken = jwtDecode(res.token);
+          if (decodedToken.role.includes("Institution")) {
+            navigate("/students");
+          } else if (decodedToken.role.includes("Admin")) {
+            navigate("/");
+          } else {
+            navigate("/applications");
+          }
           props.setAuthState(true);
           setLoad(false);
         }

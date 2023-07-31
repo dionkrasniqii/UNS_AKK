@@ -34,7 +34,7 @@ import InstitutionDetails from "../components/search/InstitutionDetails";
 import PersonDetails from "../components/personinstitutions/PersonDetails";
 import Reports from "../components/reports/Reports";
 import StatisticReports from "../components/reports/StatisticReports";
-import ApplyForm from "../components/applicationforms/apply/ApplyForm";
+import ApplyForm from "../components/applicationforms/firstapplication/ApplyForm";
 import SearchingForms from "../components/search/SearchingForms";
 import ApplicationsList from "../components/applicationforms/verification/ApplicationsList";
 import InstitutionUser from "../components/institutionuser/InstitutionUser";
@@ -42,10 +42,11 @@ import CreateInstitutionUser from "../components/institutionuser/CreateInstituti
 import EditInstitutionUser from "../components/institutionuser/EditInstitutionUser";
 import ApplicationListInstitutions from "../components/applicationforms/verification/ApplicationListInstitutions";
 import ViewApplication from "../components/applicationforms/verification/ViewApplication";
-import EditApplicationInstitution from "../components/applicationforms/verification/EditApplicationInstitution";
+import EditApplicationInstitution from "../components/applicationforms/verification/edit/EditFirstApplicationFormA";
 import QualificationType from "../components/qualificationtype/QualificationType";
 import CreateQualificationType from "../components/qualificationtype/CreateQualificationType";
 import EditQualificationType from "../components/qualificationtype/EditQualificationType";
+import ExpertReviewApplication from "../components/applicationforms/verification/ExpertReviewApplication";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -53,9 +54,10 @@ export const AppRoutes = (props) => {
     INSTITUTION: "Institution",
     MANAGER: "Manager",
     MODERATOR: "Moderator",
-    KAAPR: "KAAPR",
-    CLIENT: "Client",
-    ZYRTAR: "Zyrtar",
+    ZyrtarPerCaktiminEksperteve: "Zyrtar per caktimin e eksperteve",
+    ZyrtarAKK: "Zyrtar AKK",
+    Bord: "Bord",
+    EKSPERT: "Ekspert",
   };
   return (
     <div
@@ -72,7 +74,11 @@ export const AppRoutes = (props) => {
                 <PrivateRoute
                   setAuthState={props.setAuthState}
                   authState={props.authState}
-                  allowedRoles={[ROLES.ADMIN, ROLES.KAAPR, ROLES.ZYRTAR]}
+                  allowedRoles={[
+                    ROLES.ADMIN,
+                    ROLES.ZyrtarAKK,
+                    ROLES.ZyrtarPerCaktiminEksperteve,
+                  ]}
                   component={Home}
                 />
               ) : (
@@ -90,7 +96,11 @@ export const AppRoutes = (props) => {
                 <PrivateRoute
                   setAuthState={props.setAuthState}
                   authState={props.authState}
-                  allowedRoles={[ROLES.ADMIN, ROLES.KAAPR, ROLES.ZYRTAR]}
+                  allowedRoles={[
+                    ROLES.ADMIN,
+                    ROLES.ZyrtarAKK,
+                    ROLES.ZyrtarPerCaktiminEksperteve,
+                  ]}
                   component={Home}
                 />
               ) : (
@@ -175,7 +185,7 @@ export const AppRoutes = (props) => {
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.ADMIN]}
+                allowedRoles={[ROLES.ADMIN, ROLES.ZyrtarAKK]}
                 component={Decisions}
               />
             }
@@ -336,8 +346,8 @@ export const AppRoutes = (props) => {
                 authState={props.authState}
                 allowedRoles={[
                   ROLES.INSTITUTION,
-                  ROLES.KAAPR,
-                  ROLES.ZYRTAR,
+                  ROLES.ZyrtarAKK,
+                  ROLES.ZyrtarPerCaktiminEksperteve,
                   ROLES.MANAGER,
                   ROLES.MODERATOR,
                 ]}
@@ -445,8 +455,10 @@ export const AppRoutes = (props) => {
                 allowedRoles={[
                   ROLES.ADMIN,
                   ROLES.INSTITUTION,
-                  ROLES.KAAPR,
-                  ROLES.ZYRTAR,
+                  ROLES.ZyrtarAKK,
+                  ROLES.ZyrtarPerCaktiminEksperteve,
+                  ROLES.Bord,
+                  ROLES.EKSPERT,
                 ]}
                 component={ApplicationsList}
               />
@@ -480,8 +492,25 @@ export const AppRoutes = (props) => {
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.ADMIN, ROLES.KAAPR, ROLES.ZYRTAR]}
+                allowedRoles={[
+                  ROLES.ADMIN,
+                  ROLES.ZyrtarAKK,
+                  ROLES.ZyrtarPerCaktiminEksperteve,
+                  ROLES.Bord,
+                  ROLES.EKSPERT,
+                ]}
                 component={ViewApplication}
+              />
+            }
+          />
+          <Route
+            path='/expert-review-application/:id/:ApplicationExpertId'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.EKSPERT]}
+                component={ExpertReviewApplication}
               />
             }
           />

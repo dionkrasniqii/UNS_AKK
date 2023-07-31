@@ -50,64 +50,44 @@ export default function ApplicationsList() {
       sortable: true,
       filterable: true,
       cell: (row) => {
-        switch (row.status) {
-          case "Proces":
-            return (
-              <span
-                type='button'
-                className='btn btn-success rounded-pill waves-effect'
-              >
-                {row.status}
-              </span>
-            );
-          case "Rikthim":
-            return (
-              <button
-                type='button'
-                className='btn btn-warning rounded-pill waves-effect'
-              >
-                {row.status}
-              </button>
-            );
-          case "Refuzuar":
-            return (
-              <button
-                type='button'
-                className='btn btn-danger rounded-pill waves-effect'
-              >
-                {row.status}
-              </button>
-            );
-          case "Verifikuar":
-            return (
-              <button
-                type='button'
-                className='btn btn-info rounded-pill waves-effect'
-              >
-                {row.status}
-              </button>
-            );
-          case "Aprovuar":
-            return (
-              <button
-                type='button'
-                className='btn btn-primary rounded-pill waves-effect'
-              >
-                {row.status}
-              </button>
-            );
-          default:
-            break;
+        if (row.step === 3) {
+          return (
+            <button
+              type='button'
+              className='btn btn-warning rounded-pill waves-effect'
+            >
+              Rikthim
+            </button>
+          );
+        } else if (row.step === 5 || row.step === 9) {
+          return (
+            <span
+              type='button'
+              className='btn btn-danger rounded-pill waves-effect'
+            >
+              Refuzuar
+            </span>
+          );
+        } else {
+          return (
+            <span
+              type='button'
+              className='btn btn-success rounded-pill waves-effect'
+            >
+              Proces
+            </span>
+          );
         }
       },
     },
+
     {
       name: t("RegisterDecision"),
       sortable: true,
       filterable: true,
       cell: (row, index) => {
-        switch (row.status) {
-          case "Aprovuar":
+        switch (row.step) {
+          case 8:
             return (
               <CreateDecisionModal
                 applicationId={row.applicationId}
@@ -130,7 +110,11 @@ export default function ApplicationsList() {
       cell: (row) => {
         return (
           <Link
-            to={`/view-application/${row.applicationId}`}
+            to={
+              decodedToken.role === "Ekspert"
+                ? `/expert-review-application/${row.applicationId}/${row.applicationExpertId}`
+                : `/view-application/${row.applicationId}`
+            }
             className='btn btn-dark waves-effect waves-light'
           >
             <i className='fe-edit' />
@@ -147,25 +131,38 @@ export default function ApplicationsList() {
       return col;
     }
   });
-
   const statusToSearch =
     decodedToken &&
     (() => {
       switch (decodedToken.role) {
-        case "Zyrtar":
-          return "a05fff28-087c-4063-3409-08db77102452";
-        case "KAAPR":
-          return "a05fff28-087c-4063-3409-08db67102415";
+        case "Zyrtar AKK":
+          return "1";
+        case "Bord":
+          return "2";
+        case "Zyrtar per caktimin e eksperteve":
+          return "4";
+        case "Ekspert":
+          return "6";
         case "Admin":
-          return "00000000-0000-0000-0000-000000000000";
+          return "0";
         default:
           return null;
       }
     })();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (statusToSearch) {
+  const fetchData = async () => {
+    try {
+      if (statusToSearch) {
+        if (decodedToken.role === "Ekspert") {
+          const res = await CrudProvider.getItemByIdLang(
+            "ApplicationAPI/GetApplicationByExpert",
+            decodedToken?.UserId
+          );
+
+          if (res.statusCode === 200) {
+            setData(res.result);
+            setLoad(false);
+          }
+        } else {
           const res = await CrudProvider.getItemByIdLang(
             "ApplicationAPI/GetAppByStatus",
             statusToSearch
@@ -173,17 +170,20 @@ export default function ApplicationsList() {
 
           if (res.statusCode === 200) {
             setData(res.result);
+            setLoad(false);
           }
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoad(false);
       }
-    };
-
+    } catch (error) {
+      setLoad(false);
+    } finally {
+      setLoad(false);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, [statusToSearch]);
+
   return load ? (
     <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
       <div

@@ -36,12 +36,13 @@ export default function Login(props) {
             toast.success(t("LoginSuccess"));
             props.setAuthState(true);
             localStorage.setItem("akktoken", res.token);
-            dispatch(setToken(res.token));
             const decodedToken = jwtDecode(res.token);
             if (decodedToken.role.includes("Institution")) {
               navigate("/students");
-            } else {
+            } else if (decodedToken.role.includes("Admin")) {
               navigate("/");
+            } else {
+              navigate("/applications");
             }
             break;
           case 207:

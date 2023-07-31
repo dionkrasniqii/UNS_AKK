@@ -13,17 +13,16 @@ export default function FifthForm({ model, setModel, ...rest }) {
   const schema = Yup.object().shape({
     InstitutionsDocs: Yup.mixed().required(t("UploadDocuments")),
     Staff: Yup.mixed().required(t("UploadDocuments")),
+    OtherRequests: Yup.mixed().required(t("UploadDocuments")),
   });
   const formik = useFormik({
     initialValues: {},
     validationSchema: schema,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: () => SubmitForm(),
+    onSubmit: () => rest.setShowSixthForm(true),
   });
-  async function SubmitForm() {
-    rest.submit();
-  }
+
 
   async function changeInstitutionsDocs(files) {
     const newArray = model.Docs.filter(
@@ -65,6 +64,7 @@ export default function FifthForm({ model, setModel, ...rest }) {
       ...model,
       Docs: [...newArray, ...updatedDocs],
     });
+    formik.setFieldValue("OtherRequests", files);
   }
   return (
     <form
@@ -96,7 +96,6 @@ export default function FifthForm({ model, setModel, ...rest }) {
           <br />• {t("StrategicPlan")},
           <br />• {t("BusinessPlan")}.
         </p>
-
         <CustomFileInput
           onChangeFunction={changeInstitutionsDocs}
           acceptType={".pdf"}
@@ -131,21 +130,21 @@ export default function FifthForm({ model, setModel, ...rest }) {
           acceptType={".pdf"}
           isMultiple={true}
         />
-        <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
-          {!rest.load ? (
+        {formik.errors.OtherRequests && (
+          <span className='text-danger mt-2'>
+            {formik.errors.OtherRequests}
+          </span>
+        )}
+        {!rest.showSixthForm && (
+          <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
             <button
               type='submit'
               className='btn btn btn-primary btn-soft-blue rounded-pill '
             >
-              {t("Apply")}
+              {t("Next")}
             </button>
-          ) : (
-            <div
-              className='spinner-border text-primary m-2 text-center'
-              role='status'
-            />
-          )}
-        </div>
+          </div>
+        )}
       </div>
       <hr />
     </form>

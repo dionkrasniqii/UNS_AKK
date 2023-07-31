@@ -3,14 +3,15 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import FirstForm from "./FirstForm";
-import ProgressBar from "../../custom/ProgressBar";
 import SecondForm from "./SecondForm";
 import ThirdForm from "./ThirdForm";
 import FourthForm from "./FourthForm";
 import FifthForm from "./FifthForm";
 import CrudProvider from "../../../provider/CrudProvider";
 import { toast } from "react-toastify";
-
+import SixthForm from "./SixthForm";
+import SeventhForm from "./SeventhForm";
+import SecondApplyForm from "../secondapplication/SecondApplyForm";
 export default function ApplyForm({ authState }) {
   const { t } = useTranslation();
   const token = localStorage.getItem("akktoken");
@@ -21,6 +22,9 @@ export default function ApplyForm({ authState }) {
   const [showThirdForm, setShowThirdForm] = useState(false);
   const [showFourthForm, setShowFourthForm] = useState(false);
   const [showFifthForm, setShowFifthForm] = useState(false);
+  const [showSixthForm, setShowSixthForm] = useState(false);
+  const [showSeventhForm, setShowSeventhForm] = useState(false);
+  const [showValidationForm, setShowValidationForm] = useState(false);
   const [model, setModel] = useState({
     InstitutionId: authState ? decodedToken.groupsid : "",
     InstitutionName: "",
@@ -33,8 +37,9 @@ export default function ApplyForm({ authState }) {
     Email: "",
     Web: "",
     InstitutionLogo: "",
-    QualificationId: "",
+    QualificationTitleAndLevel: "",
     InstitutionActivityId: "",
+    InstitutionActivityName: "",
     QualificationPeriodA17: "",
     MASHTLicenseA16: "",
     OfferNoValidationCertificationA18: false,
@@ -48,18 +53,65 @@ export default function ApplyForm({ authState }) {
     RegisterNrA15: "",
     FiscalNrA15: "",
     InstitutionStatusId: "",
+    InstitutionStatusName: "",
     Docs: [],
     IsLoggedIn: authState,
   });
-
+  const [secondApplication, setSecondApplication] = useState({
+    QualificationTitleB1: "",
+    LevelB2: "",
+    QualificationTypeB3: "",
+    NumberOfHoursOfGeneralSubjectsB4: "",
+    NumberOfHoursOfProfessionalTheoreticalB4: "",
+    NumberOfHoursPracticB4: "",
+    NumberOfHoursForEvaluationB4: "",
+    NumberOfHoursForSelfStudyB4: "",
+    TotalNumberOfCreditsB4: "",
+    HasInstitutionDevelopStandartOfJobC1: false,
+    HasInstitutionDevelopStandartOfJobTextC1: "",
+    HasInstitutionDevelopQualificationC2: false,
+    HasInstitutionDevelopQualificationTextC2: "",
+    GoalsOfQualificationD11: "",
+    TargetGroupInThisQualificationD12: "",
+    DoesQualificationRelateWithOtherJobsD21: "",
+    WhatThisQualificationEnableD22: "",
+    ProvideDetailsOnInvolvementOfActorsD23: "",
+    ProvideDetailsOnRelateOfModulesD31: "",
+    ListModulesOfQualificationD4: "",
+    InCaseQualificationHasObligativeModulesD4: "",
+    SubmitLogicLinkOfModulesForCertificateD4: "",
+    ListModuletZgjedhoreD4: "",
+    ProvideDataForMethodsOfEvaluationD51: "",
+    WhatKnowledgePracticalCompetencesAreAssessedD52: "",
+    MinimumRequirementsToAchieveQualificationD53: "",
+    WhatEquipmentAreUsedForAssessmentD54: "",
+    EntryRequirementsInQualificationD61: "",
+    CritersAcceptOfCandidatesForQualificationD62: "",
+    IsAnyModulPartOfOtherQualificationD63: "",
+    DoYouRecognizeCreditsFromOtherInstitutionD64: "",
+    InformationIfThisQualificationEnableProgressD65: "",
+    ProvideEvidenceOfInternalAndExternalQualityD71: "",
+    NameSurnameLeaderE11: "",
+    AddressLeaderE11: "",
+    PhoneNumberLeaderE11: "",
+    FaxLeaderE11: "",
+    EmailLeaderE11: "",
+    NameSurnameCoordinatorE12: "",
+    AddressCoordinatorE12: "",
+    PhoneNumberCoordinatorE12: "",
+    FaxCoordinatorE12: "",
+    EmailCoordinatorE12: "",
+    PlaceOfApplicationE15: "",
+  });
   async function SubmitApplication() {
     try {
       setLoad(true);
-      await CrudProvider.createItemWithFile(
+      await CrudProvider.postApplication(
         "ApplicationAPI/ApplicationPost",
-        model
+        model,
+        secondApplication,
+        showValidationForm
       ).then((res) => {
-        console.log(res);
         if (res) {
           switch (res.statusCode) {
             case 200:
@@ -91,7 +143,7 @@ export default function ApplyForm({ authState }) {
             setShowSecondForm={setShowSecondForm}
             showSecondForm={showSecondForm}
           />
-          {showSecondForm && (
+          {!showSecondForm && (
             <SecondForm
               model={model}
               setModel={setModel}
@@ -99,7 +151,7 @@ export default function ApplyForm({ authState }) {
               showThirdForm={showThirdForm}
             />
           )}
-          {showThirdForm && (
+          {!showThirdForm && (
             <ThirdForm
               model={model}
               setModel={setModel}
@@ -107,7 +159,7 @@ export default function ApplyForm({ authState }) {
               showFourthForm={showFourthForm}
             />
           )}
-          {showFourthForm && (
+          {!showFourthForm && (
             <FourthForm
               model={model}
               setModel={setModel}
@@ -115,12 +167,38 @@ export default function ApplyForm({ authState }) {
               setShowFifthForm={setShowFifthForm}
             />
           )}
-          {showFifthForm && (
+          {!showFifthForm && (
             <FifthForm
               model={model}
               setModel={setModel}
+              showSixthForm={showSixthForm}
+              setShowSixthForm={setShowSixthForm}
+            />
+          )}
+          {!showSixthForm && (
+            <SixthForm
+              model={model}
+              setModel={setModel}
+              showSeventhForm={showSeventhForm}
+              setShowSeventhForm={setShowSeventhForm}
+            />
+          )}
+          {!showSeventhForm && (
+            <SeventhForm
+              model={model}
+              setModel={setModel}
+              showValidationForm={showValidationForm}
+              setShowValidationForm={setShowValidationForm}
               submit={SubmitApplication}
-              load={load}
+            />
+          )}
+          {!showValidationForm && (
+            <SecondApplyForm
+              model={model}
+              setModel={setModel}
+              secondApplication={secondApplication}
+              setSecondApplication={setSecondApplication}
+              submit={SubmitApplication}
             />
           )}
         </div>

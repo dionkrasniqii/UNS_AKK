@@ -8,11 +8,12 @@ import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import ViewSecondApplication from "./ViewSecondApplication";
+import AssignExperts from "./AssignExperts";
 
 export default function ViewApplication() {
   const { id } = useParams();
   const { t } = useTranslation();
-  const [load, setLoad] = useState(false);
   const [data, setData] = useState({});
   const [logoModal, setLogoModal] = useState(false);
   const [mashtModal, setMashtModal] = useState(false);
@@ -21,6 +22,21 @@ export default function ViewApplication() {
   const [instituonDetailsModal, setInstitutionDetailsModal] = useState(false);
   const [staffModal, setStaffModal] = useState(false);
   const [otherRequestModal, setOtherRequestModal] = useState(false);
+  const [managementOfQualityModal, setManagementOfQualityModal] =
+    useState(false);
+  const [dataOfAssuranceModal, setDataOfAssuranceModal] = useState(false);
+  const [
+    managementQualityCertificationModal,
+    setManagementQualityCertificationModal,
+  ] = useState(false);
+  const [politicsB14Modal, setPoliticsB14Modal] = useState(false);
+  const [handicapesB15Modal, setHandicapeB15Modal] = useState(false);
+  const [politicsB16Modal, setPoliticsB16Modal] = useState(false);
+  const [systemCreditsModal, setSystemCreditsModal] = useState(false);
+  const [enviromentModal, setEnviromentModal] = useState(false);
+  const [modelOfCertificateModal, setModelOfCertificateModal] = useState(false);
+  const [modalOfRVV, setModalOfRVV] = useState(false);
+  const [formatOfModule, setFormatOfModule] = useState(false);
   const [statuses, setStatuses] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("akktoken");
@@ -34,9 +50,33 @@ export default function ViewApplication() {
   });
   const [postLoad, setPostLoad] = useState(false);
   const [isSelected, setIsSelected] = useState("");
+  const secondApplication =
+    data &&
+    Object.keys(data).length > 0 &&
+    data.applicationQualificationValidationDTO;
+  const [expertReports, setExpertReports] = useState({});
+  const [finalExpertReportModal, setFinalExpertReportModal] = useState(false);
+  const [expertReportsModal,setExpertsReportsModal]=useState(false)
+  async function callExpertReports() {
+    if (data.step === 7) {
+      await CrudProvider.getItemById("ApplicationAPI/ExpertResults", id).then(
+        (res) => {
+          if (res) {
+            if (res.statusCode === 200) {
+              setExpertReports(res.result);
+            }
+          }
+        }
+      );
+    }
+  }
+  console.log(expertReports);
+
   useEffect(() => {
-    try {
-      setLoad(true);
+    callExpertReports();
+  }, [data]);
+  useEffect(() => {
+    Promise.all([
       CrudProvider.getItemById("ApplicationAPI/GetById", id).then((res) => {
         if (res) {
           switch (res.statusCode) {
@@ -55,7 +95,7 @@ export default function ViewApplication() {
               break;
           }
         }
-      });
+      }),
       CrudProvider.getAll("GeneralAPI/GetStatuses").then((res) => {
         if (res) {
           switch (res.statusCode) {
@@ -70,10 +110,8 @@ export default function ViewApplication() {
               break;
           }
         }
-      });
-    } finally {
-      setLoad(false);
-    }
+      }),
+    ]);
   }, []);
   async function checkModel(model) {
     if (model.StatusName === "Rikthim") {
@@ -83,50 +121,54 @@ export default function ViewApplication() {
         toast.error("Plotësoni vërejtjen");
         return false;
       }
+    } else {
+      return true;
     }
   }
-
+  console.log(data);
   async function SubmitApplication() {
-    await checkModel(model);
-    setPostLoad(true);
-    await CrudProvider.createItem(
-      "ApplicationAPI/UpdateApplicationStatus",
-      model
-    ).then((res) => {
-      if (res) {
-        switch (res.statusCode) {
-          case 200:
-            toast.success(t("DataUpdatedSuccessfully"));
-            navigate("/applications");
-            setPostLoad(false);
-            break;
-          default:
-            setPostLoad(false);
-            break;
-        }
+    try {
+      setPostLoad(true);
+      var check = await checkModel(model);
+      if (check) {
+        await CrudProvider.createItem(
+          "ApplicationAPI/UpdateApplicationStatus",
+          model
+        ).then((res) => {
+          if (res) {
+            switch (res.statusCode) {
+              case 200:
+                toast.success(t("DataUpdatedSuccessfully"));
+                navigate("/applications");
+                setPostLoad(false);
+                break;
+              default:
+                setPostLoad(false);
+                break;
+            }
+          }
+        });
       }
-    });
+    } finally {
+      setPostLoad(false);
+    }
   }
+  console.log(data);
   const statusesList =
     statuses.length > 0 &&
     decodedToken &&
     statuses
       .filter((status) => {
-        if (decodedToken.role === "KAAPR") {
-          if (
-            status.description === "Aprovuar" ||
-            status.description === "Refuzuar"
-          ) {
-            return status;
-          }
-        } else if (decodedToken.role === "Zyrtar") {
-          if (
-            status.description === "Rikthim" ||
-            status.description === "Verifikuar"
-          ) {
-            return status;
+        if (decodedToken.role === "Zyrtar AKK") {
+          return status.step === 2 || status.step === 3;
+        } else if (decodedToken.role === "Bord") {
+          if (data.step === 7) {
+            return status.step === 9 || status.step === 8;
+          } else {
+            return status.step === 4 || status.step === 5;
           }
         }
+        return false;
       })
       .sort((a, b) => b.description.localeCompare(a.description));
 
@@ -136,7 +178,7 @@ export default function ViewApplication() {
       setModel({
         ...model,
         StatusId: e.target.value,
-        StatusName: e.target.name,
+        StatusName: e.target.name === 3 ? "Rikthim" : e.target.name,
       });
       formik.setFieldValue("StatusId", e.target.value);
     } else {
@@ -157,6 +199,7 @@ export default function ViewApplication() {
     validationSchema: schema,
     onSubmit: () => SubmitApplication(),
   });
+
   return Object.keys(data).length > 0 ? (
     <div className='container'>
       <div className='card'>
@@ -206,6 +249,7 @@ export default function ViewApplication() {
           </div>
           <hr />
           <div className='row '>
+            <h3 className='card-title text-start '>{t("PartA")}</h3>
             <h5>{t("InstitutionDetails")}:</h5>
             <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
               <div className='form-group'>
@@ -707,39 +751,616 @@ export default function ViewApplication() {
           <hr />
           <form onSubmit={formik.handleSubmit}>
             <div className='row'>
-              {model.StatusName === "Rikthim" && (
-                <div className='col-xxl-12 col-lg-12 col-sm-12'>
-                  <div className='form-group'>
-                    <label>Vërejtje</label>
-                    <textarea
-                      rows={5}
-                      className='mt-2'
-                      onChange={(e) =>
-                        setModel({
-                          ...model,
-                          Remark: e.target.value,
-                        })
+              <div className='row mb-2'>
+                <h3 className='card-title text-start '>{t("PartB")}</h3>
+                <h5 className='card-title text-start '>
+                  {t("PartBFirstDesc")}
+                </h5>
+                <h5 className='card-title'>{t("PartBSecondDesc")}</h5>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>
+                    B.1.1 {t("ManagementOfQuality")}
+                  </h5>
+                  <Button
+                    onClick={() => setManagementOfQualityModal(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("ManagementOfQuality")}
+                    centered
+                    className='responsive-modal'
+                    open={managementOfQualityModal}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setManagementOfQualityModal(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "ManagementOfQualityDocs") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
                       }
-                    />
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>B.1.2 {t("DataOfAssurance")}</h5>
+                  <Button
+                    onClick={() => setDataOfAssuranceModal(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("DataOfAssurance")}
+                    centered
+                    className='responsive-modal'
+                    open={dataOfAssuranceModal}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setDataOfAssuranceModal(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "DataOfAssurance") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>
+                    B.1.3 {t("ManagementQualityCertification")}
+                  </h5>
+                  <Button
+                    onClick={() => setManagementQualityCertificationModal(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("ManagementQualityCertification")}
+                    centered
+                    className='responsive-modal'
+                    open={managementQualityCertificationModal}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() =>
+                      setManagementQualityCertificationModal(false)
+                    }
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "ManagementQualityCertification") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>B.1.4 {t("PoliticsB14")}</h5>
+                  <Button
+                    onClick={() => setPoliticsB14Modal(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("PoliticsB14")}
+                    centered
+                    className='responsive-modal'
+                    open={politicsB14Modal}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setPoliticsB14Modal(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "PoliticsAndProcedures") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>
+                    B.1.5 {t("HandicapesPolitics")}
+                  </h5>
+                  <Button
+                    onClick={() => setHandicapeB15Modal(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("HandicapesPolitics")}
+                    centered
+                    className='responsive-modal'
+                    open={handicapesB15Modal}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setHandicapeB15Modal(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "HandicapDocs") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>
+                    B.1.6 {t("PoliticsProcedures")}
+                  </h5>
+                  <Button
+                    onClick={() => setPoliticsB16Modal(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("PoliticsProcedures")}
+                    centered
+                    className='responsive-modal'
+                    open={politicsB16Modal}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setPoliticsB16Modal(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "PoliticsProceduresDocs") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>B.1.7 {t("SystemCredits")}</h5>
+                  <Button
+                    onClick={() => setSystemCreditsModal(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("SystemCredits")}
+                    centered
+                    className='responsive-modal'
+                    open={systemCreditsModal}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setSystemCreditsModal(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "SystemCreditsDocs") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>B.1.8 {t("SafeEnviroment")}</h5>
+                  <Button
+                    onClick={() => setEnviromentModal(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("SafeEnviroment")}
+                    centered
+                    className='responsive-modal'
+                    open={enviromentModal}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setEnviromentModal(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "EnviromentDocs") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>B.1.9 {t("B1.9")}.</h5>
+                  <Button
+                    onClick={() => setModelOfCertificateModal(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("SafeEnviroment")}
+                    centered
+                    className='responsive-modal'
+                    open={modelOfCertificateModal}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setModelOfCertificateModal(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "CertificateDoc") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>{t("ReportRVV")}.</h5>
+                  <Button
+                    onClick={() => setModalOfRVV(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("ReportRVV")}
+                    centered
+                    className='responsive-modal'
+                    open={modalOfRVV}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setModalOfRVV(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "ReportRVVDoc") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
+                  <h5 className='card-title'>{t("FormatOfModule")}.</h5>
+                  <Button
+                    onClick={() => setFormatOfModule(true)}
+                    className=' btn-dark'
+                  >
+                    {t("Documents")}
+                  </Button>
+                  <Modal
+                    title={t("FormatOfModule")}
+                    centered
+                    className='responsive-modal'
+                    open={formatOfModule}
+                    okButtonProps={{ style: { display: "none" } }}
+                    onCancel={() => setFormatOfModule(false)}
+                  >
+                    {data.docs.map((document) => {
+                      if (document.type === "FormatOfModuleDoc") {
+                        return CrudProvider.checkIsPDf(document.docPath) ==
+                          true ? (
+                          <iframe
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        ) : (
+                          <img
+                            key={document.applicationDocsId}
+                            src={CrudProvider.documentPath(document.docPath)}
+                            loading='lazy'
+                          />
+                        );
+                      }
+                    })}
+                  </Modal>
+                </div>
+              </div>
+              <hr />
+              <div className='row mb-2'>
+                <h3 className='card-title text-start '>{t("PartC")}</h3>
+                <h4 className='card-title text-start '>{t("PartC.1")}</h4>
+                <hr />
+                <h5 className='card-title text-start '>{t("PartC1.1")}</h5>
+                <div className='col-xxl-12 col-lg-12 col-sm-12'>
+                  <div className='row'>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("Name") + " " + t("Surname")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={
+                            data.applicationDTO.nameSurnameLeaderC11
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("Address")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={data.applicationDTO.addressLeaderC11}
+                        />
+                      </div>
+                    </div>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("PhoneNumber")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={
+                            data.applicationDTO.phoneNumberLeaderC11
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("Fax")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={data.applicationDTO.faxLeaderC11}
+                        />
+                      </div>
+                    </div>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("Email")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={data.applicationDTO.emailLeaderC11}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <hr />
+                <h5 className='card-title text-start '>{t("PartC1.2")}</h5>
+                <div className='col-xxl-12 col-lg-12 col-sm-12'>
+                  <div className='row'>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("Name") + " " + t("Surname")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={
+                            data.applicationDTO.nameSurnameCoordinatorC12
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("Address")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={
+                            data.applicationDTO.addressCoordinatorC12
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("PhoneNumber")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={
+                            data.applicationDTO.phoneNumberCoordinatorC12
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("Fax")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={data.applicationDTO.faxCoordinatorC12}
+                        />
+                      </div>
+                    </div>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
+                        <label>{t("Email")}</label>
+                        <input
+                          type='text'
+                          readOnly
+                          defaultValue={data.applicationDTO.emailCoordinatorC12}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className='col-xxl-12 col-lg-12 col-sm-12'>
+                    <div className='form-group'>
+                      <label>C1.5 {t("PartC1.5")}</label>
+                      <input
+                        type='text'
+                        readOnly
+                        defaultValue={data.applicationDTO.placeOfApplicationC15}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {data.secondApplication && (
+                <>
+                  <hr />
+                  <ViewSecondApplication
+                    secondApplication={secondApplication}
+                    docs={data.docs}
+                  />
+                </>
               )}
 
+              <hr />
+              {model.StatusName === "Rikthim" && (
+                <>
+                  <div className='col-xxl-12 col-lg-12 col-sm-12'>
+                    <div className='form-group'>
+                      <label>Vërejtje</label>
+                      <textarea
+                        rows={5}
+                        className='mt-2'
+                        onChange={(e) =>
+                          setModel({
+                            ...model,
+                            Remark: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <hr />
+                </>
+              )}
               <div className='col-xxl-12 col-lg-12 col-sm-12 text-end'>
                 {statusesList.map((item) => (
                   <Checkbox
-                    disabled={
-                      isSelected ? isSelected !== item.description : false
-                    }
+                    disabled={isSelected ? isSelected !== item.step : false}
                     value={item.statusId}
-                    name={item.description}
+                    name={item.step}
                     key={item.statusId}
                     onChange={onChange}
                   >
-                    {item.description}
+                    {item.step === 2
+                      ? "Verifiko"
+                      : item.step === 3
+                      ? "Rikthim"
+                      : item.step === 4
+                      ? "Aprovo"
+                      : item.step === 8
+                      ? "APROVIMI FINAL"
+                      : item.step === 9
+                      ? "REFUZIMI FINAL"
+                      : "Refuzo"}
                   </Checkbox>
                 ))}
-
+                {decodedToken.role === "Zyrtar per caktimin e eksperteve" && (
+                  <AssignExperts
+                    applicationId={id}
+                    decodedToken={decodedToken}
+                  />
+                )}
                 {decodedToken.role !== "Admin" &&
                   isSelected &&
                   (postLoad ? (
@@ -764,13 +1385,13 @@ export default function ViewApplication() {
       </div>
     </div>
   ) : (
-    load && (
+    <div className='card'>
       <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
         <div
           className='spinner-border text-primary m-2 text-center'
           role='status'
         />
       </div>
-    )
+    </div>
   );
 }

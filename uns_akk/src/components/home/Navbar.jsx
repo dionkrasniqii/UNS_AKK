@@ -142,7 +142,11 @@ export default function Navbar(props) {
       {/* LOGO */}
       <div className='logo-box' style={{ height: "66px" }}>
         <Link
-          to={decodedToken?.role !== "Institution" && "/home"}
+          to={
+            decodedToken?.role === "Admin" &&
+            decodedToken?.role === "Zyrtar AKK" &&
+            "/home"
+          }
           className='logo logo-dark text-center'
         >
           <span className='logo-lg text-start'>

@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
-import { Upload } from "antd";
+import CustomFileInput from "../../custom/CustomFileInput";
 
 export default function SecondForm({ model, setModel, ...rest }) {
   const { t } = useTranslation();
@@ -10,50 +10,51 @@ export default function SecondForm({ model, setModel, ...rest }) {
     document.getElementById("form2").scrollIntoView();
   }, []);
 
-  async function changeLicenseMASHT(file) {
-    const newArray = model.Docs.filter((item) => {
-      return item.Type != "MASHTLicenseA16";
-    });
-    file.status !== "removed" &&
-      newArray.push({ Type: "MASHTLicenseA16", Doc: file });
-    setModel({
-      ...model,
-      Docs: [...newArray],
-    });
-    formik.setFieldValue("MASHTLicense", file);
-  }
-  async function changeCertificateRegistration(file) {
-    const newArray = model.Docs.filter((item) => {
-      return item.Type != "CertificateRegisterDocA15";
-    });
-    file.status !== "removed" &&
-      newArray.push({ Type: "CertificateRegisterDocA15", Doc: file });
-    setModel({
-      ...model,
-      Docs: [...newArray],
-    });
-    formik.setFieldValue("CertificateRegisterDocA15", file);
-  }
   const schema = Yup.object().shape({
     RegistrationNumber: Yup.string().required(
       t("PleaseFillRegistartionNumber")
     ),
-    // FiscalNumber: Yup.string().required(t("PleaseFillFiscalNumber")),
+    FiscalNumber: Yup.string().required(t("PleaseFillFiscalNumber")),
     CertificateRegisterDocA15: Yup.string().required(t("UploadDoc")),
     MASHTLicense: Yup.string().required(t("UploadDoc")),
   });
 
+  async function setMASHTLicenseFiles(files) {
+    const newArray = model.Docs.filter(
+      (file) => file.Type != "MASHTLicenseA16"
+    );
+    const updatedDocs = Array.from(files).map((file) => ({
+      Type: "MASHTLicenseA16",
+      Doc: file,
+    }));
+    setModel({
+      ...model,
+      Docs: [...newArray, ...updatedDocs],
+    });
+    formik.setFieldValue("MASHTLicense", files);
+  }
+  async function setCertificateFiles(files) {
+    const newArray = model.Docs.filter(
+      (file) => file.Type != "CertificateRegisterDocA15"
+    );
+    const updatedDocs = Array.from(files).map((file) => ({
+      Type: "CertificateRegisterDocA15",
+      Doc: file,
+    }));
+    setModel({
+      ...model,
+      Docs: [...newArray, ...updatedDocs],
+    });
+    formik.setFieldValue("CertificateRegisterDocA15", files);
+  }
   const formik = useFormik({
     initialValues: {},
     validationSchema: schema,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: () => SubmitForm(),
+    onSubmit: () => rest.setShowThirdForm(true),
   });
 
-  async function SubmitForm() {
-    rest.setShowThirdForm(true);
-  }
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -92,47 +93,39 @@ export default function SecondForm({ model, setModel, ...rest }) {
                 ...model,
                 FiscalNrA15: e.target.value,
               });
-              // formik.setFieldValue("FiscalNumber", e.target.value);
+              formik.setFieldValue("FiscalNumber", e.target.value);
             }}
           />
-          {/* {formik.errors.FiscalNumber && (
+          {formik.errors.FiscalNumber && (
             <span className='text-danger'>{formik.errors.FiscalNumber}</span>
-          )} */}
+          )}
         </div>
         <div className='col-12'>
           <div className='row'>
-            <div className='col-xxl-2 col-lg-3 col-md-3 col-sm-12 mt-2 '>
+            <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
               <label className='form-label text-start'>
                 {t("RegistrationCertificate")}
               </label>
-              <Upload
-                beforeUpload={() => false}
-                listType='picture-circle'
-                maxCount={1}
-                accept='.pdf'
-                onChange={(e) => changeCertificateRegistration(e.file)}
-              >
-                {t("UploadDoc")}
-              </Upload>
+              <CustomFileInput
+                onChangeFunction={setCertificateFiles}
+                acceptType={".pdf"}
+                isMultiple={true}
+              />
               {formik.errors.CertificateRegisterDocA15 && (
                 <span className='text-danger'>
                   {formik.errors.CertificateRegisterDocA15}
                 </span>
               )}
             </div>
-            <div className='col-xxl-2 col-lg-3 col-md-3 col-sm-12 mt-2 '>
+            <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
               <label className='form-label text-start'>
                 {t("LicenseMASHT")}
               </label>
-              <Upload
-                beforeUpload={() => false}
-                listType='picture-circle'
-                maxCount={1}
-                accept='.pdf'
-                onChange={(e) => changeLicenseMASHT(e.file)}
-              >
-                {t("UploadDoc")}
-              </Upload>
+              <CustomFileInput
+                onChangeFunction={setMASHTLicenseFiles}
+                acceptType={".pdf"}
+                isMultiple={true}
+              />
               {formik.errors.MASHTLicense && (
                 <span className='text-danger'>
                   {formik.errors.MASHTLicense}

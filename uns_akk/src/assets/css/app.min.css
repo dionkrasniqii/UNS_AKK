@@ -25210,6 +25210,10 @@ body[data-layout-color=dark] .datepicker tfoot tr th:hover {
     min-height: 133px;
 }
 
+.form-group textarea::placeholder {
+    font-size: 12px;
+}
+
 .form-group span.focus-border {
     position: absolute;
     bottom: 0;

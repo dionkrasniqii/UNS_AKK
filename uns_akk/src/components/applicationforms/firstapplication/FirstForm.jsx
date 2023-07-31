@@ -10,7 +10,6 @@ export default function FirstForm({ model, setModel, ...rest }) {
   const { t } = useTranslation();
   const [cities, setCities] = useState([]);
   const [status, setStatus] = useState([]);
-  const [qualifications, setQualifications] = useState([]);
   const [activity, setActivity] = useState([]);
   // const token = localStorage.getItem("akktoken");
   // const decodedToken = jwtDecode(token);
@@ -38,13 +37,6 @@ export default function FirstForm({ model, setModel, ...rest }) {
           setActivity(res.result);
         }
       }),
-      CrudProvider.getAllWithLang("GeneralAPI/GetAllQualifications").then(
-        (res) => {
-          if (res) {
-            setQualifications(res.result);
-          }
-        }
-      ),
     ]);
   }, []);
 
@@ -88,16 +80,6 @@ export default function FirstForm({ model, setModel, ...rest }) {
         };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
-  const qualificationsList =
-    qualifications &&
-    qualifications.length > 0 &&
-    qualifications
-      .map((item) => ({
-        value: item.qualification.qualificationId,
-        label: item.qualificationName,
-      }))
-      .sort((a, b) => a.label.localeCompare(b.label));
-
   const activityList =
     activity &&
     activity.length > 0 &&
@@ -108,17 +90,11 @@ export default function FirstForm({ model, setModel, ...rest }) {
       }))
       .sort((a, b) => a.label.localeCompare(b.label));
 
-  function changeQualification(e) {
-    setModel({
-      ...model,
-      QualificationId: e,
-    });
-    formik.setFieldValue("QualificationId", e);
-  }
-  function changeActivity(e) {
+  function changeActivity(e, record) {
     setModel({
       ...model,
       InstitutionActivityId: e,
+      InstitutionActivityName: record.label,
     });
     formik.setFieldValue("ActivityId", e);
   }
@@ -130,10 +106,11 @@ export default function FirstForm({ model, setModel, ...rest }) {
     formik.setFieldValue("MunicipalityId", e);
   }
 
-  function changeStatus(e) {
+  function changeStatus(e, record) {
     setModel({
       ...model,
       InstitutionStatusId: e,
+      InstitutionStatusName: record.label,
     });
     formik.setFieldValue("StatusActivityId", e);
   }
@@ -166,6 +143,7 @@ export default function FirstForm({ model, setModel, ...rest }) {
         TargetNumberOfCandidatesA24: Yup.string().required(
           t("SetNumberOfMembers")
         ),
+        Equipments: Yup.string().required(t("FillField")),
       })
     : Yup.object().shape({
         QualificationId: Yup.string().required(t("ChooseQualification")),
@@ -173,23 +151,23 @@ export default function FirstForm({ model, setModel, ...rest }) {
         TargetNumberOfCandidatesA24: Yup.string().required(
           t("SetNumberOfMembers")
         ),
+        Equipments: Yup.string().required(t("FillField")),
       });
   const formik = useFormik({
     initialValues: {},
     validationSchema: CreateInstitutionSchema,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: () => SubmitForm(),
+    onSubmit: () => rest.setShowSecondForm(true),
   });
-  async function SubmitForm() {
-    rest.setShowSecondForm(true);
-  }
+
   return (
     <form
       onSubmit={formik.handleSubmit}
       className='animation animation-bot-top'
     >
       <div className='row'>
+        <h3 className='card-title text-start '>{t("PartA")}</h3>
         {!rest.authState && (
           <>
             <h5 className='card-title text-start '>
@@ -406,28 +384,44 @@ export default function FirstForm({ model, setModel, ...rest }) {
                 <textarea
                   rows={5}
                   className='mt-2'
-                  onChange={(e) =>
+                  onChange={(e) => {
                     setModel({
                       ...model,
                       EquipmentMaterialsQualificationA22: e.target.value,
-                    })
-                  }
+                    });
+                    formik.setFieldValue("Equipments", e.target.value);
+                  }}
                 />
+                {formik.errors.Equipments && (
+                  <span className='text-danger'>
+                    {formik.errors.Equipments}
+                  </span>
+                )}
               </div>
             </div>
 
-            <div className='col-xxl-4 col-lg-4 col-sm-12 mt-2'>
-              <label className='form-label'>{t("ChooseQualification")}</label>
-              <CustomSelect
-                isMulti={false}
-                onChangeFunction={changeQualification}
-                optionsList={qualificationsList}
-              />
-              {formik.errors.QualificationId && (
-                <span className='text-danger'>
-                  {formik.errors.QualificationId}
-                </span>
-              )}
+            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
+              <div className='form-group'>
+                <label className='form-label'>
+                  {t("ChooseQualificationApplication")}
+                </label>
+                <textarea
+                  rows={5}
+                  className='mt-2'
+                  onChange={(e) => {
+                    setModel({
+                      ...model,
+                      QualificationTitleAndLevel: e.target.value,
+                    });
+                    formik.setFieldValue("QualificationId", e.target.value);
+                  }}
+                />
+                {formik.errors.QualificationId && (
+                  <span className='text-danger'>
+                    {formik.errors.QualificationId}
+                  </span>
+                )}
+              </div>
             </div>
 
             <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>

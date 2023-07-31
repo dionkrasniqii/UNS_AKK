@@ -9,7 +9,9 @@ const API_BASE_URL_DOC = process.env.REACT_APP_API_BASE_URL_LOCAL_DOCS;
 // const API_BASE_URL_DOC = process.env.REACT_APP_API_BASE_URL_PRODUCTION_DOCS;
 
 const appendToFormData = (key, value, formData) => {
-  if (value instanceof File) {
+  if (value === undefined) {
+    return formData; // Don't append anything if the value is undefined
+  } else if (value instanceof File) {
     formData.append(key, value);
   } else if (Array.isArray(value)) {
     value.forEach((doc, index) => {
@@ -34,11 +36,13 @@ const appendToFormData = (key, value, formData) => {
       } else if (typeof subValue === "object" && subValue !== null) {
         appendToFormData(`${key}.${subKey}`, subValue, formData);
       } else {
+        // Handle non-file object values and convert them to string before appending
         formData.append(`${key}.${subKey}`, subValue.toString());
       }
     });
   } else {
-    formData.append(key, value);
+    // Handle string values and convert them to string before appending
+    formData.append(key, value.toString());
   }
 
   return formData;
@@ -178,6 +182,73 @@ async function createItemWithFile(controller, model) {
         },
       }
     );
+    return response.data;
+  } catch (error) {
+    handleRequestError(error);
+  }
+}
+const convertObjectToFormData = (object) => {
+  const formData = new FormData();
+
+  const appendToFormData = (value, formKey) => {
+    if (value === undefined) {
+      return; // Don't append anything if the value is undefined
+    } else if (value instanceof File) {
+      formData.append(formKey, value);
+    } else if (Array.isArray(value)) {
+      value.forEach((item, index) => {
+        if (typeof item === "object" && item !== null) {
+          convertObjectToFormData(item, `${formKey}[${index}]`);
+        } else {
+          formData.append(`${formKey}[${index}]`, item);
+        }
+      });
+    } else if (typeof value === "object" && value !== null) {
+      convertObjectToFormData(value, formKey);
+    } else {
+      // Handle non-file object values and convert them to string before appending
+      formData.append(formKey, value.toString());
+    }
+  };
+
+  for (const key in object) {
+    if (object.hasOwnProperty(key)) {
+      const value = object[key];
+      appendToFormData(value, key);
+    }
+  }
+
+  return formData;
+};
+
+async function postApplication(controller, firstModel, secondModel, bool) {
+  try {
+    let token = localStorage.getItem("akktoken");
+    const ObjToPost = {
+      ApplicationDTO: firstModel,
+      SecondApplicationDTO: secondModel,
+      SecondApplication: bool,
+    };
+    const formData3 = new FormData();
+
+    const promises3 = Object.keys(ObjToPost).map(async (key) => {
+      const value = ObjToPost[key];
+      appendToFormData(key, value, formData3);
+      return Promise;
+    });
+    await Promise.all(promises3);
+
+    const response = await axios.post(
+      `${API_BASE_URL}/${controller}`,
+      formData3,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
     return response.data;
   } catch (error) {
     handleRequestError(error);
@@ -369,4 +440,5 @@ export default {
   getReportRDLCWithLang,
   checkIsPDf,
   changeLang,
+  postApplication,
 };

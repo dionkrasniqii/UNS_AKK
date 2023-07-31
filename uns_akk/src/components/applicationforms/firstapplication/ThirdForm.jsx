@@ -22,18 +22,20 @@ export default function ThirdForm({ model, setModel, ...rest }) {
       ...model,
       Docs: [...newArray, ...updatedDocs],
     });
+    formik.setFieldValue("Docs", files);
   }
-  const schema = Yup.object().shape({});
+  const schema = Yup.object().shape({
+    Period: Yup.string().required(t("FillField")),
+    Docs: Yup.mixed().required(t("UploadDocuments")),
+  });
   const formik = useFormik({
     initialValues: {},
     validationSchema: schema,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: () => SubmitForm(),
+    onSubmit: () => rest.setShowFourthForm(true),
   });
-  async function SubmitForm() {
-    rest.setShowFourthForm(true);
-  }
+
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -54,16 +56,25 @@ export default function ThirdForm({ model, setModel, ...rest }) {
                     ...model,
                     QualificationPeriodA17: e.target.value,
                   });
+                  formik.setFieldValue("Period", e.target.value);
                 }}
               />
+              {formik.errors.Period && (
+                <span className='text-danger'>{formik.errors.Period}</span>
+              )}
             </div>
           </div>
         </div>
-        <CustomFileInput
-          onChangeFunction={setFiles}
-          acceptType={".pdf"}
-          isMultiple={true}
-        />
+        <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
+          <CustomFileInput
+            onChangeFunction={setFiles}
+            acceptType={".pdf"}
+            isMultiple={true}
+          />
+          {formik.errors.Docs && (
+            <span className='text-danger'>{formik.errors.Docs}</span>
+          )}
+        </div>
         {!rest.showFourthForm && (
           <div className='col-xxl-12 col-lg-12 col-sm-12 text-end mt-2'>
             <button

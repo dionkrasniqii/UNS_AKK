@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import CrudProvider from "../../../provider/CrudProvider";
+import CrudProvider from "../../../../provider/CrudProvider";
 import { useTranslation } from "react-i18next";
 import { Button, Modal } from "antd";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
-import CustomSelect from "../../custom/CustomSelect";
-import CustomFileInput from "../../custom/CustomFileInput";
+import CustomSelect from "../../../custom/CustomSelect";
+import CustomFileInput from "../../../custom/CustomFileInput";
 
-export default function EditApplicationInstitution() {
+export default function EditFirstApplicationFormA() {
   const { id } = useParams();
   const { t } = useTranslation();
   const [load, setLoad] = useState(false);

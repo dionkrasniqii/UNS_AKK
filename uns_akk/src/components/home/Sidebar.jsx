@@ -8,11 +8,12 @@ export default function Sidebar() {
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const role = decodedToken?.role;
+
   const SidebarItems = [
     //Admin
     {
       label: t("Home"),
-      roles: ["Admin", "KAAPR", "Zyrtar"],
+      roles: ["Admin", "Zyrtar AKK", "Zyrtar per caktimin e eksperteve"],
       path: "/",
       hasMenu: false,
       showLabel: false,
@@ -69,7 +70,7 @@ export default function Sidebar() {
     },
     {
       label: t("Decisions"),
-      roles: ["Admin"],
+      roles: ["Admin", "Zyrtar AKK"],
       path: "/decisions",
       hasMenu: false,
       showLabel: true,
@@ -134,7 +135,13 @@ export default function Sidebar() {
     },
     {
       label: t("Applications"),
-      roles: ["Admin", "KAAPR", "Zyrtar"],
+      roles: [
+        "Admin",
+        "Zyrtar per caktimin e eksperteve",
+        "Zyrtar AKK",
+        "Bord",
+        "Ekspert",
+      ],
       path: "/applications",
       hasMenu: false,
       showLabel: role === "Institution" ? false : true,

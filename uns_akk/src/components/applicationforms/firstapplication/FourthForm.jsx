@@ -1,3 +1,4 @@
+import { faPray } from "@fortawesome/free-solid-svg-icons";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,7 +8,6 @@ export default function FourthForm({ model, setModel, ...rest }) {
   const { t } = useTranslation();
   const [checked, setChecked] = useState(0);
 
-
   useEffect(() => {
     document.getElementById("form4").scrollIntoView();
   }, []);
@@ -16,21 +16,20 @@ export default function FourthForm({ model, setModel, ...rest }) {
     TypeOfAccreditation: Yup.boolean().required(
       t("ChooseOneOfAccreditationType")
     ),
+    Text: Yup.string().required(t("FillField")),
   });
   const formik = useFormik({
     initialValues: {},
     validationSchema: schema,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: () => SubmitForm(),
+    onSubmit: () => rest.setShowFifthForm(true),
   });
-  async function SubmitForm() {
-    rest.setShowFifthForm(true);
-  }
+
   return (
     <form
       onSubmit={formik.handleSubmit}
-      id="form4"
+      id='form4'
       className='animation animation-bot-top'
     >
       <div className='row'>
@@ -122,10 +121,16 @@ export default function FourthForm({ model, setModel, ...rest }) {
                 ...model,
                 TextA18: e.target.value,
               });
+              formik.setFieldValue("Text", e.target.value);
             }}
           />
+          {formik.errors.Text && (
+            <span className='text-danger text-center mt-2 fs-5'>
+              {formik.errors.Text}
+            </span>
+          )}
         </div>
-        {!rest.showFourthForm && (
+        {!rest.showFifthForm && (
           <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
             <button
               type='submit'
