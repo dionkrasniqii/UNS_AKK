@@ -327,7 +327,6 @@
   "EditQualificationType": "Modifiko llojin e kualifikimit",
   "FirstTimeLogin": "Ju lutemi ndryshoni fjalëkalimin tuaj",
   "StartDateEndDateGroup": "Data fillimit nuk mund të jetë më e vogël se data e mbarimit",
-<<<<<<< HEAD
   "Modules": "Modulet",
   "SeeDecision": "Shiko vendimin",
   "PleaseFillCredits": "Ju lutem mbushni fushën për kreditë!",
@@ -357,8 +356,7 @@
   "ExpiryDate": "Data e Skadimit",
   "QualificationStatus": "Statusi i Kualifikimit",
   "NoDataInThisLanguageForLevel": "Nuk ka të dhëna për nivelet në këtë gjuhë!",
-  "Registry": "Regjistri"
-=======
+  "Registry": "Regjistri",
   "PartA": "Pjesa A",
   "PartB": "Pjesa B",
   "PartBFirstDesc": "Kriteret e akreditimit për institucionin vlerësues dhe certifikues, jo vetëm ofrues",
@@ -473,5 +471,4 @@
   "PartE": "Pjesa E",
   "PartDValidationDesc34": "Informatat rreth personit të autorizuar i cili aplikon për validim",
   "Experts":"Ekspertët"
->>>>>>> 070bb18 (feat(SecondApplication)- Added second application and all following forms for CRUD)
 }

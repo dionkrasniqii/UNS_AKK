@@ -327,7 +327,6 @@
   "EditQualificationType": "Modify the qualification type",
   "FirstTimeLogin": "Please change your password",
   "StartDateEndDateGroup": "The start date cannot be less than the end date",
-<<<<<<< HEAD
   "Modules": "Modules",
   "SeeDecision": "See the decision",
   "PleaseFillCredits": "Please fill in the field for credits!",
@@ -357,8 +356,7 @@
   "ExpiryDate": "Expiry Date",
   "QualificationStatus": "Qualification Status",
   "NoDataInThisLanguageForLevel": "There are no level data in this language!",
-  "Registry": "Registry"
-=======
+  "Registry": "Registry",
   "PartA": "Part A",
   "PartB": "Part B",
   "PartBFirstDesc": "Accreditation criteria for the assessment and certification institution, not just the provider",
@@ -472,5 +470,4 @@
   "PartE": "Part E",
   "PartDValidationDesc34": "Information about the authorized person applying for validation",
   "Experts": "Experts"
->>>>>>> 070bb18 (feat(SecondApplication)- Added second application and all following forms for CRUD)
 }

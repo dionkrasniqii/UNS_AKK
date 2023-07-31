@@ -56,7 +56,7 @@ export default function ViewApplication() {
     data.applicationQualificationValidationDTO;
   const [expertReports, setExpertReports] = useState({});
   const [finalExpertReportModal, setFinalExpertReportModal] = useState(false);
-  const [expertReportsModal,setExpertsReportsModal]=useState(false)
+  const [expertReportsModal, setExpertsReportsModal] = useState(false);
   async function callExpertReports() {
     if (data.step === 7) {
       await CrudProvider.getItemById("ApplicationAPI/ExpertResults", id).then(
@@ -1311,8 +1311,34 @@ export default function ViewApplication() {
                   />
                 </>
               )}
-
               <hr />
+              {expertReports && (
+                <>
+                  <div className='col-xxl-12 col-lg-12 col-sm-12 mb-2'>
+                    <div className='row'>
+                      <div className='col-xxl-6 col-lg-6 col-sm-12'>
+                        <button
+                          className=' fs-6  btn2 btn-modal btn-raporti'
+                          onClick={() => setExpertReports(true)}
+                        >
+                          {t("ExpertReports")}
+                        </button>
+                      </div>
+                      {expertReports.finalReportPath && (
+                        <div className='col-xxl-6 col-lg-6 col-sm-12'>
+                          <button
+                            className=' fs-6  btn2 btn-modal btn-raporti'
+                            onClick={() => setExpertReports(true)}
+                          >
+                            {t("FinalExpertReport")}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <hr />
+                </>
+              )}
               {model.StatusName === "Rikthim" && (
                 <>
                   <div className='col-xxl-12 col-lg-12 col-sm-12'>
