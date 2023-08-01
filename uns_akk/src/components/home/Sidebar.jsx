@@ -58,6 +58,22 @@ export default function Sidebar() {
           showLabel: true,
           icon: "mdi mdi-share-variant",
         },
+        {
+          label: t("Competences"),
+          roles: ["Admin"],
+          path: "/competences",
+          hasMenu: false,
+          showLabel: true,
+          icon: "fas fa-cogs",
+        },
+        {
+          label: t("QualificationStandarts"),
+          roles: ["Admin"],
+          path: "/qualificationStandarts",
+          hasMenu: false,
+          showLabel: true,
+          icon: "fas fa-book",
+        },
       ],
     },
     {

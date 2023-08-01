@@ -797,5 +797,16 @@
   "ExpiryDate": "Datum isteka",
   "QualificationStatus": "Kvalifikacioni status",
   "NoDataInThisLanguageForLevel": "Nema podataka o nivou na ovom jeziku!",
-  "Registry": "Registar"
+  "Registry": "Registar",
+  "Competences": "Kompetencije",
+  "QualificationStandarts": "Standardi kvalifikacija",
+  "CompetenceName": "Naziv kompetencije",
+  "TypeOfCompetence": "Vrsta kompetencije",
+  "CompetencesList": "Spisak Kompetencija",
+  "EstQFLevel": "EstQF Level",
+  "RegisterCompetence": "Registrujte Kompetenciju",
+  "PerformanceIndicators": "Indikatori Učinka",
+  "SuppoirtingKnowledge": "Supporting Knovledge",
+  "AssessmentMethods": "Metode procene",
+  "ModifyCompetence": "Modifi Competence"
 }
