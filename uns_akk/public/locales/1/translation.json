@@ -470,5 +470,16 @@
   "PartDValidationDesc33": "Aplikacionit t’i bashkangjitet dokumenti mbi politikat/rregulloret e institucionit për implementim e Sigurimit të Cilësisë (SC). (Planin e institucionit për implementim dhe monitorim të vlerësimit për kualifikim/modul; mbi organizimin e vlerësimit dhe verifikimit të brendshëm dhe të jashtëm , mekanizmat tjerë të SC, etj. )",
   "PartE": "Pjesa E",
   "PartDValidationDesc34": "Informatat rreth personit të autorizuar i cili aplikon për validim",
-  "Experts":"Ekspertët"
+  "Experts":"Ekspertët",
+  "Competences": "Kompetencat",
+  "QualificationStandarts": "Standardet e Kualifikimit",
+  "CompetenceName": "Emri i kompetencës",
+  "TypeOfCompetence": "Lloji i Kompetencës",
+  "CompetencesList": "Lista e kompetencave",
+  "EstQFLevel": "Niveli EstQF",
+  "RegisterCompetence": "Regjistro Kompetencë",
+  "PerformanceIndicators": "Treguesit e Performancës",
+  "SuppoirtingKnowledge": "Mbështetja e Njohurive",
+  "AssessmentMethods": "Metodat e Vlerësimit",
+  "ModifyCompetence": "Modifiko Kompetencën"
 }

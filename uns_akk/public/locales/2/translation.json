@@ -469,5 +469,16 @@
   "PartDValidationDesc33": "The document on the policies/regulations of the institution for the implementation of Quality Assurance (SC) should be attached to the application. (The plan of the institution for the implementation and monitoring of the assessment for qualification/module; on the organization of internal assessment and verification and external, other SC mechanisms, etc.)",
   "PartE": "Part E",
   "PartDValidationDesc34": "Information about the authorized person applying for validation",
-  "Experts": "Experts"
-}
+  "Experts": "Experts",
+  "Competences": "Competences",
+  "QualificationStandarts": "Qualification Standards",
+  "CompetenceName": "Competence Name",
+  "TypeOfCompetence": "Type Of Competence ",
+  "CompetencesList": "Competences List",
+  "EstQFLevel": "EstQF Level",
+  "RegisterCompetence": "Register Competence",
+  "PerformanceIndicators": "Performance Indicators",
+  "SuppoirtingKnowledge": "Suppoirting Knowledge",
+  "AssessmentMethods": "Assessment Methods",
+  "ModifyCompetence": "Modify Competence"
+} 
