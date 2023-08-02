@@ -62,6 +62,15 @@ export default function ApplicationListInstitutions() {
               Refuzuar
             </span>
           );
+        } else if (row.step === 8) {
+          return (
+            <span
+              type='button'
+              className='btn btn-primary rounded-pill waves-effect'
+            >
+              Aprovuar
+            </span>
+          );
         } else {
           return (
             <span
@@ -92,6 +101,7 @@ export default function ApplicationListInstitutions() {
       },
     },
   ];
+  
   useEffect(() => {
     try {
       setLoad(true);

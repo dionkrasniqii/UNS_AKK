@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
-import CrudProvider from "../../provider/CrudProvider";
 import { Link } from "react-router-dom";
+import CrudProvider from "../../../provider/CrudProvider";
 
 export default function CertificateDetails() {
   const { id } = useParams();

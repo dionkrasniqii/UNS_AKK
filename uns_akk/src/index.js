@@ -7,16 +7,15 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import Loading from "./components/loading/Loading";
 import "./i18n";
-
 const root = ReactDOM.createRoot(document.getElementById("wrapper"));
 root.render(
   <React.StrictMode>
     <React.Suspense fallback={<Loading />}>
-      <BrowserRouter>
-        <Provider store={store}>
+      <Provider store={store}>
+        <BrowserRouter>
           <App />
-        </Provider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </Provider>
     </React.Suspense>
   </React.StrictMode>
 );

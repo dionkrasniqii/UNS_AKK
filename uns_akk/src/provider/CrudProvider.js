@@ -36,8 +36,10 @@ const appendToFormData = (key, value, formData) => {
       } else if (typeof subValue === "object" && subValue !== null) {
         appendToFormData(`${key}.${subKey}`, subValue, formData);
       } else {
-        // Handle non-file object values and convert them to string before appending
-        formData.append(`${key}.${subKey}`, subValue.toString());
+        if (subValue) {
+          // Handle non-file object values and convert them to string before appending
+          formData.append(`${key}.${subKey}`, subValue.toString());
+        }
       }
     });
   } else {
@@ -137,7 +139,6 @@ async function getItemById(controller, itemId) {
   }
 }
 
-// Create a new item
 async function createItem(controller, itemData) {
   try {
     let token = localStorage.getItem("akktoken");
@@ -187,39 +188,38 @@ async function createItemWithFile(controller, model) {
     handleRequestError(error);
   }
 }
-const convertObjectToFormData = (object) => {
-  const formData = new FormData();
+// const convertObjectToFormData = (object) => {
+//   const formData = new FormData();
 
-  const appendToFormData = (value, formKey) => {
-    if (value === undefined) {
-      return; // Don't append anything if the value is undefined
-    } else if (value instanceof File) {
-      formData.append(formKey, value);
-    } else if (Array.isArray(value)) {
-      value.forEach((item, index) => {
-        if (typeof item === "object" && item !== null) {
-          convertObjectToFormData(item, `${formKey}[${index}]`);
-        } else {
-          formData.append(`${formKey}[${index}]`, item);
-        }
-      });
-    } else if (typeof value === "object" && value !== null) {
-      convertObjectToFormData(value, formKey);
-    } else {
-      // Handle non-file object values and convert them to string before appending
-      formData.append(formKey, value.toString());
-    }
-  };
+//   const appendToFormData = (value, formKey) => {
+//     if (value === undefined) {
+//       return; // Don't append anything if the value is undefined
+//     } else if (value instanceof File) {
+//       formData.append(formKey, value);
+//     } else if (Array.isArray(value)) {
+//       value.forEach((item, index) => {
+//         if (typeof item === "object" && item !== null) {
+//           convertObjectToFormData(item, `${formKey}[${index}]`);
+//         } else {
+//           formData.append(`${formKey}[${index}]`, item);
+//         }
+//       });
+//     } else if (typeof value === "object" && value !== null) {
+//       convertObjectToFormData(value, formKey);
+//     } else {
+//       formData.append(formKey, value.toString());
+//     }
+//   };
 
-  for (const key in object) {
-    if (object.hasOwnProperty(key)) {
-      const value = object[key];
-      appendToFormData(value, key);
-    }
-  }
+//   for (const key in object) {
+//     if (object.hasOwnProperty(key)) {
+//       const value = object[key];
+//       appendToFormData(value, key);
+//     }
+//   }
 
-  return formData;
-};
+//   return formData;
+// };
 
 async function postApplication(controller, firstModel, secondModel, bool) {
   try {

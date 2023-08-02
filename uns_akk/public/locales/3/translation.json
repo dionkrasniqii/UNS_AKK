@@ -808,5 +808,22 @@
   "PerformanceIndicators": "Indikatori Učinka",
   "SuppoirtingKnowledge": "Supporting Knovledge",
   "AssessmentMethods": "Metode procene",
-  "ModifyCompetence": "Modifi Competence"
+  "ModifyCompetence": "Modifi Competence",
+  "ExpertReports": "Izveštaji stručnjaka",
+  "FinalExpertReport": "Final Report",
+  "FinalExpertReport": "Konačni izveštaj",
+  "Expert": "Expert",
+  "ApplyForValidation1": "Prijavite se za validaciju",
+  "ProfessionalStandards": "Profesionalni standardi",
+  "FieldOfProfessionalActivity": "Oblast profesionalne aktivnosti",
+  "Specializations": "Specijalizacije",
+  "PartialInvitations": "Delimične pozivnice",
+  "Field": "Polje",
+  "Profession": "Profesija",
+  "InvitationGroup": "Grupa za pozive",
+  "CurriculumNameAndCode": "Naziv i šifra nastavnog plana i programa",
+  "TheCallingCanBeLearned": "Pozivanje se može naučiti",
+  "EQFLevel": "EKF level",
+  "ShowMoreFilters": "Prikaži još filtera",
+  "ShowLessFilters": "Prikaži manje filtera"
 }

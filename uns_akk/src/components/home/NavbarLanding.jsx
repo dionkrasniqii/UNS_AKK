@@ -34,6 +34,7 @@ export default function NavbarLanding() {
   }, [location]);
   async function changeLang(e) {
     i18next.changeLanguage(e);
+    localStorage.setItem("Language", e);
   }
   useEffect(() => {
     const mainNavDiv = document.getElementById("mainNavLanding");
@@ -69,7 +70,6 @@ export default function NavbarLanding() {
         </div>
         <ul className='list-unstyled topnav-menu topnav-menu-left onlyMobile mb-0'>
           <li>
-            {/* Mobile menu toggle (Horizontal Layout)*/}
             <a
               onClick={(e) => {
                 dispatch(showMobileLanding(!show));
@@ -112,7 +112,7 @@ export default function NavbarLanding() {
               id='topnav-menu-content'
             >
               <ul className='top-navbar-costume'>
-                <div className='navbar-nav nav-item-end'>
+                <div className='navbar-nav nav-item-end '>
                   <li className='nav-item'>
                     <Link
                       to={"/"}
@@ -151,6 +151,32 @@ export default function NavbarLanding() {
                       {t("SearchForms")}
                     </Link>
                   </li>
+                  <li className='nav-item'>
+                    <Link
+                      to={"/professional-standards-search"}
+                      className='nav-link arrow-none'
+                      id='topnav-dashboard'
+                      role='button'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                    >
+                      <i className='fe-search me-1' />
+                      {t("ProfessionalStandards")}
+                    </Link>
+                  </li>
+                  <li className='nav-item'>
+                    <Link
+                      to={"/compentencies-search"}
+                      className='nav-link arrow-none'
+                      id='topnav-dashboard'
+                      role='button'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                    >
+                      <i className='fe-search me-1' />
+                      {t("Competencies")}
+                    </Link>
+                  </li>
                 </div>
                 <div className='navbar-end navbar-nav '>
                   <div className='nav-item dropdown '>
@@ -160,7 +186,7 @@ export default function NavbarLanding() {
                       role='button'
                       data-bs-toggle='dropdown'
                       aria-haspopup='true'
-                      aria-expanded='false'
+                      aria-expanded='true'
                     >
                       <i className='mdi mdi-card-bulleted-settings-outline me-1' />
                       {t("Languages")} <div className='arrow-down' />

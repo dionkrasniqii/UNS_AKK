@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import CrudProvider from "../../provider/CrudProvider";
-import CustomSelect from "../custom/CustomSelect";
-import img_bus from "../../assets/images/institution.png";
+import CustomSelect from "../../custom/CustomSelect";
+import img_bus from "../../../assets/images/institution.png";
 import { toast } from "react-toastify";
-import DataTablev2 from "../custom/DataTablev2";
+import DataTablev2 from "../../custom/DataTablev2";
+import CrudProvider from "../../../provider/CrudProvider";
 
 export default function SearchInstitution() {
   const { t } = useTranslation();

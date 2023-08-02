@@ -480,5 +480,21 @@
   "PerformanceIndicators": "Performance Indicators",
   "SuppoirtingKnowledge": "Suppoirting Knowledge",
   "AssessmentMethods": "Assessment Methods",
-  "ModifyCompetence": "Modify Competence"
+  "ModifyCompetence": "Modify Competence",
+  "ExpertReports": "Expert Reports",
+  "FinalExpertReport": "Final Report",
+  "Expert": "Expert",
+  "ApplyForValidation1": "Apply for Validation",
+  "ProfessionalStandards": "Professional standards",
+  "FieldOfProfessionalActivity": "Field of professional activity",
+  "Specializations": "Specializations",
+  "PartialInvitations": "Partial invitations",
+  "Field": "Field",
+  "Profession": "Profession",
+  "InvitationGroup": "Invitation group",
+  "CurriculumNameAndCode": "Curriculum name and code",
+  "TheCallingCanBeLearned": "The calling can be learned",
+  "EQFLevel": "EQF level",
+  "ShowMoreFilters": "Show more filters",
+  "ShowLessFilters": "Show less filters"
 } 

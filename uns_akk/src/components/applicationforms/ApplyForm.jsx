@@ -2,16 +2,16 @@ import jwtDecode from "jwt-decode";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
-import FirstForm from "./FirstForm";
-import SecondForm from "./SecondForm";
-import ThirdForm from "./ThirdForm";
-import FourthForm from "./FourthForm";
-import FifthForm from "./FifthForm";
-import CrudProvider from "../../../provider/CrudProvider";
+import FirstForm from "./firstapplication/FirstForm";
+import SecondForm from "./firstapplication/SecondForm";
+import ThirdForm from "./firstapplication/ThirdForm";
+import FourthForm from "./firstapplication/FourthForm";
+import FifthForm from "./firstapplication/FifthForm";
+import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
-import SixthForm from "./SixthForm";
-import SeventhForm from "./SeventhForm";
-import SecondApplyForm from "../secondapplication/SecondApplyForm";
+import SixthForm from "./firstapplication/SixthForm";
+import SeventhForm from "./firstapplication/SeventhForm";
+import SecondApplyForm from "./secondapplication/SecondApplyForm";
 export default function ApplyForm({ authState }) {
   const { t } = useTranslation();
   const token = localStorage.getItem("akktoken");
@@ -143,7 +143,7 @@ export default function ApplyForm({ authState }) {
             setShowSecondForm={setShowSecondForm}
             showSecondForm={showSecondForm}
           />
-          {!showSecondForm && (
+          {showSecondForm && (
             <SecondForm
               model={model}
               setModel={setModel}
@@ -151,7 +151,7 @@ export default function ApplyForm({ authState }) {
               showThirdForm={showThirdForm}
             />
           )}
-          {!showThirdForm && (
+          {showThirdForm && (
             <ThirdForm
               model={model}
               setModel={setModel}
@@ -159,7 +159,7 @@ export default function ApplyForm({ authState }) {
               showFourthForm={showFourthForm}
             />
           )}
-          {!showFourthForm && (
+          {showFourthForm && (
             <FourthForm
               model={model}
               setModel={setModel}
@@ -167,7 +167,7 @@ export default function ApplyForm({ authState }) {
               setShowFifthForm={setShowFifthForm}
             />
           )}
-          {!showFifthForm && (
+          {showFifthForm && (
             <FifthForm
               model={model}
               setModel={setModel}
@@ -175,7 +175,7 @@ export default function ApplyForm({ authState }) {
               setShowSixthForm={setShowSixthForm}
             />
           )}
-          {!showSixthForm && (
+          {showSixthForm && (
             <SixthForm
               model={model}
               setModel={setModel}
@@ -183,20 +183,22 @@ export default function ApplyForm({ authState }) {
               setShowSeventhForm={setShowSeventhForm}
             />
           )}
-          {!showSeventhForm && (
+          {showSeventhForm && (
             <SeventhForm
               model={model}
               setModel={setModel}
+              load={load}
               showValidationForm={showValidationForm}
               setShowValidationForm={setShowValidationForm}
               submit={SubmitApplication}
             />
           )}
-          {!showValidationForm && (
+          {showValidationForm && (
             <SecondApplyForm
               model={model}
               setModel={setModel}
               secondApplication={secondApplication}
+              load={load}
               setSecondApplication={setSecondApplication}
               submit={SubmitApplication}
             />

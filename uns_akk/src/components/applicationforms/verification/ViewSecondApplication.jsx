@@ -1,17 +1,9 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import CrudProvider from "../../../provider/CrudProvider";
-import { Button, Modal } from "antd";
+import CustomModal from "../../custom/CustomModal";
 
 export default function ViewSecondApplication({ secondApplication, docs }) {
   const { t } = useTranslation();
-  const [firstModal, setFirstModal] = useState(false);
-  const [secondModal, setSecondModal] = useState(false);
-  const [thirdModal, setThirdModal] = useState(false);
-  const [fourthModal, setFourthModal] = useState(false);
-  const [fifthModal, setFifthModal] = useState(false);
-  const [sixthModal, setSixthModal] = useState(false);
-  const [seventhModal, setSeventhModal] = useState(false);
 
   return (
     <div className='row'>
@@ -153,37 +145,13 @@ export default function ViewSecondApplication({ secondApplication, docs }) {
           />
         </div>
       </div>
-      <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 text-start'>
-        <Button className='btn-dark' onClick={(e) => setFirstModal(true)}>
-          {t("Documents")}
-        </Button>
-        <Modal
-          title={t("PartC4ValidationC1Docs")}
-          centered
-          className='responsive-modal'
-          okButtonProps={{ style: { display: "none" } }}
-          open={firstModal}
-          onCancel={(e) => setFirstModal(false)}
-        >
-          {docs.map((document) => {
-            if (document.type === "ValidationC4Doc") {
-              return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                <iframe
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              ) : (
-                <img
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              );
-            }
-          })}
-        </Modal>
-      </div>
+      <CustomModal
+        showUpload={false}
+        docs={docs}
+        placeHolder={t("Documents")}
+        typeToFilter={"ValidationC4Doc"}
+      />
+
       <div className='col-xxl-12 col-lg-12 col-sm-12'>
         <div className='form-group'>
           <label>{t("PartCValidationC1")} (Details)</label>
@@ -212,37 +180,13 @@ export default function ViewSecondApplication({ secondApplication, docs }) {
           />
         </div>
       </div>
-      <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 text-start'>
-        <Button className='btn-dark' onClick={(e) => setSeventhModal(true)}>
-          {t("Documents")}
-        </Button>
-        <Modal
-          title={t("PartC4ValidationC1Docs")}
-          centered
-          className='responsive-modal'
-          okButtonProps={{ style: { display: "none" } }}
-          open={seventhModal}
-          onCancel={(e) => setSeventhModal(false)}
-        >
-          {docs.map((document) => {
-            if (document.type === "ValidationC4Doc2") {
-              return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                <iframe
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              ) : (
-                <img
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              );
-            }
-          })}
-        </Modal>
-      </div>
+      <CustomModal
+        showUpload={false}
+        docs={docs}
+        placeHolder={t("Documents")}
+        typeToFilter={"ValidationC4Doc2"}
+      />
+
       <div className='col-xxl-12 col-lg-12 col-sm-12'>
         <div className='form-group'>
           <label>{t("PartC4ValidationC2")} (Details)</label>
@@ -332,41 +276,14 @@ export default function ViewSecondApplication({ secondApplication, docs }) {
           />
         </div>
       </div>
-      <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 text-start'>
-        <p className='text-muted'>{t("PartDValidationDesE11")}</p>
-
-        <Button className='btn-dark' onClick={(e) => setSecondModal(true)}>
-          {t("Documents")}
-        </Button>
-        <Modal
-          title={t("PartDValidationDesE11")}
-          centered
-          className='responsive-modal'
-          okButtonProps={{ style: { display: "none" } }}
-          open={secondModal}
-          onCancel={(e) => setSecondModal(false)}
-        >
-          {docs.map((document) => {
-            if (document.type === "ValidationC4Doc3") {
-              return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                <iframe
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              ) : (
-                <img
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              );
-            }
-          })}
-        </Modal>
-      </div>
+      <CustomModal
+        showUpload={false}
+        docs={docs}
+        placeHolder={t("PartDValidationDesc11")}
+        typeToFilter={"ValidationC4Doc3"}
+      />
       <h5 className='card-title text-start mt-4'>
-        D.4 {t("PartDValidationDesE12")}
+        D.4 {t("PartDValidationDesc12")}
       </h5>
       <div className='col-xxl-12 col-lg-12 col-sm-12'>
         <div className='form-group'>
@@ -432,38 +349,12 @@ export default function ViewSecondApplication({ secondApplication, docs }) {
           />
         </div>
       </div>
-      <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-start'>
-        <p className='text-muted'>{t("PartDValidationDesc19")}</p>
-        <Button className='btn-dark' onClick={(e) => setThirdModal(true)}>
-          {t("Documents")}
-        </Button>
-        <Modal
-          title={t("PartDValidationDesc19")}
-          centered
-          className='responsive-modal'
-          okButtonProps={{ style: { display: "none" } }}
-          open={thirdModal}
-          onCancel={(e) => setThirdModal(false)}
-        >
-          {docs.map((document) => {
-            if (document.type === "ValidationC4Doc4") {
-              return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                <iframe
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              ) : (
-                <img
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              );
-            }
-          })}
-        </Modal>
-      </div>
+      <CustomModal
+        showUpload={false}
+        docs={docs}
+        placeHolder={t("PartDValidationDesc19")}
+        typeToFilter={"ValidationC4Doc4"}
+      />
       <div className='col-xxl-12 col-lg-12 col-sm-12 mt-3'>
         <div className='form-group'>
           <label>D.5.2 {t("PartDValidationDesc20")}</label>
@@ -505,35 +396,12 @@ export default function ViewSecondApplication({ secondApplication, docs }) {
       </div>
       <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-start'>
         <p className='text-muted'>{t("PartDValidationDesc23")}</p>
-        <Button className='btn-dark' onClick={(e) => setFourthModal(true)}>
-          {t("Documents")}
-        </Button>
-        <Modal
-          title={t("PartDValidationDesc23")}
-          centered
-          className='responsive-modal'
-          okButtonProps={{ style: { display: "none" } }}
-          open={fourthModal}
-          onCancel={(e) => setFourthModal(false)}
-        >
-          {docs.map((document) => {
-            if (document.type === "ValidationC4Doc5") {
-              return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                <iframe
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              ) : (
-                <img
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              );
-            }
-          })}
-        </Modal>
+        <CustomModal
+          showUpload={false}
+          docs={docs}
+          placeHolder={t("Documents")}
+          typeToFilter={"ValidationC4Doc5"}
+        />
       </div>
       <h5 className='card-title text-start mt-3'>
         D.6 {t("PartDValidationDesc24")}
@@ -590,35 +458,12 @@ export default function ViewSecondApplication({ secondApplication, docs }) {
       </div>
       <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-start'>
         <p className='text-muted'>{t("PartDValidationDesc29")}</p>
-        <Button className='btn-dark' onClick={(e) => setFifthModal(true)}>
-          {t("Documents")}
-        </Button>
-        <Modal
-          title={t("PartDValidationDesc29")}
-          centered
-          className='responsive-modal'
-          okButtonProps={{ style: { display: "none" } }}
-          open={fifthModal}
-          onCancel={(e) => setFifthModal(false)}
-        >
-          {docs.map((document) => {
-            if (document.type === "ValidationC4Doc6") {
-              return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                <iframe
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              ) : (
-                <img
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              );
-            }
-          })}
-        </Modal>
+        <CustomModal
+          showUpload={false}
+          docs={docs}
+          placeHolder={t("Documents")}
+          typeToFilter={"ValidationC4Doc6"}
+        />
       </div>
       <div className='col-xxl-12 col-lg-12 col-sm-12 mt-3'>
         <div className='form-group'>
@@ -651,35 +496,12 @@ export default function ViewSecondApplication({ secondApplication, docs }) {
       </div>
       <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-start'>
         <p className='text-muted'>{t("PartDValidationDesc33")}</p>
-        <Button className='btn-dark' onClick={(e) => setSixthModal(true)}>
-          {t("Documents")}
-        </Button>
-        <Modal
-          title={t("PartDValidationDesc33")}
-          centered
-          className='responsive-modal'
-          okButtonProps={{ style: { display: "none" } }}
-          open={sixthModal}
-          onCancel={(e) => setSixthModal(false)}
-        >
-          {docs.map((document) => {
-            if (document.type === "ValidationC4Doc7") {
-              return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                <iframe
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              ) : (
-                <img
-                  key={document.applicationDocsId}
-                  src={CrudProvider.documentPath(document.docPath)}
-                  loading='lazy'
-                />
-              );
-            }
-          })}
-        </Modal>
+        <CustomModal
+          showUpload={false}
+          docs={docs}
+          placeHolder={t("Documents")}
+          typeToFilter={"ValidationC4Doc7"}
+        />
       </div>
       <hr className='mt-2' />
       <h4 className='card-title text-start'>{t("PartE")}</h4>

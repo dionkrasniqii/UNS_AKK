@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import CrudProvider from "../../provider/CrudProvider";
-import img_certification from "../../assets/images/certificate.png";
+import CrudProvider from "../../../provider/CrudProvider";
+
+import img_certification from "../../../assets/images/certificate.png";
 import { toast } from "react-toastify";
-import DataTablev2 from "../custom/DataTablev2";
+import DataTablev2 from "../../custom/DataTablev2";
 
 export default function SearchCertificate() {
   const { t } = useTranslation();

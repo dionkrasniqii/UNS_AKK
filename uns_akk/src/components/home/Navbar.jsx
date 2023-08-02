@@ -36,6 +36,7 @@ export default function Navbar(props) {
 
   async function changeLang(e) {
     i18next.changeLanguage(e);
+    localStorage.setItem("Language", e);
     setSelectedLanguage(e);
   }
 

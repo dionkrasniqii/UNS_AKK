@@ -195,7 +195,6 @@ export default function CreateDecisions() {
     });
   }
 
-  console.log(model);
 
   // const credits =
   //   subQualifications.length > 0 &&

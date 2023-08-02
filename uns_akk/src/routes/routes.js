@@ -26,23 +26,14 @@ import CreateGroup from "../components/groups/CreateGroup";
 import Landing from "../components/home/Landing";
 import Person from "../components/personinstitutions/Person";
 import PersonList from "../components/personinstitutions/PersonList";
-import CertificateDetails from "../components/search/CertificateDetails";
-import LevelDetails from "../components/search/LevelDetails";
-import QualificationDetails from "../components/search/QualificationDetails";
-import DecisionDetails from "../components/search/DecisionDetails";
-import InstitutionDetails from "../components/search/InstitutionDetails";
-import PersonDetails from "../components/personinstitutions/PersonDetails";
 import Reports from "../components/reports/Reports";
 import StatisticReports from "../components/reports/StatisticReports";
-import ApplyForm from "../components/applicationforms/firstapplication/ApplyForm";
-import SearchingForms from "../components/search/SearchingForms";
 import ApplicationsList from "../components/applicationforms/verification/ApplicationsList";
 import InstitutionUser from "../components/institutionuser/InstitutionUser";
 import CreateInstitutionUser from "../components/institutionuser/CreateInstitutionUser";
 import EditInstitutionUser from "../components/institutionuser/EditInstitutionUser";
 import ApplicationListInstitutions from "../components/applicationforms/verification/ApplicationListInstitutions";
 import ViewApplication from "../components/applicationforms/verification/ViewApplication";
-import EditApplicationInstitution from "../components/applicationforms/verification/edit/EditFirstApplicationFormA";
 import QualificationType from "../components/qualificationtype/QualificationType";
 import CreateQualificationType from "../components/qualificationtype/CreateQualificationType";
 import EditQualificationType from "../components/qualificationtype/EditQualificationType";
@@ -50,6 +41,17 @@ import ExpertReviewApplication from "../components/applicationforms/verification
 import Competences from "../components/competences/Competences";
 import CreateCompetences from "../components/competences/CreateCompetences";
 import EditCompetences from "../components/competences/EditCompetences";
+import EditFirstApplicationFormA from "../components/applicationforms/verification/edit/firstapplication/EditFirstApplicationFormA";
+import ApplyForm from "../components/applicationforms/ApplyForm";
+import CertificateDetails from "../components/search/details/CertificateDetails";
+import QualificationDetails from "../components/search/details/QualificationDetails";
+import LevelDetails from "../components/search/details/LevelDetails";
+import DecisionDetails from "../components/search/details/DecisionDetails";
+import InstitutionDetails from "../components/search/details/InstitutionDetails";
+import PersonDetails from "../components/personinstitutions/PersonDetails";
+import SearchingForms from "../components/search/searchforms/SearchingForms";
+import SearchProfessionalStandards from "../components/search/searchforms/professionalstandards/SearchProfessionalStandards";
+import SearchCompetencies from "../components/search/searchforms/SearchCompetencies";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -444,6 +446,14 @@ export const AppRoutes = (props) => {
           />
           {/* Searching Forms */}
           <Route path="/search-forms" element={<SearchingForms />} />
+          <Route
+            path='/professional-standards-search'
+            element={<SearchProfessionalStandards />}
+          />
+          <Route
+            path='/compentencies-search'
+            element={<SearchCompetencies />}
+          />
           {/* Apply Forms */}
           <Route
             path="/application-form"
@@ -485,7 +495,7 @@ export const AppRoutes = (props) => {
                 setAuthState={props.setAuthState}
                 authState={props.authState}
                 allowedRoles={[ROLES.INSTITUTION]}
-                component={EditApplicationInstitution}
+                component={EditFirstApplicationFormA}
               />
             }
           />

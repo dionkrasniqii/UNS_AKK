@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import SearchCertificate from "../search/SearchCertificate";
 import { useTranslation } from "react-i18next";
-import SearchInstitution from "../search/SearchInstitution";
+import SearchInstitution from "./SearchInstitution";
+import SearchCertificate from "./SearchCertificate";
+
 export default function SearchingForms() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("1");

@@ -107,7 +107,7 @@ export default function EditDecisions() {
     validateOnBlur: false,
     onSubmit: () => submitForm(),
   });
-
+  console.log(decision);
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className='card'>
@@ -152,7 +152,7 @@ export default function EditDecisions() {
                     <br />
                     <label className='fs-5'>{t("GroupLimits")}:</label>
                     <br />
-                    {decision.noLimitGroups ? t("Yes") : t("No")}
+                    {!decision.noLimitGroups ? t("Yes") : t("No")}
                     <br />
                     <label className='fs-5'>{t("NumberOfGroups")}:</label>
                     <br />

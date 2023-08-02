@@ -68,6 +68,15 @@ export default function ApplicationsList() {
               Refuzuar
             </span>
           );
+        } else if (row.step === 8) {
+          return (
+            <span
+              type='button'
+              className='btn btn-primary rounded-pill waves-effect'
+            >
+              Aprovuar
+            </span>
+          );
         } else {
           return (
             <span
@@ -77,29 +86,6 @@ export default function ApplicationsList() {
               Proces
             </span>
           );
-        }
-      },
-    },
-
-    {
-      name: t("RegisterDecision"),
-      sortable: true,
-      filterable: true,
-      cell: (row, index) => {
-        switch (row.step) {
-          case 8:
-            return (
-              <CreateDecisionModal
-                applicationId={row.applicationId}
-                institutionName={row.institutionName}
-              />
-            );
-          default:
-            return (
-              <span className='text-danger'>
-                {t("ApplicationNotApprovedYet")}
-              </span>
-            );
         }
       },
     },
@@ -124,13 +110,35 @@ export default function ApplicationsList() {
     },
   ];
 
-  columns = columns.filter((col) => {
-    if (decodedToken?.role === "Zyrtar") {
-      return col.name !== t("RegisterDecision");
-    } else {
-      return col;
-    }
-  });
+
+  columns = 
+   decodedToken?.role === "Zyrtar AKK" || decodedToken?.role === "Admin"?
+   [...columns, {
+      name: t("RegisterDecision"),
+      sortable: true,
+      filterable: true,
+      cell: (row, index) => {
+        switch (row.step) {
+          case 8:
+            return (
+              <CreateDecisionModal
+                applicationId={row.applicationId}
+                institutionName={row.institutionName}
+              />
+            );
+          default:
+            return (
+              <span className='text-danger'>
+                {t("ApplicationNotApprovedYet")}
+              </span>
+            );
+        }
+      },
+    },]
+ : columns
+    
+  
+
   const statusToSearch =
     decodedToken &&
     (() => {
@@ -149,6 +157,8 @@ export default function ApplicationsList() {
           return null;
       }
     })();
+
+
   const fetchData = async () => {
     try {
       if (statusToSearch) {
@@ -180,6 +190,7 @@ export default function ApplicationsList() {
       setLoad(false);
     }
   };
+  
   useEffect(() => {
     fetchData();
   }, [statusToSearch]);

@@ -15322,9 +15322,10 @@ body[data-layout-mode=horizontal][data-layout-color=light][data-topbar-color=dar
     color: var(--ct-menu-item-active)
 }
 
+
 @media (min-width:992px) {
     .topnav {
-        height: 55px
+        height: 58px
     }
 
     .topnav .navbar-nav .nav-item:first-of-type .nav-link {
@@ -25430,7 +25431,7 @@ span.rbt-btn-link-reverse.color-white:hover {
 }
 
 .divForUpload {
-    z-index: 999;
+    z-index: 99;
 }
 
 .responsive-modal .ant-modal-content {

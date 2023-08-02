@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import CrudProvider from "../../provider/CrudProvider";
+import CrudProvider from "../../../provider/CrudProvider";
+
 import { Button, Modal } from "antd";
-import DataTablev2 from "../custom/DataTablev2";
+import DataTablev2 from "../../custom/DataTablev2";
 
 export default function DecisionDetails() {
   const { id } = useParams();

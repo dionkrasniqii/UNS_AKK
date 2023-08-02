@@ -259,7 +259,6 @@ export default function SeventhForm({ model, setModel, ...rest }) {
           </div>
         </div>
         <hr />
-
         <h5 className='card-title text-start '>C1.5 {t("PartC1.5")}</h5>
         <div className='col-xxl-12 col-lg-12 col-sm-12'>
           <div className='col-xxl-3 col-lg-5 col-sm-12'>
@@ -289,17 +288,26 @@ export default function SeventhForm({ model, setModel, ...rest }) {
               onClick={(e) =>
                 rest.setShowValidationForm(!rest.showValidationForm)
               }
-              className='btn btn-warning rounded-pill '
+              className='btn btn-md btn-warning'
             >
-              Aplikimi per validim
+              {t("ApplyForValidation1")}
             </button>
             {!rest.showValidationForm && (
-              <button
-                type='submit'
-                className='btn btn btn-primary btn-soft-blue rounded-pill '
-              >
-                {t("Apply")}
-              </button>
+              <div>
+                {!rest.load ? (
+                  <button
+                    type='submit'
+                    className='btn btn-primary btn-soft-blue rounded-pill'
+                  >
+                    {t("Apply")}
+                  </button>
+                ) : (
+                  <div
+                    className='spinner-border text-primary m-2 text-center'
+                    role='status'
+                  />
+                )}
+              </div>
             )}
           </div>
         </div>

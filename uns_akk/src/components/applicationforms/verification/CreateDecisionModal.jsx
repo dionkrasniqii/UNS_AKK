@@ -78,19 +78,18 @@ export default function CreateDecisionModal({
     ]);
   }, []);
   useEffect(() => {
-    if (application?.qualificationId) {
-      CrudProvider.getItemByIdLang(
-        "GeneralAPI/GetAllSubQualificationsByQualificationId",
-        application?.qualificationId
-      ).then((res) => {
-        if (res) {
-          if (res.statusCode === 200) {
-            setSubQualifications(res.result);
-          }
+    CrudProvider.getItemByIdLang(
+      "GeneralAPI/GetAllSubQualificationsByQualificationId",
+      model.QualificationId
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setSubQualifications(res.result);
         }
-      });
-    }
-  }, [application?.qualificationId]);
+      }
+    });
+  }, [model.QualificationId]);
+
   const municipalitiesList =
     municipalities.length > 0
       ? municipalities.map((obj) => ({
@@ -127,7 +126,6 @@ export default function CreateDecisionModal({
           };
         })
       : [];
-
   function changeSubQualification(e) {
     setModel({
       ...model,
@@ -215,9 +213,6 @@ export default function CreateDecisionModal({
   const CreateDecisionSchema = Yup.object().shape({
     MunicipalityId: Yup.string().required(t("ChooseMunicipality")),
     Credits: Yup.string().max(20).required(t("CompleteCredits")),
-    SubQualifications: Yup.mixed().required(
-      t("Choose") + " " + t("SubQualifications").toLowerCase()
-    ),
     ProtocolNr: Yup.string().max(20).required(t("CompleteProtocolNumber")),
     ProtocolDate: Yup.mixed().required(t("CompleteProtocolDate")),
     DecisionDate: Yup.mixed().required(t("CompleteStartDateDecision")),
@@ -281,11 +276,7 @@ export default function CreateDecisionModal({
                 <CustomSelect
                   onChangeFunction={changeQualification}
                   isMulti={false}
-                  hasDefaultValue={true}
-                  defaultValue={{
-                    label: application.qualificationName,
-                    value: application.qualificationId,
-                  }}
+                  hasDefaultValue={false}
                   optionsList={qualificationsList}
                 />
                 {/* {formik.errors.QualificationId && (
@@ -296,17 +287,12 @@ export default function CreateDecisionModal({
               </div>
 
               <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                <label>{t("SubQualifications")}:</label>
+                <label>{t("Modules")}:</label>
                 <CustomSelect
                   onChangeFunction={changeSubQualification}
                   isMulti={true}
                   optionsList={subQualificationsList}
                 />
-                {formik.errors.SubQualifications && (
-                  <span className='text-danger'>
-                    {formik.errors.SubQualifications}
-                  </span>
-                )}
               </div>
               <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                 <label>{t("Credits")}:</label>

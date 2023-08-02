@@ -48,11 +48,12 @@ function App() {
       dispatch(removeToken());
       localStorage.removeItem("akktoken");
     }
-  }, [oldSession]);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("i18nextLng", "1");
   }, []);
+  
   if (authState === null) {
     return <Loading />;
   }

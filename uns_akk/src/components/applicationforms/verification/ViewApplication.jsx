@@ -10,33 +10,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import ViewSecondApplication from "./ViewSecondApplication";
 import AssignExperts from "./AssignExperts";
+import CustomModal from "../../custom/CustomModal";
 
 export default function ViewApplication() {
   const { id } = useParams();
   const { t } = useTranslation();
   const [data, setData] = useState({});
   const [logoModal, setLogoModal] = useState(false);
-  const [mashtModal, setMashtModal] = useState(false);
-  const [certificateModal, setCertificateModal] = useState(false);
-  const [previousDecisionModal, setPreviousDecisionModal] = useState(false);
-  const [instituonDetailsModal, setInstitutionDetailsModal] = useState(false);
-  const [staffModal, setStaffModal] = useState(false);
-  const [otherRequestModal, setOtherRequestModal] = useState(false);
-  const [managementOfQualityModal, setManagementOfQualityModal] =
-    useState(false);
-  const [dataOfAssuranceModal, setDataOfAssuranceModal] = useState(false);
-  const [
-    managementQualityCertificationModal,
-    setManagementQualityCertificationModal,
-  ] = useState(false);
-  const [politicsB14Modal, setPoliticsB14Modal] = useState(false);
-  const [handicapesB15Modal, setHandicapeB15Modal] = useState(false);
-  const [politicsB16Modal, setPoliticsB16Modal] = useState(false);
-  const [systemCreditsModal, setSystemCreditsModal] = useState(false);
-  const [enviromentModal, setEnviromentModal] = useState(false);
-  const [modelOfCertificateModal, setModelOfCertificateModal] = useState(false);
-  const [modalOfRVV, setModalOfRVV] = useState(false);
-  const [formatOfModule, setFormatOfModule] = useState(false);
   const [statuses, setStatuses] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("akktoken");
@@ -70,11 +50,13 @@ export default function ViewApplication() {
       );
     }
   }
-  console.log(expertReports);
 
+  
   useEffect(() => {
     callExpertReports();
   }, [data]);
+
+
   useEffect(() => {
     Promise.all([
       CrudProvider.getItemById("ApplicationAPI/GetById", id).then((res) => {
@@ -125,7 +107,6 @@ export default function ViewApplication() {
       return true;
     }
   }
-  console.log(data);
   async function SubmitApplication() {
     try {
       setPostLoad(true);
@@ -153,7 +134,6 @@ export default function ViewApplication() {
       setPostLoad(false);
     }
   }
-  console.log(data);
   const statusesList =
     statuses.length > 0 &&
     decodedToken &&
@@ -354,9 +334,12 @@ export default function ViewApplication() {
               </div>
             </div>
             <div className='col-xxl-1 col-lg-2 col-sm-12 mt-2 text-start'>
-              <Button className='btn-dark' onClick={(e) => setLogoModal(true)}>
+              <button
+                className='fs-6  btn2 btn-modal btn-raporti'
+                onClick={(e) => setLogoModal(true)}
+              >
                 {t("Logo")}
-              </Button>
+              </button>
               <Modal
                 title={t("Logo")}
                 centered
@@ -411,71 +394,18 @@ export default function ViewApplication() {
                 <span className='focus-border'></span>
               </div>
             </div>
-            <div className='col-xxl-2 col-lg-3 col-md-4 col-sm-12 mt-2'>
-              <Button className='btn-dark' onClick={() => setMashtModal(true)}>
-                {t("LicenseMASHT")}
-              </Button>
-              <Modal
-                title={t("LicenseMASHT")}
-                centered
-                className='responsive-modal'
-                open={mashtModal}
-                okButtonProps={{ style: { display: "none" } }}
-                onCancel={() => setMashtModal(false)}
-              >
-                {data.docs.map((document) => {
-                  if (document.type === "MASHTLicenseA16") {
-                    return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                      <iframe
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    ) : (
-                      <img
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    );
-                  }
-                })}
-              </Modal>
-            </div>
-            <div className='col-xxl-2 col-lg-3 col-md-4 col-sm-12 mt-2'>
-              <Button
-                className='btn-dark'
-                onClick={() => setCertificateModal(true)}
-              >
-                {t("RegistrationCertificate")}
-              </Button>
-              <Modal
-                title={t("RegistrationCertificate")}
-                centered
-                className='responsive-modal'
-                open={certificateModal}
-                okButtonProps={{ style: { display: "none" } }}
-                onCancel={() => setCertificateModal(false)}
-              >
-                {data.docs.map((document) => {
-                  if (document.type === "CertificateRegisterDocA15") {
-                    return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                      <iframe
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    ) : (
-                      <img
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    );
-                  }
-                })}
-              </Modal>
-            </div>
+            <CustomModal
+              showUpload={false}
+              docs={data.docs}
+              placeHolder={t("LicenseMASHT")}
+              typeToFilter={"MASHTLicenseA16"}
+            />
+            <CustomModal
+              showUpload={false}
+              docs={data.docs}
+              placeHolder={t("RegistrationCertificate")}
+              typeToFilter={"CertificateRegisterDocA15"}
+            />
           </div>
           {data.applicationDTO.qualificationPeriodA17 && (
             <>
@@ -493,41 +423,12 @@ export default function ViewApplication() {
                     <span className='focus-border'></span>
                   </div>
                 </div>
-                <div className='col-xxl-2 col-lg-3 col-md-4 col-sm-12 mt-2'>
-                  <Button
-                    className='btn-dark'
-                    onClick={() => setPreviousDecisionModal(true)}
-                  >
-                    {t("PreviousDecisionDocs")}
-                  </Button>
-                  <Modal
-                    title={t("PreviousDecisionDocs")}
-                    centered
-                    className='responsive-modal'
-                    open={previousDecisionModal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setPreviousDecisionModal(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "QualificatinDocsA17") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("PreviousDecisionDocs")}
+                  typeToFilter={"QualificatinDocsA17"}
+                />
               </div>
             </>
           )}
@@ -647,106 +548,24 @@ export default function ViewApplication() {
             </div>
           </div>
           <div className='row'>
-            <div className='col-xxl-2 col-lg-3 col-sm-12 mt-2 text-center'>
-              <Button
-                onClick={() => setInstitutionDetailsModal(true)}
-                className='btn-dark'
-              >
-                {t("InstitutionDetailsModal")}
-              </Button>
-              <Modal
-                title={t("InstitutionDetailsModal")}
-                centered
-                className='responsive-modal'
-                open={instituonDetailsModal}
-                okButtonProps={{ style: { display: "none" } }}
-                onCancel={() => setInstitutionDetailsModal(false)}
-              >
-                {data.docs.map((document) => {
-                  if (document.type === "InstitutionDocsA21") {
-                    return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                      <iframe
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    ) : (
-                      <img
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    );
-                  }
-                })}
-              </Modal>
-            </div>
-
-            <div className='col-xxl-2 col-lg-3 col-sm-12 mt-2 text-center'>
-              <Button className=' btn-dark' onClick={() => setStaffModal(true)}>
-                {t("StaffDataModal")}
-              </Button>
-              <Modal
-                title={t("StaffDataModal")}
-                centered
-                className='responsive-modal'
-                open={staffModal}
-                okButtonProps={{ style: { display: "none" } }}
-                onCancel={() => setStaffModal(false)}
-              >
-                {data.docs.map((document) => {
-                  if (document.type === "StaffA23") {
-                    return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                      <iframe
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    ) : (
-                      <img
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    );
-                  }
-                })}
-              </Modal>
-            </div>
-            <div className='col-xxl-2 col-lg-3 col-sm-12 mt-2 text-center'>
-              <Button
-                onClick={() => setOtherRequestModal(true)}
-                className=' btn-dark'
-              >
-                {t("OtherRequest")}
-              </Button>
-              <Modal
-                title={t("OtherRequest")}
-                centered
-                className='responsive-modal'
-                open={otherRequestModal}
-                okButtonProps={{ style: { display: "none" } }}
-                onCancel={() => setOtherRequestModal(false)}
-              >
-                {data.docs.map((document) => {
-                  if (document.type === "OtherRequestsA25") {
-                    return CrudProvider.checkIsPDf(document.docPath) == true ? (
-                      <iframe
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    ) : (
-                      <img
-                        key={document.applicationDocsId}
-                        src={CrudProvider.documentPath(document.docPath)}
-                        loading='lazy'
-                      />
-                    );
-                  }
-                })}
-              </Modal>
-            </div>
+            <CustomModal
+              showUpload={false}
+              docs={data.docs}
+              placeHolder={t("InstitutionDetailsModal")}
+              typeToFilter={"InstitutionDocsA21"}
+            />
+            <CustomModal
+              showUpload={false}
+              docs={data.docs}
+              placeHolder={t("StaffDataModal")}
+              typeToFilter={"StaffA23"}
+            />
+            <CustomModal
+              showUpload={false}
+              docs={data.docs}
+              placeHolder={t("OtherRequest")}
+              typeToFilter={"OtherRequestsA25"}
+            />
           </div>
           <hr />
           <form onSubmit={formik.handleSubmit}>
@@ -757,412 +576,72 @@ export default function ViewApplication() {
                   {t("PartBFirstDesc")}
                 </h5>
                 <h5 className='card-title'>{t("PartBSecondDesc")}</h5>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>
-                    B.1.1 {t("ManagementOfQuality")}
-                  </h5>
-                  <Button
-                    onClick={() => setManagementOfQualityModal(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("ManagementOfQuality")}
-                    centered
-                    className='responsive-modal'
-                    open={managementOfQualityModal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setManagementOfQualityModal(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "ManagementOfQualityDocs") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>B.1.2 {t("DataOfAssurance")}</h5>
-                  <Button
-                    onClick={() => setDataOfAssuranceModal(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("DataOfAssurance")}
-                    centered
-                    className='responsive-modal'
-                    open={dataOfAssuranceModal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setDataOfAssuranceModal(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "DataOfAssurance") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>
-                    B.1.3 {t("ManagementQualityCertification")}
-                  </h5>
-                  <Button
-                    onClick={() => setManagementQualityCertificationModal(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("ManagementQualityCertification")}
-                    centered
-                    className='responsive-modal'
-                    open={managementQualityCertificationModal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() =>
-                      setManagementQualityCertificationModal(false)
-                    }
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "ManagementQualityCertification") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>B.1.4 {t("PoliticsB14")}</h5>
-                  <Button
-                    onClick={() => setPoliticsB14Modal(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("PoliticsB14")}
-                    centered
-                    className='responsive-modal'
-                    open={politicsB14Modal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setPoliticsB14Modal(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "PoliticsAndProcedures") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>
-                    B.1.5 {t("HandicapesPolitics")}
-                  </h5>
-                  <Button
-                    onClick={() => setHandicapeB15Modal(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("HandicapesPolitics")}
-                    centered
-                    className='responsive-modal'
-                    open={handicapesB15Modal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setHandicapeB15Modal(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "HandicapDocs") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>
-                    B.1.6 {t("PoliticsProcedures")}
-                  </h5>
-                  <Button
-                    onClick={() => setPoliticsB16Modal(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("PoliticsProcedures")}
-                    centered
-                    className='responsive-modal'
-                    open={politicsB16Modal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setPoliticsB16Modal(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "PoliticsProceduresDocs") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>B.1.7 {t("SystemCredits")}</h5>
-                  <Button
-                    onClick={() => setSystemCreditsModal(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("SystemCredits")}
-                    centered
-                    className='responsive-modal'
-                    open={systemCreditsModal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setSystemCreditsModal(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "SystemCreditsDocs") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>B.1.8 {t("SafeEnviroment")}</h5>
-                  <Button
-                    onClick={() => setEnviromentModal(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("SafeEnviroment")}
-                    centered
-                    className='responsive-modal'
-                    open={enviromentModal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setEnviromentModal(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "EnviromentDocs") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>B.1.9 {t("B1.9")}.</h5>
-                  <Button
-                    onClick={() => setModelOfCertificateModal(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("SafeEnviroment")}
-                    centered
-                    className='responsive-modal'
-                    open={modelOfCertificateModal}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setModelOfCertificateModal(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "CertificateDoc") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>{t("ReportRVV")}.</h5>
-                  <Button
-                    onClick={() => setModalOfRVV(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("ReportRVV")}
-                    centered
-                    className='responsive-modal'
-                    open={modalOfRVV}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setModalOfRVV(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "ReportRVVDoc") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2'>
-                  <h5 className='card-title'>{t("FormatOfModule")}.</h5>
-                  <Button
-                    onClick={() => setFormatOfModule(true)}
-                    className=' btn-dark'
-                  >
-                    {t("Documents")}
-                  </Button>
-                  <Modal
-                    title={t("FormatOfModule")}
-                    centered
-                    className='responsive-modal'
-                    open={formatOfModule}
-                    okButtonProps={{ style: { display: "none" } }}
-                    onCancel={() => setFormatOfModule(false)}
-                  >
-                    {data.docs.map((document) => {
-                      if (document.type === "FormatOfModuleDoc") {
-                        return CrudProvider.checkIsPDf(document.docPath) ==
-                          true ? (
-                          <iframe
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        ) : (
-                          <img
-                            key={document.applicationDocsId}
-                            src={CrudProvider.documentPath(document.docPath)}
-                            loading='lazy'
-                          />
-                        );
-                      }
-                    })}
-                  </Modal>
-                </div>
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("ManagementOfQuality")}
+                  typeToFilter={"ManagementOfQualityDocs"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("DataOfAssurance")}
+                  typeToFilter={"DataOfAssurance"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("ManagementQualityCertification")}
+                  typeToFilter={"ManagementQualityCertification"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("PoliticsB14")}
+                  typeToFilter={"PoliticsAndProcedures"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("HandicapesPolitics")}
+                  typeToFilter={"HandicapDocs"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("PoliticsProcedures")}
+                  typeToFilter={"PoliticsProceduresDocs"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("SystemCredits")}
+                  typeToFilter={"SystemCreditsDocs"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("SafeEnviroment")}
+                  typeToFilter={"EnviromentDocs"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("B1.9")}
+                  typeToFilter={"CertificateDoc"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("ReportRVV")}
+                  typeToFilter={"ReportRVVDoc"}
+                />
+                <CustomModal
+                  showUpload={false}
+                  docs={data.docs}
+                  placeHolder={t("FormatOfModule")}
+                  typeToFilter={"FormatOfModuleDoc"}
+                />
               </div>
               <hr />
               <div className='row mb-2'>
@@ -1312,26 +791,100 @@ export default function ViewApplication() {
                 </>
               )}
               <hr />
-              {expertReports && (
+              {Object.keys(expertReports).length > 0 && (
                 <>
+                  <h5 className='card-title text-start '>
+                    {t("ExpertReports")}
+                  </h5>
+
                   <div className='col-xxl-12 col-lg-12 col-sm-12 mb-2'>
                     <div className='row'>
                       <div className='col-xxl-6 col-lg-6 col-sm-12'>
                         <button
+                          type='button'
                           className=' fs-6  btn2 btn-modal btn-raporti'
-                          onClick={() => setExpertReports(true)}
+                          onClick={() => setExpertsReportsModal(true)}
                         >
                           {t("ExpertReports")}
                         </button>
+                        <Modal
+                          title={t("ExpertReports")}
+                          centered
+                          className='responsive-modal'
+                          open={expertReportsModal}
+                          okButtonProps={{ style: { display: "none" } }}
+                          onCancel={() => setExpertsReportsModal(false)}
+                        >
+                          <div className='row'>
+                            {expertReports?.expertReports?.map((document) => {
+                              return (
+                                <>
+                                  <h5 className='card-title'>
+                                    {t("Name") +
+                                      " " +
+                                      t("Surname").toLowerCase() +
+                                      " " +
+                                      t("Expert").toLowerCase()}
+                                    : {document.expertNameSurname}
+                                  </h5>
+                                  {document.reportiPerAkreditimPath && (
+                                    <div className='col-xxl-6 col-lg-6 col-sm-12'>
+                                      <iframe
+                                        src={CrudProvider.documentPath(
+                                          document.reportiPerAkreditimPath
+                                        )}
+                                        loading='lazy'
+                                      />
+                                    </div>
+                                  )}
+                                  {document.reportiPerValidimPath && (
+                                    <div className='col-xxl-6 col-lg-6 col-sm-12'>
+                                      <iframe
+                                        src={CrudProvider.documentPath(
+                                          document.reportiPerValidimPath
+                                        )}
+                                        loading='lazy'
+                                      />
+                                    </div>
+                                  )}
+                                  <hr className='mb-2' />
+                                </>
+                              );
+                            })}
+                          </div>
+                        </Modal>
                       </div>
                       {expertReports.finalReportPath && (
                         <div className='col-xxl-6 col-lg-6 col-sm-12'>
                           <button
                             className=' fs-6  btn2 btn-modal btn-raporti'
-                            onClick={() => setExpertReports(true)}
+                            onClick={() => setFinalExpertReportModal(true)}
                           >
                             {t("FinalExpertReport")}
                           </button>
+                          <Modal
+                            title={t("ExpertReports")}
+                            centered
+                            className='responsive-modal'
+                            open={finalExpertReportModal}
+                            okButtonProps={{ style: { display: "none" } }}
+                            onCancel={() => setFinalExpertReportModal(false)}
+                          >
+                            <h5 className='card-title'>
+                              {t("Name") +
+                                " " +
+                                t("Surname").toLowerCase() +
+                                " " +
+                                t("Expert").toLowerCase()}
+                              : {expertReports.finalExpertNameSurname}
+                            </h5>
+                            <iframe
+                              src={CrudProvider.documentPath(
+                                expertReports.finalReportPath
+                              )}
+                              loading='lazy'
+                            />
+                          </Modal>
                         </div>
                       )}
                     </div>
