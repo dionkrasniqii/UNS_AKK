@@ -83,20 +83,20 @@ export default function EditCompetences() {
     qualificationStandarts.length > 0 &&
     qualificationStandarts.map((obj) => {
       return {
-        value: obj.qualificationStandart.qualificationStandartId,
-        label: obj.name,
+        value: obj.qualificationStandartId,
+        label: obj.qualificationStandartName,
       };
     });
 
   const defaultSelectValues = qualificationStandarts.filter((obj) =>
     competence.InsertedCompetenceStandartIds.includes(
-      obj.qualificationStandart.qualificationStandartId
+      obj.qualificationStandart?.qualificationStandartId
     )
   );
 
   const defaultOption = defaultSelectValues.map((obj) => ({
     label: obj.name,
-    value: obj.qualificationStandart.qualificationStandartId,
+    value: obj.qualificationStandart?.qualificationStandartId,
   }));
 
   function changeQualificationStandarts(e) {

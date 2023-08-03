@@ -128,7 +128,9 @@ export default function CreateInstitutionUser() {
           <div className='col-lg-12'>
             <div className='card'>
               <div className='card-header'>
-                <h4 className='card-title'>{t("RegisterInstitutionUser")}</h4>
+                <h4 className='card-title'>{decodedToken && decodedToken.role === "Admin"
+              ? t("Regjistro përdorues")
+              : t("RegisterInstitutionUser")}</h4>
               </div>
               <div className='card-body'>
                 <form onSubmit={formik.handleSubmit}>

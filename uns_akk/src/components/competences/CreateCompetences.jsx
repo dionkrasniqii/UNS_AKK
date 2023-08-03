@@ -63,8 +63,8 @@ export default function CreateCompetences() {
     qualificationStandarts.length > 0 &&
     qualificationStandarts.map((obj) => {
       return {
-        value: obj.qualificationStandart.qualificationStandartId,
-        label: obj.name,
+        value: obj.qualificationStandartId,
+        label: obj.qualificationStandartName,
       };
     });
 

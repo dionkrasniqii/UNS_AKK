@@ -69,7 +69,7 @@ export default function Sidebar() {
         {
           label: t("QualificationStandarts"),
           roles: ["Admin", "Zyrtar AKK"],
-          path: "/qualificationStandarts",
+          path: "/qualificationstandart",
           hasMenu: false,
           showLabel: true,
           icon: "fas fa-book",
