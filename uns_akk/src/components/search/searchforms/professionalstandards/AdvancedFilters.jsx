@@ -3,7 +3,15 @@ import { useTranslation } from "react-i18next";
 
 export default function AdvancedFilters({ model, setModel }) {
   const { t } = useTranslation();
-
+  async function checkNullAttributes(model) {
+    let count = 0;
+    Object.keys(model).forEach((key) => {
+      if (key !== "LangId") {
+        model[key] && count++;
+      }
+    });
+    return count > 0 ? false : true;
+  }
   return (
     <>
       <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
@@ -18,6 +26,12 @@ export default function AdvancedFilters({ model, setModel }) {
                 type='text'
                 className='form-control'
                 placeholder={t("Field")}
+                onChange={(e) =>
+                  setModel((prev) => ({
+                    ...prev,
+                    Field: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
@@ -31,75 +45,12 @@ export default function AdvancedFilters({ model, setModel }) {
                 type='text'
                 className='form-control'
                 placeholder={t("Profession")}
-              />
-            </div>
-          </div>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
-              {t("InvitationGroup")}:
-            </label>
-            <div className=' col-xl-7'>
-              <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
-                placeholder={t("InvitationGroup")}
-              />
-            </div>
-          </div>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
-              {t("CurriculumNameAndCode")}:
-            </label>
-            <div className=' col-xl-7'>
-              <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
-                placeholder={t("CurriculumNameAndCode")}
-              />
-            </div>
-          </div>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
-              {t("TheCallingCanBeLearned")}:
-            </label>
-            <div className=' col-xl-7'>
-              <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
-                placeholder={t("TheCallingCanBeLearned")}
-              />
-            </div>
-          </div>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
-              {t("Type")}:
-            </label>
-            <div className=' col-xl-7'>
-              <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
-                placeholder={t("Type")}
-              />
-            </div>
-          </div>
-        </form>
-      </div>
-      <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
-        <form className='form-horizontal'>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
-              {t("EQFLevel")}:
-            </label>
-            <div className=' col-xl-7'>
-              <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
-                placeholder={t("EQFLevel")}
+                onChange={(e) =>
+                  setModel((prev) => ({
+                    ...prev,
+                    Profession: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
@@ -113,9 +64,19 @@ export default function AdvancedFilters({ model, setModel }) {
                 type='text'
                 className='form-control'
                 placeholder={t("ISCO")}
+                onChange={(e) =>
+                  setModel((prev) => ({
+                    ...prev,
+                    ISCO: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
+        </form>
+      </div>
+      <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
+        <form className='form-horizontal'>
           <div className='row mb-3'>
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("ISCED")}:
@@ -126,19 +87,12 @@ export default function AdvancedFilters({ model, setModel }) {
                 type='text'
                 className='form-control'
                 placeholder={t("ISCED")}
-              />
-            </div>
-          </div>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
-              {t("EMTAK")}:
-            </label>
-            <div className=' col-xl-7'>
-              <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
-                placeholder={t("EMTAK")}
+                onChange={(e) =>
+                  setModel((prev) => ({
+                    ...prev,
+                    ISCED: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
@@ -152,6 +106,12 @@ export default function AdvancedFilters({ model, setModel }) {
                 type='text'
                 className='form-control'
                 placeholder={t("Status")}
+                onChange={(e) =>
+                  setModel((prev) => ({
+                    ...prev,
+                    Status: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>

@@ -2,12 +2,107 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AdvancedFilters from "./AdvancedFilters";
 import DataTablev2 from "../../../custom/DataTablev2";
+import CrudProvider from "../../../../provider/CrudProvider";
+import { toast } from "react-toastify";
 
 export default function SearchProfessionalStandards() {
   const { t } = useTranslation();
   const [data, setData] = useState([]);
   const [lessFilters, setLessFilters] = useState(false);
-  const columns = [];
+  const [model, setModel] = useState({
+    LangId: localStorage.getItem("Language"),
+    Name: "",
+    FieldOfProfessionalActivity: "",
+    Specialisations: "",
+    PartialInvitations: "",
+    Field: "",
+    Profession: "",
+    ISCO: "",
+    ISCED: "",
+    Status: "",
+  });
+  console.log(data);
+  const columns = [
+    {
+      name: t("Name"),
+      cell: (row) => {
+        return (
+          <a
+            href={`/decisiondetails/${row.qualificationStandart?.qualificationStandartId}`}
+            target='_blank'
+          >
+            {row.name}
+          </a>
+        );
+      },
+      sortable: true,
+      filterable: true,
+    },
+    {
+      name: t("EstQFLevel"),
+      selector: (row) => row.qualificationStandart?.estQFLevel,
+      sortable: true,
+      filterable: true,
+    },
+    {
+      name: t("ISCO"),
+      selector: (row) => row.isco,
+      sortable: true,
+      filterable: true,
+    },
+    {
+      name: t("ISCED"),
+      selector: (row) => row.isced,
+      sortable: true,
+      filterable: true,
+    },
+    {
+      name: t("Status"),
+      selector: (row) => row.status,
+      sortable: true,
+      filterable: true,
+    },
+  ];
+  async function checkNullAttributes(model) {
+    let count = 0;
+    Object.keys(model).forEach((key) => {
+      if (key !== "LangId") {
+        model[key] && count++;
+      }
+    });
+    return count > 0 ? false : true;
+  }
+
+  function clearInputs() {
+    setModel({
+      ...model,
+      Name: "",
+      FieldOfProfessionalActivity: "",
+      Specialisations: "",
+      PartialInvitations: "",
+      Field: "",
+      Profession: "",
+      ISCO: "",
+      ISCED: "",
+      Status: "",
+    });
+    setData([]);
+  }
+  async function searchData(e) {
+    e.preventDefault();
+    await CrudProvider.createItem(
+      "QualificationStandartAPI/FilterStandards",
+      model
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setData(res.result);
+        } else {
+          toast.error(res.errorMessages[0]);
+        }
+      }
+    });
+  }
   return (
     <div className='container mt-5 bg-light-subtle '>
       <div className='card '>
@@ -25,6 +120,12 @@ export default function SearchProfessionalStandards() {
                       type='text'
                       className='form-control'
                       placeholder={t("Name")}
+                      onChange={(e) =>
+                        setModel((prev) => ({
+                          ...prev,
+                          Name: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -38,6 +139,12 @@ export default function SearchProfessionalStandards() {
                       type='text'
                       className='form-control'
                       placeholder={t("FieldOfProfessionalActivity")}
+                      onChange={(e) =>
+                        setModel((prev) => ({
+                          ...prev,
+                          FieldOfProfessionalActivity: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -55,6 +162,12 @@ export default function SearchProfessionalStandards() {
                       type='text'
                       className='form-control'
                       placeholder={t("Specializations")}
+                      onChange={(e) =>
+                        setModel((prev) => ({
+                          ...prev,
+                          Specialisations: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -68,6 +181,12 @@ export default function SearchProfessionalStandards() {
                       type='text'
                       className='form-control'
                       placeholder={t("PartialInvitations")}
+                      onChange={(e) =>
+                        setModel((prev) => ({
+                          ...prev,
+                          PartialInvitations: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -88,6 +207,7 @@ export default function SearchProfessionalStandards() {
                 <button
                   type='button'
                   className='btn btn-soft-primary waves-effect waves-light mt-2'
+                  onClick={searchData}
                 >
                   {t("Search")}
                 </button>
@@ -103,13 +223,15 @@ export default function SearchProfessionalStandards() {
           </div>
         </div>
       </div>
-      <div className='flip-card-animation'>
-        <DataTablev2
-          dataSource={data}
-          title={t("ListOfProfessionalStandards")}
-          columns={columns}
-        />
-      </div>
+      {Object.keys(data).length > 0 && (
+        <div className='flip-card-animation'>
+          <DataTablev2
+            dataSource={data}
+            title={t("ListOfProfessionalStandards")}
+            columns={columns}
+          />
+        </div>
+      )}
     </div>
   );
 }
