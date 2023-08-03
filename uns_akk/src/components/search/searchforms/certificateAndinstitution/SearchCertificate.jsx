@@ -49,7 +49,7 @@ export default function SearchCertificate() {
       filterable: true,
       cell: (row) =>
         row.validFrom
-          ? new Date(row.validFrom.split("T")[0]).toLocaleDateString("en-GB")
+          ? new Date(row.validFrom?.split("T")[0]).toLocaleDateString("en-GB")
           : "",
     },
     {
@@ -58,7 +58,7 @@ export default function SearchCertificate() {
       filterable: true,
       cell: (row) =>
         row.validFrom
-          ? new Date(row.validTo.split("T")[0]).toLocaleDateString("en-GB")
+          ? new Date(row.validTo?.split("T")[0]).toLocaleDateString("en-GB")
           : "",
     },
   ];

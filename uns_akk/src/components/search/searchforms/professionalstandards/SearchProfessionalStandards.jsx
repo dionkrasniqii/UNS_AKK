@@ -9,6 +9,8 @@ export default function SearchProfessionalStandards() {
   const { t } = useTranslation();
   const [data, setData] = useState([]);
   const [lessFilters, setLessFilters] = useState(false);
+  const [load, setLoad] = useState(false);
+
   const [model, setModel] = useState({
     LangId: localStorage.getItem("Language"),
     Name: "",
@@ -21,14 +23,13 @@ export default function SearchProfessionalStandards() {
     ISCED: "",
     Status: "",
   });
-  console.log(data);
   const columns = [
     {
       name: t("Name"),
       cell: (row) => {
         return (
           <a
-            href={`/decisiondetails/${row.qualificationStandart?.qualificationStandartId}`}
+            href={`/qualification-standard-details/${row.qualificationStandart?.qualificationStandartId}`}
             target='_blank'
           >
             {row.name}
@@ -90,19 +91,26 @@ export default function SearchProfessionalStandards() {
   }
   async function searchData(e) {
     e.preventDefault();
-    await CrudProvider.createItem(
-      "QualificationStandartAPI/FilterStandards",
-      model
-    ).then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          setData(res.result);
-        } else {
-          toast.error(res.errorMessages[0]);
+    try {
+      setLoad(true);
+
+      await CrudProvider.createItem(
+        "QualificationStandartAPI/FilterStandards",
+        model
+      ).then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setData(res.result);
+          } else {
+            toast.error(res.errorMessages[0]);
+          }
         }
-      }
-    });
+      });
+    } finally {
+      setLoad(false);
+    }
   }
+
   return (
     <div className='container mt-5 bg-light-subtle '>
       <div className='card '>
@@ -214,7 +222,7 @@ export default function SearchProfessionalStandards() {
                 <button
                   type='button'
                   className='btn btn-soft-secondary waves-effect mt-2'
-                  // onClick={clearInputs}
+                  onClick={clearInputs}
                 >
                   {t("Clear")}
                 </button>
@@ -223,13 +231,26 @@ export default function SearchProfessionalStandards() {
           </div>
         </div>
       </div>
-      {Object.keys(data).length > 0 && (
-        <div className='flip-card-animation'>
-          <DataTablev2
-            dataSource={data}
-            title={t("ListOfProfessionalStandards")}
-            columns={columns}
-          />
+      {!load ? (
+        <>
+          {Object.keys(data).length > 0 && (
+            <div className='flip-card-animation'>
+              <DataTablev2
+                dataSource={data}
+                title={t("ListOfProfessionalStandards")}
+                columns={columns}
+              />
+            </div>
+          )}
+        </>
+      ) : (
+        <div className='card card-body'>
+          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+            <div
+              className='spinner-border text-primary m-2 text-center'
+              role='status'
+            />
+          </div>
         </div>
       )}
     </div>

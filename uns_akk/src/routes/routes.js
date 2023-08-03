@@ -55,6 +55,7 @@ import SearchCompetencies from "../components/search/searchforms/competencies/Se
 import QualificationStandart from "../components/qualificationstandarts/QualificationStandart";
 import CreateQualificationStandart from "../components/qualificationstandarts/CreateQualificationStandart";
 import EditQualificationStandart from "../components/qualificationstandarts/EditQualificationStandart";
+import QualificationStandartDetails from "../components/search/details/qualificationStandart/QualificatonStandartDetails";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -462,11 +463,11 @@ export const AppRoutes = (props) => {
           {/* Searching Forms */}
           <Route path='/search-forms' element={<SearchingForms />} />
           <Route
-            path="/professional-standards-search"
+            path='/professional-standards-search'
             element={<SearchProfessionalStandards />}
           />
           <Route
-            path="/compentencies-search"
+            path='/compentencies-search'
             element={<SearchCompetencies />}
           />
           {/* Apply Forms */}
@@ -532,7 +533,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path="/expert-review-application/:id/:ApplicationExpertId"
+            path='/expert-review-application/:id/:ApplicationExpertId'
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -665,39 +666,44 @@ export const AppRoutes = (props) => {
           {/* qualification standart */}
 
           <Route
-            path="/qualificationstandart"
+            path='/qualificationstandart'
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.ADMIN,ROLES.ZyrtarAKK]}
+                allowedRoles={[ROLES.ADMIN, ROLES.ZyrtarAKK]}
                 component={QualificationStandart}
               />
             }
           />
 
           <Route
-            path="/createqualificationstandart"
+            path='/createqualificationstandart'
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.ADMIN,ROLES.ZyrtarAKK]}
+                allowedRoles={[ROLES.ADMIN, ROLES.ZyrtarAKK]}
                 component={CreateQualificationStandart}
               />
             }
           />
 
           <Route
-            path="/editqualificationstandart/:id"
+            path='/editqualificationstandart/:id'
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.ADMIN,ROLES.ZyrtarAKK]}
+                allowedRoles={[ROLES.ADMIN, ROLES.ZyrtarAKK]}
                 component={EditQualificationStandart}
               />
             }
+          />
+
+          <Route
+            path='/qualification-standard-details/:id'
+            element={<QualificationStandartDetails />}
           />
         </Routes>
       </div>

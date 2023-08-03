@@ -10,7 +10,7 @@ export default function CertificateDetails() {
   const [data, setData] = useState({});
   const [load, setLoad] = useState(false);
   const [loadPrint, setLoadPrint] = useState(false);
-
+  console.log(data);
   useEffect(() => {
     setLoad(true);
     CrudProvider.getItemByIdLang(
@@ -102,9 +102,10 @@ export default function CertificateDetails() {
                         {t("BirthDate")}:
                       </label>
                       <span className='ms-2 font-20'>
-                        {new Date(
-                          data.dateOfBirth.split("T")[0]
-                        ).toLocaleDateString("en-GB")}
+                        {data.dateOfBirth &&
+                          new Date(
+                            data.dateOfBirth.split("T")[0]
+                          ).toLocaleDateString("en-GB")}
                       </span>
                       <hr />
                       <label className='text-uppercase text-muted font-13'>
@@ -150,7 +151,7 @@ export default function CertificateDetails() {
                         {t("ValidFrom")}:
                       </label>
                       <span className='ms-2 font-20'>
-                        {data.validFrom
+                        {data.validFrom && data.validFrom
                           ? new Date(
                               data.validFrom.split("T")[0]
                             ).toLocaleDateString("en-GB")
@@ -161,7 +162,7 @@ export default function CertificateDetails() {
                         {t("ValidTo")}:
                       </label>
                       <span className='ms-2 font-20'>
-                        {data.validTo
+                        {data.validTo && data.validTo
                           ? new Date(
                               data.validTo.split("T")[0]
                             ).toLocaleDateString("en-GB")
