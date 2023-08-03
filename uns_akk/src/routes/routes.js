@@ -462,11 +462,11 @@ export const AppRoutes = (props) => {
           {/* Searching Forms */}
           <Route path='/search-forms' element={<SearchingForms />} />
           <Route
-            path='/professional-standards-search'
+            path="/professional-standards-search"
             element={<SearchProfessionalStandards />}
           />
           <Route
-            path='/compentencies-search'
+            path="/compentencies-search"
             element={<SearchCompetencies />}
           />
           {/* Apply Forms */}
@@ -689,7 +689,7 @@ export const AppRoutes = (props) => {
           />
 
           <Route
-            path="/editqualificationstandart"
+            path="/editqualificationstandart/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}

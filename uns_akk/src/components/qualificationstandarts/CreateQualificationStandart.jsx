@@ -204,7 +204,7 @@ export default function CreateQualificationStandart() {
                   </span>
                 )}
               </div>
-              <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
+              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
                 <label>{t("DateOfDecisionOfOccupationalQualificationCouncil")}:</label>
                 <CustomDatePicker onChangeFunction={changeDateOfDecision} />
                 {formik.errors.DateOfDecisionOfOccupationalQualificationCouncil && (
@@ -810,7 +810,7 @@ export default function CreateQualificationStandart() {
 
             <ul className="list-inline mt-3 wizard">
               <Link
-                to="/qualifications"
+                to="/qualificationstandart"
                 className="btn btn-danger waves-effect waves-light float-start"
               >
                 <span className="btn-label">
