@@ -12,7 +12,7 @@ export default function Navbar(props) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem("i18nextLng")
+    localStorage.getItem("Language")
   );
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);

@@ -29,7 +29,7 @@ export default function Sidebar() {
     },
     {
       label: t("QualificationTypes"),
-      roles: ["Admin"],
+      roles: ["Admin", "Zyrtar AKK"],
       path: "/qualifications-type",
       hasMenu: false,
       showLabel: true,
@@ -37,14 +37,14 @@ export default function Sidebar() {
     },
     {
       label: t("Registry"),
-      roles: ["Admin"],
+      roles: ["Admin", "Zyrtar AKK"],
       hasMenu: true,
       showLabel: true,
       icon: "mdi mdi-book-edit",
       submenu: [
         {
           label: t("Qualifications"),
-          roles: ["Admin"],
+          roles: ["Admin", "Zyrtar AKK"],
           path: "/qualifications",
           hasMenu: false,
           showLabel: true,
@@ -52,7 +52,7 @@ export default function Sidebar() {
         },
         {
           label: t("Level"),
-          roles: ["Admin"],
+          roles: ["Admin", "Zyrtar AKK"],
           path: "/level",
           hasMenu: false,
           showLabel: true,
@@ -60,7 +60,7 @@ export default function Sidebar() {
         },
         {
           label: t("Competences"),
-          roles: ["Admin"],
+          roles: ["Admin", "Zyrtar AKK"],
           path: "/competences",
           hasMenu: false,
           showLabel: true,
@@ -68,7 +68,7 @@ export default function Sidebar() {
         },
         {
           label: t("QualificationStandarts"),
-          roles: ["Admin"],
+          roles: ["Admin", "Zyrtar AKK"],
           path: "/qualificationStandarts",
           hasMenu: false,
           showLabel: true,
@@ -78,7 +78,7 @@ export default function Sidebar() {
     },
     {
       label: t("Institutions"),
-      roles: ["Admin"],
+      roles: ["Admin", "Zyrtar AKK"],
       path: "/institutions",
       hasMenu: false,
       showLabel: true,
@@ -94,7 +94,7 @@ export default function Sidebar() {
     },
     {
       label: t("Candidates"),
-      roles: ["Admin"],
+      roles: ["Admin", "Zyrtar AKK"],
       path: "/person",
       hasMenu: false,
       showLabel: true,
@@ -102,7 +102,7 @@ export default function Sidebar() {
     },
     {
       label: t("Reports"),
-      roles: ["Admin"],
+      roles: ["Admin", "Zyrtar AKK"],
       path: "/reports",
       hasMenu: false,
       showLabel: true,
@@ -110,7 +110,7 @@ export default function Sidebar() {
     },
     // {
     //   label: t("StatisticsReports"),
-    //   roles: ["Admin"],
+    //   roles: ["Admin", "Zyrtar AKK"],
     //   path: "/statisticsReports",
     //   hasMenu: false,
     //   showLabel: false,
@@ -127,7 +127,7 @@ export default function Sidebar() {
     },
     {
       label: t("Groups"),
-      roles: ["Institution"],
+      roles: ["Institution", "Manager"],
       path: "/groups",
       hasMenu: false,
       showLabel: true,
@@ -135,7 +135,7 @@ export default function Sidebar() {
     },
     {
       label: t("Candidates"),
-      roles: ["Institution"],
+      roles: ["Institution", "Manager", "Moderator"],
       path: "/students",
       hasMenu: false,
       showLabel: true,
@@ -143,7 +143,7 @@ export default function Sidebar() {
     },
     {
       label: t("Apply"),
-      roles: ["Institution"],
+      roles: ["Institution", "Manager"],
       path: "/application-form",
       hasMenu: false,
       showLabel: true,
@@ -165,7 +165,7 @@ export default function Sidebar() {
     },
     {
       label: t("Applications"),
-      roles: ["Institution"],
+      roles: ["Institution", "Manager"],
       path: "/applications-list",
       hasMenu: false,
       showLabel: false,

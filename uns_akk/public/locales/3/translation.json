@@ -825,5 +825,8 @@
   "TheCallingCanBeLearned": "Pozivanje se može naučiti",
   "EQFLevel": "EKF level",
   "ShowMoreFilters": "Prikaži još filtera",
-  "ShowLessFilters": "Prikaži manje filtera"
+  "ShowLessFilters": "Prikaži manje filtera",
+  "ListOfProfessionalStandards": "Spisak profesionalnih standarda",
+  "PasswordForLogin": "Šifra",
+  "ChooseRoleToLogin": "Izaberite ulogu za pristup"
 }

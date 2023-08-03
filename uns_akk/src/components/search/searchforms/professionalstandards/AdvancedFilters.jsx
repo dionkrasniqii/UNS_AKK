@@ -12,8 +12,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("Field")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -25,8 +25,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("Profession")}
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -38,8 +38,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("InvitationGroup")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -51,8 +51,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("CurriculumNameAndCode")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -64,8 +64,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("TheCallingCanBeLearned")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -77,8 +77,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("Type")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -94,8 +94,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("EQFLevel")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -107,8 +107,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("ISCO")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -120,8 +120,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("ISCED")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -133,8 +133,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("EMTAK")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'
@@ -146,8 +146,8 @@ export default function AdvancedFilters({ model, setModel }) {
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("Status")}:
             </label>
-   <div className=' col-xl-7'>
-                    <input
+            <div className=' col-xl-7'>
+              <input
                 autoComplete='off'
                 type='text'
                 className='form-control'

@@ -24773,6 +24773,24 @@ body[data-layout-color=dark] .datepicker tfoot tr th:hover {
     animation-duration: 1s;
 }
 
+.flip-card-animation {
+    animation: flipCardAnimation 1s ease-out;
+}
+
+@keyframes flipCardAnimation {
+
+
+    0% {
+        opacity: 1;
+        transform: perspective(2500px) rotateY(90deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: perspective(2500px) rotateY(0deg);
+    }
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;

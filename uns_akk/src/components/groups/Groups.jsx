@@ -77,7 +77,6 @@ export default function Groups() {
       }
     });
   }
-
   async function getAllData() {
     setLoad(true);
     await CrudProvider.getItemById(

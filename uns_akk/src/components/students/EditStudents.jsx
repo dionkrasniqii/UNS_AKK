@@ -104,8 +104,16 @@ export default function EditStudents() {
               InstitutionDecisionDetailsId:
                 obj.institutionGroupDecision?.institutionDecisionDetails
                   ?.institutionDecisionDetailsId,
-              ValidFrom: obj.validFrom,
-              ValidTo: obj.validTo,
+              ValidFrom: obj.validFrom
+                ? new Date(obj.validFrom.split("T")[0])
+                    .toISOString()
+                    .split("T")[0]
+                : null,
+              ValidTo: obj.validTo
+                ? new Date(obj.validTo.split("T")[0])
+                    .toISOString()
+                    .split("T")[0]
+                : null,
             });
             setGroup({
               label: obj.institutionGroupDecision?.groupName,
@@ -179,38 +187,6 @@ export default function EditStudents() {
         };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
-
-  const dateString = candidates.ValidFrom;
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const validFrom = `${year}-${month}-${day}`;
-
-  const dateString2 = candidates.ValidTo;
-  const date2 = new Date(dateString2);
-  const year2 = date2.getFullYear();
-  const month2 = String(date2.getMonth() + 1).padStart(2, "0");
-  const day2 = String(date2.getDate()).padStart(2, "0");
-  const validTo = `${year2}-${month2}-${day2}`;
-
-  const dateString3 = candidates.RegisteredDate;
-  const date3 = new Date(dateString3);
-  const year3 = date3.getFullYear();
-  const month3 = String(date3.getMonth() + 1).padStart(2, "0");
-  const day3 = String(date3.getDate()).padStart(2, "0");
-  const registeredDate = `${year3}-${month3}-${day3}`;
-
-  let dateString4 = candidates.GraduatedDate;
-  dateString4 =
-    candidates.GraduatedDate !== null
-      ? `${new Date(dateString4).getFullYear()}-${String(
-          new Date(dateString4).getMonth() + 1
-        ).padStart(2, "0")}-${String(new Date(dateString4).getDate()).padStart(
-          2,
-          "0"
-        )}`
-      : null;
 
   function changeMunicipality(e) {
     setCandidates({
@@ -661,13 +637,16 @@ export default function EditStudents() {
                       )}
                     </div>
                     <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
-                      <label>{t("RegisterDate")}:</label>
+                      <label>{t("CreatedAt")}:</label>
                       <input
                         type='date'
                         autoComplete='off'
                         id='basic-datepicker'
                         className='form-control flatpickr-input active'
-                        value={registeredDate}
+                        defaultValue={
+                          candidates?.RegisteredDate &&
+                          candidates?.RegisteredDate
+                        }
                         onChange={(e) => {
                           setCandidates({
                             ...candidates,
@@ -689,7 +668,9 @@ export default function EditStudents() {
                         autoComplete='off'
                         id='basic-datepicker'
                         className='form-control flatpickr-input active'
-                        defaultValue={dateString4}
+                        defaultValue={
+                          candidates?.GraduatedDate && candidates.GraduatedDate
+                        }
                         onChange={(e) => {
                           setCandidates({
                             ...candidates,
@@ -706,7 +687,7 @@ export default function EditStudents() {
                         autoComplete='off'
                         id='basic-datepicker'
                         className='form-control flatpickr-input active'
-                        value={validFrom}
+                        defaultValue={candidates?.ValidFrom}
                         onChange={(e) => {
                           setCandidates({
                             ...candidates,
@@ -728,7 +709,9 @@ export default function EditStudents() {
                         autoComplete='off'
                         id='basic-datepicker'
                         className='form-control flatpickr-input active'
-                        value={validTo}
+                        defaultValue={
+                          candidates?.ValidTo && candidates?.ValidTo
+                        }
                         onChange={(e) => {
                           setCandidates({
                             ...candidates,

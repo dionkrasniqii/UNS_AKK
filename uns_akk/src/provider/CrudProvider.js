@@ -44,7 +44,9 @@ const appendToFormData = (key, value, formData) => {
     });
   } else {
     // Handle string values and convert them to string before appending
-    formData.append(key, value.toString());
+    if (value) {
+      formData.append(key, value.toString());
+    }
   }
 
   return formData;

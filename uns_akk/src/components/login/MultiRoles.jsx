@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CrudProvider from "../../provider/CrudProvider";
 import jwtDecode from "jwt-decode";
+import { useTranslation } from "react-i18next";
 
 export default function MultiRoles(props) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [load, setLoad] = useState(false);
   useEffect(() => {
     if (props.model.SelectedRole !== 0) {
@@ -44,7 +46,7 @@ export default function MultiRoles(props) {
         <div className='modal-content'>
           <div className='modal-header'>
             <h5 className='modal-title' id='scrollableModalTitle'>
-              Zgjedhni rolin per qasje
+              {t("ChooseRoleToLogin")}
             </h5>
           </div>
           <div className='modal-body'>

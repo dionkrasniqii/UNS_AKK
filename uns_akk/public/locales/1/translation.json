@@ -211,7 +211,7 @@
   "RegisterGroup": "Regjistroni grupin",
   "RegisterInstitution": "Regjistro Institucionin",
   "RegisterQualification": "Regjistro Kualifikime",
-  "RegisterStudent": "Regjistroni studentin",
+  "RegisterStudent": "Regjistroni kandidatëD",
   "RegisterSubQualification": "Regjistro Nënkualifikime",
   "RegistrationCertificate": "Certifikata regjistrimit",
   "RegistrationNumber": "Numri i regjistrimit",
@@ -495,7 +495,10 @@
   "InvitationGroup": "Grupi i ftesës",
   "CurriculumNameAndCode": "Emri dhe kodi i kurrikulës",
   "TheCallingCanBeLearned": "Thirrja mund të mësohet",
-  "EQFLevel":"Niveli EQF",
-  "ShowMoreFilters":"Shfaq më shumë filtra",
-  "ShowLessFilters":"Shfaq më pak filtra"
+  "EQFLevel": "Niveli EQF",
+  "ShowMoreFilters": "Shfaq më shumë filtra",
+  "ShowLessFilters": "Shfaq më pak filtra",
+  "ListOfProfessionalStandards": "Lista e standardeve profesionale",
+  "PasswordForLogin": "Fjalëkalimin",
+  "ChooseRoleToLogin": "Zgjedhni rolin për qasje"
 }

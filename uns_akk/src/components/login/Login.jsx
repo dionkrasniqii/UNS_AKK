@@ -72,11 +72,15 @@ export default function Login(props) {
   }
 
   const LoginSchema = Yup.object().shape({
-    Username: Yup.string().required(t("Fill") + " " + t("Username")),
-    Password: Yup.string().required(t("Fill") + " " + t("Password")),
+    Username: Yup.string().required(t("Fill") + " " + t("Email").toLowerCase()),
+    Password: Yup.string().required(
+      t("Fill") + " " + t("PasswordForLogin").toLowerCase()
+    ),
   });
   const formik = useFormik({
     initialValues: {},
+    validateOnMount: false,
+    validateOnChange: false,
     validationSchema: LoginSchema,
     onSubmit: () => loginFunction(),
   });
@@ -127,7 +131,7 @@ export default function Login(props) {
                     }}
                     id='emailaddress'
                     required=''
-                    placeholder='Enter your email'
+                    placeholder={t("Email")}
                   />
                   {formik.errors.Username && (
                     <span className='text-danger'>
@@ -152,7 +156,7 @@ export default function Login(props) {
                       formik.setFieldValue("Password", e.target.value);
                     }}
                     id='password'
-                    placeholder='Enter your password'
+                    placeholder={t("Password")}
                   />
                   {formik.errors.Password && (
                     <span className='text-danger'>

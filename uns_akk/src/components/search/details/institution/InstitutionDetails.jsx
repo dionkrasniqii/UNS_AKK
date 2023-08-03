@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
-import CrudProvider from "../../../provider/CrudProvider";
+import CrudProvider from "../../../../provider/CrudProvider";
 
 import { Link } from "react-router-dom";
 

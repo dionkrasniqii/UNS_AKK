@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import AdvancedFilters from "./AdvancedFilters";
+import DataTablev2 from "../../../custom/DataTablev2";
 
 export default function SearchProfessionalStandards() {
   const { t } = useTranslation();
+  const [data, setData] = useState([]);
   const [lessFilters, setLessFilters] = useState(false);
-
+  const columns = [];
   return (
-    <div className='container mt-5 bg-light-subtle animation'>
+    <div className='container mt-5 bg-light-subtle '>
       <div className='card '>
         <div className='card-body'>
           <div className='row'>
-            <div className='col-xxl-6 col-lg-6 col-sm-12'>
+            <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
               <form className='form-horizontal'>
                 <div className='row mb-3'>
                   <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
@@ -41,7 +43,7 @@ export default function SearchProfessionalStandards() {
                 </div>
               </form>
             </div>
-            <div className='col-xxl-6 col-lg-6 col-sm-12'>
+            <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
               <form className='form-horizontal'>
                 <div className='row mb-3'>
                   <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
@@ -71,7 +73,7 @@ export default function SearchProfessionalStandards() {
                 </div>
               </form>
             </div>
-            <div className='col-xxl-12 col-lg-12 col-sm-12'>
+            <div className='col-xxl-12 col-lg-12 col-sm-12 animation'>
               <button
                 type='button'
                 className='btn btn-bordered-light text-dark shadow-inner'
@@ -81,7 +83,7 @@ export default function SearchProfessionalStandards() {
               </button>
             </div>
             {lessFilters && <AdvancedFilters />}
-            <div className='col-xxl-12 col-lg-12 col-sm-12 text-end'>
+            <div className='col-xxl-12 col-lg-12 col-sm-12 text-end animation'>
               <div className='button-list text-end'>
                 <button
                   type='button'
@@ -100,6 +102,13 @@ export default function SearchProfessionalStandards() {
             </div>
           </div>
         </div>
+      </div>
+      <div className='flip-card-animation'>
+        <DataTablev2
+          dataSource={data}
+          title={t("ListOfProfessionalStandards")}
+          columns={columns}
+        />
       </div>
     </div>
   );

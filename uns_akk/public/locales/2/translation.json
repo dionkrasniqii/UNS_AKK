@@ -496,5 +496,8 @@
   "TheCallingCanBeLearned": "The calling can be learned",
   "EQFLevel": "EQF level",
   "ShowMoreFilters": "Show more filters",
-  "ShowLessFilters": "Show less filters"
-} 
+  "ShowLessFilters": "Show less filters",
+  "ListOfProfessionalStandards": "List of professional standards",
+  "PasswordForLogin": "Password",
+  "ChooseRoleToLogin": "Select the role for access"
+}

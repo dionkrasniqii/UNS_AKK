@@ -127,7 +127,7 @@ export default function SeventhForm({ model, setModel, ...rest }) {
               <div className='form-group'>
                 <label>{t("Email")}</label>
                 <input
-                  type='email'
+                  type='text'
                   onChange={(e) => {
                     setModel((prev) => ({
                       ...prev,
