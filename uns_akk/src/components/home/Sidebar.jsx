@@ -68,7 +68,7 @@ export default function Sidebar() {
         },
         {
           label: t("QualificationStandarts"),
-          roles: ["Admin"],
+          roles: ["Admin", "Zyrtar AKK"],
           path: "/qualificationstandart",
           hasMenu: false,
           showLabel: true,

@@ -670,7 +670,7 @@ export const AppRoutes = (props) => {
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.ADMIN]}
+                allowedRoles={[ROLES.ADMIN,ROLES.ZyrtarAKK]}
                 component={QualificationStandart}
               />
             }
@@ -682,7 +682,7 @@ export const AppRoutes = (props) => {
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.ADMIN]}
+                allowedRoles={[ROLES.ADMIN,ROLES.ZyrtarAKK]}
                 component={CreateQualificationStandart}
               />
             }
@@ -694,7 +694,7 @@ export const AppRoutes = (props) => {
               <PrivateRoute
                 setAuthState={props.setAuthState}
                 authState={props.authState}
-                allowedRoles={[ROLES.ADMIN]}
+                allowedRoles={[ROLES.ADMIN,ROLES.ZyrtarAKK]}
                 component={EditQualificationStandart}
               />
             }
