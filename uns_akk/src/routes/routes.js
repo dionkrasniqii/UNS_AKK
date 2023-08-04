@@ -56,6 +56,7 @@ import QualificationStandart from "../components/qualificationstandarts/Qualific
 import CreateQualificationStandart from "../components/qualificationstandarts/CreateQualificationStandart";
 import EditQualificationStandart from "../components/qualificationstandarts/EditQualificationStandart";
 import QualificationStandartDetails from "../components/search/details/qualificationStandart/QualificatonStandartDetails";
+import ComptenceDetails from "../components/search/details/competence/CompetenceDetails";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -590,7 +591,6 @@ export const AppRoutes = (props) => {
             }
           />
           {/* qualifications-types */}
-
           <Route
             path='/qualifications-type'
             element={
@@ -624,9 +624,7 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* competences */}
-
           <Route
             path='/competences'
             element={
@@ -638,7 +636,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           <Route
             path='/createcompetences'
             element={
@@ -650,7 +647,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           <Route
             path='/editcompetences/:id'
             element={
@@ -662,9 +658,11 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
+          <Route
+            path='/competence-details/:id'
+            element={<ComptenceDetails />}
+          />
           {/* qualification standart */}
-
           <Route
             path='/qualificationstandart'
             element={
@@ -676,7 +674,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           <Route
             path='/createqualificationstandart'
             element={
@@ -688,7 +685,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           <Route
             path='/editqualificationstandart/:id'
             element={
@@ -700,7 +696,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           <Route
             path='/qualification-standard-details/:id'
             element={<QualificationStandartDetails />}

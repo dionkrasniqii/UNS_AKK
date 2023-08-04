@@ -12,22 +12,25 @@ export default function CertificateDetails() {
   const [loadPrint, setLoadPrint] = useState(false);
   console.log(data);
   useEffect(() => {
-    setLoad(true);
-    CrudProvider.getItemByIdLang(
-      "CertificatesAPI/GetCertificateDetail",
-      id
-    ).then((res) => {
-      if (res) {
-        switch (res.statusCode) {
-          case 200:
-            setData(res.result);
-            break;
-          default:
-            break;
+    try {
+      setLoad(true);
+      CrudProvider.getItemByIdLang(
+        "CertificatesAPI/GetCertificateDetail",
+        id
+      ).then((res) => {
+        if (res) {
+          switch (res.statusCode) {
+            case 200:
+              setData(res.result);
+              break;
+            default:
+              break;
+          }
         }
-        setLoad(false);
-      }
-    });
+      });
+    } finally {
+      setLoad(false);
+    }
   }, [id]);
   // async function printCertificate() {
   //   setLoadPrint(true);

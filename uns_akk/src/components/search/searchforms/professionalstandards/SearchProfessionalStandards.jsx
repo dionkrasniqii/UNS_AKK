@@ -209,7 +209,9 @@ export default function SearchProfessionalStandards() {
                 {!lessFilters ? t("ShowMoreFilters") : t("ShowLessFilters")}
               </button>
             </div>
-            {lessFilters && <AdvancedFilters />}
+            {lessFilters && (
+              <AdvancedFilters model={model} setModel={setModel} />
+            )}
             <div className='col-xxl-12 col-lg-12 col-sm-12 text-end animation'>
               <div className='button-list text-end'>
                 <button

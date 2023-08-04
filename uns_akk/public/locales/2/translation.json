@@ -521,5 +521,7 @@
   "OccupationalQualificationCouncil": "Occupational Qualification Council",
   "NoOfdecisionOfOccupationalQualificationCouncil": "No Of decision Of Occupational Qualification Council",
   "SubField": "SubField",
-  "Occupation": "Occupation"
+  "Occupation": "Occupation",
+  "QualificationStandardDetails": "Qualification Standard Details",
+  "CompetenceDetails": "Competence details"
 }

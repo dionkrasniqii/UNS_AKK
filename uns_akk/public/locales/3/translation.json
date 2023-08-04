@@ -850,5 +850,7 @@
   "OccupationalQualificationCouncil": "Savet za kvalifikacije zanimanja",
   "NoOfdecisionOfOccupationalQualificationCouncil": "br. odluke Saveta za kvalifikacije zanimanja",
   "SubField": "SubField",
-  "Occupation": "Zanimanje"
+  "Occupation": "Zanimanje",
+  "QualificationStandardDetails": "Detalji standarda kvalifikacije",
+  "CompetenceDetails": "Detalji o kompetencijama"
 }
