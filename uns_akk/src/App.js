@@ -52,8 +52,9 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("i18nextLng", "1");
+    localStorage.setItem("Language", "1");
   }, []);
-  
+
   if (authState === null) {
     return <Loading />;
   }
