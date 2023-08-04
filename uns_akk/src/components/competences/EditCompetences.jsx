@@ -120,8 +120,6 @@ export default function EditCompetences() {
     });
   }
 
-  console.log(competence);
-
   async function handleSubmit() {
     try {
       setLoad(true);

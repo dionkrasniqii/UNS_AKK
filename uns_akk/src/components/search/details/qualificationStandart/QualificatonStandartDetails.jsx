@@ -54,7 +54,7 @@ export default function QualificationStandartDetails() {
       filterable: true,
     },
   ];
-
+console.log(data)
   return (
     <div className='content-page-landing animation'>
       <div className='content'>
@@ -277,7 +277,7 @@ export default function QualificationStandartDetails() {
 
                     <div className='col-xxl-12 col-lg-12 col-sm-12 mt-3'>
                       <DataTablev2
-                        dataSource={data.competences}
+                        dataSource={data?.competences}
                         title={t("Competencies")}
                         columns={colCompetencies}
                       />
