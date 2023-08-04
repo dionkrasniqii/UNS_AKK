@@ -16,6 +16,7 @@ export default function CreateQualifications() {
   const [levels, setLevels] = useState([]);
   const [qualificationTypes, setQualificationTypes] = useState([]);
   const [qualificationStatus, setQualificationStatus] = useState([]);
+  const [qualificationStandarts, setQualificationStandarts] = useState([]);
   const langId = localStorage.getItem("i18nextLng");
   const [model, setModel] = useState({
     LevelKKKId: "",
@@ -38,6 +39,7 @@ export default function CreateQualifications() {
     SectorField: "",
     OccupationalStandartCode: "",
     LangId: "",
+    QualificationStandardsId: []
   });
 
   async function GetLevelsWithLang() {
@@ -60,16 +62,29 @@ export default function CreateQualifications() {
       }
     );
   }
+  async function GetQualificationStandartsWithLang() {
+    await CrudProvider.getAllWithLang("QualificationStandartAPI/GetAll").then(
+      (res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setQualificationStandarts(res.result);
+          }
+        }
+      }
+    );
+  }
   useEffect(() => {
     GetLevelsWithLang();
     GetQualificationTypesWithLang();
     GetQualificationStatusWithLang();
+    GetQualificationStandartsWithLang();
   }, []);
 
   useEffect(() => {
     GetLevelsWithLang();
     GetQualificationTypesWithLang();
     GetQualificationStatusWithLang();
+    GetQualificationStandartsWithLang();
   }, [langId]);
 
   async function GetQualificationStatusWithLang() {
@@ -127,6 +142,16 @@ export default function CreateQualifications() {
       };
     });
 
+    const qualificationStandardsList =
+    qualificationStandarts &&
+    qualificationStandarts.length > 0 &&
+    qualificationStandarts.map((obj) => {
+      return {
+        value: obj.qualificationStandartId,
+        label: obj.qualificationStandartName,
+      };
+    });
+
   function changeLevel(e) {
     setModel({
       ...model,
@@ -149,6 +174,14 @@ export default function CreateQualifications() {
       QualificationStatusId: e,
     });
     formik.setFieldValue("QualificationStatusId", e);
+  }
+
+  function changeQualificationStandart(e) {
+    setModel({
+      ...model,
+      QualificationStandardsId: e,
+    });
+    formik.setFieldValue("QualificationStandardsId", e);
   }
 
   function formatedDate(date) {
@@ -186,6 +219,7 @@ export default function CreateQualifications() {
     SectorField: Yup.string().required(t("FillField")),
     OccupationalStandartCode: Yup.string().required(t("FillField")),
     LangId: Yup.string().required(t("FillField")),
+    QualificationStandardsId: Yup.array().required(t("FillField")),
   });
 
   const formik = useFormik({
@@ -266,6 +300,21 @@ export default function CreateQualifications() {
                 {formik.errors.QualificationTypeId && (
                   <span className="text-danger">
                     {formik.errors.QualificationTypeId}
+                  </span>
+                )}
+              </div>
+
+              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <label>{t("QualificationStandarts")}</label>
+                <CustomSelect
+                  onChangeFunction={changeQualificationStandart}
+                  optionsList={qualificationStandardsList}
+                  isMulti={true}
+                />
+                {formik.errors.QualificationStandardsId && (
+                  <span className="text-danger">
+                    {" "}
+                    {formik.errors.QualificationStandardsId}
                   </span>
                 )}
               </div>
