@@ -852,5 +852,8 @@
   "SubField": "SubField",
   "Occupation": "Zanimanje",
   "QualificationStandardDetails": "Detalji standarda kvalifikacije",
-  "CompetenceDetails": "Detalji o kompetencijama"
+  "CompetenceDetails": "Detalji o kompetencijama",
+  "ForgotPassword": "Zaboravili ste lozinku",
+  "ResetPassword": "Resetuj šifru",
+  "Continue": "Nastavi"
 }

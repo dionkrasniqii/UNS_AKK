@@ -57,6 +57,8 @@ import CreateQualificationStandart from "../components/qualificationstandarts/Cr
 import EditQualificationStandart from "../components/qualificationstandarts/EditQualificationStandart";
 import QualificationStandartDetails from "../components/search/details/qualificationStandart/QualificatonStandartDetails";
 import ComptenceDetails from "../components/search/details/competence/CompetenceDetails";
+import SubmitEmail from "../components/forgotpassword/SubmitEmail";
+import ForgotPassword from "../components/forgotpassword/ForgotPassword";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -699,6 +701,16 @@ export const AppRoutes = (props) => {
           <Route
             path='/qualification-standard-details/:id'
             element={<QualificationStandartDetails />}
+          />
+
+          {/*Reset password */}
+          <Route
+            path='/submit-email'
+            element={<SubmitEmail />}
+          />
+           <Route
+            path='/reset-password/:id'
+            element={<ForgotPassword />}
           />
         </Routes>
       </div>

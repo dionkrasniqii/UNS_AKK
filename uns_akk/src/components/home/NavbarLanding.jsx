@@ -21,8 +21,7 @@ export default function NavbarLanding() {
     const mainNavDiv = document.getElementById("mainNavLanding");
     const secondNav = document.getElementById("secondNav");
     const hamburger = document.getElementById("hamburger");
-
-    if (location.pathname === "/login") {
+    if (location.pathname === "/login"||location.pathname === "/submit-email"||location.pathname.split("/").some((path)=>path==="reset-password")) {
       mainNavDiv.classList.add("d-none");
       secondNav.classList.add("d-none");
       hamburger.classList.add("d-none");
