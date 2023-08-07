@@ -32,12 +32,6 @@ export default function EditDecisions() {
       sortable: true,
       filterable: true,
     },
-    {
-      name: t("Credits"),
-      selector: (row) => row.credits,
-      sortable: true,
-      filterable: true,
-    },
   ];
   useEffect(() => {
     setLoad(true);

@@ -43,20 +43,21 @@ export default function Sidebar() {
       icon: "mdi mdi-book-edit",
       submenu: [
         {
-          label: t("Qualifications"),
-          roles: ["Admin", "Zyrtar AKK"],
-          path: "/qualifications",
-          hasMenu: false,
-          showLabel: true,
-          icon: "mdi mdi-book-edit",
-        },
-        {
           label: t("Level"),
           roles: ["Admin", "Zyrtar AKK"],
           path: "/level",
           hasMenu: false,
           showLabel: true,
           icon: "mdi mdi-share-variant",
+        },
+
+        {
+          label: t("QualificationStandarts"),
+          roles: ["Admin", "Zyrtar AKK"],
+          path: "/qualificationstandart",
+          hasMenu: false,
+          showLabel: true,
+          icon: "fas fa-book",
         },
         {
           label: t("Competences"),
@@ -67,12 +68,12 @@ export default function Sidebar() {
           icon: "fas fa-cogs",
         },
         {
-          label: t("QualificationStandarts"),
+          label: t("Qualifications"),
           roles: ["Admin", "Zyrtar AKK"],
-          path: "/qualificationstandart",
+          path: "/qualifications",
           hasMenu: false,
           showLabel: true,
-          icon: "fas fa-book",
+          icon: "mdi mdi-book-edit",
         },
       ],
     },

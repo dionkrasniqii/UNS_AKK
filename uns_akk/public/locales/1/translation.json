@@ -523,9 +523,11 @@
   "NoOfdecisionOfOccupationalQualificationCouncil": "Nr. Vendimi i Këshillit të Kualifikimit Profesional",
   "SubField": "Nënfusha",
   "Occupation": "Profesioni",
-  "QualificationStandardDetails":"Të dhënat e standardit të kualifikimit",
-  "CompetenceDetails":"Të dhënat e kompetencës",
+  "QualificationStandardDetails": "Të dhënat e standardit të kualifikimit",
+  "CompetenceDetails": "Të dhënat e kompetencës",
   "ForgotPassword": "Keni harruar fjalëkalimin",
   "ResetPassword": "Rivendosni fjalëkalimin",
-  "Continue": "Vazhdo"
+  "Continue": "Vazhdo",
+  "ApplicationReviewReportupdatedsuccessfully": "Raporti u përditësua me sukses",
+  "ApplicationReviewReportaddedsuccessfully": "Raporti është ruajtur me sukses"
 }

@@ -241,17 +241,13 @@ export default function SearchCompetencies() {
         </div>
       </div>
       {!load ? (
-        <>
-          {Object.keys(data).length > 0 && (
-            <div className='flip-card-animation'>
-              <DataTablev2
-                dataSource={data}
-                title={t("Competencies")}
-                columns={competenciesColumns}
-              />
-            </div>
-          )}
-        </>
+        <div className='flip-card-animation'>
+          <DataTablev2
+            dataSource={data}
+            title={t("Competencies")}
+            columns={competenciesColumns}
+          />
+        </div>
       ) : (
         <div className='card card-body'>
           <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>

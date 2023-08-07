@@ -49,42 +49,51 @@ export default function EditQualificationStandart() {
   useEffect(() => {
     setLoad(true);
     Promise.all([
-      CrudProvider.getItemById("QualificationStandartAPI/GetById", id).then(
+      CrudProvider.getItemByIdLang("QualificationStandartAPI/GetById", id).then(
         (res) => {
           if (res) {
             if (res.statusCode === 200) {
               const obj = res.result;
               setQualificationStandart({
                 ...qualificationStandart,
-                EstQFLevel: obj[0].estQFLevel,
-                ReferenceToEuropanQualificationFramework: obj[0].referenceToEuropanQualificationFramework,
-                OccupationalQualificationStandartVersion: obj[0].occupationalQualificationStandartVersion,
-                ValidFrom: obj[0].validFrom,
-                ValidTo: obj[0].validTo,
-                DateOfDecisionOfOccupationalQualificationCouncil: obj[0].dateOfDecisionOfOccupationalQualificationCouncil,
-                QualificationStandartName: obj[0].qualificationStandartName,
-                Specialisation: obj[0].specialisation,
-                PartialOccupationalQualifications: obj[0].partialOccupationalQualifications,
-                DescriptionOfWork: obj[0].descriptionOfWork,
-                WorkUnits: obj[0].workUnits,
-                WorkEnvironmentAndSpecificNatureOfWork: obj[0].workEnvironmentAndSpecificNatureOfWork,
-                Tools: obj[0].tools,
-                PersonalQualities: obj[0].personalQualities,
-                ProfessionalPreparation: obj[0].professionalPreparation,
-                MostCommonOccupationalTitles: obj[0].mostCommonOccupationalTitles,
-                RegulationsGoverningProfession: obj[0].regulationsGoverningProfession,
-                CompetencyRequirements: obj[0].competencyRequirements,
-                DesignationInRegister: obj[0].designationInRegister,
-                FieldOfOccupational: obj[0].fieldOfOccupational,
-                OccupationalQualificationCouncil: obj[0].occupationalQualificationCouncil,
-                NoOfdecisionOfOccupationalQualificationCouncil: obj[0].noOfdecisionOfOccupationalQualificationCouncil,
-                Field: obj[0].field,
-                SubField: obj[0].subField,
-                Occupation: obj[0].occupation,
-                ISCO: obj[0].isco,
-                ISCED: obj[0].isced,
-                NACE: obj[0].nace,
-                Status: obj[0].status,
+                EstQFLevel: obj.estQFLevel,
+                ReferenceToEuropanQualificationFramework:
+                  obj.referenceToEuropanQualificationFramework,
+                OccupationalQualificationStandartVersion:
+                  obj.occupationalQualificationStandartVersion,
+                ValidFrom: obj.validFrom,
+                ValidTo: obj.validTo,
+                DateOfDecisionOfOccupationalQualificationCouncil:
+                  obj.dateOfDecisionOfOccupationalQualificationCouncil,
+                QualificationStandartName: obj.qualificationStandartName,
+                Specialisation: obj.specialisation,
+                PartialOccupationalQualifications:
+                  obj.partialOccupationalQualifications,
+                DescriptionOfWork: obj.descriptionOfWork,
+                WorkUnits: obj.workUnits,
+                WorkEnvironmentAndSpecificNatureOfWork:
+                  obj.workEnvironmentAndSpecificNatureOfWork,
+                Tools: obj.tools,
+                PersonalQualities: obj.personalQualities,
+                ProfessionalPreparation: obj.professionalPreparation,
+                MostCommonOccupationalTitles:
+                  obj.mostCommonOccupationalTitles,
+                RegulationsGoverningProfession:
+                  obj.regulationsGoverningProfession,
+                CompetencyRequirements: obj.competencyRequirements,
+                DesignationInRegister: obj.designationInRegister,
+                FieldOfOccupational: obj.fieldOfOccupational,
+                OccupationalQualificationCouncil:
+                  obj.occupationalQualificationCouncil,
+                NoOfdecisionOfOccupationalQualificationCouncil:
+                  obj.noOfdecisionOfOccupationalQualificationCouncil,
+                Field: obj.field,
+                SubField: obj.subField,
+                Occupation: obj.occupation,
+                ISCO: obj.isco,
+                ISCED: obj.isced,
+                NACE: obj.nace,
+                Status: obj.status,
               });
             } else {
               toast.error(res.errorMessages[0]);
@@ -146,20 +155,20 @@ export default function EditQualificationStandart() {
     onSubmit: () => SubmitForm(),
   });
   return (
-    <div className="col-xl-12">
-      <div className="card">
+    <div className='col-xl-12'>
+      <div className='card'>
         {!load ? (
-          <div className="card-body">
-            <h3 className="mb-3">{t("Modify Qualification Standart")}</h3>
+          <div className='card-body'>
+            <h3 className='mb-3'>{t("Modify Qualification Standart")}</h3>
             <form onSubmit={formik.handleSubmit}>
-              <div className="row">
-                <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
+              <div className='row'>
+                <div className='col-xxl-2 col-lg-2 col-sm-12 mb-3'>
                   <label>{t("ValidFrom")}:</label>
                   <input
-                    type="date"
-                    autoComplete="off"
-                    id="basic-datepicker"
-                    className="form-control flatpickr-input active"
+                    type='date'
+                    autoComplete='off'
+                    id='basic-datepicker'
+                    className='form-control flatpickr-input active'
                     defaultValue={ValidFrom}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -169,18 +178,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.ValidFrom && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.ValidFrom}
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
+                <div className='col-xxl-2 col-lg-2 col-sm-12 mb-3'>
                   <label>{t("ValidTo")}:</label>
                   <input
-                    type="date"
-                    autoComplete="off"
-                    id="basic-datepicker"
-                    className="form-control flatpickr-input active"
+                    type='date'
+                    autoComplete='off'
+                    id='basic-datepicker'
+                    className='form-control flatpickr-input active'
                     defaultValue={ValidTo}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -190,18 +199,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.ValidTo && (
-                    <span className="text-danger">{formik.errors.ValidTo}</span>
+                    <span className='text-danger'>{formik.errors.ValidTo}</span>
                   )}
                 </div>
-                <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+                <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                   <label>
                     {t("DateOfDecisionOfOccupationalQualificationCouncil")}:
                   </label>
                   <input
-                    type="date"
-                    autoComplete="off"
-                    id="basic-datepicker"
-                    className="form-control flatpickr-input active"
+                    type='date'
+                    autoComplete='off'
+                    id='basic-datepicker'
+                    className='form-control flatpickr-input active'
                     defaultValue={
                       DateOfDecisionOfOccupationalQualificationCouncil
                     }
@@ -215,7 +224,7 @@ export default function EditQualificationStandart() {
                   />
                   {formik.errors
                     .DateOfDecisionOfOccupationalQualificationCouncil && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {
                         formik.errors
                           .DateOfDecisionOfOccupationalQualificationCouncil
@@ -224,13 +233,13 @@ export default function EditQualificationStandart() {
                   )}
                 </div>
               </div>
-              <div className="row">
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+              <div className='row'>
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("QualificationStandartName")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={
                       qualificationStandart.QualificationStandartName
                     }
@@ -246,18 +255,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.QualificationStandartName && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.QualificationStandartName}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("EstQFLevel")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.EstQFLevel}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -268,18 +277,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.EstQFLevel && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.EstQFLevel}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("ReferenceToEuropanQualificationFramework")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={
                       qualificationStandart.ReferenceToEuropanQualificationFramework
                     }
@@ -296,18 +305,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.ReferenceToEuropanQualificationFramework && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.ReferenceToEuropanQualificationFramework}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("OccupationalQualificationStandartVersion")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={
                       qualificationStandart.OccupationalQualificationStandartVersion
                     }
@@ -324,18 +333,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.OccupationalQualificationStandartVersion && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.OccupationalQualificationStandartVersion}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("Specialisation")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.Specialisation}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -346,18 +355,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.Specialisation && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.Specialisation}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("PartialOccupationalQualifications")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={
                       qualificationStandart.PartialOccupationalQualifications
                     }
@@ -373,18 +382,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.PartialOccupationalQualifications && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.PartialOccupationalQualifications}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("DescriptionOfWork")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.DescriptionOfWork}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -395,18 +404,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.DescriptionOfWork && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.DescriptionOfWork}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("WorkUnits")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.WorkUnits}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -417,18 +426,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.WorkUnits && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.WorkUnits}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("WorkEnvironmentAndSpecificNatureOfWork")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={
                       qualificationStandart.WorkEnvironmentAndSpecificNatureOfWork
                     }
@@ -444,18 +453,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.WorkEnvironmentAndSpecificNatureOfWork && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.WorkEnvironmentAndSpecificNatureOfWork}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("Tools")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.Tools}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -466,16 +475,16 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.Tools && (
-                    <span className="text-danger">{formik.errors.Tools}</span>
+                    <span className='text-danger'>{formik.errors.Tools}</span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("PersonalQualities")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.PersonalQualities}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -486,21 +495,19 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.PersonalQualities && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.PersonalQualities}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("ProfessionalPreparation")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
-                    defaultValue={
-                      qualificationStandart.ProfessionalPreparation
-                    }
+                    className='form-control'
+                    defaultValue={qualificationStandart.ProfessionalPreparation}
                     onChange={(e) => {
                       setQualificationStandart({
                         ...qualificationStandart,
@@ -513,18 +520,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.ProfessionalPreparation && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.ProfessionalPreparation}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("MostCommonOccupationalTitles")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={
                       qualificationStandart.MostCommonOccupationalTitles
                     }
@@ -540,17 +547,17 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.MostCommonOccupationalTitles && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.MostCommonOccupationalTitles}
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("RegulationsGoverningProfession")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={
                       qualificationStandart.RegulationsGoverningProfession
                     }
@@ -566,20 +573,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.RegulationsGoverningProfession && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.RegulationsGoverningProfession}
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("CompetencyRequirements")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
-                    defaultValue={
-                      qualificationStandart.CompetencyRequirements
-                    }
+                    className='form-control'
+                    defaultValue={qualificationStandart.CompetencyRequirements}
                     onChange={(e) => {
                       setQualificationStandart({
                         ...qualificationStandart,
@@ -592,20 +597,18 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.CompetencyRequirements && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.CompetencyRequirements}
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("DesignationInRegister")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
-                    defaultValue={
-                      qualificationStandart.DesignationInRegister
-                    }
+                    className='form-control'
+                    defaultValue={qualificationStandart.DesignationInRegister}
                     onChange={(e) => {
                       setQualificationStandart({
                         ...qualificationStandart,
@@ -618,17 +621,17 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.DesignationInRegister && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.DesignationInRegister}
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("FieldOfOccupational")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.FieldOfOccupational}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -642,17 +645,17 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.FieldOfOccupational && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.FieldOfOccupational}
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("OccupationalQualificationCouncil")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={
                       qualificationStandart.OccupationalQualificationCouncil
                     }
@@ -668,19 +671,19 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.OccupationalQualificationCouncil && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.OccupationalQualificationCouncil}
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>
                     {t("NoOfdecisionOfOccupationalQualificationCouncil")}
                   </label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={
                       qualificationStandart.NoOfdecisionOfOccupationalQualificationCouncil
                     }
@@ -698,7 +701,7 @@ export default function EditQualificationStandart() {
                   />
                   {formik.errors
                     .NoOfdecisionOfOccupationalQualificationCouncil && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {
                         formik.errors
                           .NoOfdecisionOfOccupationalQualificationCouncil
@@ -706,12 +709,12 @@ export default function EditQualificationStandart() {
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("Field")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.Field}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -722,15 +725,15 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.Field && (
-                    <span className="text-danger">{formik.errors.Field}</span>
+                    <span className='text-danger'>{formik.errors.Field}</span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("SubField")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.SubField}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -741,17 +744,17 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.SubField && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.SubField}
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("Occupation")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.Occupation}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -762,17 +765,17 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.Occupation && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.Occupation}
                     </span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("ISCO")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.ISCO}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -783,15 +786,15 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.ISCO && (
-                    <span className="text-danger">{formik.errors.ISCO}</span>
+                    <span className='text-danger'>{formik.errors.ISCO}</span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("ISCED")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.ISCED}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -802,16 +805,16 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.ISCED && (
-                    <span className="text-danger">{formik.errors.ISCED}</span>
+                    <span className='text-danger'>{formik.errors.ISCED}</span>
                   )}
                 </div>
 
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("NACE")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.NACE}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -822,15 +825,15 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.NACE && (
-                    <span className="text-danger">{formik.errors.NACE}</span>
+                    <span className='text-danger'>{formik.errors.NACE}</span>
                   )}
                 </div>
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("Status")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={qualificationStandart.Status}
                     onChange={(e) => {
                       setQualificationStandart({
@@ -841,28 +844,28 @@ export default function EditQualificationStandart() {
                     }}
                   />
                   {formik.errors.Status && (
-                    <span className="text-danger">{formik.errors.Status}</span>
+                    <span className='text-danger'>{formik.errors.Status}</span>
                   )}
                 </div>
               </div>
 
-              <ul className="list-inline mt-3 wizard">
+              <ul className='list-inline mt-3 wizard'>
                 <Link
-                  to="/qualificationstandart"
-                  className="btn btn-danger waves-effect waves-light float-start"
+                  to='/qualificationstandart'
+                  className='btn btn-danger waves-effect waves-light float-start'
                 >
-                  <span className="btn-label">
-                    <i className="fe-arrow-left"></i>
+                  <span className='btn-label'>
+                    <i className='fe-arrow-left'></i>
                   </span>
                   {t("Discard")}
                 </Link>
-                <li className="next list-inline-item float-end">
+                <li className='next list-inline-item float-end'>
                   <button
-                    type="submit"
-                    className="btn btn-success waves-effect waves-light"
+                    type='submit'
+                    className='btn btn-success waves-effect waves-light'
                   >
-                    <span className="btn-label">
-                      <i className="fe-check"></i>
+                    <span className='btn-label'>
+                      <i className='fe-check'></i>
                     </span>
                     {t("Save")}
                   </button>
@@ -871,10 +874,10 @@ export default function EditQualificationStandart() {
             </form>
           </div>
         ) : (
-          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
             <div
-              className="spinner-border text-primary m-2 text-center"
-              role="status"
+              className='spinner-border text-primary m-2 text-center'
+              role='status'
             />
           </div>
         )}

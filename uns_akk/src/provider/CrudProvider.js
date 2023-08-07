@@ -222,7 +222,16 @@ async function createItemWithFile(controller, model) {
 
 //   return formData;
 // };
+// Create a custom XMLHttpRequest instance
+const customAxios = axios.create();
 
+// Increase the maximum request size for the custom instance
+customAxios.defaults.maxContentLength = 1000000000; // 1 GB (adjust as needed)
+
+// Set the Content-Type header to 'multipart/form-data' for large payloads
+customAxios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+
+// Use the custom instance for your requests
 async function postApplication(controller, firstModel, secondModel, bool) {
   try {
     let token = localStorage.getItem("akktoken");
@@ -231,8 +240,9 @@ async function postApplication(controller, firstModel, secondModel, bool) {
       SecondApplicationDTO: secondModel,
       SecondApplication: bool,
     };
-    const formData3 = new FormData();
 
+    // Rest of your code remains the same, just use 'customAxios' instead of 'axios'
+    const formData3 = new FormData();
     const promises3 = Object.keys(ObjToPost).map(async (key) => {
       const value = ObjToPost[key];
       appendToFormData(key, value, formData3);
@@ -240,7 +250,7 @@ async function postApplication(controller, firstModel, secondModel, bool) {
     });
     await Promise.all(promises3);
 
-    const response = await axios.post(
+    const response = await customAxios.post(
       `${API_BASE_URL}/${controller}`,
       formData3,
       {
@@ -256,7 +266,6 @@ async function postApplication(controller, firstModel, secondModel, bool) {
     handleRequestError(error);
   }
 }
-
 // Update an existing item
 async function updateItem(controller, itemData) {
   try {

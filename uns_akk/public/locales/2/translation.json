@@ -526,5 +526,7 @@
   "CompetenceDetails": "Competence details",
   "ForgotPassword": "Forgot Password",
   "ResetPassword": "Reset Password",
-  "Continue": "Continue"
+  "Continue": "Continue",
+  "ApplicationReviewReportupdatedsuccessfully": "Report updated successfully",
+  "ApplicationReviewReportaddedsuccessfully": "Report saved successfully"
 }

@@ -47,18 +47,18 @@ export default function EditCompetences() {
         if (res) {
           if (res.statusCode === 200) {
             const obj = res.result;
-            const competenceStandartIds = obj[0].competenceStandartList.map(
+            const competenceStandartIds = obj.competenceStandartList.map(
               (item) => item.qualificationStandartId
             );
             setCompetence({
               ...competence,
-              CompetencesId: obj[0].competencesId,
-              EstQFLevel: obj[0].estQFLevel,
-              CompetenceName: obj[0].competenceName,
-              TypeOfCompetence: obj[0].typeOfCompetence,
-              PerformanceIndicators: obj[0].performanceIndicators,
-              SuppoirtingKnowledge: obj[0].suppoirtingKnowledge,
-              AssessmentMethods: obj[0].assessmentMethods,
+              CompetencesId: obj.competencesId,
+              EstQFLevel: obj.estQFLevel,
+              CompetenceName: obj.competenceName,
+              TypeOfCompetence: obj.typeOfCompetence,
+              PerformanceIndicators: obj.performanceIndicators,
+              SuppoirtingKnowledge: obj.suppoirtingKnowledge,
+              AssessmentMethods: obj.assessmentMethods,
               InsertedCompetenceStandartIds: competenceStandartIds,
               DeletedCompetenceStandartIds: [],
             });
@@ -88,16 +88,20 @@ export default function EditCompetences() {
       };
     });
 
-  const defaultSelectValues = qualificationStandarts.filter((obj) =>
-    competence.InsertedCompetenceStandartIds.includes(
-      obj.qualificationStandart?.qualificationStandartId
-    )
-  );
+  const defaultSelectValues =
+    Object.keys(competence).length > 0 &&
+    qualificationStandarts.filter((obj) =>
+      competence.InsertedCompetenceStandartIds.includes(
+        obj.qualificationStandartId
+      )
+    );
 
-  const defaultOption = defaultSelectValues.map((obj) => ({
-    label: obj.name,
-    value: obj.qualificationStandart?.qualificationStandartId,
-  }));
+  const defaultOption =
+    defaultSelectValues &&
+    defaultSelectValues.map((obj) => ({
+      label: obj.name,
+      value: obj.qualificationStandartId,
+    }));
 
   function changeQualificationStandarts(e) {
     const newInsertedIds = [
@@ -149,14 +153,14 @@ export default function EditCompetences() {
   });
 
   return (
-    <div className="col-xl-12">
-      <div className="card">
+    <div className='col-xl-12'>
+      <div className='card'>
         {!load ? (
-          <div className="card-body">
-            <h3 className="mb-3">{t("ModifyCompetence")}</h3>
+          <div className='card-body'>
+            <h3 className='mb-3'>{t("ModifyCompetence")}</h3>
             <form onSubmit={formik.handleSubmit}>
-              <div className="row">
-                <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+              <div className='row'>
+                <div className='col-xxl-4 col-lg-4 col-sm-12 mb-3'>
                   <label>{t("QualificationStandarts")}</label>
                   <CustomSelect
                     onChangeFunction={changeQualificationStandarts}
@@ -167,12 +171,12 @@ export default function EditCompetences() {
                   />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+              <div className='row'>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mb-3'>
                   <label>{t("CompetenceName")}</label>
                   <textarea
-                    type="text"
-                    className="form-control"
+                    type='text'
+                    className='form-control'
                     defaultValue={competence.CompetenceName}
                     rows={3}
                     onChange={(e) => {
@@ -184,18 +188,18 @@ export default function EditCompetences() {
                     }}
                   />
                   {formik.errors.CompetenceName && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.CompetenceName}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mb-3'>
                   <label>{t("EstQFLevel")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={competence.EstQFLevel}
                     onChange={(e) => {
                       setCompetence({
@@ -206,17 +210,17 @@ export default function EditCompetences() {
                     }}
                   />
                   {formik.errors.EstQFLevel && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.EstQFLevel}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mb-3'>
                   <label>{t("TypeOfCompetence")}</label>
                   <textarea
-                    type="text"
-                    className="form-control"
+                    type='text'
+                    className='form-control'
                     defaultValue={competence.TypeOfCompetence}
                     rows={3}
                     onChange={(e) => {
@@ -228,17 +232,17 @@ export default function EditCompetences() {
                     }}
                   />
                   {formik.errors.TypeOfCompetence && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.TypeOfCompetence}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mb-3'>
                   <label>{t("PerformanceIndicators")}</label>
                   <textarea
-                    type="text"
-                    className="form-control"
+                    type='text'
+                    className='form-control'
                     defaultValue={competence.PerformanceIndicators}
                     rows={3}
                     onChange={(e) => {
@@ -253,18 +257,18 @@ export default function EditCompetences() {
                     }}
                   />
                   {formik.errors.PerformanceIndicators && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.PerformanceIndicators}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mb-3'>
                   <label>{t("SuppoirtingKnowledge")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={competence.SuppoirtingKnowledge}
                     onChange={(e) => {
                       setCompetence({
@@ -278,18 +282,18 @@ export default function EditCompetences() {
                     }}
                   />
                   {formik.errors.SuppoirtingKnowledge && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.SuppoirtingKnowledge}
                     </span>
                   )}
                 </div>
 
-                <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mb-3'>
                   <label>{t("AssessmentMethods")}</label>
                   <textarea
-                    type="text"
+                    type='text'
                     rows={3}
-                    className="form-control"
+                    className='form-control'
                     defaultValue={competence.AssessmentMethods}
                     onChange={(e) => {
                       setCompetence({
@@ -300,30 +304,30 @@ export default function EditCompetences() {
                     }}
                   />
                   {formik.errors.AssessmentMethods && (
-                    <span className="text-danger">
+                    <span className='text-danger'>
                       {formik.errors.AssessmentMethods}
                     </span>
                   )}
                 </div>
               </div>
 
-              <ul className="list-inline mt-3 wizard">
+              <ul className='list-inline mt-3 wizard'>
                 <Link
-                  to="/competences"
-                  className="btn btn-danger waves-effect waves-light float-start"
+                  to='/competences'
+                  className='btn btn-danger waves-effect waves-light float-start'
                 >
-                  <span className="btn-label">
-                    <i className="fe-arrow-left"></i>
+                  <span className='btn-label'>
+                    <i className='fe-arrow-left'></i>
                   </span>
                   {t("Discard")}
                 </Link>
-                <li className="next list-inline-item float-end">
+                <li className='next list-inline-item float-end'>
                   <button
-                    type="submit"
-                    className="btn btn-success waves-effect waves-light"
+                    type='submit'
+                    className='btn btn-success waves-effect waves-light'
                   >
-                    <span className="btn-label">
-                      <i className="fe-check"></i>
+                    <span className='btn-label'>
+                      <i className='fe-check'></i>
                     </span>
                     {t("Edit")}
                   </button>
@@ -332,10 +336,10 @@ export default function EditCompetences() {
             </form>
           </div>
         ) : (
-          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
             <div
-              className="spinner-border text-primary m-2 text-center"
-              role="status"
+              className='spinner-border text-primary m-2 text-center'
+              role='status'
             />
           </div>
         )}

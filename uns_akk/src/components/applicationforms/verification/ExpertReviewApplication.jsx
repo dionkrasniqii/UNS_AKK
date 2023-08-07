@@ -77,7 +77,7 @@ export default function ExpertReviewApplication() {
         if (res) {
           switch (res.statusCode) {
             case 200:
-              toast.success(t("DataUpdatedSuccessfully"));
+              toast.success(t(res.result));
               navigate("/applications");
               setPostLoad(false);
               break;
@@ -391,7 +391,7 @@ export default function ExpertReviewApplication() {
                 <input
                   type='text'
                   readOnly
-                  defaultValue={data.applicationDTO.qualificationName}
+                  defaultValue={data.applicationDTO.qualificationTitleAndLevel}
                 />
                 <span className='focus-border'></span>
               </div>

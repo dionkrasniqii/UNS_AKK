@@ -855,5 +855,7 @@
   "CompetenceDetails": "Detalji o kompetencijama",
   "ForgotPassword": "Zaboravili ste lozinku",
   "ResetPassword": "Resetuj šifru",
-  "Continue": "Nastavi"
+  "Continue": "Nastavi",
+  "ApplicationReviewReportupdatedsuccessfully": "Izveštaj je uspešno ažuriran",
+  "ApplicationReviewReportaddedsuccessfully": "Izveštaj je uspešno sačuvan"
 }
