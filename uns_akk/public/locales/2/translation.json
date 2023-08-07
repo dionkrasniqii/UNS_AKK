@@ -523,5 +523,8 @@
   "SubField": "SubField",
   "Occupation": "Occupation",
   "QualificationStandardDetails": "Qualification Standard Details",
-  "CompetenceDetails": "Competence details"
+  "CompetenceDetails": "Competence details",
+  "ForgotPassword": "Forgot Password",
+  "ResetPassword": "Reset Password",
+  "Continue": "Continue"
 }
