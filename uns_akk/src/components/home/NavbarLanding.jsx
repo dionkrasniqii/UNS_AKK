@@ -10,6 +10,7 @@ import usePagination from "@mui/material/usePagination/usePagination";
 export default function NavbarLanding() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
   const showMobile = useSelector(
@@ -21,7 +22,11 @@ export default function NavbarLanding() {
     const mainNavDiv = document.getElementById("mainNavLanding");
     const secondNav = document.getElementById("secondNav");
     const hamburger = document.getElementById("hamburger");
-    if (location.pathname === "/login"||location.pathname === "/submit-email"||location.pathname.split("/").some((path)=>path==="reset-password")) {
+    if (
+      location.pathname === "/login" ||
+      location.pathname === "/submit-email" ||
+      location.pathname.split("/").some((path) => path === "reset-password")
+    ) {
       mainNavDiv.classList.add("d-none");
       secondNav.classList.add("d-none");
       hamburger.classList.add("d-none");
@@ -53,177 +58,186 @@ export default function NavbarLanding() {
   }, []);
 
   return (
-    <div className='navbar-custom navbar-costum-padding' id='mainNavLanding'>
-      <div className='container-fluid'>
-        <ul className='list-unstyled topnav-menu float-end mb-0'></ul>
+    <div className="navbar-custom navbar-costum-padding" id="mainNavLanding">
+      <div className="container-fluid">
+        <ul className="list-unstyled topnav-menu float-end mb-0"></ul>
 
-        <div className='logo-box bg-dark-custom ' style={{ height: "67px" }}>
-          <Link to='/' className='logo logo-dark text-center'>
-            <span className='logo-lg text-center'>
-              <img src={smallLogo} alt='' height={50} loading='lazy' />
+        <div className="logo-box bg-dark-custom " style={{ height: "67px" }}>
+          <Link to="/" className="logo logo-dark text-center">
+            <span className="logo-lg text-center">
+              <img src={smallLogo} alt="" height={50} loading="lazy" />
             </span>
-            <span className='logo-sm text-center'>
-              <img src={smallLogo} alt='' height={30} loading='lazy' />
+            <span className="logo-sm text-center">
+              <img src={smallLogo} alt="" height={30} loading="lazy" />
             </span>
           </Link>
         </div>
-        <ul className='list-unstyled topnav-menu topnav-menu-left onlyMobile mb-0'>
+        <ul className="list-unstyled topnav-menu topnav-menu-left onlyMobile mb-0">
           <li>
             <a
               onClick={(e) => {
                 dispatch(showMobileLanding(!show));
                 setShow(!show);
               }}
-              id='hamburger'
-              className='navbar-toggle nav-link collapsed'
-              data-bs-toggle='collapse'
-              data-bs-target='#topnav-menu-content'
-              aria-expanded='false'
+              id="hamburger"
+              className="navbar-toggle nav-link collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#topnav-menu-content"
+              aria-expanded="false"
             >
               <svg
-                xmlns='http://www.w3.org/2000/svg'
+                xmlns="http://www.w3.org/2000/svg"
                 width={25}
                 height={25}
-                fill='currentColor'
-                className='bi bi-list'
-                viewBox='0 0 16 16'
+                fill="currentColor"
+                className="bi bi-list"
+                viewBox="0 0 16 16"
               >
                 <path
-                  fillRule='evenodd'
-                  d='M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z'
+                  fillRule="evenodd"
+                  d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
                 />
               </svg>
             </a>
           </li>
         </ul>
-        <div className='clearfix' />
+        <div className="clearfix" />
       </div>
-      <div className='topnav navbar-costum-padding' id='secondNav'>
-        <div className='container-fluid'>
+      <div className="topnav navbar-costum-padding" id="secondNav">
+        <div className="container-fluid">
           <nav
-            className='navbar navbar-light navbar-expand-lg topnav-menu'
+            className="navbar navbar-light navbar-expand-lg topnav-menu"
             ref={navRef}
           >
             <div
               className={`collapse navbar-collapse ${
                 showMobile ? "show animate" : ""
               }`}
-              id='topnav-menu-content'
+              id="topnav-menu-content"
             >
-              <ul className='top-navbar-costume'>
-                <div className='navbar-nav nav-item-end '>
-                  <li className='nav-item'>
+              <ul className="top-navbar-costume">
+                <div className="navbar-nav nav-item-end ">
+                  <li className="nav-item">
                     <Link
                       to={"/"}
-                      className='nav-link arrow-none'
-                      id='topnav-dashboard'
-                      role='button'
-                      aria-haspopup='true'
-                      aria-expanded='false'
+                      className="nav-link arrow-none"
+                      id="topnav-dashboard"
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                      <i className='mdi mdi-view-dashboard me-1' />
+                      <i className="mdi mdi-view-dashboard me-1" />
                       {t("Home")}
                     </Link>
                   </li>
-                  <li className='nav-item'>
+                  <li className="nav-item">
                     <Link
-                      className='nav-link arrow-none'
-                      to='/application-form'
-                      id='topnav-dashboard'
-                      role='button'
-                      aria-haspopup='true'
-                      aria-expanded='false'
+                      className="nav-link arrow-none"
+                      to="/application-form"
+                      id="topnav-dashboard"
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                      <i className='ti-pencil me-1' /> {t("ApplyForm")}
+                      <i className="ti-pencil me-1" /> {t("ApplyForm")}
                     </Link>
                   </li>
-                  <li className='nav-item'>
+                  <li className="nav-item">
                     <Link
                       to={"/search-forms"}
-                      className='nav-link arrow-none'
-                      id='topnav-dashboard'
-                      role='button'
-                      aria-haspopup='true'
-                      aria-expanded='false'
+                      className="nav-link arrow-none"
+                      id="topnav-dashboard"
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                      <i className='fe-search me-1' />
+                      <i className="fe-search me-1" />
                       {t("SearchForms")}
                     </Link>
                   </li>
-                  <li className='nav-item'>
+                  <li className="nav-item">
                     <Link
                       to={"/professional-standards-search"}
-                      className='nav-link arrow-none'
-                      id='topnav-dashboard'
-                      role='button'
-                      aria-haspopup='true'
-                      aria-expanded='false'
+                      className="nav-link arrow-none"
+                      id="topnav-dashboard"
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                      <i className='fe-search me-1' />
+                      <i className="fe-search me-1" />
                       {t("ProfessionalStandards")}
                     </Link>
                   </li>
-                  <li className='nav-item'>
+                  <li className="nav-item">
                     <Link
                       to={"/compentencies-search"}
-                      className='nav-link arrow-none'
-                      id='topnav-dashboard'
-                      role='button'
-                      aria-haspopup='true'
-                      aria-expanded='false'
+                      className="nav-link arrow-none"
+                      id="topnav-dashboard"
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                      <i className='fe-search me-1' />
+                      <i className="fe-search me-1" />
                       {t("Competencies")}
                     </Link>
                   </li>
                 </div>
-                <div className='navbar-end navbar-nav '>
-                  <div className='nav-item dropdown '>
+                <div className="navbar-center navbar-nav">
+                  <div className="nav-item dropdown ">
                     <a
-                      className='nav-link dropdown-toggle arrow-none'
-                      id='topnav-layout'
-                      role='button'
-                      data-bs-toggle='dropdown'
-                      aria-haspopup='true'
-                      aria-expanded='true'
+                      className="nav-link dropdown-toggle arrow-none"
+                      id="topnav-layout"
+                      role="button"
+                      // data-bs-toggle="dropdown"
+                      // aria-haspopup="true"
+                      // aria-expanded="true"
+                      onClick={() =>
+                        setLanguageDropdownOpen(!languageDropdownOpen)
+                      }
                     >
-                      <i className='mdi mdi-card-bulleted-settings-outline me-1' />
-                      {t("Languages")} <div className='arrow-down' />
+                      <i className="mdi mdi-card-bulleted-settings-outline me-1" />
+                      {t("Languages")} <div className="arrow-down" />
                     </a>
+                    {/* <div
+                      className="dropdown-menu active"
+                      aria-labelledby="topnav-layout"
+                    > */}
                     <div
-                      className='dropdown-menu active'
-                      aria-labelledby='topnav-layout'
+                      className={`dropdown-menu ${
+                        languageDropdownOpen ? "show" : ""
+                      }`}
+                      aria-labelledby="topnav-layout"
                     >
                       <a
-                        className='dropdown-item '
+                        className="dropdown-item "
                         onClick={(e) => changeLang("1")}
                       >
                         <label>AL</label>
                       </a>
                       <a
-                        className='dropdown-item '
+                        className="dropdown-item "
                         onClick={(e) => changeLang("2")}
                       >
-                        <label className='fs-6'>ENG</label>
+                        <label className="fs-6">ENG</label>
                       </a>
                       <a
-                        className='dropdown-item '
+                        className="dropdown-item "
                         onClick={(e) => changeLang("3")}
                       >
-                        <label className='fs-6'>SR</label>
+                        <label className="fs-6">SR</label>
                       </a>
                     </div>
                   </div>
-                  <div className='nav-item'>
+                  <div className="nav-item">
                     <Link
-                      className='nav-link arrow-none'
-                      to='/login'
-                      id='topnav-dashboard'
-                      role='button'
-                      aria-haspopup='true'
-                      aria-expanded='false'
+                      className="nav-link arrow-none"
+                      to="/login"
+                      id="topnav-dashboard"
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                      <i className='fe-log-in me-1' /> {t("Login")}
+                      <i className="fe-log-in me-1" /> {t("Login")}
                     </Link>
                   </div>
                 </div>
