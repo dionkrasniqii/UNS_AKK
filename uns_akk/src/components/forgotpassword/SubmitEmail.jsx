@@ -24,7 +24,6 @@ try {
         "AccountController/get-user-by-email",
         email
       ).then((res) => {
-        console.log(res)
         if (res) {
           if (res.statusCode === 200) {
             navigate(`/reset-password/${res.result}`);
