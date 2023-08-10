@@ -24774,7 +24774,7 @@ body[data-layout-color=dark] .datepicker tfoot tr th:hover {
 }
 
 .flip-card-animation {
-    animation: flipCardAnimation 1s ease-out;
+    animation: flipCardAnimation 0.5s ease-out;
     perspective: 100000px;
     transform-style: preserve-3d;
 }

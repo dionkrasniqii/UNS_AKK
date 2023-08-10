@@ -1393,7 +1393,7 @@ export default function SecondApplyForm({
             type='submit'
             className='btn btn btn-primary btn-soft-blue rounded-pill '
           >
-            {t("Apply")}
+            {t("Perfundoni")}
           </button>
         ) : (
           <div

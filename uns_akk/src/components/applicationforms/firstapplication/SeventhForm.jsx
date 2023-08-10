@@ -288,18 +288,18 @@ export default function SeventhForm({ model, setModel, ...rest }) {
               onClick={(e) =>
                 rest.setShowValidationForm(!rest.showValidationForm)
               }
-              className='btn btn-md btn-warning'
+              className='btn btn-md btn-warning rounded-pill'
             >
               {t("ApplyForValidation1")}
             </button>
             {!rest.showValidationForm && (
-              <div>
+              <>
                 {!rest.load ? (
                   <button
                     type='submit'
                     className='btn btn-primary btn-soft-blue rounded-pill'
                   >
-                    {t("Apply")}
+                    {t("Aplikoni per akreditim")}
                   </button>
                 ) : (
                   <div
@@ -307,7 +307,7 @@ export default function SeventhForm({ model, setModel, ...rest }) {
                     role='status'
                   />
                 )}
-              </div>
+              </>
             )}
           </div>
         </div>

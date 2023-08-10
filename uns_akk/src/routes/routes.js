@@ -374,6 +374,8 @@ export const AppRoutes = (props) => {
                   ROLES.ZyrtarPerCaktiminEksperteve,
                   ROLES.MANAGER,
                   ROLES.MODERATOR,
+                  ROLES.EKSPERT,
+                  ROLES.Bord,
                 ]}
                 component={Profile}
               />
@@ -704,14 +706,8 @@ export const AppRoutes = (props) => {
           />
 
           {/*Reset password */}
-          <Route
-            path='/submit-email'
-            element={<SubmitEmail />}
-          />
-           <Route
-            path='/reset-password/:id'
-            element={<ForgotPassword />}
-          />
+          <Route path='/submit-email' element={<SubmitEmail />} />
+          <Route path='/reset-password/:id' element={<ForgotPassword />} />
         </Routes>
       </div>
     </div>
