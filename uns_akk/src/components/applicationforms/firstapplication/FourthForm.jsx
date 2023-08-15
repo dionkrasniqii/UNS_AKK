@@ -33,7 +33,7 @@ export default function FourthForm({ model, setModel, ...rest }) {
       className='animation animation-bot-top'
     >
       <div className='row'>
-        <h5 className='card-title text-start '>{t("TypeOfAccredication")}</h5>
+        <h5 className='card-title text-start '>A.1.8 {t("TypeOfAccredication")}</h5>
         <div className='col-xxl-3 col-lg-4 col-sm-12'>
           <div className='form-check text-start'>
             <input

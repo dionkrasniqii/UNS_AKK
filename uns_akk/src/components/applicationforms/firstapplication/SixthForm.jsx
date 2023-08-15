@@ -190,7 +190,7 @@ export default function SixthForm({ model, setModel, ...rest }) {
       <div className='row'>
         <h3 className='card-title text-start '>{t("PartB")}</h3>
         <h4 className='card-title text-start '>{t("PartBFirstDesc")}</h4>
-        <h4 className='card-title'>{t("PartBSecondDesc")}</h4>
+        <h4 className='card-title'>B.1 {t("PartBSecondDesc")}</h4>
         <hr />
         <h5 className='card-title'>B.1.1 {t("ManagementOfQuality")}</h5>
         <p className='text-muted'>
@@ -199,6 +199,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("InsidePolitics")},
           <br /> • {t("VerifyPolitics")}.
         </p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changeManagementOfQualityDocs}
           acceptType={".pdf"}
@@ -218,6 +232,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("DataAssurance4")},
           <br />• {t("DataAssurance5")}.
         </p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changeDataOfAssuranceDocs}
           acceptType={".pdf"}
@@ -238,6 +266,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("Declare2")},
           <br />• {t("Declare3")}.
         </p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changeManagementQualityCertificationFiles}
           acceptType={".pdf"}
@@ -256,6 +298,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("DevelopmentPolitics")},
           <br />• {t("DocsForPerformance")}.
         </p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changePoliticsAndProcedures}
           acceptType={".pdf"}
@@ -279,6 +335,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("Handicapes4")},
           <br />• {t("Handicapes5")}.
         </p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changeHandicapDocs}
           acceptType={".pdf"}
@@ -297,6 +367,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("PoliticsProcedures2")},
           <br />• {t("PoliticsProcedures3")}.
         </p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changePoliticsProceduresDocs}
           acceptType={".pdf"}
@@ -313,6 +397,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
           {t("Declare")}:
           <br />• {t("SystemCredits1")}.
         </p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changeSystemCreditsDocs}
           acceptType={".pdf"}
@@ -332,6 +430,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("SafeEnviroment3")},
           <br />• {t("SafeEnviroment4")}.
         </p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changeEnviromentDocs}
           acceptType={".pdf"}
@@ -345,6 +457,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
         <hr className='mt-2' />
         <h5 className='card-title text-start '>B.1.9 {t("B1.9")}</h5>
         <p className='text-muted'>{t("ModelOfCertificate")}.</p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changeCertificateDoc}
           acceptType={".pdf"}
@@ -357,6 +483,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
         )}
         <hr className='mt-2' />
         <h5 className='card-title text-start '>{t("ReportRVV")}</h5>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changeReportRVVDoc}
           acceptType={".pdf"}
@@ -367,6 +507,20 @@ export default function SixthForm({ model, setModel, ...rest }) {
         )}
         <hr className='mt-2' />
         <h5 className='card-title text-start '>{t("FormatOfModule")}</h5>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            // onChange={(e) => {
+            //   setModel({
+            //     ...model,
+            //     QualificationName: e.target.value,
+            //   });
+            //   formik.setFieldValue("QualificationName", e.target.value);
+            // }}
+          />
+        </div>
         <CustomFileInput
           onChangeFunction={changeFormatOfModuleDoc}
           acceptType={".pdf"}
@@ -377,7 +531,6 @@ export default function SixthForm({ model, setModel, ...rest }) {
             {formik.errors.FormatOfModuleDoc}
           </span>
         )}
-
         <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
           {!rest.showSeventhForm && (
             <button

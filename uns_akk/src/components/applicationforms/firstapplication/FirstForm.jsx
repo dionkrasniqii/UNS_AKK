@@ -168,10 +168,13 @@ export default function FirstForm({ model, setModel, ...rest }) {
     >
       <div className='row'>
         <h3 className='card-title text-start '>{t("PartA")}</h3>
+        <h3 className='card-title text-start '>
+              A.1 {t("InstitutionsDetails")}
+            </h3>
         {!rest.authState && (
           <>
             <h5 className='card-title text-start '>
-              {t("InstitutionsDetails")}
+              A.1.1 {t("InstitutionsDetails")}
             </h5>
             <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
               <label className='form-label'>{t("InstitutionName")}</label>
@@ -323,54 +326,7 @@ export default function FirstForm({ model, setModel, ...rest }) {
               )}
             </div>
             <hr className='mt-2' />
-            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 '>
-              <div className='row'>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
-                  <h5 className='card-title text-start'>
-                    {t("InstitutionStatus")}
-                  </h5>
-                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
-                    <label className='form-label'>
-                      {t("InstitutionStatus")}
-                    </label>
-                    <CustomSelect
-                      onChangeFunction={changeStatus}
-                      optionsList={statusList}
-                      isMulti={false}
-                    />
-                    {formik.errors.StatusActivityId && (
-                      <span className='text-danger'>
-                        {formik.errors.StatusActivityId}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
-                  <h5 className='card-title text-start'>
-                    {t("InstitutionActivity")}
-                  </h5>
-                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
-                    <label className='form-label'>
-                      {t("InstitutionActivity")}
-                    </label>
-                    <CustomSelect
-                      isMulti={false}
-                      onChangeFunction={changeActivity}
-                      optionsList={activityList}
-                    />
-                    {formik.errors.ActivityId && (
-                      <span className='text-danger'>
-                        {formik.errors.ActivityId}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr className='mt-3' />
-          </>
-        )}
-        <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
+            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
           <div className='row'>
             <h5 className='card-title text-start'>
               A1.2 {t("ChooseQualificationApplication")}
@@ -467,6 +423,53 @@ export default function FirstForm({ model, setModel, ...rest }) {
             </div>
           </div>
         </div>
+        <hr className='mt-3' />
+            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 '>
+              <div className='row'>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
+                  <h5 className='card-title text-start'>
+                    A.1.3 {t("InstitutionStatus")}
+                  </h5>
+                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
+                    <label className='form-label'>
+                      {t("InstitutionStatus")}
+                    </label>
+                    <CustomSelect
+                      onChangeFunction={changeStatus}
+                      optionsList={statusList}
+                      isMulti={false}
+                    />
+                    {formik.errors.StatusActivityId && (
+                      <span className='text-danger'>
+                        {formik.errors.StatusActivityId}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
+                  <h5 className='card-title text-start'>
+                    A.1.4 {t("InstitutionActivity")}
+                  </h5>
+                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
+                    <label className='form-label'>
+                      {t("InstitutionActivity")}
+                    </label>
+                    <CustomSelect
+                      isMulti={false}
+                      onChangeFunction={changeActivity}
+                      optionsList={activityList}
+                    />
+                    {formik.errors.ActivityId && (
+                      <span className='text-danger'>
+                        {formik.errors.ActivityId}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
         {!rest.showSecondForm && (
           <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
             <button
