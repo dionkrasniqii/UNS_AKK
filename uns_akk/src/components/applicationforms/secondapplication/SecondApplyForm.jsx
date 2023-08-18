@@ -465,6 +465,7 @@ export default function SecondApplyForm({
           <label className="text-muted w-100">
             {t("ParC4ValidationC1Placeholder")}
           </label>
+            <p className="text-muted">{t("ProvideWrittenEvidence")}</p>
           <div className="form-group">
             <textarea
               rows={5}
@@ -487,26 +488,7 @@ export default function SecondApplyForm({
             )}
           </div>
         </div>
-        <p className="text-muted">{t("PartC4ValidationC1Docs")}</p>
-        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2">
-          <textarea
-            type="text"
-            rows={3}
-            className="form-control mb-3"
-            // onChange={(e) => {
-            //   setModel({
-            //     ...model,
-            //     QualificationName: e.target.value,
-            //   });
-            //   formik.setFieldValue("QualificationName", e.target.value);
-            // }}
-          />
-          {/* {formik.errors.CertificateRegisterDocA15 && (
-                <span className='text-danger'>
-                  {formik.errors.CertificateRegisterDocA15}
-                </span>
-              )} */}
-        </div>
+        {/* <p className="text-muted">{t("PartC4ValidationC1Docs")}</p> */}
         <CustomFileInput
           isMultiple={true}
           acceptType=".pdf"
@@ -569,6 +551,7 @@ export default function SecondApplyForm({
           <label className="text-muted w-100">
             {t("ParC4ValidationC1Placeholder")}
           </label>
+          <p className="text-muted">{t("PartC4ValidationC1Docs")}</p>
           <div className="form-group">
             <textarea
               rows={5}
@@ -589,26 +572,6 @@ export default function SecondApplyForm({
                 {formik.errors.HasInstitutionDevelopQualificationTextC2}
               </span>
             )} */}
-          </div>
-          <p className="text-muted">{t("PartC4ValidationC1Docs")}</p>
-          <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2">
-            <textarea
-              type="text"
-              rows={3}
-              className="form-control mb-3"
-              // onChange={(e) => {
-              //   setModel({
-              //     ...model,
-              //     QualificationName: e.target.value,
-              //   });
-              //   formik.setFieldValue("QualificationName", e.target.value);
-              // }}
-            />
-            {/* {formik.errors.CertificateRegisterDocA15 && (
-                <span className='text-danger'>
-                  {formik.errors.CertificateRegisterDocA15}
-                </span>
-              )} */}
           </div>
           <CustomFileInput
             isMultiple={true}
@@ -631,6 +594,7 @@ export default function SecondApplyForm({
           <div className="form-group">
             <label>D1.1 {t("PartDValidationDesc2")}</label>
             <textarea
+            placeholder={t("DescribeGeneralPurposeOfQualification")}
               rows={5}
               className="mt-2"
               onChange={(e) => {
@@ -756,7 +720,7 @@ export default function SecondApplyForm({
             <label>D3.1 {t("PartDValidationDesc10")}</label>
             <textarea
               rows={5}
-              className="mt-2"
+              className="mt-5"
               onChange={(e) => {
                 setSecondApplication((prev) => ({
                   ...prev,
@@ -775,25 +739,6 @@ export default function SecondApplyForm({
             )}
           </div>
           <p className="text-muted">{t("PartDValidationDesc11")}</p>
-          <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2">
-        <textarea
-            type="text"
-            rows={3}
-            className="form-control mb-3"
-            // onChange={(e) => {
-            //   setModel({
-            //     ...model,
-            //     QualificationName: e.target.value,
-            //   });
-            //   formik.setFieldValue("QualificationName", e.target.value);
-            // }}
-          />
-          {/* {formik.errors.CertificateRegisterDocA15 && (
-                <span className='text-danger'>
-                  {formik.errors.CertificateRegisterDocA15}
-                </span>
-              )} */}
-        </div>
           <CustomFileInput
             isMultiple={true}
             acceptType=".pdf"
@@ -928,25 +873,6 @@ export default function SecondApplyForm({
             )}
           </div>
           <p className="text-muted">{t("PartDValidationDesc19")}</p>
-          <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2">
-        <textarea
-            type="text"
-            rows={3}
-            className="form-control mb-3"
-            // onChange={(e) => {
-            //   setModel({
-            //     ...model,
-            //     QualificationName: e.target.value,
-            //   });
-            //   formik.setFieldValue("QualificationName", e.target.value);
-            // }}
-          />
-          {/* {formik.errors.CertificateRegisterDocA15 && (
-                <span className='text-danger'>
-                  {formik.errors.CertificateRegisterDocA15}
-                </span>
-              )} */}
-        </div>
           <CustomFileInput
             isMultiple={true}
             acceptType=".pdf"
@@ -1050,6 +976,7 @@ export default function SecondApplyForm({
             <label>D.6.1 {t("PartDValidationDesc25")}</label>
             <textarea
               rows={5}
+              placeholder={t("AgeAndPreviousQualification")}
               className="mt-2"
               onChange={(e) => {
                 setSecondApplication((prev) => ({
@@ -1216,7 +1143,7 @@ export default function SecondApplyForm({
             </span>
           )}
         </div>
-        <hr />
+        {/* <hr />
         <h4 className="card-title text-start">{t("PartE")}</h4>
         <p className="card-title text-start text-muted">
           {t("PartDValidationDesc34")}
@@ -1461,7 +1388,7 @@ export default function SecondApplyForm({
               )}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="col-xxl-12 col-lg-12 col-sm-12 text-end">
         {!load ? (

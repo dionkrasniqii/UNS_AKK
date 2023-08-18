@@ -14,6 +14,11 @@ export default function FifthForm({ model, setModel, ...rest }) {
     InstitutionsDocs: Yup.mixed().required(t("UploadDocuments")),
     Staff: Yup.mixed().required(t("UploadDocuments")),
     OtherRequests: Yup.mixed().required(t("UploadDocuments")),
+    Equipments: Yup.string().required(t("FillField")),
+    CandidatesDataA24: Yup.string().required(t("FillField")),
+    A21Text: Yup.string().required(t("FillField")),
+    A23Text: Yup.string().required(t("FillField")),
+    A25Text: Yup.string().required(t("FillField")),
   });
   const formik = useFormik({
     initialValues: {},
@@ -74,12 +79,12 @@ export default function FifthForm({ model, setModel, ...rest }) {
       <div className="row">
         <h4 className="card-title text-start ">
           A.2 {t(
-            "Data on resources for fulfilling the criteria for the qualification/module"
+            "QualificationCriteria"
           )}
         </h4>
         <h5 className="card-title">
           A.2.1 {t(
-            "Data on the institution, including management and financial status"
+            "DataOnInstitution"
           )}
         </h5>
         <p className="text-muted">
@@ -100,14 +105,19 @@ export default function FifthForm({ model, setModel, ...rest }) {
             type="text"
             rows={3}
             className="form-control mb-3"
-            // onChange={(e) => {
-            //   setModel({
-            //     ...model,
-            //     QualificationName: e.target.value,
-            //   });
-            //   formik.setFieldValue("QualificationName", e.target.value);
-            // }}
+            onChange={(e) => {
+              setModel({
+                ...model,
+                A21Text: e.target.value,
+              });
+              formik.setFieldValue("A21Text", e.target.value);
+            }}
           />
+          {formik.errors.A21Text && (
+                  <span className='text-danger'>
+                    {formik.errors.A21Text}
+                  </span>
+                )}
         </div>
         <CustomFileInput
           onChangeFunction={changeInstitutionsDocs}
@@ -119,6 +129,31 @@ export default function FifthForm({ model, setModel, ...rest }) {
             {formik.errors.InstitutionsDocs}
           </span>
         )}
+        <hr className="mt-2" />
+         <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
+              <h5 className='card-title text-start '>
+                A.2.2 {t("ToolsForQualification")}
+              </h5>
+              <div className='form-group'>
+                <p className='text-muted'>{t("ToolsDesc")}</p>
+                <textarea
+                  rows={5}
+                  className='mt-2'
+                  onChange={(e) => {
+                    setModel({
+                      ...model,
+                      EquipmentMaterialsQualificationA22: e.target.value,
+                    });
+                    formik.setFieldValue("Equipments", e.target.value);
+                  }}
+                />
+                {formik.errors.Equipments && (
+                  <span className='text-danger'>
+                    {formik.errors.Equipments}
+                  </span>
+                )}
+              </div>
+            </div> 
         <hr className="mt-2" />
         <h5 className="card-title text-start ">A.2.3 {t("StaffData")}.</h5>
         <p className="text-muted">
@@ -132,14 +167,17 @@ export default function FifthForm({ model, setModel, ...rest }) {
             type="text"
             rows={3}
             className="form-control mb-3"
-            // onChange={(e) => {
-            //   setModel({
-            //     ...model,
-            //     QualificationName: e.target.value,
-            //   });
-            //   formik.setFieldValue("QualificationName", e.target.value);
-            // }}
+            onChange={(e) => {
+              setModel({
+                ...model,
+                A23Text: e.target.value,
+              });
+              formik.setFieldValue("A23Text", e.target.value);
+            }}
           />
+          {formik.errors.A23Text && (
+          <span className="text-danger mt-2">{formik.errors.A23Text}</span>
+        )}
         </div>
         <CustomFileInput
           onChangeFunction={changeStaff}
@@ -150,6 +188,30 @@ export default function FifthForm({ model, setModel, ...rest }) {
           <span className="text-danger mt-2">{formik.errors.Staff}</span>
         )}
         <hr className="mt-2" />
+        <h5 className="card-title text-start ">A.2.4 {t("DataForCandidates")}</h5>
+        <p className="text-muted">
+          {t("Append")}:
+          <br />• {t("TargetNumberOfCandidates")},
+          <br />• {t("NumberOfGroupsWithinCertification")}
+        </p>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+            onChange={(e) => {
+              setModel({
+                ...model,
+                CandidatesDataA24: e.target.value,
+              });
+              formik.setFieldValue("CandidatesDataA24", e.target.value);
+            }}
+          />
+          {formik.errors.CandidatesDataA24 && (
+            <span className="text-danger">{formik.errors.CandidatesDataA24}</span>
+          )}
+        </div>
+        <hr className="mt-2" />
         <h5 className="card-title text-start ">A.2.5 {t("OtherRequest")}</h5>
         <p className="text-muted">{t("OtherRequestDesc")}</p>
         <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
@@ -157,14 +219,17 @@ export default function FifthForm({ model, setModel, ...rest }) {
             type="text"
             rows={3}
             className="form-control mb-3"
-            // onChange={(e) => {
-            //   setModel({
-            //     ...model,
-            //     QualificationName: e.target.value,
-            //   });
-            //   formik.setFieldValue("QualificationName", e.target.value);
-            // }}
+            onChange={(e) => {
+              setModel({
+                ...model,
+                A25Text: e.target.value,
+              });
+              formik.setFieldValue("A25Text", e.target.value);
+            }}
           />
+          {formik.errors.A25Text && (
+            <span className="text-danger">{formik.errors.A25Text}</span>
+          )}
         </div>
         <CustomFileInput
           onChangeFunction={changeOtherRequests}

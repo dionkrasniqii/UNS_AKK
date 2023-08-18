@@ -11,12 +11,13 @@ export default function SecondForm({ model, setModel, ...rest }) {
   }, []);
 
   const schema = Yup.object().shape({
-    RegistrationNumber: Yup.string().required(
-      t("PleaseFillRegistartionNumber")
-    ),
-    FiscalNumber: Yup.string().required(t("PleaseFillFiscalNumber")),
+    // RegistrationNumber: Yup.string().required(
+    //   t("PleaseFillRegistartionNumber")
+    // ),
+    // FiscalNumber: Yup.string().required(t("PleaseFillFiscalNumber")),
     CertificateRegisterDocA15: Yup.string().required(t("UploadDoc")),
     MASHTLicense: Yup.string().required(t("UploadDoc")),
+    JuridicPersonA15: Yup.string().required(t("FillField")),
   });
 
   async function setMASHTLicenseFiles(files) {
@@ -65,7 +66,7 @@ export default function SecondForm({ model, setModel, ...rest }) {
         <h5 className="card-title text-start ">
           A.1.5 {t("LegalEntityStatus")}
         </h5>
-        <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+        {/* <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
           <label className="form-label">{t("RegistrationNumber")}</label>
           <input
             type="number"
@@ -100,25 +101,30 @@ export default function SecondForm({ model, setModel, ...rest }) {
           {formik.errors.FiscalNumber && (
             <span className="text-danger">{formik.errors.FiscalNumber}</span>
           )}
-        </div>
+        </div> */}
         <div className="col-12">
           <div className="row">
             <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
               <label className="form-label text-start">
-                {t("RegistrationCertificate")}
+                {t(
+                  "AttachEvidence"
+                )}
               </label>
               <textarea
                 type="text"
                 rows={3}
                 className="form-control mb-3"
-                // onChange={(e) => {
-                //   setModel({
-                //     ...model,
-                //     QualificationName: e.target.value,
-                //   });
-                //   formik.setFieldValue("QualificationName", e.target.value);
-                // }}
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    JuridicPersonA15: e.target.value,
+                  });
+                  formik.setFieldValue("JuridicPersonA15", e.target.value);
+                }}
               />
+              {formik.errors.JuridicPersonA15 && (
+                <span className="text-danger">{formik.errors.JuridicPersonA15}</span>
+              )}
               <CustomFileInput
                 onChangeFunction={setCertificateFiles}
                 acceptType={".pdf"}
@@ -138,23 +144,23 @@ export default function SecondForm({ model, setModel, ...rest }) {
         <h5 className="card-title text-start ">
           A.1.6{" "}
           {t(
-            "Nëse jeni të licencuar si ofrues i arsimit nga MASHT, ofroni dëshmi."
+            "ProvideEvidence"
           )}
         </h5>
         <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
-          <label className="form-label text-start">{t("LicenseMASHT")}</label>
-          <textarea
+          {/* <label className="form-label text-start">{t("LicenseMASHT")}</label> */}
+          {/* <textarea
             type="text"
             rows={3}
             className="form-control mb-3"
-            // onChange={(e) => {
-            //   setModel({
-            //     ...model,
-            //     QualificationName: e.target.value,
-            //   });
-            //   formik.setFieldValue("QualificationName", e.target.value);
-            // }}
-          />
+             onChange={(e) => {
+               setModel({
+                 ...model,
+                 QualificationName: e.target.value,
+               });
+               formik.setFieldValue("QualificationName", e.target.value);
+             }}
+          /> */}
           <CustomFileInput
             onChangeFunction={setMASHTLicenseFiles}
             acceptType={".pdf"}

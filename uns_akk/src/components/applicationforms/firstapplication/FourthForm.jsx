@@ -16,7 +16,11 @@ export default function FourthForm({ model, setModel, ...rest }) {
     TypeOfAccreditation: Yup.boolean().required(
       t("ChooseOneOfAccreditationType")
     ),
-    Text: Yup.string().required(t("FillField")),
+    Text: model.OfferValidationCertificationA18
+    ? Yup.string()
+    : Yup.string().required(t("FillField")),
+    // OfferNoValidationCertificationTextA18: Yup.string().required(t("FillField")),
+    // ValidationCertificationNotOfferTextA18: Yup.string().required(t("FillField")),
   });
   const formik = useFormik({
     initialValues: {},
@@ -111,15 +115,16 @@ export default function FourthForm({ model, setModel, ...rest }) {
             {formik.errors.TypeOfAccreditation}
           </span>
         )}
+        {model.OfferNoValidationCertificationA18 && (
         <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
-          <label className='form-label'>{t("OfferAdditionalData")}</label>
+          <label className='form-label'>{t("OfferNoValidationCertificationTextA18")}</label>
           <textarea
             className='form-control'
             rows={5}
             onChange={(e) => {
               setModel({
                 ...model,
-                TextA18: e.target.value,
+                OfferNoValidationCertificationTextA18: e.target.value,
               });
               formik.setFieldValue("Text", e.target.value);
             }}
@@ -130,6 +135,28 @@ export default function FourthForm({ model, setModel, ...rest }) {
             </span>
           )}
         </div>
+        )}
+        {model.ValidationCertificationNotOfferA18 && (
+        <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
+          <label className='form-label'>{t("ValidationCertificationNotOfferTextA18")}</label>
+          <textarea
+            className='form-control'
+            rows={5}
+            onChange={(e) => {
+              setModel({
+                ...model,
+                ValidationCertificationNotOfferTextA18: e.target.value,
+              });
+              formik.setFieldValue("Text", e.target.value);
+            }}
+          />
+          {formik.errors.Text && (
+            <span className='text-danger text-center mt-2 fs-5'>
+              {formik.errors.Text}
+            </span>
+          )}
+        </div>
+        )}
         {!rest.showFifthForm && (
           <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
             <button
