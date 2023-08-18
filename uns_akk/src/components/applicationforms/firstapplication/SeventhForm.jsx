@@ -40,7 +40,7 @@ export default function SeventhForm({ model, setModel, ...rest }) {
         <h3 className='card-title text-start '>{t("PartC")}</h3>
         <h4 className='card-title text-start '>{t("PartC.1")}</h4>
         <hr />
-        <h5 className='card-title text-start '>C1.1{t("PartC1.1")}</h5>
+        <h5 className='card-title text-start '>C1.1 {t("PartC1.1")}</h5>
         <div className='col-xxl-12 col-lg-12 col-sm-12'>
           <div className='row'>
             <div className='col-xxl-3 col-lg-5 col-sm-12'>

@@ -11,12 +11,13 @@ export default function SecondForm({ model, setModel, ...rest }) {
   }, []);
 
   const schema = Yup.object().shape({
-    RegistrationNumber: Yup.string().required(
-      t("PleaseFillRegistartionNumber")
-    ),
-    FiscalNumber: Yup.string().required(t("PleaseFillFiscalNumber")),
+    // RegistrationNumber: Yup.string().required(
+    //   t("PleaseFillRegistartionNumber")
+    // ),
+    // FiscalNumber: Yup.string().required(t("PleaseFillFiscalNumber")),
     CertificateRegisterDocA15: Yup.string().required(t("UploadDoc")),
     MASHTLicense: Yup.string().required(t("UploadDoc")),
+    JuridicPersonA15: Yup.string().required(t("FillField")),
   });
 
   async function setMASHTLicenseFiles(files) {
@@ -58,17 +59,18 @@ export default function SecondForm({ model, setModel, ...rest }) {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className='animation animation-bot-top'
-      id='form2'
+      className="animation animation-bot-top"
+      id="form2"
     >
-      <div className='row'>
-        <h5 className='card-title text-start '>{t("LegalEntityStatus")}</h5>
-
-        <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-          <label className='form-label'>{t("RegistrationNumber")}</label>
+      <div className="row">
+        <h5 className="card-title text-start ">
+          A.1.5 {t("LegalEntityStatus")}
+        </h5>
+        {/* <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+          <label className="form-label">{t("RegistrationNumber")}</label>
           <input
-            type='number'
-            className='form-control'
+            type="number"
+            className="form-control"
             onChange={(e) => {
               setModel({
                 ...model,
@@ -78,16 +80,16 @@ export default function SecondForm({ model, setModel, ...rest }) {
             }}
           />
           {formik.errors.RegistrationNumber && (
-            <span className='text-danger'>
+            <span className="text-danger">
               {formik.errors.RegistrationNumber}
             </span>
           )}
         </div>
-        <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-          <label className='form-label'>{t("FiscalNumber")}</label>
+        <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+          <label className="form-label">{t("FiscalNumber")}</label>
           <input
-            type='number'
-            className='form-control'
+            type="number"
+            className="form-control"
             onChange={(e) => {
               setModel({
                 ...model,
@@ -97,49 +99,83 @@ export default function SecondForm({ model, setModel, ...rest }) {
             }}
           />
           {formik.errors.FiscalNumber && (
-            <span className='text-danger'>{formik.errors.FiscalNumber}</span>
+            <span className="text-danger">{formik.errors.FiscalNumber}</span>
           )}
-        </div>
-        <div className='col-12'>
-          <div className='row'>
-            <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
-              <label className='form-label text-start'>
-                {t("RegistrationCertificate")}
+        </div> */}
+        <div className="col-12">
+          <div className="row">
+            <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+              <label className="form-label text-start">
+                {t(
+                  "AttachEvidence"
+                )}
               </label>
+              <textarea
+                type="text"
+                rows={3}
+                className="form-control mb-3"
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    JuridicPersonA15: e.target.value,
+                  });
+                  formik.setFieldValue("JuridicPersonA15", e.target.value);
+                }}
+              />
+              {formik.errors.JuridicPersonA15 && (
+                <span className="text-danger">{formik.errors.JuridicPersonA15}</span>
+              )}
               <CustomFileInput
                 onChangeFunction={setCertificateFiles}
                 acceptType={".pdf"}
                 isMultiple={true}
               />
               {formik.errors.CertificateRegisterDocA15 && (
-                <span className='text-danger'>
+                <span className="text-danger">
                   {formik.errors.CertificateRegisterDocA15}
-                </span>
-              )}
-            </div>
-            <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
-              <label className='form-label text-start'>
-                {t("LicenseMASHT")}
-              </label>
-              <CustomFileInput
-                onChangeFunction={setMASHTLicenseFiles}
-                acceptType={".pdf"}
-                isMultiple={true}
-              />
-              {formik.errors.MASHTLicense && (
-                <span className='text-danger'>
-                  {formik.errors.MASHTLicense}
                 </span>
               )}
             </div>
           </div>
         </div>
       </div>
+      <hr className="mt-3" />
+      <div className="row">
+        <h5 className="card-title text-start ">
+          A.1.6{" "}
+          {t(
+            "ProvideEvidence"
+          )}
+        </h5>
+        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+          {/* <label className="form-label text-start">{t("LicenseMASHT")}</label> */}
+          {/* <textarea
+            type="text"
+            rows={3}
+            className="form-control mb-3"
+             onChange={(e) => {
+               setModel({
+                 ...model,
+                 QualificationName: e.target.value,
+               });
+               formik.setFieldValue("QualificationName", e.target.value);
+             }}
+          /> */}
+          <CustomFileInput
+            onChangeFunction={setMASHTLicenseFiles}
+            acceptType={".pdf"}
+            isMultiple={true}
+          />
+          {formik.errors.MASHTLicense && (
+            <span className="text-danger">{formik.errors.MASHTLicense}</span>
+          )}
+        </div>
+      </div>
       {!rest.showThirdForm && (
-        <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
+        <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end">
           <button
-            type='submit'
-            className='btn btn btn-primary btn-soft-blue rounded-pill '
+            type="submit"
+            className="btn btn btn-primary btn-soft-blue rounded-pill "
           >
             {t("Next")}
           </button>
