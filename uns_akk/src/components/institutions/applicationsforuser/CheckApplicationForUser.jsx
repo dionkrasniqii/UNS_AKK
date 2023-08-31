@@ -1,92 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
-import { useFormik } from "formik";
-import CustomSelect from "../custom/CustomSelect";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import CrudProvider from "../../../provider/CrudProvider";
+import { Checkbox, Modal } from "antd";
 
-export default function EditInstitution() {
+export default function CheckApplicationForUser() {
   const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   const [institution, setInstitution] = useState({});
-  const [cities, setCities] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [model, setModel] = useState({
+    InstitutionId: id,
+    Status: false,
+  });
+
   useEffect(() => {
-    setLoad(true);
-    Promise.all([
-      CrudProvider.getItemById("InstitutionAPI/GetInstitution", id).then(
-        (res) => {
-          if (res) {
-            if (res.statusCode === 200) {
-              setInstitution(res.result);
-            } else {
-              toast.error(res.errorMessages[0]);
-              navigate("/institutions");
-            }
-          }
+    CrudProvider.getItemById(
+      "InstitutionAPI/GetSelfRegistredInsitutionsById",
+      id
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setInstitution(res.result);
+          setLoad(false);
+        } else {
+          toast.error(res.errorMessages[0]);
+          navigate("/institution-application");
         }
-      ),
-      CrudProvider.getAllWithLang("GeneralAPI/GetAllMunicipalities").then(
-        (res) => {
-          if (res) {
-            if (res.statusCode === 200) {
-              setCities(res.result);
-            }
-          }
-        }
-      ),
-    ]).then((res) => {
-      setLoad(false);
+      }
     });
   }, [id]);
-
-  const citiesList =
-    cities &&
-    cities.length > 0 &&
-    cities
-      .map((obj) => {
-        return {
-          value: obj.municipality.municipalityId,
-          label: obj.municipalityName,
-        };
-      })
-      .sort((a, b) => a.label.localeCompare(b.label));
-
-  const defaultSelectValue =
-    cities.length > 0 &&
-    cities.find(
-      (obj) => obj.municipality.municipalityId === institution.municipalityId
-    );
-  const defaultLabel = defaultSelectValue?.municipalityName ?? "";
-  const defaultValue = defaultSelectValue?.municipality?.municipalityId ?? "";
-
-  const defaultOption = {
-    label: defaultLabel,
-    value: defaultValue,
-  };
-
-  function changeCity(e) {
-    setInstitution({
-      ...institution,
-      municipalityId: e,
-    });
-    formik.setFieldValue("MunicipalityId", e);
-  }
-
   async function handleSubmit() {
     try {
       setLoad(true);
-      await CrudProvider.updateItemWithFile(
-        "InstitutionAPI/UpdateInstitution",
-        institution
+      await CrudProvider.createItem(
+        "InstitutionAPI/ChangeInstitutionActive",
+        model
       ).then((res) => {
         if (res) {
           if (res.statusCode === 200) {
             toast.success(t("DataUpdatedSuccessfully"));
-            navigate("/institutions");
+            navigate("/institution-application");
           } else {
             toast.error(res.errorMessages[0]);
           }
@@ -97,19 +55,13 @@ export default function EditInstitution() {
     }
   }
 
-  const formik = useFormik({
-    initialValues: {},
-    validateOnBlur: false,
-    validateOnMount: false,
-    onSubmit: async () => handleSubmit(),
-  });
   return (
     <div className='col-xl-12'>
       <div className='card'>
         {!load ? (
           <div className='card-body'>
-            <h3 className=' mb-3'>{t("ModifyInstitution")}</h3>
-            <form onSubmit={formik.handleSubmit}>
+            <h3 className=' mb-3'>{t("InstitutionsDetails")}</h3>
+            <form>
               <div className='tab-pane active' id='account-2'>
                 <div className='row'>
                   <div className='col-12'>
@@ -132,20 +84,8 @@ export default function EditInstitution() {
                           type='text'
                           defaultValue={institution.institutionName}
                           className='form-control'
-                          onChange={(e) => {
-                            setInstitution({
-                              ...institution,
-                              institutionName: e.target.value,
-                            });
-                            formik.setFieldValue("Name", e.target.value);
-                          }}
+                          readOnly
                         />
-                        {formik.errors.Name && (
-                          <span className='text-danger'>
-                            {" "}
-                            {formik.errors.Name}
-                          </span>
-                        )}
                       </div>
                     </div>
                     <div className='row mb-3'>
@@ -184,26 +124,11 @@ export default function EditInstitution() {
                       </label>
                       <div className='col-md-9'>
                         <input
-                          type='number'
+                          type='text'
                           defaultValue={institution.uniqueNumber}
-                          onChange={(e) => {
-                            setInstitution({
-                              ...institution,
-                              uniqueNumber: e.target.value,
-                            });
-                            formik.setFieldValue(
-                              "UniqueNumber",
-                              e.target.value
-                            );
-                          }}
+                          readOnly
                           className='form-control'
                         />
-                        {formik.errors.UniqueNumber && (
-                          <span className='text-danger'>
-                            {" "}
-                            {formik.errors.UniqueNumber}
-                          </span>
-                        )}
                       </div>
                     </div>
                     <div className='row mb-3'>
@@ -211,19 +136,12 @@ export default function EditInstitution() {
                         {t("Municipality")}
                       </label>
                       <div className='col-md-9'>
-                        <CustomSelect
-                          hasDefaultValue={true}
-                          defaultValue={defaultOption}
-                          onChangeFunction={changeCity}
-                          optionsList={citiesList}
-                          isMulti={false}
+                        <input
+                          type='text'
+                          defaultValue={institution.municipalityName}
+                          readOnly
+                          className='form-control'
                         />
-                        {formik.errors.MunicipalityId && (
-                          <span className='text-danger'>
-                            {" "}
-                            {formik.errors.MunicipalityId}
-                          </span>
-                        )}
                       </div>
                     </div>
                     <div className='row mb-3'>
@@ -234,21 +152,9 @@ export default function EditInstitution() {
                         <input
                           type='text'
                           defaultValue={institution.address}
-                          onChange={(e) => {
-                            setInstitution({
-                              ...institution,
-                              address: e.target.value,
-                            });
-                            formik.setFieldValue("Address", e.target.value);
-                          }}
+                          readOnly
                           className='form-control'
                         />
-                        {formik.errors.Address && (
-                          <span className='text-danger'>
-                            {" "}
-                            {formik.errors.Address}
-                          </span>
-                        )}
                       </div>
                     </div>
                     <div className='row mb-3'>
@@ -260,20 +166,8 @@ export default function EditInstitution() {
                           type='number'
                           defaultValue={institution.postalCode}
                           className='form-control'
-                          onChange={(e) => {
-                            setInstitution({
-                              ...institution,
-                              postalCode: e.target.value,
-                            });
-                            formik.setFieldValue("PostalCode", e.target.value);
-                          }}
+                          readOnly
                         />
-                        {formik.errors.PostalCode && (
-                          <span className='text-danger'>
-                            {" "}
-                            {formik.errors.PostalCode}
-                          </span>
-                        )}
                       </div>
                     </div>
                     <div className='row mb-3'>
@@ -285,20 +179,8 @@ export default function EditInstitution() {
                           type='text'
                           defaultValue={institution.phoneNum}
                           className='form-control'
-                          onChange={(e) => {
-                            setInstitution({
-                              ...institution,
-                              phoneNum: e.target.value,
-                            });
-                            formik.setFieldValue("PhoneNumber", e.target.value);
-                          }}
+                          readOnly
                         />
-                        {formik.errors.PhoneNumber && (
-                          <span className='text-danger'>
-                            {" "}
-                            {formik.errors.PhoneNumber}
-                          </span>
-                        )}
                       </div>
                     </div>
                     <div className='row mb-3'>
@@ -307,21 +189,9 @@ export default function EditInstitution() {
                         <input
                           type='email'
                           defaultValue={institution.email}
-                          onChange={(e) => {
-                            setInstitution({
-                              ...institution,
-                              email: e.target.value,
-                            });
-                            formik.setFieldValue("Email", e.target.value);
-                          }}
+                          readOnly
                           className='form-control'
                         />
-                        {formik.errors.Email && (
-                          <span className='text-danger'>
-                            {" "}
-                            {formik.errors.Email}
-                          </span>
-                        )}
                       </div>
                     </div>
                     <div className='row mb-3'>
@@ -332,49 +202,108 @@ export default function EditInstitution() {
                         <input
                           type='text'
                           defaultValue={institution.web}
-                          onChange={(e) => {
-                            setInstitution({
-                              ...institution,
-                              web: e.target.value,
-                            });
-                            formik.setFieldValue("Web", e.target.value);
-                          }}
+                          readOnly
                           className='form-control'
                         />
-                        {formik.errors.Web && (
-                          <span className='text-danger'>
-                            {" "}
-                            {formik.errors.Web}
-                          </span>
-                        )}
                       </div>
                     </div>
-                  </div>{" "}
-                  {/* end col */}
-                </div>{" "}
-                {/* end row */}
+                    <div className='row mb-3'>
+                      <label className='col-md-3 col-form-label'>
+                        {t("BusinessDocuments")}
+                      </label>
+                      <div className='col-md-9'>
+                        <button
+                          type='button'
+                          className=' fs-6  btn2 btn-modal btn-raporti'
+                          onClick={() => setIsOpen(true)}
+                        >
+                          {t("BusinessDocuments")}
+                        </button>
+                        <Modal
+                          title={t("BusinessDocuments")}
+                          centered
+                          className='responsive-modal'
+                          open={isOpen}
+                          okButtonProps={{ style: { display: "none" } }}
+                          onCancel={() => setIsOpen(false)}
+                        >
+                          {institution.institutionDocuments.map((document) => {
+                            return CrudProvider.checkIsPDf(document.docPath) ==
+                              true ? (
+                              <iframe
+                                key={document.docPath}
+                                id={document.docPath}
+                                src={CrudProvider.documentPath(
+                                  document.docPath
+                                )}
+                                loading='lazy'
+                              />
+                            ) : (
+                              <img
+                                key={document.docPath}
+                                src={CrudProvider.documentPath(
+                                  document.docPath
+                                )}
+                                width='800px'
+                                height='800px'
+                                loading='lazy'
+                              />
+                            );
+                          })}
+                        </Modal>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <ul className='list-inline mb-0 wizard'>
                 <Link
-                  to='/institutions'
+                  to='/institution-application'
                   className='btn btn-danger waves-effect waves-light float-start'
                 >
                   <span className='btn-label'>
                     <i className='fe-arrow-left'></i>
                   </span>
-                  {t("Discard")}
+                  {t("Back")}
                 </Link>
                 <li className='next list-inline-item float-end'>
                   {!load ? (
-                    <button
-                      type='submit'
-                      className='btn btn-success waves-effect waves-light'
-                    >
-                      <span className='btn-label'>
-                        <i className='fe-check'></i>
-                      </span>
-                      {t("Edit")}
-                    </button>
+                    <>
+                      <Checkbox
+                        value={false}
+                        checked={!model.Status}
+                        onChange={() =>
+                          setModel((prev) => ({
+                            ...prev,
+                            Status: false,
+                          }))
+                        }
+                      >
+                        Refuzo
+                      </Checkbox>
+                      <Checkbox
+                        value={true}
+                        checked={model.Status}
+                        onChange={() =>
+                          setModel((prev) => ({
+                            ...prev,
+                            Status: true,
+                          }))
+                        }
+                      >
+                        Aprovo
+                      </Checkbox>
+                      <button
+                        type='button'
+                        onClick={handleSubmit}
+                        className='btn btn-success waves-effect waves-light'
+                      >
+                        <span className='btn-label'>
+                          <i className='fe-check'></i>
+                        </span>
+                        {t("Save")}
+                      </button>
+                    </>
                   ) : (
                     <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
                       <div

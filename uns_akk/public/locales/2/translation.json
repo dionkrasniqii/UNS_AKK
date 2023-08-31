@@ -539,5 +539,13 @@
   "DescribeGeneralPurposeOfQualification": "At this point you are asked to describe the general purpose of the qualification/module.",
   "AgeAndPreviousQualification": "(age, previous qualifications, previous knowledge or experience)",
   "OfferNoValidationCertificationTextA18": "Provide data on the institutions that offer qualifications/modules, in the space below",
-  "ValidationCertificationNotOfferTextA18": "Provide the data for the institutions that will evaluate and certify qualifications/modules, in the space below"
+  "ValidationCertificationNotOfferTextA18": "Provide the data for the institutions that will evaluate and certify qualifications/modules, in the space below",
+  "RegisterHere": "Register here",
+  "Register": "Register",
+  "PleaseChooseInstitutionActivity": "Please select the activity of the institution",
+  "ApplicationsForUser": "Application for user",
+  "ApplicationsForAccrediation": "Applications for accreditation",
+  "BusinessDocuments": "Business documents (Business Certificate, VAT Certificate,...)",
+  "BusinessLicense": "Business license",
+  "VATLicense": "VAT certificate"
 }

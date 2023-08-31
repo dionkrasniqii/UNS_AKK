@@ -540,5 +540,13 @@
   "DescribeGeneralPurposeOfQualification": "U ovom trenutku od vas se traži da opišete opštu svrhu kvalifikacije/modula.",
   "AgeAndPreviousQualification": "(starost, prethodne kvalifikacije, prethodno znanje ili iskustvo)",
   "OfferNoValidationCertificationTextA18": "Navedite podatke o institucijama koje nude kvalifikacije/module, u prostoru ispod",
-  "ValidationCertificationNotOfferTextA18": "Navedite podatke za institucije koje će vrednovati i sertifikovati kvalifikacije/module, u prostoru ispod"
+  "ValidationCertificationNotOfferTextA18": "Navedite podatke za institucije koje će vrednovati i sertifikovati kvalifikacije/module, u prostoru ispod",
+  "RegisterHere": "Registrujte ovde",
+  "Register": "Registrujte",
+  "PleaseChooseInstitutionActivity": "Molimo izaberite delatnost institucije",
+  "ApplicationsForUser": "Aplikacija za korisnika",
+  "ApplicationsForAccrediation": "Prijave za akreditaciju",
+  "BusinessDocuments": "Poslovna dokumentacija (potvrda o poslovanju, potvrda o PDV-u,...)",
+  "BusinessLicense": "Poslovna licenca",
+  "VATLicense": "PDV sertifikat"
 }

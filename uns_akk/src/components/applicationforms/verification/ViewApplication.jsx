@@ -21,6 +21,7 @@ export default function ViewApplication() {
   const navigate = useNavigate();
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
+
   const [model, setModel] = useState({
     ApplicationId: "",
     StatusId: "",
@@ -38,17 +39,15 @@ export default function ViewApplication() {
   const [finalExpertReportModal, setFinalExpertReportModal] = useState(false);
   const [expertReportsModal, setExpertsReportsModal] = useState(false);
   async function callExpertReports() {
-    if (data.step === 7) {
-      await CrudProvider.getItemById("ApplicationAPI/ExpertResults", id).then(
-        (res) => {
-          if (res) {
-            if (res.statusCode === 200) {
-              setExpertReports(res.result);
-            }
+    await CrudProvider.getItemById("ApplicationAPI/ExpertResults", id).then(
+      (res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setExpertReports(res.result);
           }
         }
-      );
-    }
+      }
+    );
   }
 
   useEffect(() => {
@@ -93,6 +92,7 @@ export default function ViewApplication() {
       }),
     ]);
   }, []);
+
   async function checkModel(model) {
     if (model.StatusName === "Rikthim") {
       if (model.Remark) {
@@ -138,13 +138,13 @@ export default function ViewApplication() {
     statuses
       .filter((status) => {
         if (decodedToken.role === "Zyrtar AKK") {
-          return status.step === 2 || status.step === 3;
-        } else if (decodedToken.role === "Bord") {
           if (data.step === 7) {
-            return status.step === 9 || status.step === 8;
+            return status.step === 6 || status.step === 11;
           } else {
-            return status.step === 4 || status.step === 5;
+            return status.step === 2 || status.step === 3;
           }
+        } else if (decodedToken.role === "Bord") {
+          return status.step === 9 || status.step === 8;
         }
         return false;
       })
@@ -156,7 +156,10 @@ export default function ViewApplication() {
       setModel({
         ...model,
         StatusId: e.target.value,
-        StatusName: e.target.name === 3 ? "Rikthim" : e.target.name,
+        StatusName:
+          e.target.name === 3 || e.target.name === 6
+            ? "Rikthim"
+            : e.target.name,
       });
       formik.setFieldValue("StatusId", e.target.value);
     } else {
@@ -179,45 +182,45 @@ export default function ViewApplication() {
   });
 
   return Object.keys(data).length > 0 ? (
-    <div className="container">
-      <div className="card">
-        <div className="card-body">
-          <div className="row">
-            <div className="col-xxl-2 col-lg-2 col-sm-12  mb-sm-">
+    <div className='container'>
+      <div className='card'>
+        <div className='card-body'>
+          <div className='row'>
+            <div className='col-xxl-2 col-lg-2 col-sm-12  mb-sm-'>
               <Link
                 to={"/applications"}
-                className="text-dark rbt-btn-link-reverse"
+                className='text-dark rbt-btn-link-reverse'
               >
                 <i>
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns='http://www.w3.org/2000/svg'
                     width={16}
                     height={16}
-                    fill="currentColor"
-                    className="bi bi-arrow-left"
-                    viewBox="0 0 16 16"
+                    fill='currentColor'
+                    className='bi bi-arrow-left'
+                    viewBox='0 0 16 16'
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                      fillRule='evenodd'
+                      d='M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z'
                     />
                   </svg>
                 </i>
                 {t("Back")}
               </Link>
             </div>
-            <div className="col-xxl-8 col-lg-8 col-md-12 col-sm-10">
-              <h4 className="card-title text-start">
+            <div className='col-xxl-8 col-lg-8 col-md-12 col-sm-10'>
+              <h4 className='card-title text-start'>
                 {t("ApplicationByInstitution")}:
-                <span className="font-20 ms-1 text-primary ">
+                <span className='font-20 ms-1 text-primary '>
                   {data.applicationDTO.institutionName}
                 </span>
               </h4>
             </div>
-            <div className="col-xxl-2 col-lg-2 col-md-12 col-sm-12">
-              <div className="row">
-                <span className="text-muted">{t("ApplicationDate")}:</span>
-                <span className="text-success">
+            <div className='col-xxl-2 col-lg-2 col-md-12 col-sm-12'>
+              <div className='row'>
+                <span className='text-muted'>{t("ApplicationDate")}:</span>
+                <span className='text-success'>
                   {new Date(
                     data.applicationDTO.applicationDate.split("T")[0]
                   ).toLocaleDateString("en-GB")}
@@ -226,114 +229,114 @@ export default function ViewApplication() {
             </div>
           </div>
           <hr />
-          <div className="row ">
-            <h3 className="card-title text-start ">{t("PartA")}</h3>
+          <div className='row '>
+            <h3 className='card-title text-start '>{t("PartA")}</h3>
             <h5>{t("InstitutionDetails")}:</h5>
-            <div className="col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">{t("UniqueNumber")}:</label>
+            <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>{t("UniqueNumber")}:</label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={data.applicationDTO.uniqueNumber}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
 
-            <div className="col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">{t("Municipality")}:</label>
+            <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>{t("Municipality")}:</label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={data.applicationDTO.municipalityName}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">{t("PostalCode")}:</label>
+            <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>{t("PostalCode")}:</label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={data.applicationDTO.postalCode}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">{t("Address")}:</label>
+            <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>{t("Address")}:</label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={data.applicationDTO.address}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">{t("Email")}:</label>
+            <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>{t("Email")}:</label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={data.applicationDTO.email}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">{t("PhoneNumber")}:</label>
+            <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>{t("PhoneNumber")}:</label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={data.applicationDTO.phoneNum}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">{t("Web")}:</label>
+            <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>{t("Web")}:</label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={data.applicationDTO.web}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">{t("InstitutionStatus")}:</label>
+            <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>{t("InstitutionStatus")}:</label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={data.applicationDTO.institutionStatusName}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">
+            <div className='col-xxl-2 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>
                   {t("InstitutionActivity")}:
                 </label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={data.applicationDTO.institutionActivityName}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-1 col-lg-2 col-sm-12 mt-2 text-start">
+            <div className='col-xxl-1 col-lg-2 col-sm-12 mt-2 text-start'>
               <button
-                className="fs-6  btn2 btn-modal btn-raporti"
+                className='fs-6  btn2 btn-modal btn-raporti'
                 onClick={(e) => setLogoModal(true)}
               >
                 {t("Logo")}
@@ -341,7 +344,7 @@ export default function ViewApplication() {
               <Modal
                 title={t("Logo")}
                 centered
-                className="responsive-modal"
+                className='responsive-modal'
                 okButtonProps={{ style: { display: "none" } }}
                 open={logoModal}
                 onCancel={(e) => setLogoModal(false)}
@@ -352,33 +355,35 @@ export default function ViewApplication() {
                     src={CrudProvider.documentPath(
                       data.applicationDTO.institutionLogo
                     )}
-                    width="800px"
-                    height="800px"
-                    loading="lazy"
+                    width='800px'
+                    height='800px'
+                    loading='lazy'
                   ></iframe>
                 ) : (
                   <img
                     src={CrudProvider.documentPath(
                       data.applicationDTO.institutionLogo
                     )}
-                    loading="lazy"
+                    loading='lazy'
                   ></img>
                 )}
               </Modal>
             </div>
           </div>
-          <h5 className="mt-3 text-muted">{t("ChooseQualificationApplication")}:</h5>
-          <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-            <div className="form-group">
+          <h5 className='mt-3 text-muted'>
+            {t("ChooseQualificationApplication")}:
+          </h5>
+          <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+            <div className='form-group'>
               <textarea
-                  className="mt-2"
-                  readOnly
-                  defaultValue={data.applicationDTO.qualificationTitleAndLevel}
-                />
-              <span className="focus-border"></span>
+                className='mt-2'
+                readOnly
+                defaultValue={data.applicationDTO.qualificationTitleAndLevel}
+              />
+              <span className='focus-border'></span>
             </div>
           </div>
-          <div className="row">
+          <div className='row'>
             <h5>{t("JuridicPersonDetails")}:</h5>
             {/* <div className='col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
               <div className='form-group'>
@@ -408,14 +413,14 @@ export default function ViewApplication() {
               placeHolder={t("RegistrationCertificate")}
               typeToFilter={"CertificateRegisterDocA15"}
             />
-            <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-              <div className="form-group">
+            <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
                 <textarea
-                  className="mt-2"
+                  className='mt-2'
                   readOnly
                   defaultValue={data.applicationDTO.juridicPersonA15}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
             <CustomModal
@@ -428,17 +433,17 @@ export default function ViewApplication() {
           {data.applicationDTO.qualificationPeriodA17 && (
             <>
               <hr />
-              <div className="row">
+              <div className='row'>
                 <h5>{t("EarilerQualifications")}</h5>
-                <div className="col-xxl-12 col-lg-12 col-sm-12 mt-1 text-start">
-                  <div className="form-group">
-                    <label className="text-muted">{t("NoticePeriod")}:</label>
+                <div className='col-xxl-12 col-lg-12 col-sm-12 mt-1 text-start'>
+                  <div className='form-group'>
+                    <label className='text-muted'>{t("NoticePeriod")}:</label>
                     <textarea
-                      className="mt-2"
+                      className='mt-2'
                       readOnly
                       defaultValue={data.applicationDTO.qualificationPeriodA17}
                     />
-                    <span className="focus-border"></span>
+                    <span className='focus-border'></span>
                   </div>
                 </div>
                 <CustomModal
@@ -451,7 +456,7 @@ export default function ViewApplication() {
             </>
           )}
           <hr />
-          <div className="row">
+          <div className='row'>
             <h5>{t("DataForAccreditation")}:</h5>
             {/* <div className='col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
               <div className='form-group'>
@@ -486,13 +491,13 @@ export default function ViewApplication() {
                 <span className='focus-border'></span>
               </div>
             </div> */}
-            <div className="col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">
+            <div className='col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>
                   {t("ForDeliveryNotEvaluationAndCertification")}:
                 </label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={
                     data.applicationDTO.offerNoValidationCertificationA18
@@ -500,16 +505,16 @@ export default function ViewApplication() {
                       : t("No")
                   }
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">
+            <div className='col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>
                   {t("ForAssessmentAndCertificatioNotDelivery")}:
                 </label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={
                     data.applicationDTO.validationCertificationNotOfferA18
@@ -517,16 +522,16 @@ export default function ViewApplication() {
                       : t("No")
                   }
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">
+            <div className='col-xxl-3 col-lg-4 col-md-5 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>
                   {t("ForAssessmentAndCertificatioDelivery")}:
                 </label>
                 <input
-                  type="text"
+                  type='text'
                   readOnly
                   defaultValue={
                     data.applicationDTO.offerValidationCertificationA18
@@ -534,52 +539,52 @@ export default function ViewApplication() {
                       : t("No")
                   }
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-              <div className="form-group">
-                <label className="text-muted">{t("AdditionalData")}:</label>
+            <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
+                <label className='text-muted'>{t("AdditionalData")}:</label>
                 <textarea
-                  className="mt-2"
+                  className='mt-2'
                   readOnly
                   defaultValue={data.applicationDTO.textA18}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className='row'>
             <CustomModal
               showUpload={false}
               docs={data.docs}
               placeHolder={t("InstitutionDetailsModal")}
               typeToFilter={"InstitutionDocsA21"}
             />
-            <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-              <div className="form-group">
+            <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
                 <textarea
-                  className="mt-2"
+                  className='mt-2'
                   readOnly
                   defaultValue={data.applicationDTO.a21Text}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-12 col-lg-12 col-sm-12 mt-1 ">
-              <div className="form-group">
-                <label className="text-muted">
+            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-1 '>
+              <div className='form-group'>
+                <label className='text-muted'>
                   {t("ToolsForQualification")}:
                 </label>
                 <textarea
                   readOnly
-                  className="mt-2"
+                  className='mt-2'
                   rows={5}
                   defaultValue={
                     data.applicationDTO.equipmentMaterialsQualificationA22
                   }
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
             <CustomModal
@@ -588,31 +593,26 @@ export default function ViewApplication() {
               placeHolder={t("StaffDataModal")}
               typeToFilter={"StaffA23"}
             />
-            <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-              <div className="form-group">
+            <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
                 <textarea
-                  className="mt-2"
+                  className='mt-2'
                   readOnly
                   defaultValue={data.applicationDTO.a23Text}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
-            <div className="col-xxl-12 col-lg-12 col-sm-12 mt-1 ">
-              <div className="form-group">
-                <label className="text-muted">
-                  {t(
-                    "DataForCandidates"
-                  )}
-                  :
-                </label>
+            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-1 '>
+              <div className='form-group'>
+                <label className='text-muted'>{t("DataForCandidates")}:</label>
                 <textarea
                   readOnly
-                  className="mt-2"
+                  className='mt-2'
                   rows={5}
                   defaultValue={data.applicationDTO.candidatesDataA24}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
             <CustomModal
@@ -621,40 +621,40 @@ export default function ViewApplication() {
               placeHolder={t("OtherRequest")}
               typeToFilter={"OtherRequestsA25"}
             />
-            <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-              <div className="form-group">
+            <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+              <div className='form-group'>
                 <textarea
-                  className="mt-2"
+                  className='mt-2'
                   readOnly
                   defaultValue={data.applicationDTO.a25Text}
                 />
-                <span className="focus-border"></span>
+                <span className='focus-border'></span>
               </div>
             </div>
           </div>
           <hr />
           <form onSubmit={formik.handleSubmit}>
-            <div className="row">
-              <div className="row mb-2">
-                <h3 className="card-title text-start ">{t("PartB")}</h3>
-                <h5 className="card-title text-start ">
+            <div className='row'>
+              <div className='row mb-2'>
+                <h3 className='card-title text-start '>{t("PartB")}</h3>
+                <h5 className='card-title text-start '>
                   {t("PartBFirstDesc")}
                 </h5>
-                <h5 className="card-title">{t("PartBSecondDesc")}</h5>
+                <h5 className='card-title'>{t("PartBSecondDesc")}</h5>
                 <CustomModal
                   showUpload={false}
                   docs={data.docs}
                   placeHolder={t("ManagementOfQuality")}
                   typeToFilter={"ManagementOfQualityDocs"}
                 />
-                <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-                  <div className="form-group">
+                <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+                  <div className='form-group'>
                     <textarea
-                      className="mt-2"
+                      className='mt-2'
                       readOnly
                       defaultValue={data.applicationDTO.b11Text}
                     />
-                    <span className="focus-border"></span>
+                    <span className='focus-border'></span>
                   </div>
                 </div>
                 <CustomModal
@@ -663,14 +663,14 @@ export default function ViewApplication() {
                   placeHolder={t("DataOfAssurance")}
                   typeToFilter={"DataOfAssurance"}
                 />
-                <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-                  <div className="form-group">
+                <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+                  <div className='form-group'>
                     <textarea
-                      className="mt-2"
+                      className='mt-2'
                       readOnly
                       defaultValue={data.applicationDTO.b12Text}
                     />
-                    <span className="focus-border"></span>
+                    <span className='focus-border'></span>
                   </div>
                 </div>
                 <CustomModal
@@ -679,14 +679,14 @@ export default function ViewApplication() {
                   placeHolder={t("ManagementQualityCertification")}
                   typeToFilter={"ManagementQualityCertification"}
                 />
-                <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-                  <div className="form-group">
+                <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+                  <div className='form-group'>
                     <textarea
-                      className="mt-2"
+                      className='mt-2'
                       readOnly
                       defaultValue={data.applicationDTO.b13Text}
                     />
-                    <span className="focus-border"></span>
+                    <span className='focus-border'></span>
                   </div>
                 </div>
                 <CustomModal
@@ -695,14 +695,14 @@ export default function ViewApplication() {
                   placeHolder={t("PoliticsB14")}
                   typeToFilter={"PoliticsAndProcedures"}
                 />
-                <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-                  <div className="form-group">
+                <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+                  <div className='form-group'>
                     <textarea
-                      className="mt-2"
+                      className='mt-2'
                       readOnly
                       defaultValue={data.applicationDTO.b14Text}
                     />
-                    <span className="focus-border"></span>
+                    <span className='focus-border'></span>
                   </div>
                 </div>
                 <CustomModal
@@ -711,14 +711,14 @@ export default function ViewApplication() {
                   placeHolder={t("HandicapesPolitics")}
                   typeToFilter={"HandicapDocs"}
                 />
-                <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-                  <div className="form-group">
+                <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+                  <div className='form-group'>
                     <textarea
-                      className="mt-2"
+                      className='mt-2'
                       readOnly
                       defaultValue={data.applicationDTO.b15Text}
                     />
-                    <span className="focus-border"></span>
+                    <span className='focus-border'></span>
                   </div>
                 </div>
                 <CustomModal
@@ -727,14 +727,14 @@ export default function ViewApplication() {
                   placeHolder={t("PoliticsProcedures")}
                   typeToFilter={"PoliticsProceduresDocs"}
                 />
-                <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-                  <div className="form-group">
+                <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+                  <div className='form-group'>
                     <textarea
-                      className="mt-2"
+                      className='mt-2'
                       readOnly
                       defaultValue={data.applicationDTO.b16Text}
                     />
-                    <span className="focus-border"></span>
+                    <span className='focus-border'></span>
                   </div>
                 </div>
                 <CustomModal
@@ -743,14 +743,14 @@ export default function ViewApplication() {
                   placeHolder={t("SystemCredits")}
                   typeToFilter={"SystemCreditsDocs"}
                 />
-                <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-                  <div className="form-group">
+                <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+                  <div className='form-group'>
                     <textarea
-                      className="mt-2"
+                      className='mt-2'
                       readOnly
                       defaultValue={data.applicationDTO.b17Text}
                     />
-                    <span className="focus-border"></span>
+                    <span className='focus-border'></span>
                   </div>
                 </div>
                 <CustomModal
@@ -759,14 +759,14 @@ export default function ViewApplication() {
                   placeHolder={t("SafeEnviroment")}
                   typeToFilter={"EnviromentDocs"}
                 />
-                <div className="col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start">
-                  <div className="form-group">
+                <div className='col-xxl-12 col-lg-12 col-md-12 col-sm-12 mt-1 text-start'>
+                  <div className='form-group'>
                     <textarea
-                      className="mt-2"
+                      className='mt-2'
                       readOnly
                       defaultValue={data.applicationDTO.b18Text}
                     />
-                    <span className="focus-border"></span>
+                    <span className='focus-border'></span>
                   </div>
                 </div>
                 <CustomModal
@@ -789,18 +789,18 @@ export default function ViewApplication() {
                 />
               </div>
               <hr />
-              <div className="row mb-2">
-                <h3 className="card-title text-start ">{t("PartC")}</h3>
-                <h4 className="card-title text-start ">{t("PartC.1")}</h4>
+              <div className='row mb-2'>
+                <h3 className='card-title text-start '>{t("PartC")}</h3>
+                <h4 className='card-title text-start '>{t("PartC.1")}</h4>
                 <hr />
-                <h5 className="card-title text-start ">{t("PartC1.1")}</h5>
-                <div className="col-xxl-12 col-lg-12 col-sm-12">
-                  <div className="row">
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                <h5 className='card-title text-start '>{t("PartC1.1")}</h5>
+                <div className='col-xxl-12 col-lg-12 col-sm-12'>
+                  <div className='row'>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("Name") + " " + t("Surname")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={
                             data.applicationDTO.nameSurnameLeaderC11
@@ -808,21 +808,21 @@ export default function ViewApplication() {
                         />
                       </div>
                     </div>
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("Address")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={data.applicationDTO.addressLeaderC11}
                         />
                       </div>
                     </div>
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("PhoneNumber")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={
                             data.applicationDTO.phoneNumberLeaderC11
@@ -830,21 +830,21 @@ export default function ViewApplication() {
                         />
                       </div>
                     </div>
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("Fax")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={data.applicationDTO.faxLeaderC11}
                         />
                       </div>
                     </div>
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("Email")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={data.applicationDTO.emailLeaderC11}
                         />
@@ -853,14 +853,14 @@ export default function ViewApplication() {
                   </div>
                 </div>
                 <hr />
-                <h5 className="card-title text-start ">{t("PartC1.2")}</h5>
-                <div className="col-xxl-12 col-lg-12 col-sm-12">
-                  <div className="row">
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                <h5 className='card-title text-start '>{t("PartC1.2")}</h5>
+                <div className='col-xxl-12 col-lg-12 col-sm-12'>
+                  <div className='row'>
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("Name") + " " + t("Surname")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={
                             data.applicationDTO.nameSurnameCoordinatorC12
@@ -868,11 +868,11 @@ export default function ViewApplication() {
                         />
                       </div>
                     </div>
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("Address")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={
                             data.applicationDTO.addressCoordinatorC12
@@ -880,11 +880,11 @@ export default function ViewApplication() {
                         />
                       </div>
                     </div>
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("PhoneNumber")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={
                             data.applicationDTO.phoneNumberCoordinatorC12
@@ -892,32 +892,32 @@ export default function ViewApplication() {
                         />
                       </div>
                     </div>
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("Fax")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={data.applicationDTO.faxCoordinatorC12}
                         />
                       </div>
                     </div>
-                    <div className="col-xxl-3 col-lg-5 col-sm-12">
-                      <div className="form-group">
+                    <div className='col-xxl-3 col-lg-5 col-sm-12'>
+                      <div className='form-group'>
                         <label>{t("Email")}</label>
                         <input
-                          type="text"
+                          type='text'
                           readOnly
                           defaultValue={data.applicationDTO.emailCoordinatorC12}
                         />
                       </div>
                     </div>
                   </div>
-                  <div className="col-xxl-12 col-lg-12 col-sm-12">
-                    <div className="form-group">
+                  <div className='col-xxl-12 col-lg-12 col-sm-12'>
+                    <div className='form-group'>
                       <label>C1.5 {t("PartC1.5")}</label>
                       <input
-                        type="text"
+                        type='text'
                         readOnly
                         defaultValue={data.applicationDTO.placeOfApplicationC15}
                       />
@@ -936,18 +936,18 @@ export default function ViewApplication() {
                 </>
               )}
               <hr />
-              {Object.keys(expertReports).length > 0 && (
+              {expertReports && Object.keys(expertReports).length > 0 && (
                 <>
-                  <h5 className="card-title text-start ">
+                  <h5 className='card-title text-start '>
                     {t("ExpertReports")}
                   </h5>
 
-                  <div className="col-xxl-12 col-lg-12 col-sm-12 mb-2">
-                    <div className="row">
-                      <div className="col-xxl-6 col-lg-6 col-sm-12">
+                  <div className='col-xxl-12 col-lg-12 col-sm-12 mb-2'>
+                    <div className='row'>
+                      <div className='col-xxl-6 col-lg-6 col-sm-12'>
                         <button
-                          type="button"
-                          className=" fs-6  btn2 btn-modal btn-raporti"
+                          type='button'
+                          className=' fs-6  btn2 btn-modal btn-raporti'
                           onClick={() => setExpertsReportsModal(true)}
                         >
                           {t("ExpertReports")}
@@ -955,16 +955,16 @@ export default function ViewApplication() {
                         <Modal
                           title={t("ExpertReports")}
                           centered
-                          className="responsive-modal"
+                          className='responsive-modal'
                           open={expertReportsModal}
                           okButtonProps={{ style: { display: "none" } }}
                           onCancel={() => setExpertsReportsModal(false)}
                         >
-                          <div className="row">
+                          <div className='row'>
                             {expertReports?.expertReports?.map((document) => {
                               return (
                                 <>
-                                  <h5 className="card-title">
+                                  <h5 className='card-title'>
                                     {t("Name") +
                                       " " +
                                       t("Surname").toLowerCase() +
@@ -973,26 +973,26 @@ export default function ViewApplication() {
                                     : {document.expertNameSurname}
                                   </h5>
                                   {document.reportiPerAkreditimPath && (
-                                    <div className="col-xxl-6 col-lg-6 col-sm-12">
+                                    <div className='col-xxl-6 col-lg-6 col-sm-12'>
                                       <iframe
                                         src={CrudProvider.documentPath(
                                           document.reportiPerAkreditimPath
                                         )}
-                                        loading="lazy"
+                                        loading='lazy'
                                       />
                                     </div>
                                   )}
                                   {document.reportiPerValidimPath && (
-                                    <div className="col-xxl-6 col-lg-6 col-sm-12">
+                                    <div className='col-xxl-6 col-lg-6 col-sm-12'>
                                       <iframe
                                         src={CrudProvider.documentPath(
                                           document.reportiPerValidimPath
                                         )}
-                                        loading="lazy"
+                                        loading='lazy'
                                       />
                                     </div>
                                   )}
-                                  <hr className="mb-2" />
+                                  <hr className='mb-2' />
                                 </>
                               );
                             })}
@@ -1000,9 +1000,9 @@ export default function ViewApplication() {
                         </Modal>
                       </div>
                       {expertReports.finalReportPath && (
-                        <div className="col-xxl-6 col-lg-6 col-sm-12">
+                        <div className='col-xxl-6 col-lg-6 col-sm-12'>
                           <button
-                            className=" fs-6  btn2 btn-modal btn-raporti"
+                            className=' fs-6  btn2 btn-modal btn-raporti'
                             onClick={() => setFinalExpertReportModal(true)}
                           >
                             {t("FinalExpertReport")}
@@ -1010,12 +1010,12 @@ export default function ViewApplication() {
                           <Modal
                             title={t("ExpertReports")}
                             centered
-                            className="responsive-modal"
+                            className='responsive-modal'
                             open={finalExpertReportModal}
                             okButtonProps={{ style: { display: "none" } }}
                             onCancel={() => setFinalExpertReportModal(false)}
                           >
-                            <h5 className="card-title">
+                            <h5 className='card-title'>
                               {t("Name") +
                                 " " +
                                 t("Surname").toLowerCase() +
@@ -1027,7 +1027,7 @@ export default function ViewApplication() {
                               src={CrudProvider.documentPath(
                                 expertReports.finalReportPath
                               )}
-                              loading="lazy"
+                              loading='lazy'
                             />
                           </Modal>
                         </div>
@@ -1039,12 +1039,12 @@ export default function ViewApplication() {
               )}
               {model.StatusName === "Rikthim" && (
                 <>
-                  <div className="col-xxl-12 col-lg-12 col-sm-12">
-                    <div className="form-group">
+                  <div className='col-xxl-12 col-lg-12 col-sm-12'>
+                    <div className='form-group'>
                       <label>Vërejtje</label>
                       <textarea
                         rows={5}
-                        className="mt-2"
+                        className='mt-2'
                         onChange={(e) =>
                           setModel({
                             ...model,
@@ -1057,63 +1057,69 @@ export default function ViewApplication() {
                   <hr />
                 </>
               )}
-              <div className="col-xxl-12 col-lg-12 col-sm-12 text-end">
-                {statusesList.map((item) => (
-                  <Checkbox
-                    disabled={isSelected ? isSelected !== item.step : false}
-                    value={item.statusId}
-                    name={item.step}
-                    key={item.statusId}
-                    onChange={onChange}
-                  >
-                    {item.step === 2
-                      ? "Verifiko"
-                      : item.step === 3
-                      ? "Rikthim"
-                      : item.step === 4
-                      ? "Aprovo"
-                      : item.step === 8
-                      ? "APROVIMI FINAL"
-                      : item.step === 9
-                      ? "REFUZIMI FINAL"
-                      : "Refuzo"}
-                  </Checkbox>
-                ))}
-                {decodedToken.role === "Zyrtar per caktimin e eksperteve" && (
-                  <AssignExperts
-                    applicationId={id}
-                    decodedToken={decodedToken}
-                  />
-                )}
-                {decodedToken.role !== "Admin" &&
-                  isSelected &&
-                  (postLoad ? (
-                    <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
-                      <div
-                        className="spinner-border text-primary m-2 text-center"
-                        role="status"
-                      />
-                    </div>
-                  ) : (
-                    <button
-                      type="submit"
-                      className="btn btn-soft-primary waves-effect "
+              {data.step !== 8 && (
+                <div className='col-xxl-12 col-lg-12 col-sm-12 text-end'>
+                  {statusesList.map((item) => (
+                    <Checkbox
+                      disabled={isSelected ? isSelected !== item.step : false}
+                      value={item.statusId}
+                      name={item.step}
+                      key={item.statusId}
+                      onChange={onChange}
                     >
-                      {t("Save")}
-                    </button>
+                      {item.step === 2
+                        ? "Verifiko"
+                        : item.step === 3
+                        ? "Rikthim"
+                        : item.step === 4
+                        ? "Aprovo"
+                        : item.step === 8
+                        ? "APROVIMI FINAL"
+                        : item.step === 9
+                        ? "REFUZIMI FINAL"
+                        : item.step === 6
+                        ? "Rikthim tek ekspertët"
+                        : item.step === 11
+                        ? "Dërgo tek bordi për verifikim"
+                        : "Refuzo"}
+                    </Checkbox>
                   ))}
-              </div>
+                  {decodedToken.role === "Zyrtar per caktimin e eksperteve" && (
+                    <AssignExperts
+                      applicationId={id}
+                      decodedToken={decodedToken}
+                    />
+                  )}
+                  {decodedToken.role !== "Admin" ||
+                    (isSelected &&
+                      (postLoad ? (
+                        <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                          <div
+                            className='spinner-border text-primary m-2 text-center'
+                            role='status'
+                          />
+                        </div>
+                      ) : (
+                        <button
+                          type='submit'
+                          className='btn btn-soft-primary waves-effect '
+                        >
+                          {t("Save")}
+                        </button>
+                      )))}
+                </div>
+              )}
             </div>
           </form>
         </div>
       </div>
     </div>
   ) : (
-    <div className="card">
-      <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+    <div className='card'>
+      <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
         <div
-          className="spinner-border text-primary m-2 text-center"
-          role="status"
+          className='spinner-border text-primary m-2 text-center'
+          role='status'
         />
       </div>
     </div>

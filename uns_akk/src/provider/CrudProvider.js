@@ -71,7 +71,6 @@ async function login(controller, model) {
     return error;
   }
 }
-// Get all items
 async function getAllWithLang(controller) {
   try {
     let token = localStorage.getItem("akktoken");
@@ -104,7 +103,6 @@ async function getAll(controller) {
     handleRequestError(error);
   }
 }
-// Get a single item by ID
 async function getItemByIdLang(controller, itemId) {
   try {
     let langId = localStorage.getItem("i18nextLng");
@@ -167,8 +165,7 @@ async function createItemWithFile(controller, model) {
 
     const promises = Object.keys(model).map(async (key) => {
       const value = model[key];
-      appendToFormData(key, value, formData);
-      return Promise;
+      return appendToFormData(key, value, formData);
     });
 
     await Promise.all(promises);
@@ -190,48 +187,14 @@ async function createItemWithFile(controller, model) {
     handleRequestError(error);
   }
 }
-// const convertObjectToFormData = (object) => {
-//   const formData = new FormData();
-
-//   const appendToFormData = (value, formKey) => {
-//     if (value === undefined) {
-//       return; // Don't append anything if the value is undefined
-//     } else if (value instanceof File) {
-//       formData.append(formKey, value);
-//     } else if (Array.isArray(value)) {
-//       value.forEach((item, index) => {
-//         if (typeof item === "object" && item !== null) {
-//           convertObjectToFormData(item, `${formKey}[${index}]`);
-//         } else {
-//           formData.append(`${formKey}[${index}]`, item);
-//         }
-//       });
-//     } else if (typeof value === "object" && value !== null) {
-//       convertObjectToFormData(value, formKey);
-//     } else {
-//       formData.append(formKey, value.toString());
-//     }
-//   };
-
-//   for (const key in object) {
-//     if (object.hasOwnProperty(key)) {
-//       const value = object[key];
-//       appendToFormData(value, key);
-//     }
-//   }
-
-//   return formData;
-// };
 // Create a custom XMLHttpRequest instance
 const customAxios = axios.create();
-
 // Increase the maximum request size for the custom instance
 customAxios.defaults.maxContentLength = 1000000000; // 1 GB (adjust as needed)
-
 // Set the Content-Type header to 'multipart/form-data' for large payloads
 customAxios.defaults.headers.post["Content-Type"] = "multipart/form-data";
-
 // Use the custom instance for your requests
+
 async function postApplication(controller, firstModel, secondModel, bool) {
   try {
     let token = localStorage.getItem("akktoken");
@@ -349,7 +312,11 @@ async function getReportRDLC(methodRoute, fileType, id, reportName) {
     if (contentType === "application/pdf") {
       const newWindow = window.open();
       newWindow.location.href = url;
-      console.log(url);
+      if (newWindow) {
+        newWindow.location.href = url;
+      } else {
+        console.error("Failed to open new window.");
+      }
     } else if (contentType === "application/vnd.ms-excel") {
       const link = document.createElement("a");
       link.href = url;
@@ -379,7 +346,11 @@ async function getReportRDLCWithLang(methodRoute, fileType, id, reportName) {
     const contentType = response.headers["content-type"];
     if (contentType === "application/pdf") {
       const newWindow = window.open();
-      newWindow.location.href = url;
+      if (newWindow) {
+        newWindow.location.href = url;
+      } else {
+        console.error("Failed to open new window.");
+      }
     } else if (contentType === "application/vnd.ms-excel") {
       const link = document.createElement("a");
       link.href = url;
@@ -412,18 +383,6 @@ async function changeLang(controller) {
 function documentPath(filePath) {
   return `${API_BASE_URL_DOC}/${filePath}`;
 }
-
-async function handleRequestError(error) {
-  if (error.response) {
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
-  } else if (error.request) {
-    console.log(error.request);
-  } else {
-    console.log("Error", error.message);
-  }
-}
 function checkIsPDf(event) {
   if (event) {
     let parts = event.split(".");
@@ -435,6 +394,18 @@ function checkIsPDf(event) {
     }
   }
 }
+async function handleRequestError(error) {
+  if (error.response) {
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
+  } else if (error.request) {
+    console.log(error.request);
+  } else {
+    console.log("Error", error.message);
+  }
+}
+
 export default {
   login,
   getAll,

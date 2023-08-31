@@ -21,11 +21,29 @@ export default function Sidebar() {
     },
     {
       label: t("Users"),
-      roles: ["Admin"],
-      path: "/users",
-      hasMenu: false,
+      roles: ["Admin", "Zyrtar AKK"],
+      hasMenu: true,
       showLabel: true,
-      icon: "fas fa-layer-group",
+      icon: "mdi mdi-book-edit",
+      submenu: [
+        {
+          label: t("Users"),
+          roles: ["Admin", "Zyrtar AKK"],
+          path: "/users",
+          hasMenu: false,
+          showLabel: true,
+          icon: "fas fa-layer-group",
+        },
+
+        {
+          label: t("ApplicationsForUser"),
+          roles: ["Admin", "Zyrtar AKK"],
+          path: "/institution-application",
+          hasMenu: false,
+          showLabel: true,
+          icon: "fe-user",
+        },
+      ],
     },
     {
       label: t("QualificationTypes"),
@@ -151,7 +169,7 @@ export default function Sidebar() {
       icon: "mdi mdi-form-select",
     },
     {
-      label: t("Applications"),
+      label: t("ApplicationsForAccrediation"),
       roles: [
         "Admin",
         "Zyrtar per caktimin e eksperteve",

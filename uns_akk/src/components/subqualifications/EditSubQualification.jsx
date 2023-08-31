@@ -19,6 +19,7 @@ export default function EditSubQualification() {
     DescriptionAL: "",
     DescriptionEN: "",
     DescriptionSR: "",
+    Credits: "",
   });
 
   useEffect(() => {
@@ -82,7 +83,7 @@ export default function EditSubQualification() {
           <hr />
           <form onSubmit={formik.handleSubmit}>
             <div className='row'>
-              <div className='col-md-4'>
+              <div className='col-md-3'>
                 <label className='col-form-label'>{t("Code")} (AL)</label>
                 <input
                   type='text'
@@ -100,7 +101,7 @@ export default function EditSubQualification() {
                   <span className='text-danger'>{formik.errors.CodeAL}</span>
                 )}
               </div>
-              <div className='col-md-4'>
+              <div className='col-md-3'>
                 <label className='col-form-label'>{t("Code")} (EN)</label>
                 <input
                   type='text'
@@ -118,7 +119,7 @@ export default function EditSubQualification() {
                   <span className='text-danger'>{formik.errors.CodeEN}</span>
                 )}
               </div>
-              <div className='col-md-4'>
+              <div className='col-md-3'>
                 <label className=' col-form-label'>{t("Code")} (SR)</label>
                 <input
                   type='text'
@@ -136,10 +137,26 @@ export default function EditSubQualification() {
                   <span className='text-danger'>{formik.errors.CodeSR}</span>
                 )}
               </div>
+              <div className='col-md-2'>
+                <label className='col-form-label'>{t("Credits")}</label>
+                <input
+                  type='number'
+                  defaultValue={subqualification.Credits}
+                  className='form-control'
+                  onChange={(e) => {
+                    setSubQualification({
+                      ...subqualification,
+                      Credits: e.target.value,
+                    });
+                    formik.setFieldValue("Credits", e.target.value);
+                  }}
+                />
+                {formik.errors.Credits && (
+                  <span className='text-danger'>{formik.errors.Credits}</span>
+                )}
+              </div>
               <div className='col-md-12'>
-                <label className='col-form-label'>
-                  {t("ModuleName")} (AL)
-                </label>
+                <label className='col-form-label'>{t("ModuleName")} (AL)</label>
                 <textarea
                   type='text'
                   rows={6}
@@ -160,9 +177,7 @@ export default function EditSubQualification() {
                 )}
               </div>
               <div className='col-md-12'>
-                <label className='col-form-label'>
-                  {t("ModuleName")} (EN)
-                </label>
+                <label className='col-form-label'>{t("ModuleName")} (EN)</label>
                 <textarea
                   type='text'
                   rows={6}
@@ -184,9 +199,7 @@ export default function EditSubQualification() {
               </div>
 
               <div className='col-md-12'>
-                <label className='col-form-label'>
-                  {t("ModuleName")} (SR)
-                </label>
+                <label className='col-form-label'>{t("ModuleName")} (SR)</label>
                 <textarea
                   type='text'
                   rows={6}
@@ -206,7 +219,7 @@ export default function EditSubQualification() {
                   </span>
                 )}
               </div>
-             </div>
+            </div>
 
             <ul className='list-inline mb-0 wizard mt-2'>
               <Link

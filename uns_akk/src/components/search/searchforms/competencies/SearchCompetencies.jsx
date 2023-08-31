@@ -91,7 +91,6 @@ export default function SearchCompetencies() {
       setLoad(false);
     }
   }
-  console.log(data);
   return (
     <div className='container mt-5 bg-light-subtle '>
       <div className='card '>

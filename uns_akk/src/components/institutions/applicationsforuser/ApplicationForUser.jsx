@@ -1,38 +1,66 @@
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
-import CrudProvider from "../../provider/CrudProvider";
+import DataTablev2 from "../../custom/DataTablev2";
+import { Link } from "react-router-dom";
+import CrudProvider from "../../../provider/CrudProvider";
 import { toast } from "react-toastify";
-import DataTablev2 from "../custom/DataTablev2";
+import { useTranslation } from "react-i18next";
 
-export default function SubQualifications() {
-  const { id } = useParams();
-  const [load, setLoad] = useState(false);
+export default function ApplicationForUser() {
   const [data, setData] = useState([]);
+  const [load, setLoad] = useState(true);
   const { t } = useTranslation();
-  const langId = localStorage.getItem("i18nextLng");
   const columns = [
     {
-      name: t("Modules"),
-      selector: (row) => row.description,
+      name: t("InstitutionName"),
+      selector: (row) => row.institutionName,
       sortable: true,
       filterable: true,
     },
     {
-      name: t("Credits"),
-      selector: (row) => row.credits,
+      name: t("UniqueNumber"),
+      selector: (row) => row.uniqueNumber,
       sortable: true,
       filterable: true,
     },
     {
-      name: t("Code"),
-      selector: (row) => row.code,
+      name: t("Municipality"),
+      selector: (row) => row.municipalityName,
       sortable: true,
       filterable: true,
     },
     {
-      name: t("Qualification"),
-      selector: (row) => row.qualificationName,
+      name: t("Address"),
+      selector: (row) => row.address,
+      sortable: true,
+      filterable: true,
+    },
+    {
+      name: t("PostalCode"),
+      selector: (row) => row.postalCode,
+      sortable: true,
+      filterable: true,
+    },
+    {
+      name: t("Email"),
+      selector: (row) => row.email,
+      sortable: true,
+      filterable: true,
+    },
+    {
+      name: t("Web"),
+      sortable: true,
+      filterable: true,
+      cell: (record) => {
+        const url =
+          record.web.startsWith("http://") || record.web.startsWith("https://")
+            ? record.web
+            : `http://${record.web}`;
+        return (
+          <a target='_blank' rel='noopener noreferrer' href={url}>
+            {record.web}
+          </a>
+        );
+      },
     },
     {
       name: t("Actions"),
@@ -41,13 +69,13 @@ export default function SubQualifications() {
           <div className='button-list'>
             <Link
               className='btn btn-secondary btn-sm'
-              to={`/editsubqualifications/${record.qualificationChildId}`}
+              to={`/check-institution-application/${record.institutionId}`}
             >
               <i className='fe-edit' />
             </Link>
             <a
-              className='btn btn-sm btn-danger'
-              onClick={(e) => handleDelete(record.qualificationChildId)}
+              className='btn btn-sm btn-danger me-2'
+              onClick={(e) => handleDelete(record.institutionId)}
             >
               <i className='fe-trash-2' />
             </a>
@@ -56,13 +84,13 @@ export default function SubQualifications() {
       },
     },
   ];
-
-  async function GetAllData() {
-    await CrudProvider.getItemByIdLang("QualificationChildAPI/GetAll", id).then(
+  useEffect(() => {
+    CrudProvider.getAll("InstitutionAPI/GetSelfRegistredInsitutions").then(
       (res) => {
         if (res) {
           if (res.statusCode === 200) {
             setData(res.result);
+            setLoad(false);
           } else if (res.statusCode === 400) {
             toast.error(t("ServerProblems"));
           }
@@ -70,31 +98,18 @@ export default function SubQualifications() {
         setLoad(false);
       }
     );
-  }
-
-  useEffect(() => {
-    setLoad(true);
-    GetAllData();
   }, []);
-
-  useEffect(() => {
-    setLoad(true);
-    GetAllData();
-  }, [langId]);
 
   async function handleDelete(id) {
     setLoad(true);
     await CrudProvider.deleteItemById(
-      "QualificationChildAPI/DeleteQualificationChild",
+      "InstitutionAPI/DeleteInstitution",
       id
     ).then((res) => {
       if (res) {
         if (res.statusCode === 200) {
           toast.success(t("DataDeletedSuccessfully"));
-          CrudProvider.getItemByIdLang(
-            "QualificationChildAPI/GetAll",
-            data[0].qualificationId
-          ).then((res) => {
+          CrudProvider.getAllWithLang("InstitutionAPI/GetAll").then((res) => {
             if (res) {
               if (res.statusCode === 200) {
                 setData(res.result);
@@ -103,8 +118,6 @@ export default function SubQualifications() {
               }
             }
           });
-        } else if (res.statusCode === 409) {
-          toast.error(t("CannotDeleteModule"));
         }
       }
       setLoad(false);
@@ -119,13 +132,13 @@ export default function SubQualifications() {
             <div className='col-12'>
               <div className='col-12 d-flex justify-content-end'>
                 <Link
-                  className='btn btn-secondary waves-effect waves-light'
-                  to='/qualifications'
+                  className='btn btn-info waves-effect waves-light'
+                  to='/createinstitutions'
                 >
                   <span className='btn-label'>
-                    <i className='icon-arrow-left'></i>
+                    <i className='fe-plus-circle'></i>
                   </span>
-                  {t("Back")}
+                  {t("Add")}
                 </Link>
               </div>
             </div>
@@ -135,7 +148,7 @@ export default function SubQualifications() {
               <DataTablev2
                 columns={columns}
                 dataSource={data}
-                title={t("ModuleList")}
+                title={t("ApplicationList")}
               />
             ) : (
               <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>

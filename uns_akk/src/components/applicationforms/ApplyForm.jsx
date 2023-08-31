@@ -103,6 +103,7 @@ export default function ApplyForm({ authState }) {
     EmailCoordinatorE12: "",
     PlaceOfApplicationE15: "",
   });
+
   async function SubmitApplication() {
     try {
       setLoad(true);

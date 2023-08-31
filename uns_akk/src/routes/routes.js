@@ -59,6 +59,8 @@ import QualificationStandartDetails from "../components/search/details/qualifica
 import ComptenceDetails from "../components/search/details/competence/CompetenceDetails";
 import SubmitEmail from "../components/forgotpassword/SubmitEmail";
 import ForgotPassword from "../components/forgotpassword/ForgotPassword";
+import ApplicationForUser from "../components/institutions/applicationsforuser/ApplicationForUser";
+import CheckApplicationForUser from "../components/institutions/applicationsforuser/CheckApplicationForUser";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -135,7 +137,7 @@ export const AppRoutes = (props) => {
               />
             }
           />
-          <Route
+          {/* <Route
             path='/createinstitutions'
             element={
               <PrivateRoute
@@ -145,7 +147,17 @@ export const AppRoutes = (props) => {
                 component={CreateInstitutions}
               />
             }
+          /> */}
+          <Route
+            path='/createinstitutions'
+            element={
+              <CreateInstitutions
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+              />
+            }
           />
+
           <Route
             path='/editinstitutions/:id'
             element={
@@ -390,6 +402,7 @@ export const AppRoutes = (props) => {
               />
             }
           />
+
           {/* Certification */}
           <Route
             path='/certificationdetails/:id'
@@ -708,6 +721,30 @@ export const AppRoutes = (props) => {
           {/*Reset password */}
           <Route path='/submit-email' element={<SubmitEmail />} />
           <Route path='/reset-password/:id' element={<ForgotPassword />} />
+
+          {/* Application for user */}
+          <Route
+            path='/institution-application'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN, ROLES.ZyrtarAKK]}
+                component={ApplicationForUser}
+              />
+            }
+          />
+          <Route
+            path='/check-institution-application/:id'
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.ADMIN, ROLES.ZyrtarAKK]}
+                component={CheckApplicationForUser}
+              />
+            }
+          />
         </Routes>
       </div>
     </div>

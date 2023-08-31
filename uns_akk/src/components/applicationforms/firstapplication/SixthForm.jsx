@@ -207,11 +207,11 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("InsidePolitics")},
           <br /> • {t("VerifyPolitics")}.
         </p>
-        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+        <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
           <textarea
-            type="text"
+            type='text'
             rows={3}
-            className="form-control mb-3"
+            className='form-control mb-3'
             onChange={(e) => {
               setModel({
                 ...model,
@@ -220,11 +220,9 @@ export default function SixthForm({ model, setModel, ...rest }) {
               formik.setFieldValue("B11Text", e.target.value);
             }}
           />
-           {formik.errors.B11Text && (
-                  <span className='text-danger'>
-                    {formik.errors.B11Text}
-                  </span>
-                )}
+          {formik.errors.B11Text && (
+            <span className='text-danger'>{formik.errors.B11Text}</span>
+          )}
         </div>
         <CustomFileInput
           onChangeFunction={changeManagementOfQualityDocs}
@@ -245,11 +243,11 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("DataAssurance4")},
           <br />• {t("DataAssurance5")}.
         </p>
-        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+        <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
           <textarea
-            type="text"
+            type='text'
             rows={3}
-            className="form-control mb-3"
+            className='form-control mb-3'
             onChange={(e) => {
               setModel({
                 ...model,
@@ -259,10 +257,8 @@ export default function SixthForm({ model, setModel, ...rest }) {
             }}
           />
           {formik.errors.B12Text && (
-                  <span className='text-danger'>
-                    {formik.errors.B12Text}
-                  </span>
-                )}
+            <span className='text-danger'>{formik.errors.B12Text}</span>
+          )}
         </div>
         <CustomFileInput
           onChangeFunction={changeDataOfAssuranceDocs}
@@ -284,11 +280,11 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("Declare2")},
           <br />• {t("Declare3")}.
         </p>
-        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+        <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
           <textarea
-            type="text"
+            type='text'
             rows={3}
-            className="form-control mb-3"
+            className='form-control mb-3'
             onChange={(e) => {
               setModel({
                 ...model,
@@ -298,10 +294,8 @@ export default function SixthForm({ model, setModel, ...rest }) {
             }}
           />
           {formik.errors.B13Text && (
-                  <span className='text-danger'>
-                    {formik.errors.B13Text}
-                  </span>
-                )}
+            <span className='text-danger'>{formik.errors.B13Text}</span>
+          )}
         </div>
         <CustomFileInput
           onChangeFunction={changeManagementQualityCertificationFiles}
@@ -321,11 +315,11 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("DevelopmentPolitics")},
           <br />• {t("DocsForPerformance")}.
         </p>
-        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+        <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
           <textarea
-            type="text"
+            type='text'
             rows={3}
-            className="form-control mb-3"
+            className='form-control mb-3'
             onChange={(e) => {
               setModel({
                 ...model,
@@ -335,10 +329,8 @@ export default function SixthForm({ model, setModel, ...rest }) {
             }}
           />
           {formik.errors.B14Text && (
-                  <span className='text-danger'>
-                    {formik.errors.B14Text}
-                  </span>
-                )}
+            <span className='text-danger'>{formik.errors.B14Text}</span>
+          )}
         </div>
         <CustomFileInput
           onChangeFunction={changePoliticsAndProcedures}
@@ -363,11 +355,11 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("Handicapes4")},
           <br />• {t("Handicapes5")}.
         </p>
-        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+        <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
           <textarea
-            type="text"
+            type='text'
             rows={3}
-            className="form-control mb-3"
+            className='form-control mb-3'
             onChange={(e) => {
               setModel({
                 ...model,
@@ -377,10 +369,8 @@ export default function SixthForm({ model, setModel, ...rest }) {
             }}
           />
           {formik.errors.B15Text && (
-                  <span className='text-danger'>
-                    {formik.errors.B15Text}
-                  </span>
-                )}
+            <span className='text-danger'>{formik.errors.B15Text}</span>
+          )}
         </div>
         <CustomFileInput
           onChangeFunction={changeHandicapDocs}
@@ -400,11 +390,11 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("PoliticsProcedures2")},
           <br />• {t("PoliticsProcedures3")}.
         </p>
-        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+        <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
           <textarea
-            type="text"
+            type='text'
             rows={3}
-            className="form-control mb-3"
+            className='form-control mb-3'
             onChange={(e) => {
               setModel({
                 ...model,
@@ -414,10 +404,8 @@ export default function SixthForm({ model, setModel, ...rest }) {
             }}
           />
           {formik.errors.B16Text && (
-                  <span className='text-danger'>
-                    {formik.errors.B16Text}
-                  </span>
-                )}
+            <span className='text-danger'>{formik.errors.B16Text}</span>
+          )}
         </div>
         <CustomFileInput
           onChangeFunction={changePoliticsProceduresDocs}
@@ -435,11 +423,11 @@ export default function SixthForm({ model, setModel, ...rest }) {
           {t("Declare")}:
           <br />• {t("SystemCredits1")}.
         </p>
-        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+        <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
           <textarea
-            type="text"
+            type='text'
             rows={3}
-            className="form-control mb-3"
+            className='form-control mb-3'
             onChange={(e) => {
               setModel({
                 ...model,
@@ -449,10 +437,8 @@ export default function SixthForm({ model, setModel, ...rest }) {
             }}
           />
           {formik.errors.B17Text && (
-                  <span className='text-danger'>
-                    {formik.errors.B17Text}
-                  </span>
-                )}
+            <span className='text-danger'>{formik.errors.B17Text}</span>
+          )}
         </div>
         <CustomFileInput
           onChangeFunction={changeSystemCreditsDocs}
@@ -473,11 +459,11 @@ export default function SixthForm({ model, setModel, ...rest }) {
           <br />• {t("SafeEnviroment3")},
           <br />• {t("SafeEnviroment4")}.
         </p>
-        <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+        <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
           <textarea
-            type="text"
+            type='text'
             rows={3}
-            className="form-control mb-3"
+            className='form-control mb-3'
             onChange={(e) => {
               setModel({
                 ...model,
@@ -487,10 +473,8 @@ export default function SixthForm({ model, setModel, ...rest }) {
             }}
           />
           {formik.errors.B18Text && (
-                  <span className='text-danger'>
-                    {formik.errors.B18Text}
-                  </span>
-                )}
+            <span className='text-danger'>{formik.errors.B18Text}</span>
+          )}
         </div>
         <CustomFileInput
           onChangeFunction={changeEnviromentDocs}

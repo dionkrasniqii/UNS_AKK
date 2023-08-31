@@ -88,7 +88,6 @@ export default function QualificationDetails() {
     Object.keys(data).length > 0
       ? data.standards.filter((obj) => obj.qualificationStandardId !== null)
       : [];
-  console.log(qualificationStandards);
   return (
     <div className="content-page-landing animation">
       <div className="content">

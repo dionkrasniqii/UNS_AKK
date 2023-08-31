@@ -338,7 +338,6 @@ export default function EditQualifications() {
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
   }
-console.log(qualification)
   function changeExpiryDate(date, dateString) {
     setQualification({
       ...qualification,

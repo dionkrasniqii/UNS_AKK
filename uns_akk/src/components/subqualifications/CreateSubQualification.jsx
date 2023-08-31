@@ -19,6 +19,7 @@ export default function CreateSubQualification() {
     DescriptionAL: "",
     DescriptionEN: "",
     DescriptionSR: "",
+    Credits: "",
   });
 
   async function SubmitForm() {
@@ -42,6 +43,7 @@ export default function CreateSubQualification() {
     DescriptionAL: Yup.string().required(t("PleaseFillModuleAl")),
     DescriptionEN: Yup.string().required(t("PleaseFillModuleEN")),
     DescriptionSR: Yup.string().required(t("PleaseFillModuleSR")),
+    Credits: Yup.string().required(t("FillField")),
   });
 
   const formik = useFormik({
@@ -53,17 +55,17 @@ export default function CreateSubQualification() {
   });
 
   return (
-    <div className="card">
-      <div className="card-body">
-        <h3 className="mb-3">{t("RegisterModule")}</h3>
+    <div className='card'>
+      <div className='card-body'>
+        <h3 className='mb-3'>{t("RegisterModule")}</h3>
         <form onSubmit={formik.handleSubmit}>
           <ProgressBar model={model} />
-          <div className="row">
-            <div className="col-md-4">
-              <label className="col-form-label">{t("Code")} (AL)</label>
+          <div className='row'>
+            <div className='col-md-3'>
+              <label className='col-form-label'>{t("Code")} (AL)</label>
               <input
-                type="text"
-                className="form-control"
+                type='text'
+                className='form-control'
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -73,14 +75,14 @@ export default function CreateSubQualification() {
                 }}
               />
               {formik.errors.CodeAL && (
-                <span className="text-danger">{formik.errors.CodeAL}</span>
+                <span className='text-danger'>{formik.errors.CodeAL}</span>
               )}
             </div>
-            <div className="col-md-4">
-              <label className="col-form-label">{t("Code")} (EN)</label>
+            <div className='col-md-3'>
+              <label className='col-form-label'>{t("Code")} (EN)</label>
               <input
-                type="text"
-                className="form-control"
+                type='text'
+                className='form-control'
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -90,15 +92,15 @@ export default function CreateSubQualification() {
                 }}
               />
               {formik.errors.CodeEN && (
-                <span className="text-danger">{formik.errors.CodeEN}</span>
+                <span className='text-danger'>{formik.errors.CodeEN}</span>
               )}
             </div>
 
-            <div className="col-md-4">
-              <label className="col-form-label">{t("Code")} (SR)</label>
+            <div className='col-md-3'>
+              <label className='col-form-label'>{t("Code")} (SR)</label>
               <input
-                type="text"
-                className="form-control"
+                type='text'
+                className='form-control'
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -108,17 +110,32 @@ export default function CreateSubQualification() {
                 }}
               />
               {formik.errors.CodeSR && (
-                <span className="text-danger">{formik.errors.CodeSR}</span>
+                <span className='text-danger'>{formik.errors.CodeSR}</span>
               )}
             </div>
-            <div className="col-md-12">
-              <label className="col-form-label">
-                {t("ModuleName")} (AL)
-              </label>
+            <div className='col-md-2'>
+              <label className='col-form-label'>{t("Credits")}</label>
+              <input
+                type='number'
+                className='form-control'
+                onChange={(e) => {
+                  setModel({
+                    ...model,
+                    Credits: e.target.value,
+                  });
+                  formik.setFieldValue("Credits", e.target.value);
+                }}
+              />
+              {formik.errors.Credits && (
+                <span className='text-danger'>{formik.errors.Credits}</span>
+              )}
+            </div>
+            <div className='col-md-12'>
+              <label className='col-form-label'>{t("ModuleName")} (AL)</label>
               <textarea
-                type="text"
+                type='text'
                 rows={6}
-                className="form-control"
+                className='form-control'
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -128,19 +145,17 @@ export default function CreateSubQualification() {
                 }}
               />
               {formik.errors.DescriptionAL && (
-                <span className="text-danger">
+                <span className='text-danger'>
                   {formik.errors.DescriptionAL}
                 </span>
               )}
             </div>
-            <div className="col-md-12">
-              <label className="col-form-label">
-                {t("ModuleName")} (EN)
-              </label>
+            <div className='col-md-12'>
+              <label className='col-form-label'>{t("ModuleName")} (EN)</label>
               <textarea
-                type="text"
+                type='text'
                 rows={6}
-                className="form-control"
+                className='form-control'
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -150,19 +165,17 @@ export default function CreateSubQualification() {
                 }}
               />
               {formik.errors.DescriptionEN && (
-                <span className="text-danger">
+                <span className='text-danger'>
                   {formik.errors.DescriptionEN}
                 </span>
               )}
             </div>
-            <div className="col-md-12">
-              <label className="col-form-label">
-                {t("ModuleName")} (SR)
-              </label>
+            <div className='col-md-12'>
+              <label className='col-form-label'>{t("ModuleName")} (SR)</label>
               <textarea
-                type="text"
+                type='text'
                 rows={6}
-                className="form-control"
+                className='form-control'
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -172,29 +185,29 @@ export default function CreateSubQualification() {
                 }}
               />
               {formik.errors.DescriptionSR && (
-                <span className="text-danger">
+                <span className='text-danger'>
                   {formik.errors.DescriptionSR}
                 </span>
               )}
             </div>
           </div>
-          <ul className="list-inline mb-0 wizard mt-2">
+          <ul className='list-inline mb-0 wizard mt-2'>
             <Link
-              to="/qualifications"
-              className="btn btn-danger waves-effect waves-light float-start"
+              to='/qualifications'
+              className='btn btn-danger waves-effect waves-light float-start'
             >
-              <span className="btn-label">
-                <i className="fe-arrow-left"></i>
+              <span className='btn-label'>
+                <i className='fe-arrow-left'></i>
               </span>
               {t("Discard")}
             </Link>
-            <li className="next list-inline-item float-end">
+            <li className='next list-inline-item float-end'>
               <button
-                type="submit"
-                className="btn btn-success waves-effect waves-light"
+                type='submit'
+                className='btn btn-success waves-effect waves-light'
               >
-                <span className="btn-label">
-                  <i className="fe-check"></i>
+                <span className='btn-label'>
+                  <i className='fe-check'></i>
                 </span>
                 {t("Save")}
               </button>

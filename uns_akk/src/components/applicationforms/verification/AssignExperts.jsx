@@ -36,10 +36,9 @@ export default function AssignExperts({ applicationId, decodedToken }) {
       return false;
     }
   }
-
   async function SubmitExperts() {
     try {
-      setPostLoad(false);
+      setPostLoad(true);
       var check = await checkExpertsList();
       if (check) {
         await CrudProvider.createItem(
@@ -54,6 +53,7 @@ export default function AssignExperts({ applicationId, decodedToken }) {
                 setPostLoad(false);
                 break;
               default:
+                toast.error(res.errorMessages[0]);
                 setPostLoad(false);
                 break;
             }

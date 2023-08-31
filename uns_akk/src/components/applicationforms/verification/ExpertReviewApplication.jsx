@@ -19,6 +19,10 @@ export default function ExpertReviewApplication() {
   const navigate = useNavigate();
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
+  const [postLoad, setPostLoad] = useState(false);
+  const [hasExpertsUploadedAllFiles, setHasExpertsUploadedAllFiles] =
+    useState(false);
+  const [expertReports, setExpertReports] = useState({});
   const [model, setModel] = useState({
     ApplicationExpertId: ApplicationExpertId,
     RaportiPerAkreditim: "",
@@ -33,10 +37,6 @@ export default function ExpertReviewApplication() {
     data &&
     Object.keys(data).length > 0 &&
     data.applicationQualificationValidationDTO;
-
-  const [postLoad, setPostLoad] = useState(false);
-  const [hasExpertsUploadedAllFiles, setHasExpertsUploadedAllFiles] =
-    useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -56,7 +56,7 @@ export default function ExpertReviewApplication() {
       }),
       CrudProvider.getItemById(
         "ApplicationAPI/HasExpertsUplodedTheirReview",
-        id
+        id 
       ).then((res) => {
         if (res) {
           if (res.statusCode === 200) {
@@ -64,9 +64,18 @@ export default function ExpertReviewApplication() {
           }
         }
       }),
+      CrudProvider.getItemById(
+        "ApplicationAPI/ExpertReport",
+        `${id}/${decodedToken.UserId}`
+      ).then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setExpertReports(res.result);
+          }
+        }
+      }),
     ]);
   }, []);
-
   async function PostReports() {
     try {
       setPostLoad(true);
@@ -164,6 +173,17 @@ export default function ExpertReviewApplication() {
             </div>
           </div>
           <hr />
+          {data.applicationDTO.remark && (
+            <div className='col-xxl-12 col-lg-12 col-sm-12'>
+              <div className='form-group'>
+                <textarea
+                  readOnly
+                  rows={5}
+                  defaultValue={data.applicationDTO.remark}
+                />
+              </div>
+            </div>
+          )}
           <div className='row '>
             <h3 className='card-title text-start '>{t("PartA")}</h3>
             <h5>{t("InstitutionDetails")}:</h5>
@@ -808,6 +828,9 @@ export default function ExpertReviewApplication() {
                   )}
                 </>
               )}
+            </div>
+            <div className='row'>
+
             </div>
             <div className='col-xxl-12 col-lg-12 col-sm-12 text-end'>
               {postLoad ? (

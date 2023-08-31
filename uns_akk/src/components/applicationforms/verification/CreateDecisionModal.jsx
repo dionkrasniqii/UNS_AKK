@@ -7,6 +7,7 @@ import CustomDatePicker from "../../custom/CustomDatePicker";
 import CustomSelect from "../../custom/CustomSelect";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import jwtDecode from "jwt-decode";
 
 export default function CreateDecisionModal({
   applicationId,
@@ -19,6 +20,9 @@ export default function CreateDecisionModal({
   const [municipalities, setMunicipalities] = useState([]);
   const [qualifications, setQualifications] = useState([]);
   const [subQualifications, setSubQualifications] = useState([]);
+  const token = localStorage.getItem("akktoken");
+  const decodedToken = token && jwtDecode(token);
+
   const [model, setModel] = useState({
     InstitutionId: "",
     MunicipalityId: "",
@@ -34,6 +38,9 @@ export default function CreateDecisionModal({
     MaximumPeoplePerGroup: "",
     Reaccreditation: false,
     Document: "",
+    IsSelfApplication: true,
+    ApplicationId: applicationId,
+    UserId: decodedToken.UserId,
   });
   function formatedDate(date) {
     const [day, month, year] = date.split("/");
@@ -296,27 +303,19 @@ export default function CreateDecisionModal({
               </div>
               <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                 <label>{t("Credits")}:</label>
-                {total !== 0 ? (
-                  <input
-                    type='number'
-                    className='form-control'
-                    readOnly
-                    defaultValue={model.Credits}
-                  />
-                ) : (
-                  <input
-                    type='number'
-                    className='form-control'
-                    defaultValue={""}
-                    onChange={(e) => {
-                      setModel({
-                        ...model,
-                        Credits: e.target.value,
-                      });
-                      formik.setFieldValue("Credits", e.target.value);
-                    }}
-                  />
-                )}
+
+                <input
+                  type='number'
+                  className='form-control'
+                  defaultValue={model.Credits}
+                  onChange={(e) => {
+                    setModel({
+                      ...model,
+                      Credits: e.target.value,
+                    });
+                    formik.setFieldValue("Credits", e.target.value);
+                  }}
+                />
                 {formik.errors.Credits && (
                   <span className='text-danger'>{formik.errors.Credits}</span>
                 )}

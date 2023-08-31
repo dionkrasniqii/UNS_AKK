@@ -101,7 +101,6 @@ export default function EditDecisions() {
     validateOnBlur: false,
     onSubmit: () => submitForm(),
   });
-  console.log(decision);
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className='card'>

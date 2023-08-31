@@ -541,5 +541,13 @@
   "DescribeGeneralPurposeOfQualification": "Në këtë pikë kërkohet nga ju që të përshkruani qëllimin e përgjithshëm të kualifikimit/modulit.",
   "AgeAndPreviousQualification": "(mosha, kualifikimet paraprake, njohuritë paraprake ose përvoja)",
   "OfferNoValidationCertificationTextA18": "Ofroni të dhëna për institucionet të cilat ofrojnë kualifikime/module, në hapësirën më poshtë",
-  "ValidationCertificationNotOfferTextA18": "Ofroni të dhënat për institucionet të cilat do të vlerësojnë dhe certifikojnë kualifikime/module, në hapësirën më poshtë"
+  "ValidationCertificationNotOfferTextA18": "Ofroni të dhënat për institucionet të cilat do të vlerësojnë dhe certifikojnë kualifikime/module, në hapësirën më poshtë",
+  "RegisterHere": "Regjistrohuni këtu",
+  "Register": "Regjistrohuni",
+  "PleaseChooseInstitutionActivity": "Ju lutem zgjedhni aktivitetin e institucionit",
+  "ApplicationsForUser": "Aplikimet për përdorues",
+  "ApplicationsForAccrediation": "Aplikimet për akreditim",
+  "BusinessDocuments": "Dokumenetet e biznesit (Certifikata e Biznesit,Certifikata e TVSH-së,...)",
+  "BusinessLicense": "Certifikata biznesit",
+  "VATLicense": "Certifikata e TVSH-së"
 }

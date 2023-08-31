@@ -18,6 +18,7 @@ export default function CustomModal({
   return (
     <div className='col-xxl-6 col-lg-8 col-sm-12 mt-2 divForUpload'>
       <button
+        type='button'
         className=' fs-6  btn2 btn-modal btn-raporti'
         onClick={() => setIsOpen(id)}
       >
@@ -94,6 +95,8 @@ export default function CustomModal({
               <img
                 key={document.applicationDocsId}
                 src={CrudProvider.documentPath(document.docPath)}
+                width='800px'
+                height='800px'
                 loading='lazy'
               />
             );

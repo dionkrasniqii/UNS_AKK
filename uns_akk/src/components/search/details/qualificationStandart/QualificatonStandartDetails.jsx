@@ -54,7 +54,6 @@ export default function QualificationStandartDetails() {
       filterable: true,
     },
   ];
-console.log(data)
   return (
     <div className='content-page-landing animation'>
       <div className='content'>

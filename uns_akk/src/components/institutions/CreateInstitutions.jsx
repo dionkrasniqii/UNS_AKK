@@ -1,20 +1,21 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { object } from "yup";
-import { red } from "@mui/material/colors";
 import CrudProvider from "../../provider/CrudProvider";
 import ProgressBar from "../custom/ProgressBar";
 import CustomSelect from "../custom/CustomSelect";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-export default function CreateInstitutions() {
+import CustomFileInput from "../custom/CustomFileInput";
+
+export default function CreateInstitutions({ authState }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [load, setLoad] = useState(false);
   const [cities, setCities] = useState([]);
   const [status, setStatus] = useState([]);
+  const [activity, setActivity] = useState([]);
   const [model, setModel] = useState({
     InstitutionName: "",
     UniqueNumber: "",
@@ -26,8 +27,11 @@ export default function CreateInstitutions() {
     Web: "",
     Document: "",
     StatusActivityId: "",
+    ActivityId: "",
+    IsSelfRegistred: !authState, // if authState is true IsSelfRegistred should be false else contraversal
+    BusinessLicense: "",
+    VATLicense: "",
   });
-
   useEffect(() => {
     CrudProvider.getAllWithLang("GeneralAPI/GetAllMunicipalities").then(
       (res) => {
@@ -42,6 +46,13 @@ export default function CreateInstitutions() {
       if (res) {
         if (res.statusCode === 200) {
           setStatus(res.result);
+        }
+      }
+    });
+    CrudProvider.getAll("GeneralAPI/GetInstitutionActivity").then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setActivity(res.result);
         }
       }
     });
@@ -71,6 +82,18 @@ export default function CreateInstitutions() {
       })
       .sort((a, b) => a.label.localeCompare(b.label));
 
+  const activityList =
+    activity &&
+    activity.length > 0 &&
+    activity
+      .map((obj) => {
+        return {
+          value: obj.institutionActivityId,
+          label: obj.description,
+        };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label));
+
   function changeCity(e) {
     setModel({
       ...model,
@@ -86,6 +109,13 @@ export default function CreateInstitutions() {
     });
     formik.setFieldValue("StatusActivityId", e);
   }
+  function changeActivity(e) {
+    setModel({
+      ...model,
+      ActivityId: e,
+    });
+    formik.setFieldValue("ActivityId", e);
+  }
 
   async function SubmitForm() {
     try {
@@ -96,7 +126,7 @@ export default function CreateInstitutions() {
       ).then((res) => {
         if (res) {
           if (res.statusCode === 200) {
-            navigate("/institutions");
+            navigate(authState ? "/institutions" : "/");
             toast.success(t("DataSavedSuccessfully"));
           } else if (res.statusCode === 409) {
             toast.error(t("InstitutionExists"));
@@ -126,6 +156,7 @@ export default function CreateInstitutions() {
     Web: Yup.string().required(t("PleaseFillWeb")),
     Documents: Yup.string().required(t("PleaseFillDocument")),
     StatusActivityId: Yup.string().required(t("PleaseChooseStatusActivity")),
+    ActivityId: Yup.string().required(t("PleaseChooseInstitutionActivity")),
   });
   const formik = useFormik({
     initialValues: {},
@@ -134,11 +165,16 @@ export default function CreateInstitutions() {
     validateOnChange: false,
     onSubmit: async () => SubmitForm(),
   });
+
   return (
-    <div className='col-xl-12'>
+    <div className={authState ? "col-xxl-12" : "container mt-5"}>
       <div className='card'>
         <div className='card-body'>
-          <h3 className=' mb-3'>{t("RegisterInstitution")}</h3>
+          <h3 className=' mb-3'>
+            {authState
+              ? t("RegisterInstitution")
+              : t("InstitutionDetailsModal")}
+          </h3>
           <form onSubmit={formik.handleSubmit}>
             <ProgressBar model={model} />
             <div className='tab-pane active' id='account-2'>
@@ -180,6 +216,23 @@ export default function CreateInstitutions() {
                       {formik.errors.StatusActivityId && (
                         <span className='text-danger'>
                           {formik.errors.StatusActivityId}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className='row mb-3'>
+                    <label className='col-md-3 col-form-label'>
+                      {t("InstitutionActivity")}
+                    </label>
+                    <div className='col-md-9'>
+                      <CustomSelect
+                        onChangeFunction={changeActivity}
+                        optionsList={activityList}
+                        isMulti={false}
+                      />
+                      {formik.errors.ActivityId && (
+                        <span className='text-danger'>
+                          {formik.errors.ActivityId}
                         </span>
                       )}
                     </div>
@@ -357,6 +410,46 @@ export default function CreateInstitutions() {
                       )}
                     </div>
                   </div>
+                  {!authState && (
+                    <>
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
+                          {t("BusinessLicense")}
+                        </label>
+                        <div className='col-md-9'>
+                          <input
+                            type='file'
+                            accept='.jpg,.png,.jpeg,.pdf'
+                            onChange={(e) => {
+                              setModel((prev) => ({
+                                ...prev,
+                                BusinessLicense: e.target.files[0],
+                              }));
+                            }}
+                            className='form-control'
+                          />
+                        </div>
+                      </div>
+                      <div className='row mb-3'>
+                        <label className='col-md-3 col-form-label'>
+                          {t("VATLicense")}
+                        </label>
+                        <div className='col-md-9'>
+                          <input
+                            type='file'
+                            accept='.jpg,.png,.jpeg,.pdf'
+                            onChange={(e) => {
+                              setModel((prev) => ({
+                                ...prev,
+                                VATLicense: e.target.files[0],
+                              }));
+                            }}
+                            className='form-control'
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

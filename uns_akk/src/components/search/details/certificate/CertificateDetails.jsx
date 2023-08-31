@@ -10,7 +10,6 @@ export default function CertificateDetails() {
   const [data, setData] = useState({});
   const [load, setLoad] = useState(false);
   const [loadPrint, setLoadPrint] = useState(false);
-  console.log(data);
   useEffect(() => {
     try {
       setLoad(true);

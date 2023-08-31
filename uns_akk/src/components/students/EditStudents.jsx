@@ -680,7 +680,7 @@ export default function EditStudents() {
                         }}
                       />
                     </div>
-                    <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                    {/* <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                       <label>{t("ValidFrom")}:</label>
                       <input
                         type='date'
@@ -725,7 +725,7 @@ export default function EditStudents() {
                           {formik.errors.ValidTo}
                         </span>
                       )}
-                    </div>
+                    </div> */}
                     {candidates.UnRegistered ? (
                       <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                         <label>{t("Remark")}:</label>

@@ -688,7 +688,7 @@ export default function CreateStudents() {
                   ) : (
                     ""
                   )}
-                  <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
+                  {/* <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("ValidFrom")}:</label>
                     <CustomDatePicker onChangeFunction={changeValidFromDate} />
                     {formik.errors.ValidFrom && (
@@ -700,12 +700,12 @@ export default function CreateStudents() {
                   <div className='col-xxl-3 col-lg-3 col-sm-12 mb-3'>
                     <label>{t("ValidTo")}:</label>
                     <CustomDatePicker onChangeFunction={changeValidToDate} />
-                    {/* {formik.errors.ValidTo && (
+                    {formik.errors.ValidTo && (
                       <span className="text-danger">
                         {formik.errors.ValidTo}
                       </span>
-                    )} */}
-                  </div>
+                    )} 
+                  </div> */}
                 </div>
               </div>
             </div>
