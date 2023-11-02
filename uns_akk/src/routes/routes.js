@@ -61,6 +61,8 @@ import SubmitEmail from "../components/forgotpassword/SubmitEmail";
 import ForgotPassword from "../components/forgotpassword/ForgotPassword";
 import ApplicationForUser from "../components/institutions/applicationsforuser/ApplicationForUser";
 import CheckApplicationForUser from "../components/institutions/applicationsforuser/CheckApplicationForUser";
+import SearchOccupationalQualificationCouncil from "../components/search/searchforms/occupationalQualificationCouncils/SearchOccupationalQualificationCouncil";
+import SearchCertificateSuplement from "../components/search/searchforms/certificateSuplement/SearchCertificateSuplement";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -561,6 +563,16 @@ export const AppRoutes = (props) => {
               />
             }
           />
+
+<Route
+            path='/occupational-qualification-councils-search'
+            element={<SearchOccupationalQualificationCouncil />}
+          />
+          <Route
+            path='/certificate-suplement-search'
+            element={<SearchCertificateSuplement />}
+          />
+          
           {/* Institution User */}
           <Route
             path='/institution-user'
