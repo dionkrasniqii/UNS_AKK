@@ -36,24 +36,18 @@ export default function CreateLevel() {
 
   const CreateLevelSchema = Yup.object().shape({
     Type: Yup.string().max(50).required(t("PleaseFillTheType")),
-    LevelReferenceKEK: Yup.string()
-      .max(450)
-      .required(t("PleaseFillTheLevelReferenceKEK")),
-    LevelDescription: Yup.string()
-      .max(200)
-      .required(t("PleaseFillTheLevelDescription")),
-    Competencies: Yup.string()
-      .max(1000)
-      .required(t("PleaseFillTheCompetencies")),
-    DetailedDescription: Yup.string()
-      .max(300)
-      .required(t("PleaseFillTheDetailedDescription")),
-    Knowledge: Yup.string().max(1000).required(t("PleaseFillTheKnowledge")),
-    LevelIndicator: Yup.string()
-      .max(2000)
-      .required(t("PleaseFillTheLevelIndicator")),
-    Skills: Yup.string().max(1000).required(t("PleaseFillTheSkills")),
-    TheDescriptor: Yup.string().max(1000).required(t("PlaseFillTheDescriptor")),
+    LevelReferenceKEK: Yup.string().required(
+      t("PleaseFillTheLevelReferenceKEK")
+    ),
+    LevelDescription: Yup.string().required(t("PleaseFillTheLevelDescription")),
+    Competencies: Yup.string().required(t("PleaseFillTheCompetencies")),
+    DetailedDescription: Yup.string().required(
+      t("PleaseFillTheDetailedDescription")
+    ),
+    Knowledge: Yup.string().required(t("PleaseFillTheKnowledge")),
+    LevelIndicator: Yup.string().required(t("PleaseFillTheLevelIndicator")),
+    Skills: Yup.string().required(t("PleaseFillTheSkills")),
+    TheDescriptor: Yup.string().required(t("PlaseFillTheDescriptor")),
     LangId: Yup.string().required(t("PleaseChooseTheLanguange")),
   });
 
@@ -222,7 +216,7 @@ export default function CreateLevel() {
                     )}
                   </div>
 
-                  <div className="col-md-12 mt-2">
+                  <div className="form-group mt-2">
                     <h5 className="card-title">{t("Descriptor")}</h5>
 
                     <textarea
@@ -313,8 +307,8 @@ export default function CreateLevel() {
                       )}
                     </div>
                   </div>
-                  
-                  <div className="col-md-12 mt-2">
+
+                  <div className="form-group mt-2">
                     <h5 className="card-title">{t("Level Indicator")}</h5>
                     <textarea
                       name="LevelIndicator"

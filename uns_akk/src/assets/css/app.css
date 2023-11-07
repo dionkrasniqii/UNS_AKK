@@ -24686,4 +24686,8 @@ body[data-layout-color=dark] .datepicker tfoot tr th:hover {
   padding: 0 5px;
   border-radius: 3px;
   font-weight: 500;
+
 }
+  .languageDropDownTopNav{
+position:  absolute !important;
+  }

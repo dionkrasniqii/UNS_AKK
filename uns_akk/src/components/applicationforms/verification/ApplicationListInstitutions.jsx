@@ -47,8 +47,8 @@ export default function ApplicationListInstitutions() {
         if (row.step === 3) {
           return (
             <button
-              type='button'
-              className='btn btn-warning rounded-pill waves-effect'
+              type="button"
+              className="btn btn-warning rounded-pill waves-effect"
             >
               Rikthim
             </button>
@@ -56,8 +56,8 @@ export default function ApplicationListInstitutions() {
         } else if (row.step === 5 || row.step === 9) {
           return (
             <span
-              type='button'
-              className='btn btn-danger rounded-pill waves-effect'
+              type="button"
+              className="btn btn-danger rounded-pill waves-effect"
             >
               Refuzuar
             </span>
@@ -65,8 +65,8 @@ export default function ApplicationListInstitutions() {
         } else if (row.step === 8) {
           return (
             <span
-              type='button'
-              className='btn btn-primary rounded-pill waves-effect'
+              type="button"
+              className="btn btn-primary rounded-pill waves-effect"
             >
               Aprovuar
             </span>
@@ -74,8 +74,8 @@ export default function ApplicationListInstitutions() {
         } else {
           return (
             <span
-              type='button'
-              className='btn btn-success rounded-pill waves-effect'
+              type="button"
+              className="btn btn-success rounded-pill waves-effect"
             >
               Proces
             </span>
@@ -88,20 +88,30 @@ export default function ApplicationListInstitutions() {
       sortable: true,
       filterable: true,
       cell: (row) => {
-        return (
-          row.step === 3 && (
+        if (row.step === 3) {
+          return (
             <Link
               to={`/editapplication/${row.applicationId}`}
-              className='btn btn-dark waves-effect waves-light'
+              className="btn btn-dark waves-effect waves-light"
             >
-              <i className='fe-edit' />
+              <i className="fe-edit" />
             </Link>
-          )
-        );
+          );
+        } else if (row.step === 8) {
+          return (
+            <Link
+              to={`/application-for-register/2`}
+              className="btn btn-dark waves-effect waves-light"
+            >
+              Regjistër
+              <i className=" ti-arrow-right" />
+            </Link>
+          );
+        }
       },
     },
   ];
-  
+
   useEffect(() => {
     try {
       setLoad(true);
@@ -126,24 +136,24 @@ export default function ApplicationListInstitutions() {
     <DataTablev2
       dataSource={data}
       columns={columns}
-      title={"Lista aplikimeve"}
+      title={"Lista aplikimeve per akreditim"}
     />
   ) : load ? (
-    <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+    <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
       <div
-        className='spinner-border text-primary m-2 text-center'
-        role='status'
+        className="spinner-border text-primary m-2 text-center"
+        role="status"
       />
     </div>
   ) : (
-    <div className='card card-body'>
+    <div className="card card-body">
       <Space
-        direction='vertical'
+        direction="vertical"
         style={{
           width: "100%",
         }}
       >
-        <Alert message={t("NoNewApplications")} type='info' />
+        <Alert message={t("NoNewApplications")} type="info" />
       </Space>
     </div>
   );

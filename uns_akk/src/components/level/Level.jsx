@@ -41,18 +41,18 @@ export default function Level() {
 
       cell: (record) => {
         return (
-          <div className='button-list'>
+          <div className="button-list">
             <Link
-              className='btn btn-secondary btn-sm'
+              className="btn btn-secondary btn-sm"
               to={`/editlevel/${record.levelKKKId}`}
             >
-              <i className='fe-edit' />
+              <i className="fe-edit" />
             </Link>
             <a
-              className='btn btn-sm btn-danger'
+              className="btn btn-sm btn-danger"
               onClick={(e) => handleDelete(record.levelKKKId)}
             >
-              <i className='fe-trash-2' />
+              <i className="fe-trash-2" />
             </a>
           </div>
         );
@@ -103,26 +103,26 @@ export default function Level() {
     );
   }
   return (
-    <div className='col-xxl-12'>
-      <div className='col-xxl-12 text-end'></div>
-      <div className='row'>
-        <div className='col-12'>
-          <div className='row'>
-            <div className='col-12'>
-              <div className='col-12 d-flex justify-content-end'>
+    <div className="col-xxl-12">
+      <div className="col-xxl-12 text-end"></div>
+      <div className="row">
+        <div className="col-12">
+          <div className="row">
+            <div className="col-12">
+              <div className="col-12 d-flex justify-content-end">
                 <Link
-                  className='btn btn-info waves-effect waves-light'
-                  to='/createlevel'
+                  className="btn btn-info waves-effect waves-light"
+                  to="/createlevel"
                 >
-                  <span className='btn-label'>
-                    <i className='fe-plus-circle'></i>
+                  <span className="btn-label">
+                    <i className="fe-plus-circle"></i>
                   </span>
                   {t("AddLevel")}
                 </Link>
               </div>
             </div>
           </div>
-          <div className='p-2 mt-2'>
+          <div className="p-2 mt-2">
             {!load ? (
               <DataTablev2
                 columns={columns}
@@ -130,10 +130,10 @@ export default function Level() {
                 title={t("LevelList")}
               />
             ) : (
-              <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+              <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
                 <div
-                  className='spinner-border text-primary m-2 text-center'
-                  role='status'
+                  className="spinner-border text-primary m-2 text-center"
+                  role="status"
                 />
               </div>
             )}

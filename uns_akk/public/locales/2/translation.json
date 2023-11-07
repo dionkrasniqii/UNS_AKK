@@ -473,7 +473,7 @@
   "CompetenceName": "Competence Name",
   "TypeOfCompetence": "Type Of Competence ",
   "CompetencesList": "Competences List",
-  "EstQFLevel": "EstQF Level",
+  "EstQFLevel": "KRQ Level",
   "RegisterCompetence": "Register Competence",
   "PerformanceIndicators": "Performance Indicators",
   "SuppoirtingKnowledge": "Suppoirting Knowledge",
@@ -547,5 +547,6 @@
   "ApplicationsForAccrediation": "Applications for accreditation",
   "BusinessDocuments": "Business documents (Business Certificate, VAT Certificate,...)",
   "BusinessLicense": "Business license",
-  "VATLicense": "VAT certificate"
+  "VATLicense": "VAT certificate",
+  "ApplicationsForRegister": "Applications for register"
 }

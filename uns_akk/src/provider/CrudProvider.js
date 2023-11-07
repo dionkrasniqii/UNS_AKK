@@ -169,6 +169,7 @@ async function createItemWithFile(controller, model) {
     });
 
     await Promise.all(promises);
+
     // for (let item of formData.entries()) {
     //   console.log(item[0] + "=" + item[1]);
     // }

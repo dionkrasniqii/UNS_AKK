@@ -1,11 +1,11 @@
 .table-container {
     width: 100%;
-    overflow-x: auto;
-}
-
-.table-scroll {
+    overflow: auto; /* Use 'auto' for both horizontal and vertical scrolling */
+  }
+  
+  .table-scroll {
+    white-space: normal;
     display: inline-block;
-    white-space: nowrap;
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-}
+    max-width: 100%; /* Ensure the table doesn't exceed its container */
+  }

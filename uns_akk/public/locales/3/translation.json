@@ -474,7 +474,7 @@
   "CompetenceName": "Naziv kompetencije",
   "TypeOfCompetence": "Vrsta kompetencije",
   "CompetencesList": "Spisak Kompetencija",
-  "EstQFLevel": "EstQF Level",
+  "EstQFLevel": "KKK Level",
   "RegisterCompetence": "Registrujte Kompetenciju",
   "PerformanceIndicators": "Indikatori Učinka",
   "SuppoirtingKnowledge": "Supporting Knovledge",
@@ -548,5 +548,6 @@
   "ApplicationsForAccrediation": "Prijave za akreditaciju",
   "BusinessDocuments": "Poslovna dokumentacija (potvrda o poslovanju, potvrda o PDV-u,...)",
   "BusinessLicense": "Poslovna licenca",
-  "VATLicense": "PDV sertifikat"
+  "VATLicense": "PDV sertifikat",
+  "ApplicationsForRegister": "Prijave za registraciju"
 }

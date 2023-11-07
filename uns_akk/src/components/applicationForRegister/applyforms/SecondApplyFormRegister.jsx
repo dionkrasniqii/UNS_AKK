@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
-import CrudProvider from "../../provider/CrudProvider";
-import CustomDatePicker from "../custom/CustomDatePicker";
-import { useFormik } from "formik";
-import ProgressBar from "../custom/ProgressBar";
-import CustomSelect from "../custom/CustomSelect";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import ProgressBar from "../../custom/ProgressBar";
+import CustomSelect from "../../custom/CustomSelect";
 import * as Yup from "yup";
+import { useFormik } from "formik";
+import CustomDatePicker from "../../custom/CustomDatePicker";
+import ThirdApplyFormRegister from "./ThirdApplyFormRegister";
 
-export default function CreateQualificationStandart() {
+export default function SecondApplyFormRegister({ model, setModel }) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const langId = localStorage.getItem("i18nextLng");
-  const [model, setModel] = useState({
-    EstQFLevel: "",
+  const [showThirdForm, setShowThirdForm] = useState(false);
+
+  useEffect(() => {
+    const formDiv = document.querySelector("#form2");
+    formDiv.scrollIntoView();
+  }, []);
+
+  const [newModel, setNewModel] = useState({
     ReferenceToEuropanQualificationFramework: "",
     OccupationalQualificationStandartVersion: "",
     ValidFrom: "",
@@ -44,22 +46,7 @@ export default function CreateQualificationStandart() {
     ISCED: "",
     NACE: "",
     Status: "",
-    LanguageId: "",
   });
-
-  async function SubmitForm() {
-    await CrudProvider.createItem(
-      "QualificationStandartAPI/CreateQualificationStandart",
-      model
-    ).then((res) => {
-      if (res) {
-        if (res.statusCode === 200) {
-          navigate("/qualificationstandart");
-          toast.success(t("DataSavedSuccessfully"));
-        }
-      }
-    });
-  }
 
   function formatedDate(date) {
     const [day, month, year] = date.split("/");
@@ -68,24 +55,24 @@ export default function CreateQualificationStandart() {
   }
 
   function changeValidFrom(date, dateString) {
-    setModel({
-      ...model,
+    setNewModel({
+      ...newModel,
       ValidFrom: formatedDate(dateString),
     });
     formik.setFieldValue("ValidFrom", dateString);
   }
 
   function changeValidTo(date, dateString) {
-    setModel({
-      ...model,
+    setNewModel({
+      ...newModel,
       ValidTo: formatedDate(dateString),
     });
     formik.setFieldValue("ValidTo", dateString);
   }
 
   function changeDateOfDecision(date, dateString) {
-    setModel({
-      ...model,
+    setNewModel({
+      ...newModel,
       DateOfDecisionOfOccupationalQualificationCouncil:
         formatedDate(dateString),
     });
@@ -96,7 +83,6 @@ export default function CreateQualificationStandart() {
   }
 
   const CreateQualificationStandartsSchema = Yup.object().shape({
-    EstQFLevel: Yup.string().required(t("FillField")),
     ReferenceToEuropanQualificationFramework: Yup.string().required(
       t("FillField")
     ),
@@ -123,7 +109,6 @@ export default function CreateQualificationStandart() {
     RegulationsGoverningProfession: Yup.string().required(t("FillField")),
     CompetencyRequirements: Yup.string().required(t("FillField")),
     DesignationInRegister: Yup.string().required(t("FillField")),
-    LanguageId: Yup.string().required(t("FillField")),
     FieldOfOccupational: Yup.string().required(t("FillField")),
     OccupationalQualificationCouncil: Yup.string().required(t("FillField")),
     NoOfdecisionOfOccupationalQualificationCouncil: Yup.string().required(
@@ -143,55 +128,25 @@ export default function CreateQualificationStandart() {
     validationSchema: CreateQualificationStandartsSchema,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: () => SubmitForm(),
+    onSubmit: () => {
+      setShowThirdForm(true);
+      model.QualificationStandarts = newModel;
+    },
   });
-  const changeLangId = (e) => {
-    setModel({
-      ...model,
-      LanguageId: e,
-    });
-    formik.setFieldValue("LanguageId", e);
-  };
-
-  const langList = [
-    {
-      value: 1,
-      label: t("Albanian"),
-    },
-    {
-      value: 2,
-      label: t("English"),
-    },
-    {
-      value: 3,
-      label: t("Serbian"),
-    },
-  ];
-
   return (
-    <div className="col-xl-12">
-      <div className="card">
-        <div className="card-body">
-          <h3 className="mb-3">{t("Register Qualification Standart")}</h3>
-          <form onSubmit={formik.handleSubmit}>
-            <ProgressBar model={model} />
+    <>
+      <form
+        onSubmit={formik.handleSubmit}
+        id="form2"
+        className="animation animation-bot-top"
+      >
+        <div className="card">
+          <div className="card-body">
+            <h4 className="mb-3 text-uppercase">
+              Te dhenat e standardit te kualifikimit
+            </h4>
+            <ProgressBar model={newModel} />
             <div className="row">
-              <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
-                <label>{t("Language")}</label>
-                <CustomSelect
-                  optionsList={langList}
-                  isMulti={false}
-                  className="form-control"
-                  name="LanguageId"
-                  onChangeFunction={changeLangId}
-                />
-                {formik.errors.LanguageId && (
-                  <span className="text-danger">
-                    {formik.errors.LanguageId}
-                  </span>
-                )}
-              </div>
-
               <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
                 <label>{t("ValidFrom")}:</label>
                 <CustomDatePicker onChangeFunction={changeValidFrom} />
@@ -230,8 +185,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       QualificationStandartName: e.target.value,
                     });
                     formik.setFieldValue(
@@ -248,35 +203,14 @@ export default function CreateQualificationStandart() {
               </div>
 
               <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
-                <label>{t("EstQFLevel")}</label>
-                <textarea
-                  type="text"
-                  rows={3}
-                  className="form-control"
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      EstQFLevel: e.target.value,
-                    });
-                    formik.setFieldValue("EstQFLevel", e.target.value);
-                  }}
-                />
-                {formik.errors.EstQFLevel && (
-                  <span className="text-danger">
-                    {formik.errors.EstQFLevel}
-                  </span>
-                )}
-              </div>
-
-              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
                 <label>{t("ReferenceToEuropanQualificationFramework")}</label>
                 <textarea
                   type="text"
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       ReferenceToEuropanQualificationFramework: e.target.value,
                     });
                     formik.setFieldValue(
@@ -299,8 +233,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       OccupationalQualificationStandartVersion: e.target.value,
                     });
                     formik.setFieldValue(
@@ -323,8 +257,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       Specialisation: e.target.value,
                     });
                     formik.setFieldValue("Specialisation", e.target.value);
@@ -344,8 +278,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       PartialOccupationalQualifications: e.target.value,
                     });
                     formik.setFieldValue(
@@ -368,8 +302,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       DescriptionOfWork: e.target.value,
                     });
                     formik.setFieldValue("DescriptionOfWork", e.target.value);
@@ -389,8 +323,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       WorkUnits: e.target.value,
                     });
                     formik.setFieldValue("WorkUnits", e.target.value);
@@ -408,8 +342,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       WorkEnvironmentAndSpecificNatureOfWork: e.target.value,
                     });
                     formik.setFieldValue(
@@ -432,8 +366,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       Tools: e.target.value,
                     });
                     formik.setFieldValue("Tools", e.target.value);
@@ -451,8 +385,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       PersonalQualities: e.target.value,
                     });
                     formik.setFieldValue("PersonalQualities", e.target.value);
@@ -472,8 +406,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       ProfessionalPreparation: e.target.value,
                     });
                     formik.setFieldValue(
@@ -496,8 +430,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       MostCommonOccupationalTitles: e.target.value,
                     });
                     formik.setFieldValue(
@@ -519,8 +453,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       RegulationsGoverningProfession: e.target.value,
                     });
                     formik.setFieldValue(
@@ -542,8 +476,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       CompetencyRequirements: e.target.value,
                     });
                     formik.setFieldValue(
@@ -565,8 +499,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       DesignationInRegister: e.target.value,
                     });
                     formik.setFieldValue(
@@ -588,8 +522,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       FieldOfOccupational: e.target.value,
                     });
                     formik.setFieldValue("FieldOfOccupational", e.target.value);
@@ -608,8 +542,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       OccupationalQualificationCouncil: e.target.value,
                     });
                     formik.setFieldValue(
@@ -633,8 +567,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       NoOfdecisionOfOccupationalQualificationCouncil:
                         e.target.value,
                     });
@@ -661,8 +595,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       Field: e.target.value,
                     });
                     formik.setFieldValue("Field", e.target.value);
@@ -679,8 +613,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       SubField: e.target.value,
                     });
                     formik.setFieldValue("SubField", e.target.value);
@@ -697,8 +631,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       Occupation: e.target.value,
                     });
                     formik.setFieldValue("Occupation", e.target.value);
@@ -717,8 +651,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       ISCO: e.target.value,
                     });
                     formik.setFieldValue("ISCO", e.target.value);
@@ -735,8 +669,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       ISCED: e.target.value,
                     });
                     formik.setFieldValue("ISCED", e.target.value);
@@ -754,8 +688,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       NACE: e.target.value,
                     });
                     formik.setFieldValue("NACE", e.target.value);
@@ -772,8 +706,8 @@ export default function CreateQualificationStandart() {
                   rows={3}
                   className="form-control"
                   onChange={(e) => {
-                    setModel({
-                      ...model,
+                    setNewModel({
+                      ...newModel,
                       Status: e.target.value,
                     });
                     formik.setFieldValue("Status", e.target.value);
@@ -784,32 +718,22 @@ export default function CreateQualificationStandart() {
                 )}
               </div>
             </div>
-
             <ul className="list-inline mt-3 wizard">
-              <Link
-                to="/qualificationstandart"
-                className="btn btn-danger waves-effect waves-light float-start"
-              >
-                <span className="btn-label">
-                  <i className="fe-arrow-left"></i>
-                </span>
-                {t("Discard")}
-              </Link>
               <li className="next list-inline-item float-end">
                 <button
                   type="submit"
-                  className="btn btn-success waves-effect waves-light"
+                  className="btn btn btn-primary btn-soft-blue rounded-pill "
                 >
-                  <span className="btn-label">
-                    <i className="fe-check"></i>
-                  </span>
-                  {t("Save")}
+                  Vazhdo
                 </button>
               </li>
             </ul>
-          </form>
+          </div>
         </div>
-      </div>
-    </div>
+      </form>
+      {showThirdForm && (
+        <ThirdApplyFormRegister model={model} setModel={setModel} />
+      )}
+    </>
   );
 }

@@ -63,6 +63,15 @@ import ApplicationForUser from "../components/institutions/applicationsforuser/A
 import CheckApplicationForUser from "../components/institutions/applicationsforuser/CheckApplicationForUser";
 import SearchOccupationalQualificationCouncil from "../components/search/searchforms/occupationalQualificationCouncils/SearchOccupationalQualificationCouncil";
 import SearchCertificateSuplement from "../components/search/searchforms/certificateSuplement/SearchCertificateSuplement";
+import SearchInstitution from "../components/search/searchforms/certificateAndinstitution/SearchInstitution";
+import SearchCertificate from "../components/search/searchforms/certificateAndinstitution/SearchCertificate";
+import ListOfProfessions from "../components/search/searchforms/professionClassification/ListOfProfessions";
+import ApplicationForRegister from "../components/applicationForRegister/applyforms/ApplicationForRegister";
+import ApplicationsForRegisterListInstitution from "../components/applicationForRegister/applicationsList/ApplicationsForRegisterListInstitution";
+import EditRegisterApplication from "../components/applicationForRegister/view/ViewRegisterApplication";
+import ViewRegisterApplication from "../components/applicationForRegister/view/ViewRegisterApplication";
+import ApplicationsForRegisterListAKK from "../components/applicationForRegister/applicationsList/ApplicationsForRegisterListAKK";
+import SearchQualifications from "../components/search/searchforms/qualifications/SearchQualifications";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -81,10 +90,10 @@ export const AppRoutes = (props) => {
         props.authState ? "" : "content-page-no-margin "
       }`}
     >
-      <div className='content mt-2'>
+      <div className="content mt-2">
         <Routes>
           <Route
-            path='*'
+            path="*"
             element={
               props.authState ? (
                 <PrivateRoute
@@ -106,7 +115,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/'
+            path="/"
             element={
               props.authState ? (
                 <PrivateRoute
@@ -129,7 +138,7 @@ export const AppRoutes = (props) => {
           />
           {/* Institutions */}
           <Route
-            path='/institutions'
+            path="/institutions"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -151,7 +160,7 @@ export const AppRoutes = (props) => {
             }
           /> */}
           <Route
-            path='/createinstitutions'
+            path="/createinstitutions"
             element={
               <CreateInstitutions
                 setAuthState={props.setAuthState}
@@ -161,7 +170,7 @@ export const AppRoutes = (props) => {
           />
 
           <Route
-            path='/editinstitutions/:id'
+            path="/editinstitutions/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -172,7 +181,7 @@ export const AppRoutes = (props) => {
           />
           {/* Levels */}
           <Route
-            path='/level'
+            path="/level"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -183,7 +192,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createlevel'
+            path="/createlevel"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -194,7 +203,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/editlevel/:id'
+            path="/editlevel/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -206,7 +215,7 @@ export const AppRoutes = (props) => {
           />
           {/* Decisions */}
           <Route
-            path='/decisions'
+            path="/decisions"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -217,7 +226,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createdecisions'
+            path="/createdecisions"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -228,7 +237,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/editdecisions/:id'
+            path="/editdecisions/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -240,7 +249,7 @@ export const AppRoutes = (props) => {
           />
           {/* Qualifications */}
           <Route
-            path='/qualifications'
+            path="/qualifications"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -251,7 +260,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createqualifications'
+            path="/createqualifications"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -262,7 +271,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/editqualifications/:id'
+            path="/editqualifications/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -274,7 +283,7 @@ export const AppRoutes = (props) => {
           />
           {/* QualificationChildren */}
           <Route
-            path='/subqualifications/:id'
+            path="/subqualifications/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -285,7 +294,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createsubqualifications/:id'
+            path="/createsubqualifications/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -296,7 +305,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/editsubqualifications/:id'
+            path="/editsubqualifications/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -308,7 +317,7 @@ export const AppRoutes = (props) => {
           />
           {/* Students */}
           <Route
-            path='/students'
+            path="/students"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -323,7 +332,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createstudents'
+            path="/createstudents"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -338,7 +347,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/editstudent/:id'
+            path="/editstudent/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -354,7 +363,7 @@ export const AppRoutes = (props) => {
           />
           {/* Groups */}
           <Route
-            path='/groups'
+            path="/groups"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -365,7 +374,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/creategroup'
+            path="/creategroup"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -377,7 +386,7 @@ export const AppRoutes = (props) => {
           />
           {/* Profile */}
           <Route
-            path='/profile'
+            path="/profile"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -396,7 +405,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/login'
+            path="/login"
             element={
               <Login
                 authState={props.authState}
@@ -407,25 +416,25 @@ export const AppRoutes = (props) => {
 
           {/* Certification */}
           <Route
-            path='/certificationdetails/:id'
+            path="/certificationdetails/:id"
             element={<CertificateDetails />}
           />
           {/* Qualification */}
           <Route
-            path='/qualificationdetails/:qualificationId/:municipalityId/:institutionId'
+            path="/qualificationdetails/:qualificationId"
             element={<QualificationDetails />}
           />
           {/* Level */}
-          <Route path='/leveldetails/:id' element={<LevelDetails />} />
+          <Route path="/leveldetails/:id" element={<LevelDetails />} />
           {/*Decision */}
-          <Route path='/decisiondetails/:id' element={<DecisionDetails />} />
+          <Route path="/decisiondetails/:id" element={<DecisionDetails />} />
           <Route
-            path='/institutiondetails/:id'
+            path="/institutiondetails/:id"
             element={<InstitutionDetails />}
           />
           {/* {/ PersonList /} */}
           <Route
-            path='/person'
+            path="/person"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -436,7 +445,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/personlist'
+            path="/personlist"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -447,7 +456,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/persondetails/:id'
+            path="/persondetails/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -459,7 +468,7 @@ export const AppRoutes = (props) => {
           />
           {/* Reports */}
           <Route
-            path='/reports'
+            path="/reports"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -470,7 +479,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/statisticsReports'
+            path="/statisticsReports"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -481,22 +490,90 @@ export const AppRoutes = (props) => {
             }
           />
           {/* Searching Forms */}
-          <Route path='/search-forms' element={<SearchingForms />} />
+          <Route path="/search-awardingbody" element={<SearchCertificate />} />
           <Route
-            path='/professional-standards-search'
+            path="/professional-standards-search"
             element={<SearchProfessionalStandards />}
           />
           <Route
-            path='/compentencies-search'
+            path="/compentencies-search"
             element={<SearchCompetencies />}
+          />
+          <Route
+            path="/classification-of-professions"
+            element={<ListOfProfessions />}
+          />
+
+          <Route
+            path="/qualifications-search"
+            element={<SearchQualifications />}
           />
           {/* Apply Forms */}
           <Route
-            path='/application-form'
-            element={<ApplyForm authState={props.authState} />}
+            path="/application-form"
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.INSTITUTION, ROLES.MANAGER]}
+                component={ApplyForm}
+              />
+            }
           />
           <Route
-            path='/applications'
+            path="/application-for-register/:IsAccreditatedBefore"
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.INSTITUTION, ROLES.MANAGER]}
+                component={ApplicationForRegister}
+              />
+            }
+          />
+          <Route
+            path="/register-applications-list"
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[ROLES.INSTITUTION, ROLES.MANAGER]}
+                component={ApplicationsForRegisterListInstitution}
+              />
+            }
+          />
+          <Route
+            path="/applications-register-list"
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[
+                  ROLES.ADMIN,
+                  ROLES.ZyrtarAKK,
+                  ROLES.ZyrtarPerCaktiminEksperteve,
+                ]}
+                component={ApplicationsForRegisterListAKK}
+              />
+            }
+          />
+          <Route
+            path="/view-register-application/:id"
+            element={
+              <PrivateRoute
+                setAuthState={props.setAuthState}
+                authState={props.authState}
+                allowedRoles={[
+                  ROLES.ADMIN,
+                  ROLES.ZyrtarAKK,
+                  ROLES.ZyrtarPerCaktiminEksperteve,
+                ]}
+                component={ViewRegisterApplication}
+              />
+            }
+          />
+          <Route
+            path="/applications"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -514,7 +591,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/applications-list'
+            path="/applications-list"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -525,7 +602,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/editapplication/:id'
+            path="/editapplication/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -536,7 +613,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/view-application/:id'
+            path="/view-application/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -553,7 +630,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/expert-review-application/:id/:ApplicationExpertId'
+            path="/expert-review-application/:id/:ApplicationExpertId"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -564,18 +641,18 @@ export const AppRoutes = (props) => {
             }
           />
 
-<Route
-            path='/occupational-qualification-councils-search'
+          <Route
+            path="/occupational-qualification-councils-search"
             element={<SearchOccupationalQualificationCouncil />}
           />
           <Route
-            path='/certificate-suplement-search'
+            path="/certificate-suplement-search"
             element={<SearchCertificateSuplement />}
           />
-          
+          <Route path="/institutions-search" element={<SearchInstitution />} />
           {/* Institution User */}
           <Route
-            path='/institution-user'
+            path="/institution-user"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -586,7 +663,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createinstitutionuser'
+            path="/createinstitutionuser"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -597,7 +674,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/editinstitutionuser/:id'
+            path="/editinstitutionuser/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -609,7 +686,7 @@ export const AppRoutes = (props) => {
           />
           {/* Admin User */}
           <Route
-            path='/users'
+            path="/users"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -621,7 +698,7 @@ export const AppRoutes = (props) => {
           />
           {/* qualifications-types */}
           <Route
-            path='/qualifications-type'
+            path="/qualifications-type"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -632,7 +709,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createqualifications-type'
+            path="/createqualifications-type"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -643,7 +720,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/qualificationtype-edit/:id'
+            path="/qualificationtype-edit/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -655,7 +732,7 @@ export const AppRoutes = (props) => {
           />
           {/* competences */}
           <Route
-            path='/competences'
+            path="/competences"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -666,7 +743,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createcompetences'
+            path="/createcompetences"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -677,7 +754,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/editcompetences/:id'
+            path="/editcompetences/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -688,12 +765,12 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/competence-details/:id'
+            path="/competence-details/:id"
             element={<ComptenceDetails />}
           />
           {/* qualification standart */}
           <Route
-            path='/qualificationstandart'
+            path="/qualificationstandart"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -704,7 +781,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/createqualificationstandart'
+            path="/createqualificationstandart"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -715,7 +792,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/editqualificationstandart/:id'
+            path="/editqualificationstandart/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -726,17 +803,17 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/qualification-standard-details/:id'
+            path="/qualification-standard-details/:id"
             element={<QualificationStandartDetails />}
           />
 
           {/*Reset password */}
-          <Route path='/submit-email' element={<SubmitEmail />} />
-          <Route path='/reset-password/:id' element={<ForgotPassword />} />
+          <Route path="/submit-email" element={<SubmitEmail />} />
+          <Route path="/reset-password/:id" element={<ForgotPassword />} />
 
           {/* Application for user */}
           <Route
-            path='/institution-application'
+            path="/institution-application"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}
@@ -747,7 +824,7 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path='/check-institution-application/:id'
+            path="/check-institution-application/:id"
             element={
               <PrivateRoute
                 setAuthState={props.setAuthState}

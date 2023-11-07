@@ -95,13 +95,13 @@ export default function Login(props) {
     <FirstTimeLogin UserId={userId} setFirstTimeLogin={setFirstTimeLogin} />
   ) : (
     <div
-      className='account-pages pt-5 animation '
+      className="account-pages pt-5 animation "
       style={{ marginTop: "100px" }}
     >
-      <div className='container d-flex justify-content-center'>
-        <div className='col-md-8 col-lg-6 col-xl-4'>
+      <div className="container d-flex justify-content-center">
+        <div className="col-md-8 col-lg-6 col-xl-4">
           <form onSubmit={formik.handleSubmit}>
-            <div className='card'>
+            <div className="card">
               {/* <div className='text-center'>
                     <img
                       src={logo}
@@ -110,18 +110,18 @@ export default function Login(props) {
                       className='mx-auto mt-2'
                     />
                 </div> */}
-              <div className='card-body p-4'>
-                <div className='text-center mb-4'>
-                  <h4 className='text-uppercase mt-0'>{t("Login")}</h4>
+              <div className="card-body p-4">
+                <div className="text-center mb-4">
+                  <h4 className="text-uppercase mt-0">{t("Login")}</h4>
                 </div>
-                <div className='mb-3'>
-                  <label htmlFor='emailaddress' className='form-label'>
+                <div className="mb-3">
+                  <label htmlFor="emailaddress" className="form-label">
                     {t("Username")}
                   </label>
                   <input
-                    className='form-control'
-                    autoComplete='off'
-                    type='text'
+                    className="form-control"
+                    autoComplete="off"
+                    type="text"
                     onChange={(e) => {
                       setModel({
                         ...model,
@@ -129,25 +129,25 @@ export default function Login(props) {
                       });
                       formik.setFieldValue("Username", e.target.value);
                     }}
-                    id='emailaddress'
-                    required=''
+                    id="emailaddress"
+                    required=""
                     placeholder={t("Email")}
                   />
                   {formik.errors.Username && (
-                    <span className='text-danger'>
+                    <span className="text-danger">
                       {formik.errors.Username}
                     </span>
                   )}
                 </div>
-                <div className='mb-3'>
-                  <label htmlFor='password' className='form-label'>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">
                     {t("Password")}
                   </label>
                   <input
-                    className='form-control'
-                    type='password'
-                    autoComplete='off'
-                    required=''
+                    className="form-control"
+                    type="password"
+                    autoComplete="off"
+                    required=""
                     onChange={(e) => {
                       setModel({
                         ...model,
@@ -155,22 +155,22 @@ export default function Login(props) {
                       });
                       formik.setFieldValue("Password", e.target.value);
                     }}
-                    id='password'
+                    id="password"
                     placeholder={t("Password")}
                   />
                   {formik.errors.Password && (
-                    <span className='text-danger'>
+                    <span className="text-danger">
                       {formik.errors.Password}
                     </span>
                   )}
                 </div>
-                <div className='mb-3'>
-                  <Link class='link' to={"/submit-email"}>
+                <div className="mb-3">
+                  <Link className="link" to={"/submit-email"}>
                     {t("ForgotPassword")}?
                   </Link>
                 </div>
-                <div className='mb-3'>
-                  <Link class='link' to={"/createinstitutions"}>
+                <div className="mb-3">
+                  <Link className="link" to={"/createinstitutions"}>
                     {t("RegisterHere")}
                   </Link>
                 </div>
@@ -191,16 +191,16 @@ export default function Login(props) {
                       </label>
                     </div>
                   </div> */}
-                <div className='mb-3 d-grid text-center'>
+                <div className="mb-3 d-grid text-center">
                   {!load ? (
-                    <button className='btn btn-primary' type='submit'>
+                    <button className="btn btn-primary" type="submit">
                       {t("Log-In")}
                     </button>
                   ) : (
-                    <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                    <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
                       <div
-                        className='spinner-border text-primary m-2 text-center'
-                        role='status'
+                        className="spinner-border text-primary m-2 text-center"
+                        role="status"
                       />
                     </div>
                   )}
@@ -208,11 +208,11 @@ export default function Login(props) {
               </div>
             </div>
           </form>
-          <div className='row mt-3'>
-            <div className='col-12 text-center'>
-              <p className='text-muted'>
-                <Link to='/' className='text-dark ms-1'>
-                  <i className='fe-arrow-left' />
+          <div className="row mt-3">
+            <div className="col-12 text-center">
+              <p className="text-muted">
+                <Link to="/" className="text-dark ms-1">
+                  <i className="fe-arrow-left" />
                   <b> {t("Back")}</b>
                 </Link>
               </p>

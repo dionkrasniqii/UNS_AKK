@@ -63,34 +63,39 @@ export default function FirstForm({ model, setModel, ...rest }) {
   //     }
   //   });
   // }, [rest.authState]);
-  
+
   useEffect(() => {
-    if (rest.authState !== false) { // Check if authState is not false
+    if (rest.authState !== false) {
+      // Check if authState is not false
       const token = localStorage.getItem("akktoken");
       const decodedToken = jwtDecode(token);
       CrudProvider.getItemById(
         "InstitutionAPI/GetInstitution",
         decodedToken.groupsid
-      ).then((res) => {
-        if (res.statusCode === 200) {
-          const institution = res.result;
-          setModel((prevModel) => ({
-            ...prevModel,
-            InstitutionName: institution.institutionName,
-            UniqueNumber: institution.uniqueNumber,
-            MunicipalityId: institution.municipalityId,
-            Address: institution.address,
-            PostalCode: institution.postalCode,
-            PhoneNum: institution.phoneNum,
-            Email: institution.email,
-            Web: institution.web,
-            InstitutionLogo: institution.path,
-            MunicipalityName: institution.municipalityName
-          }));
-        }
-      }).catch((error) => {
-        console.error('Error fetching institution:', error);
-      });
+      )
+        .then((res) => {
+          if (res.statusCode === 200) {
+            const institution = res.result;
+            setModel((prevModel) => ({
+              ...prevModel,
+              InstitutionName: institution.institutionName,
+              UniqueNumber: institution.uniqueNumber,
+              MunicipalityId: institution.municipality.municipalityId,
+              Address: institution.address,
+              PostalCode: institution.postalCode,
+              PhoneNum: institution.phoneNum,
+              Email: institution.email,
+              Web: institution.web,
+              InstitutionLogo: institution.path,
+              MunicipalityName:
+                institution.municipality.municipalityLanguages[0]
+                  .municipalityName,
+            }));
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching institution:", error);
+        });
     }
   }, [rest.authState]);
 
@@ -205,37 +210,37 @@ export default function FirstForm({ model, setModel, ...rest }) {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className='animation animation-bot-top'
+      className="animation animation-bot-top"
     >
-      <div className='row'>
-        <h3 className='card-title text-start '>{t("PartA")}</h3>
-        <h3 className='card-title text-start '>
-              A.1 {t("InstitutionsDetails")}
-            </h3>
+      <div className="row">
+        <h3 className="card-title text-start ">{t("PartA")}</h3>
+        <h3 className="card-title text-start ">
+          A.1 {t("InstitutionsDetails")}
+        </h3>
         {!rest.authState && (
           <>
-            <h5 className='card-title text-start '>
+            <h5 className="card-title text-start ">
               A.1.1 {t("InstitutionsDetails")}
             </h5>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("InstitutionName")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("InstitutionName")}</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 onChange={(e) => {
                   setModel({ ...model, InstitutionName: e.target.value });
                   formik.setFieldValue("Name", e.target.value);
                 }}
               />
               {formik.errors.Name && (
-                <span className='text-danger'>{formik.errors.Name}</span>
+                <span className="text-danger">{formik.errors.Name}</span>
               )}
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("UniqueNumber")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("UniqueNumber")}</label>
               <input
-                type='number'
-                className='form-control'
+                type="number"
+                className="form-control"
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -245,29 +250,29 @@ export default function FirstForm({ model, setModel, ...rest }) {
                 }}
               />
               {formik.errors.UniqueNumber && (
-                <span className='text-danger'>
+                <span className="text-danger">
                   {formik.errors.UniqueNumber}
                 </span>
               )}
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("Municipality")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("Municipality")}</label>
               <CustomSelect
                 onChangeFunction={changeCity}
                 optionsList={citiesList}
                 isMulti={false}
               />
               {formik.errors.MunicipalityId && (
-                <span className='text-danger'>
+                <span className="text-danger">
                   {formik.errors.MunicipalityId}
                 </span>
               )}
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("Address")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("Address")}</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -277,14 +282,14 @@ export default function FirstForm({ model, setModel, ...rest }) {
                 }}
               />
               {formik.errors.Address && (
-                <span className='text-danger'>{formik.errors.Address}</span>
+                <span className="text-danger">{formik.errors.Address}</span>
               )}
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("PostalCode")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("PostalCode")}</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -294,14 +299,14 @@ export default function FirstForm({ model, setModel, ...rest }) {
                 }}
               />
               {formik.errors.PostalCode && (
-                <span className='text-danger'>{formik.errors.PostalCode}</span>
+                <span className="text-danger">{formik.errors.PostalCode}</span>
               )}
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("PhoneNumber")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("PhoneNumber")}</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -311,14 +316,14 @@ export default function FirstForm({ model, setModel, ...rest }) {
                 }}
               />
               {formik.errors.PhoneNumber && (
-                <span className='text-danger'>{formik.errors.PhoneNumber}</span>
+                <span className="text-danger">{formik.errors.PhoneNumber}</span>
               )}
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("Email")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("Email")}</label>
               <input
-                type='email'
-                className='form-control'
+                type="email"
+                className="form-control"
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -328,14 +333,14 @@ export default function FirstForm({ model, setModel, ...rest }) {
                 }}
               />
               {formik.errors.Email && (
-                <span className='text-danger'>{formik.errors.Email}</span>
+                <span className="text-danger">{formik.errors.Email}</span>
               )}
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("Web")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("Web")}</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -345,15 +350,15 @@ export default function FirstForm({ model, setModel, ...rest }) {
                 }}
               />
               {formik.errors.Web && (
-                <span className='text-danger'>{formik.errors.Web}</span>
+                <span className="text-danger">{formik.errors.Web}</span>
               )}
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("Logo")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("Logo")}</label>
               <input
-                type='file'
-                accept='image/*'
-                className='form-control'
+                type="file"
+                accept="image/*"
+                className="form-control"
                 onChange={(e) => {
                   setModel({
                     ...model,
@@ -363,16 +368,16 @@ export default function FirstForm({ model, setModel, ...rest }) {
                 }}
               />
               {formik.errors.Documents && (
-                <span className='text-danger'>{formik.errors.Documents}</span>
+                <span className="text-danger">{formik.errors.Documents}</span>
               )}
             </div>
-            <hr className='mt-2' />
-            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
-          <div className='row'>
-            <h5 className='card-title text-start'>
-              A1.2 {t("ChooseQualificationApplication")}
-            </h5>
-            {/* <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
+            <hr className="mt-2" />
+            <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2">
+              <div className="row">
+                <h5 className="card-title text-start">
+                  A1.2 {t("ChooseQualificationApplication")}
+                </h5>
+                {/* <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
               <h5 className='card-title text-start '>
                 {t("ToolsForQualification")}
               </h5>
@@ -397,31 +402,31 @@ export default function FirstForm({ model, setModel, ...rest }) {
               </div>
             </div> */}
 
-            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
-              <div className='form-group'>
-                <label className='form-label'>
-                  {t("QualificationTitleAndLevel")}
-                </label>
-                <textarea
-                  rows={5}
-                  className='mt-5'
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      QualificationTitleAndLevel: e.target.value,
-                    });
-                    formik.setFieldValue("QualificationId", e.target.value);
-                  }}
-                />
-                {formik.errors.QualificationId && (
-                  <span className='text-danger'>
-                    {formik.errors.QualificationId}
-                  </span>
-                )}
-              </div>
-            </div>
+                <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2">
+                  <div className="form-group">
+                    <label className="form-label">
+                      {t("QualificationTitleAndLevel")}
+                    </label>
+                    <textarea
+                      rows={5}
+                      className="mt-5"
+                      onChange={(e) => {
+                        setModel({
+                          ...model,
+                          QualificationTitleAndLevel: e.target.value,
+                        });
+                        formik.setFieldValue("QualificationId", e.target.value);
+                      }}
+                    />
+                    {formik.errors.QualificationId && (
+                      <span className="text-danger">
+                        {formik.errors.QualificationId}
+                      </span>
+                    )}
+                  </div>
+                </div>
 
-            {/* <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
+                {/* <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
               <label className='form-label'>{t("NumOfGroups")}</label>
               <input
                 type='number'
@@ -462,17 +467,17 @@ export default function FirstForm({ model, setModel, ...rest }) {
                 </span>
               )}
             </div> */}
-          </div>
-        </div>
-        <hr className='mt-3' />
-            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 '>
-              <div className='row'>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
-                  <h5 className='card-title text-start'>
+              </div>
+            </div>
+            <hr className="mt-3" />
+            <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2 ">
+              <div className="row">
+                <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+                  <h5 className="card-title text-start">
                     A.1.3 {t("InstitutionStatus")}
                   </h5>
-                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
-                    <label className='form-label'>
+                  <div className="col-xxl-7 col-lg-7 col-sm-12 mt-2">
+                    <label className="form-label">
                       {t("InstitutionStatus")}
                     </label>
                     <CustomSelect
@@ -481,18 +486,18 @@ export default function FirstForm({ model, setModel, ...rest }) {
                       isMulti={false}
                     />
                     {formik.errors.StatusActivityId && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.StatusActivityId}
                       </span>
                     )}
                   </div>
                 </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
-                  <h5 className='card-title text-start'>
+                <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+                  <h5 className="card-title text-start">
                     A.1.4 {t("InstitutionActivity")}
                   </h5>
-                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
-                    <label className='form-label'>
+                  <div className="col-xxl-7 col-lg-7 col-sm-12 mt-2">
+                    <label className="form-label">
                       {t("InstitutionActivity")}
                     </label>
                     <CustomSelect
@@ -501,7 +506,7 @@ export default function FirstForm({ model, setModel, ...rest }) {
                       optionsList={activityList}
                     />
                     {formik.errors.ActivityId && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.ActivityId}
                       </span>
                     )}
@@ -513,120 +518,120 @@ export default function FirstForm({ model, setModel, ...rest }) {
         )}
         {rest.authState && (
           <>
-            <h5 className='card-title text-start '>
+            <h5 className="card-title text-start ">
               A.1.1 {t("InstitutionsDetails")}
             </h5>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("InstitutionName")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("InstitutionName")}</label>
               <input
-                type='text'
+                type="text"
                 defaultValue={model.InstitutionName}
-                className='form-control'
+                className="form-control"
                 readOnly
               />
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("UniqueNumber")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("UniqueNumber")}</label>
               <input
-                type='number'
-                className='form-control'
+                type="number"
+                className="form-control"
                 defaultValue={model.UniqueNumber}
               />
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("Municipality")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("Municipality")}</label>
               <input
-                type='text'
+                type="text"
                 defaultValue={model.MunicipalityName}
-                className='form-control'
+                className="form-control"
                 readOnly
               />
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("Address")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("Address")}</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 readOnly
                 defaultValue={model.Address}
               />
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("PostalCode")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("PostalCode")}</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 readOnly
                 defaultValue={model.PostalCode}
               />
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("PhoneNumber")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("PhoneNumber")}</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 readOnly
                 defaultValue={model.PhoneNum}
               />
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("Email")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("Email")}</label>
               <input
-                type='email'
-                className='form-control'
+                type="email"
+                className="form-control"
                 readOnly
                 defaultValue={model.Email}
               />
             </div>
-            <div className='col-xxl-3 col-lg-3 col-sm-12 mt-2'>
-              <label className='form-label'>{t("Web")}</label>
+            <div className="col-xxl-3 col-lg-3 col-sm-12 mt-2">
+              <label className="form-label">{t("Web")}</label>
               <input
-                type='text'
-                className='form-control'
+                type="text"
+                className="form-control"
                 readOnly
                 defaultValue={model.Web}
               />
             </div>
-            <hr className='mt-2' />
-            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
-          <div className='row'>
-            <h5 className='card-title text-start'>
-              A1.2 {t("ChooseQualificationApplication")}
-            </h5>
-            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2'>
-              <div className='form-group'>
-                <label className='form-label'>
-                  {t("QualificationTitleAndLevel")}
-                </label>
-                <textarea
-                  rows={5}
-                  className='mt-5'
-                  onChange={(e) => {
-                    setModel({
-                      ...model,
-                      QualificationTitleAndLevel: e.target.value,
-                    });
-                    formik.setFieldValue("QualificationId", e.target.value);
-                  }}
-                />
-                {formik.errors.QualificationId && (
-                  <span className='text-danger'>
-                    {formik.errors.QualificationId}
-                  </span>
-                )}
+            <hr className="mt-2" />
+            <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2">
+              <div className="row">
+                <h5 className="card-title text-start">
+                  A1.2 {t("ChooseQualificationApplication")}
+                </h5>
+                <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2">
+                  <div className="form-group">
+                    <label className="form-label">
+                      {t("QualificationTitleAndLevel")}
+                    </label>
+                    <textarea
+                      rows={5}
+                      className="mt-5"
+                      onChange={(e) => {
+                        setModel({
+                          ...model,
+                          QualificationTitleAndLevel: e.target.value,
+                        });
+                        formik.setFieldValue("QualificationId", e.target.value);
+                      }}
+                    />
+                    {formik.errors.QualificationId && (
+                      <span className="text-danger">
+                        {formik.errors.QualificationId}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <hr className='mt-3' />
-            <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 '>
-              <div className='row'>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
-                  <h5 className='card-title text-start'>
+            <hr className="mt-3" />
+            <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2 ">
+              <div className="row">
+                <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+                  <h5 className="card-title text-start">
                     A.1.3 {t("InstitutionStatus")}
                   </h5>
-                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
-                    <label className='form-label'>
+                  <div className="col-xxl-7 col-lg-7 col-sm-12 mt-2">
+                    <label className="form-label">
                       {t("InstitutionStatus")}
                     </label>
                     <CustomSelect
@@ -635,18 +640,18 @@ export default function FirstForm({ model, setModel, ...rest }) {
                       isMulti={false}
                     />
                     {formik.errors.StatusActivityId && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.StatusActivityId}
                       </span>
                     )}
                   </div>
                 </div>
-                <div className='col-xxl-6 col-lg-6 col-sm-12 mt-2 '>
-                  <h5 className='card-title text-start'>
+                <div className="col-xxl-6 col-lg-6 col-sm-12 mt-2 ">
+                  <h5 className="card-title text-start">
                     A.1.4 {t("InstitutionActivity")}
                   </h5>
-                  <div className='col-xxl-7 col-lg-7 col-sm-12 mt-2'>
-                    <label className='form-label'>
+                  <div className="col-xxl-7 col-lg-7 col-sm-12 mt-2">
+                    <label className="form-label">
                       {t("InstitutionActivity")}
                     </label>
                     <CustomSelect
@@ -655,7 +660,7 @@ export default function FirstForm({ model, setModel, ...rest }) {
                       optionsList={activityList}
                     />
                     {formik.errors.ActivityId && (
-                      <span className='text-danger'>
+                      <span className="text-danger">
                         {formik.errors.ActivityId}
                       </span>
                     )}
@@ -666,10 +671,10 @@ export default function FirstForm({ model, setModel, ...rest }) {
           </>
         )}
         {!rest.showSecondForm && (
-          <div className='col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end'>
+          <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2 text-end">
             <button
-              type='submit'
-              className='btn btn btn-primary btn-soft-blue rounded-pill '
+              type="submit"
+              className="btn btn btn-primary btn-soft-blue rounded-pill "
             >
               {t("Next")}
             </button>

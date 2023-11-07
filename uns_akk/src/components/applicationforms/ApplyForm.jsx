@@ -129,10 +129,10 @@ export default function ApplyForm({ authState }) {
     }
   }
   return (
-    <div className='container mt-5'>
-      <div className='card'>
-        <div className='card-body'>
-          <h4 className='card-title text-center'>
+    <div className="container mt-5">
+      <div className="card">
+        <div className="card-body">
+          <h4 className="card-title text-center text-uppercase">
             {t("FirstApplicationName")}
           </h4>
           {/* <ProgressBar model={model} /> */}

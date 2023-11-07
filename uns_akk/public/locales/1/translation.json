@@ -475,7 +475,7 @@
   "CompetenceName": "Emri i kompetencës",
   "TypeOfCompetence": "Lloji i Kompetencës",
   "CompetencesList": "Lista e kompetencave",
-  "EstQFLevel": "Niveli EstQF",
+  "EstQFLevel": "Niveli KKK",
   "RegisterCompetence": "Regjistro Kompetencë",
   "PerformanceIndicators": "Treguesit e Performancës",
   "SuppoirtingKnowledge": "Mbështetja e Njohurive",
@@ -549,5 +549,8 @@
   "ApplicationsForAccrediation": "Aplikimet për akreditim",
   "BusinessDocuments": "Dokumenetet e biznesit (Certifikata e Biznesit,Certifikata e TVSH-së,...)",
   "BusinessLicense": "Certifikata biznesit",
-  "VATLicense": "Certifikata e TVSH-së"
+  "VATLicense": "Certifikata e TVSH-së",
+  "ApplyForAccreditation": "Aplikoni per akreditim",
+  "ApplyForRegister": "Aplikoni per regjister",
+  "ApplicationsForRegister":"Aplikimet per regjister"
 }

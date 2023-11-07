@@ -53,8 +53,8 @@ export default function ApplicationsList() {
         if (row.step === 3) {
           return (
             <button
-              type='button'
-              className='btn btn-warning rounded-pill waves-effect'
+              type="button"
+              className="btn btn-warning rounded-pill waves-effect"
             >
               Rikthim
             </button>
@@ -62,8 +62,8 @@ export default function ApplicationsList() {
         } else if (row.step === 5 || row.step === 9) {
           return (
             <span
-              type='button'
-              className='btn btn-danger rounded-pill waves-effect'
+              type="button"
+              className="btn btn-danger rounded-pill waves-effect"
             >
               Refuzuar
             </span>
@@ -71,8 +71,8 @@ export default function ApplicationsList() {
         } else if (row.step === 8) {
           return (
             <span
-              type='button'
-              className='btn btn-primary rounded-pill waves-effect'
+              type="button"
+              className="btn btn-primary rounded-pill waves-effect"
             >
               Aprovuar
             </span>
@@ -80,8 +80,8 @@ export default function ApplicationsList() {
         } else {
           return (
             <span
-              type='button'
-              className='btn btn-success rounded-pill waves-effect'
+              type="button"
+              className="btn btn-success rounded-pill waves-effect"
             >
               Proces
             </span>
@@ -101,43 +101,40 @@ export default function ApplicationsList() {
                 ? `/expert-review-application/${row.applicationId}/${row.applicationExpertId}`
                 : `/view-application/${row.applicationId}`
             }
-            className='btn btn-dark waves-effect waves-light'
+            className="btn btn-dark waves-effect waves-light"
           >
-            <i className='fe-edit' />
+            <i className="fe-edit" />
           </Link>
         );
       },
     },
   ];
 
-
-  columns = 
-   decodedToken?.role === "Zyrtar AKK" || decodedToken?.role === "Admin"?
-   [...columns, {
-      name: t("RegisterDecision"),
-      sortable: true,
-      filterable: true,
-      cell: (row, index) => {
-        switch (row.step) {
-          case 8:
-            return (
-              <CreateDecisionModal
-                applicationId={row.applicationId}
-                institutionName={row.institutionName}
-              />
-            );
-          default:
-            return (
-              <span className='text-danger'>
-                {t("ApplicationNotApprovedYet")}
-              </span>
-            );
-        }
-      },
-    },]
- : columns
-    
-  
+  // columns =
+  //  decodedToken?.role === "Zyrtar AKK" || decodedToken?.role === "Admin"?
+  //  [...columns, {
+  //     name: t("RegisterDecision"),
+  //     sortable: true,
+  //     filterable: true,
+  //     cell: (row, index) => {
+  //       switch (row.step) {
+  //         case 8:
+  //           return (
+  //             <CreateDecisionModal
+  //               applicationId={row.applicationId}
+  //               institutionName={row.institutionName}
+  //             />
+  //           );
+  //         default:
+  //           return (
+  //             <span className='text-danger'>
+  //               {t("ApplicationNotApprovedYet")}
+  //             </span>
+  //           );
+  //       }
+  //     },
+  //   },]
+  //: columns
 
   const statusToSearch =
     decodedToken &&
@@ -157,7 +154,6 @@ export default function ApplicationsList() {
           return null;
       }
     })();
-
 
   const fetchData = async () => {
     try {
@@ -190,16 +186,16 @@ export default function ApplicationsList() {
       setLoad(false);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
   }, [statusToSearch]);
 
   return load ? (
-    <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+    <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
       <div
-        className='spinner-border text-primary m-2 text-center'
-        role='status'
+        className="spinner-border text-primary m-2 text-center"
+        role="status"
       />
     </div>
   ) : data.length > 0 ? (
@@ -209,9 +205,9 @@ export default function ApplicationsList() {
       title={t("ApplicationList")}
     />
   ) : (
-    <div className='card card-body'>
-      <Space direction='vertical' style={{ width: "100%" }}>
-        <Alert message={t("NoNewApplications")} type='info' />
+    <div className="card card-body">
+      <Space direction="vertical" style={{ width: "100%" }}>
+        <Alert message={t("NoNewApplications")} type="info" />
       </Space>
     </div>
   );
