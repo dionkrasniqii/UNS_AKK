@@ -176,6 +176,18 @@ export default function Landing() {
           <div className="col-10">
             <div className="card">
               <div className="card-body">
+                Ketu do te vendosen te dhenat e niveleve pasi ti konsumojme nga
+                KKK
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="content mb-3">
+        <div className="container-fluid d-flex justify-content-center">
+          <div className="col-10">
+            <div className="card">
+              <div className="card-body">
                 <h4 className="text-center">
                   <FaCertificate className="me-2" />
                   {t("Certificate")}

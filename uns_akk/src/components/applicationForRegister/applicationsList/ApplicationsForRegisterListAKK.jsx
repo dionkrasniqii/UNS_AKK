@@ -34,7 +34,7 @@ export default function ApplicationsForRegisterListAKK() {
       selector: (row) => row.levelKKKDescription,
     },
     {
-      name: t("Level") + " " + "EQF",
+      name: t("Level") + " " + "KEK",
       sortable: true,
       filterable: true,
       selector: (row) => row.eqfLevelDescription,

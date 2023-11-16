@@ -19,7 +19,6 @@ export default function FirstApplyFormRegister({
   const [EQFLevels, setEQFLevels] = useState([]);
   const [showSecondForm, setShowSecondForm] = useState(false);
   const langId = localStorage.getItem("i18nextLng");
-
   async function fetchDataWithLang(apiEndpoint, setter) {
     const res = await CrudProvider.getAllWithLang(apiEndpoint);
     if (res && res.statusCode === 200) {
@@ -78,8 +77,8 @@ export default function FirstApplyFormRegister({
     EQFLevels.length > 0 &&
     EQFLevels.map((obj) => {
       return {
-        value: obj.eqfLevelId,
-        label: obj.levelDescription,
+        value: obj.id,
+        label: obj.value,
       };
     });
 
@@ -118,7 +117,7 @@ export default function FirstApplyFormRegister({
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
   }
-
+  console.log(EQFLevels);
   function changeExpiryDate(date, dateString) {
     setModel({
       ...model,

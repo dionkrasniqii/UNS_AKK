@@ -211,7 +211,7 @@
   "RegisterGroup": "Regjistroni grupin",
   "RegisterInstitution": "Regjistro Institucionin",
   "RegisterQualification": "Regjistro Kualifikime",
-  "RegisterStudent": "Regjistroni kandidatëD",
+  "RegisterStudent": "Regjistroni kandidatë",
   "RegisterSubQualification": "Regjistro Nënkualifikime",
   "RegistrationCertificate": "Certifikata regjistrimit",
   "RegistrationNumber": "Numri i regjistrimit",
@@ -343,7 +343,7 @@
   "AccreditedProvider": "Ofruesi i Akredituar",
   "EntryRequirements": "Kërkesat e Hyrjes",
   "ExternalQualityAssurance": "Sigurimi i Jashtëm i Cilësisë",
-  "FurtherInformationOnQualification": "Informacione të Mëtejshme mbi Kualifikimin",
+  "FurtherInformationOnQualification": "Informacione të Mëtejshme mbi Kualifikimin (Modulet)",
   "LanguageOfProvision": "Gjuha e Ofrimit",
   "LearningOutcomesKnowledge": "Rezultatet e të Nxënit Njohuri",
   "LinkToRelevantSupplements": "Lidhja me Suplementet Përkatëse",
@@ -494,7 +494,7 @@
   "InvitationGroup": "Grupi i ftesës",
   "CurriculumNameAndCode": "Emri dhe kodi i kurrikulës",
   "TheCallingCanBeLearned": "Thirrja mund të mësohet",
-  "EQFLevel": "Niveli EQF",
+  "EQFLevel": "Niveli KEK",
   "ShowMoreFilters": "Shfaq më shumë filtra",
   "ShowLessFilters": "Shfaq më pak filtra",
   "ListOfProfessionalStandards": "Lista e standardeve profesionale",
@@ -552,5 +552,7 @@
   "VATLicense": "Certifikata e TVSH-së",
   "ApplyForAccreditation": "Aplikoni per akreditim",
   "ApplyForRegister": "Aplikoni per regjister",
-  "ApplicationsForRegister":"Aplikimet per regjister"
+  "ApplicationsForRegister": "Aplikimet per regjister",
+  "PleaseWait": "Ju lutem prisni",
+  "SuplementDetails": "Të dhënat e shtojces së certifikatës "
 }

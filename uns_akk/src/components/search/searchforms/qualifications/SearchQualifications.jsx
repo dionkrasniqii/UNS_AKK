@@ -224,60 +224,58 @@ export default function SearchQualifications() {
                 </div>
               </div>
               <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
-                <form className="form-horizontal">
-                  <div className="row mb-3">
-                    <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                      {t("Level")} KKK:
-                    </label>
-                    <div className="col-xl-7">
-                      <CustomSelect
-                        isMulti={false}
-                        optionsList={kkkLevels}
-                        hasDefaultValue={false}
-                        onChangeFunction={changeLevelKKK}
-                      />
-                    </div>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
+                    {t("Level")} KKK:
+                  </label>
+                  <div className="col-xl-7">
+                    <CustomSelect
+                      isMulti={false}
+                      optionsList={kkkLevels}
+                      hasDefaultValue={false}
+                      onChangeFunction={changeLevelKKK}
+                    />
                   </div>
-                  <div className="row mb-3">
-                    <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                      {t("Level")} EQF:
-                    </label>
-                    <div className="col-xl-7">
-                      <CustomSelect
-                        isMulti={false}
-                        optionsList={eqfLevels}
-                        hasDefaultValue={false}
-                        onChangeFunction={changeLevelEQF}
-                      />
-                    </div>
+                </div>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
+                    {t("Level")} KEK:
+                  </label>
+                  <div className="col-xl-7">
+                    <CustomSelect
+                      isMulti={false}
+                      optionsList={eqfLevels}
+                      hasDefaultValue={false}
+                      onChangeFunction={changeLevelEQF}
+                    />
                   </div>
-                  <div className="row mb-3">
-                    <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                      {t("QualificationType")}:
-                    </label>
-                    <div className="col-xl-7">
-                      <CustomSelect
-                        isMulti={false}
-                        optionsList={qualificationsTypes}
-                        hasDefaultValue={false}
-                        onChangeFunction={changeQualificationType}
-                      />
-                    </div>
+                </div>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
+                    {t("QualificationType")}:
+                  </label>
+                  <div className="col-xl-7">
+                    <CustomSelect
+                      isMulti={false}
+                      optionsList={qualificationsTypes}
+                      hasDefaultValue={false}
+                      onChangeFunction={changeQualificationType}
+                    />
                   </div>
-                  <div className="row mb-3">
-                    <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                      {t("QualificationStatus")}:
-                    </label>
-                    <div className="col-xl-7">
-                      <CustomSelect
-                        isMulti={false}
-                        optionsList={qualificationsStatuses}
-                        hasDefaultValue={false}
-                        onChangeFunction={changeQualificationStatus}
-                      />
-                    </div>
+                </div>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
+                    {t("QualificationStatus")}:
+                  </label>
+                  <div className="col-xl-7">
+                    <CustomSelect
+                      isMulti={false}
+                      optionsList={qualificationsStatuses}
+                      hasDefaultValue={false}
+                      onChangeFunction={changeQualificationStatus}
+                    />
                   </div>
-                </form>
+                </div>
               </div>
               <div className="col-xxl-12 col-lg-12 col-sm-12 text-end animation">
                 <div className="button-list text-end">

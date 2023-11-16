@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import smallLogo from "./../../assets/images/sm.png";
+import logoAKK from "../../assets/images/logo_akk.png";
 import { useDispatch, useSelector } from "react-redux";
 import { showMobileLanding } from "../../store/actions";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
-import usePagination from "@mui/material/usePagination/usePagination";
 
 export default function NavbarLanding() {
   const dispatch = useDispatch();
@@ -157,7 +157,8 @@ export default function NavbarLanding() {
           <div className="logo-box bg-dark-custom " style={{ height: "67px" }}>
             <Link to="/" className="logo logo-dark text-center">
               <span className="logo-lg text-center">
-                <img src={smallLogo} alt="" height={50} loading="lazy" />
+                {/* <img src={smallLogo} alt="" height={50} loading="lazy" /> */}
+                <img src={logoAKK} alt="" height={50} loading="lazy" />
               </span>
               <span className="logo-sm text-center">
                 <img src={smallLogo} alt="" height={30} loading="lazy" />
@@ -395,7 +396,7 @@ export default function NavbarLanding() {
                       aria-expanded="false"
                     >
                       {/* <i className="fe-search me-1" /> */}
-                      Suplementet e certifikatës
+                      Suplementi/Shtojca e Certifikatës
                     </Link>
                   </li>
                   <li className="nav-item">

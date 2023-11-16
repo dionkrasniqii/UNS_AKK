@@ -72,6 +72,7 @@ import EditRegisterApplication from "../components/applicationForRegister/view/V
 import ViewRegisterApplication from "../components/applicationForRegister/view/ViewRegisterApplication";
 import ApplicationsForRegisterListAKK from "../components/applicationForRegister/applicationsList/ApplicationsForRegisterListAKK";
 import SearchQualifications from "../components/search/searchforms/qualifications/SearchQualifications";
+import SuplementDetails from "../components/search/details/suplement/SuplementDetails";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -509,7 +510,7 @@ export const AppRoutes = (props) => {
             element={<SearchQualifications />}
           />
           {/* Apply Forms */}
-          <Route
+          {/* <Route
             path="/application-form"
             element={
               <PrivateRoute
@@ -517,6 +518,15 @@ export const AppRoutes = (props) => {
                 authState={props.authState}
                 allowedRoles={[ROLES.INSTITUTION, ROLES.MANAGER]}
                 component={ApplyForm}
+              />
+            }
+          /> */}
+          <Route
+            path="/application-form"
+            element={
+              <ApplyForm
+                setAuthState={props.setAuthState}
+                authState={props.authState}
               />
             }
           />
@@ -649,6 +659,11 @@ export const AppRoutes = (props) => {
             path="/certificate-suplement-search"
             element={<SearchCertificateSuplement />}
           />
+          <Route
+            path="/suplementdetails/:suplementId"
+            element={<SuplementDetails />}
+          />
+
           <Route path="/institutions-search" element={<SearchInstitution />} />
           {/* Institution User */}
           <Route

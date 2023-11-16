@@ -70,7 +70,7 @@ export default function ViewQualificationDetails({ model }) {
             </div>
             <div className="col-xxl-3 col-lg-4 col-sm-12 mb-3">
               <div className="form-group">
-                <label>{t("Level")} EQF</label>
+                <label>{t("Level")} KEK</label>
                 <input type="text" readOnly defaultValue={model.eqfLevelName} />
               </div>
             </div>

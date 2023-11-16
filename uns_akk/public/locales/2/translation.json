@@ -548,5 +548,6 @@
   "BusinessDocuments": "Business documents (Business Certificate, VAT Certificate,...)",
   "BusinessLicense": "Business license",
   "VATLicense": "VAT certificate",
-  "ApplicationsForRegister": "Applications for register"
+  "ApplicationsForRegister": "Applications for register",
+  "PleaseWait": "Please wait"
 }

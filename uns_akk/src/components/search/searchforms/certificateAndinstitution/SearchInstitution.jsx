@@ -5,6 +5,7 @@ import img_bus from "../../../../assets/images/institution.png";
 import { toast } from "react-toastify";
 import DataTablev2 from "../../../custom/DataTablev2";
 import CrudProvider from "../../../../provider/CrudProvider";
+import { Checkbox } from "antd";
 
 export default function SearchInstitution() {
   const { t } = useTranslation();
@@ -17,7 +18,9 @@ export default function SearchInstitution() {
     MunicipalityName: "",
     UniqueNumber: "",
     InstitutionName: "",
+    GroupOfEducation: null,
   });
+  const [checked, setChecked] = useState("");
   const columns = [
     {
       name: t("Name"),
@@ -142,13 +145,8 @@ export default function SearchInstitution() {
   }
 
   function clearInputs() {
-    setModel({
-      ...model,
-      UniqueNumber: "",
-      MunicipalityId: "",
-      InstitutionName: "",
-      MunicipalityName: "",
-    });
+    setModel({});
+    setChecked("");
     setData([]);
   }
   return (
@@ -161,6 +159,50 @@ export default function SearchInstitution() {
                 <img className="w-100" src={img_bus} loading="lazy" />
               </div>
               <div className="col-lg-6">
+                <div className="col-xxl-12 d-flex justify-content-end mb-3">
+                  <Checkbox
+                    name="1"
+                    checked={checked === "1"}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setModel({
+                          ...model,
+                          GroupOfEducation: 1,
+                        });
+                        setChecked(e.target.name);
+                      } else {
+                        setModel({
+                          ...model,
+                          GroupOfEducation: null,
+                        });
+                        setChecked("");
+                      }
+                    }}
+                  >
+                    Arsim i lartë
+                  </Checkbox>
+                  <Checkbox
+                    name="2"
+                    checked={checked === "2"}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setModel({
+                          ...model,
+                          GroupOfEducation: 2,
+                        });
+                        setChecked(e.target.name);
+                      } else {
+                        setModel({
+                          ...model,
+                          GroupOfEducation: null,
+                        });
+                        setChecked("");
+                      }
+                    }}
+                  >
+                    Arsim i profesional
+                  </Checkbox>
+                </div>
                 <div className="col-xxl-12">
                   <div className="row justify-content-end">
                     <label className="col-md-4 col-form-label text-md-end text-start-sm mb-2">
@@ -219,6 +261,7 @@ export default function SearchInstitution() {
                     </div>
                   </div>
                 </div>
+
                 <div className="col-xxl-12 col-lg-12 text-end d-flex justify-content-end">
                   {!load ? (
                     <div className="button-list">
@@ -255,7 +298,7 @@ export default function SearchInstitution() {
                 <DataTablev2
                   dataSource={data}
                   columns={columns}
-                  title={t("InstitutionsList")}
+                  title={t("Qualificaitons")}
                 />
               ) : (
                 <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">

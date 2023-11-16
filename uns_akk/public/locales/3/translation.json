@@ -493,7 +493,7 @@
   "InvitationGroup": "Grupa za pozive",
   "CurriculumNameAndCode": "Naziv i šifra nastavnog plana i programa",
   "TheCallingCanBeLearned": "Pozivanje se može naučiti",
-  "EQFLevel": "EKF level",
+  "EQFLevel": "KEK level",
   "ShowMoreFilters": "Prikaži još filtera",
   "ShowLessFilters": "Prikaži manje filtera",
   "ListOfProfessionalStandards": "Spisak profesionalnih standarda",
@@ -549,5 +549,6 @@
   "BusinessDocuments": "Poslovna dokumentacija (potvrda o poslovanju, potvrda o PDV-u,...)",
   "BusinessLicense": "Poslovna licenca",
   "VATLicense": "PDV sertifikat",
-  "ApplicationsForRegister": "Prijave za registraciju"
+  "ApplicationsForRegister": "Prijave za registraciju",
+  "PleaseWait": "Please wait"
 }
