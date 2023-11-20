@@ -340,7 +340,7 @@ export default function NavbarLanding() {
                       }
                     >
                       {/* <i className="fe-search me-1" /> */}
-                      Standardet e Kualifikimit Profesional
+                      Standardet dhe klasifikimi
                       <div className="arrow-down" />
                     </a>
                     {/* <div
@@ -354,27 +354,7 @@ export default function NavbarLanding() {
                       onMouseLeave={() => setQualificationsDropdownOpen(false)}
                       aria-labelledby="topnav-layout"
                     >
-                      <Link
-                        to={"/professional-standards-search"}
-                        className="nav-link arrow-none text-nowrap fs-5"
-                        id="topnav-dashboard"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Standardet e Kualifikimit Profesional
-                      </Link>
-                      <Link
-                        to={"/classification-of-professions"}
-                        className="nav-link arrow-none fs-5"
-                        id="topnav-dashboard"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Klasifikimi i Sistemit të Kualifikimeve Profesionale
-                      </Link>
-                      <Link
+                       <Link
                         to={"/qualifications-search"}
                         className="nav-link arrow-none fs-5 "
                         id="topnav-dashboard"
@@ -384,6 +364,37 @@ export default function NavbarLanding() {
                       >
                         Kualifikimet
                       </Link>
+                      <Link
+                        to={"/professional-standards-search"}
+                        className="nav-link arrow-none text-nowrap fs-5"
+                        id="topnav-dashboard"
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Standardet e profesionit
+                      </Link>
+                      <Link
+                        // to={"/classification-of-professions"}
+                        className="nav-link arrow-none fs-5"
+                        id="topnav-dashboard"
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Standartet e kualifikimit
+                      </Link>
+                      <Link
+                        to={"/classification-of-professions"}
+                        className="nav-link arrow-none fs-5"
+                        id="topnav-dashboard"
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                       Klasifikimi i profesioneve në Kosovë
+                      </Link>
+                     
                     </div>
                   </div>
                   <li className="nav-item">
@@ -396,7 +407,8 @@ export default function NavbarLanding() {
                       aria-expanded="false"
                     >
                       {/* <i className="fe-search me-1" /> */}
-                      Suplementi/Shtojca e Certifikatës
+                      Shtojca e Diplomës/Certifikatës
+                      
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -434,9 +446,20 @@ export default function NavbarLanding() {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      {/* <i className="fe-search me-1" /> */}
-                      Këshillat e Kualifikimit Profesional
+                      Këshillat profesionale/sektoriale
                     </Link>
+                    <Link
+                      to={"https://arbk.rks-gov.net/desk/inc/media/FA0E6C9D-2422-481E-8047-A2AFB4B9124C.pdf"}
+                      target='_blank'
+                      className="nav-link arrow-none fs-5 text-nowrap"
+                      id="topnav-dashboard"
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      NACE Kodi i veprimtarive ekonomike
+                    </Link>
+                    
                   </li>
                 </div>
               </ul>

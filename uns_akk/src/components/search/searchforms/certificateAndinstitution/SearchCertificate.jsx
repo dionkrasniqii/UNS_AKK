@@ -5,6 +5,7 @@ import CrudProvider from "../../../../provider/CrudProvider";
 import img_certification from "../../../../assets/images/certificate.png";
 import { toast } from "react-toastify";
 import DataTablev2 from "../../../custom/DataTablev2";
+import { Checkbox } from "antd";
 
 export default function SearchCertificate() {
   const { t } = useTranslation();
@@ -123,6 +124,50 @@ export default function SearchCertificate() {
                 />
               </div>
               <div className="col-xxl-6 col-lg-6 text-start order-sm-1 order-lg-1 order-xl-1 order-xxl-1">
+              <div className="col-xxl-12 d-flex justify-content-end mb-3">
+                  <Checkbox
+                    name="1"
+                    // checked={checked === "1"}
+                    // onChange={(e) => {
+                    //   if (e.target.checked) {
+                    //     setModel({
+                    //       ...model,
+                    //       GroupOfEducation: 1,
+                    //     });
+                    //     setChecked(e.target.name);
+                    //   } else {
+                    //     setModel({
+                    //       ...model,
+                    //       GroupOfEducation: null,
+                    //     });
+                    //     setChecked("");
+                    //   }
+                    // }}
+                  >
+                    Diplomë
+                  </Checkbox>
+                  <Checkbox
+                    name="2"
+                    // checked={checked === "2"}
+                    // onChange={(e) => {
+                    //   if (e.target.checked) {
+                    //     setModel({
+                    //       ...model,
+                    //       GroupOfEducation: 2,
+                    //     });
+                    //     setChecked(e.target.name);
+                    //   } else {
+                    //     setModel({
+                    //       ...model,
+                    //       GroupOfEducation: null,
+                    //     });
+                    //     setChecked("");
+                    //   }
+                    // }}
+                  >
+                    Certifikatë
+                  </Checkbox>
+                </div>
                 <div className="col-xxl-12">
                   <div className="row">
                     <label
