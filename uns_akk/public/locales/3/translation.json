@@ -550,5 +550,8 @@
   "BusinessLicense": "Poslovna licenca",
   "VATLicense": "PDV sertifikat",
   "ApplicationsForRegister": "Prijave za registraciju",
-  "PleaseWait": "Please wait"
+  "PleaseWait": "Please wait",
+  "Description": "Detaljan",
+  "QualificationStandart": "Standardna kvalifikacija",
+  "DescriptionAboutRegister": "Nacionalni sistem kvalifikacija na Kosovu je zasnovan na Nacionalnom okviru kvalifikacija (NOK) koji je uspostavila i održava Nacionalna uprava za kvalifikacije (NAK). Pravni osnov za regulisanje sistema nacionalnih kvalifikacija je predviđen Zakonom o nacionalnim kvalifikacijama (Zakon br. 03/L-060, usvojen od strane Skupštine Republike Kosovo 7. novembra 2008. godine). Kvalifikacija se odnosi na formalnu potvrdu da je osoba uspešno postigla specifične ishode učenja u vezi sa identifikovanim akademskim, industrijskim ili društvenim zahtevima. Kvalifikacija je formalni dokument koji izdaje ovlašćeno telo u znak priznavanja obrazovnih dostignuća i/ili trenutnih kompetencija pojedinca. Ovaj dokument se može izdati u obliku diplome, sertifikata ili licence Registar kvalifikacija Kosova je izvor koji pruža javnu potvrdu formalnog, tehničkog odnosa između kvalifikacija i Nacionalnog okvira kvalifikacija. Nivo kvalifikacija u registru odgovara osam nivoa KKK, odnosno KEK."
 }

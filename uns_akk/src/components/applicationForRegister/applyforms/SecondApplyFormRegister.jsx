@@ -6,11 +6,25 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import CustomDatePicker from "../../custom/CustomDatePicker";
 import ThirdApplyFormRegister from "./ThirdApplyFormRegister";
+import CrudProvider from "../../../provider/CrudProvider";
 
 export default function SecondApplyFormRegister({ model, setModel }) {
   const { t } = useTranslation();
-  const langId = localStorage.getItem("i18nextLng");
   const [showThirdForm, setShowThirdForm] = useState(false);
+  const [fields, setFields] = useState([]);
+  const [subFields, setSubFields] = useState([]);
+
+  useEffect(() => {
+    CrudProvider.getAllWithLang(
+      "ProfessionGroupAPI/GetAllMainProfessions"
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setFields(res.result);
+        }
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const formDiv = document.querySelector("#form2");
@@ -109,14 +123,14 @@ export default function SecondApplyFormRegister({ model, setModel }) {
     RegulationsGoverningProfession: Yup.string().required(t("FillField")),
     CompetencyRequirements: Yup.string().required(t("FillField")),
     DesignationInRegister: Yup.string().required(t("FillField")),
-    FieldOfOccupational: Yup.string().required(t("FillField")),
+    // FieldOfOccupational: Yup.string().required(t("FillField")),
     OccupationalQualificationCouncil: Yup.string().required(t("FillField")),
     NoOfdecisionOfOccupationalQualificationCouncil: Yup.string().required(
       t("FillField")
     ),
     Field: Yup.string().required(t("FillField")),
     SubField: Yup.string().required(t("FillField")),
-    Occupation: Yup.string().required(t("FillField")),
+    // Occupation: Yup.string().required(t("FillField")),
     ISCO: Yup.string().required(t("FillField")),
     ISCED: Yup.string().required(t("FillField")),
     NACE: Yup.string().required(t("FillField")),
@@ -129,10 +143,41 @@ export default function SecondApplyFormRegister({ model, setModel }) {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: () => {
+      console.log(newModel);
       setShowThirdForm(true);
       model.QualificationStandarts = newModel;
     },
   });
+
+  async function changeField(e) {
+    setNewModel({
+      ...newModel,
+      Field: e,
+    });
+    formik.setFieldValue("Field", e);
+    await getByProfessionByMainGroup(e);
+  }
+
+  async function changeSubField(e) {
+    setNewModel({
+      ...newModel,
+      SubField: e,
+    });
+    formik.setFieldValue("SubField", e);
+  }
+
+  async function getByProfessionByMainGroup(id) {
+    await CrudProvider.getItemByIdLang(
+      "ProfessionGroupAPI/GetProfessionByMainGroupId",
+      id
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setSubFields(res.result);
+        }
+      }
+    });
+  }
   return (
     <>
       <form
@@ -147,21 +192,21 @@ export default function SecondApplyFormRegister({ model, setModel }) {
             </h4>
             <ProgressBar model={newModel} />
             <div className="row">
-              <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
+              <div className="col-xxl-2 col-lg-2 col-sm-12">
                 <label>{t("ValidFrom")}:</label>
                 <CustomDatePicker onChangeFunction={changeValidFrom} />
                 {formik.errors.ValidFrom && (
                   <span className="text-danger">{formik.errors.ValidFrom}</span>
                 )}
               </div>
-              <div className="col-xxl-2 col-lg-2 col-sm-12 mb-3">
+              <div className="col-xxl-2 col-lg-2 col-sm-12 ">
                 <label>{t("ValidTo")}:</label>
                 <CustomDatePicker onChangeFunction={changeValidTo} />
                 {formik.errors.ValidTo && (
                   <span className="text-danger">{formik.errors.ValidTo}</span>
                 )}
               </div>
-              <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+              <div className="col-xxl-3 col-lg-5 col-sm-12">
                 <label className="text-nowrap">
                   {t("DateOfDecisionOfOccupationalQualificationCouncil")}:
                 </label>
@@ -178,6 +223,31 @@ export default function SecondApplyFormRegister({ model, setModel }) {
               </div>
             </div>
             <div className="row">
+              {/* //fushaaa */}
+              <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+                <label>{t("Field")}</label>
+                <CustomSelect
+                  hasDefaultValue={false}
+                  isMulti={false}
+                  onChangeFunction={changeField}
+                  optionsList={fields}
+                />
+                {formik.errors.Field && (
+                  <span className="text-danger">{formik.errors.Field}</span>
+                )}
+              </div>
+              <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+                <label>{t("SubField")}</label>
+                <CustomSelect
+                  hasDefaultValue={false}
+                  isMulti={false}
+                  onChangeFunction={changeSubField}
+                  optionsList={subFields}
+                />
+                {formik.errors.SubField && (
+                  <span className="text-danger">{formik.errors.SubField}</span>
+                )}
+              </div>
               <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
                 <label>{t("QualificationStandartName")}</label>
                 <textarea
@@ -516,26 +586,6 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 )}
               </div>
               <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
-                <label>{t("FieldOfOccupational")}</label>
-                <textarea
-                  type="text"
-                  rows={3}
-                  className="form-control"
-                  onChange={(e) => {
-                    setNewModel({
-                      ...newModel,
-                      FieldOfOccupational: e.target.value,
-                    });
-                    formik.setFieldValue("FieldOfOccupational", e.target.value);
-                  }}
-                />
-                {formik.errors.FieldOfOccupational && (
-                  <span className="text-danger">
-                    {formik.errors.FieldOfOccupational}
-                  </span>
-                )}
-              </div>
-              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
                 <label>{t("OccupationalQualificationCouncil")}</label>
                 <textarea
                   type="text"
@@ -585,62 +635,6 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                       formik.errors
                         .NoOfdecisionOfOccupationalQualificationCouncil
                     }
-                  </span>
-                )}
-              </div>
-              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
-                <label>{t("Field")}</label>
-                <textarea
-                  type="text"
-                  rows={3}
-                  className="form-control"
-                  onChange={(e) => {
-                    setNewModel({
-                      ...newModel,
-                      Field: e.target.value,
-                    });
-                    formik.setFieldValue("Field", e.target.value);
-                  }}
-                />
-                {formik.errors.Field && (
-                  <span className="text-danger">{formik.errors.Field}</span>
-                )}
-              </div>
-              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
-                <label>{t("SubField")}</label>
-                <textarea
-                  type="text"
-                  rows={3}
-                  className="form-control"
-                  onChange={(e) => {
-                    setNewModel({
-                      ...newModel,
-                      SubField: e.target.value,
-                    });
-                    formik.setFieldValue("SubField", e.target.value);
-                  }}
-                />
-                {formik.errors.SubField && (
-                  <span className="text-danger">{formik.errors.SubField}</span>
-                )}
-              </div>
-              <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
-                <label>{t("Occupation")}</label>
-                <textarea
-                  type="text"
-                  rows={3}
-                  className="form-control"
-                  onChange={(e) => {
-                    setNewModel({
-                      ...newModel,
-                      Occupation: e.target.value,
-                    });
-                    formik.setFieldValue("Occupation", e.target.value);
-                  }}
-                />
-                {formik.errors.Occupation && (
-                  <span className="text-danger">
-                    {formik.errors.Occupation}
                   </span>
                 )}
               </div>

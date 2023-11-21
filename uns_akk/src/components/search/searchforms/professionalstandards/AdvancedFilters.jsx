@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import CustomSelect from "../../../custom/CustomSelect";
+import CrudProvider from "../../../../provider/CrudProvider";
 
 export default function AdvancedFilters({ model, setModel }) {
   const { t } = useTranslation();
+  const [fields, setFields] = useState([]);
+
+  useEffect(() => {
+    CrudProvider.getAllWithLang(
+      "ProfessionGroupAPI/GetAllMainProfessions"
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setFields(res.result);
+        }
+      }
+    });
+  }, []);
+  async function changeField(e) {
+    setModel({
+      ...model,
+      Field: e,
+    });
+  }
   async function checkNullAttributes(model) {
     let count = 0;
     Object.keys(model).forEach((key) => {
@@ -14,28 +35,22 @@ export default function AdvancedFilters({ model, setModel }) {
   }
   return (
     <>
-      <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
-        <form className='form-horizontal'>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+      <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+        <form className="form-horizontal">
+          <div className="row mb-3">
+            <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
               {t("Field")}:
             </label>
-            <div className=' col-xl-7'>
-              <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
-                placeholder={t("Field")}
-                onChange={(e) =>
-                  setModel((prev) => ({
-                    ...prev,
-                    Field: e.target.value,
-                  }))
-                }
+            <div className=" col-xl-7">
+              <CustomSelect
+                hasDefaultValue={false}
+                isMulti={false}
+                onChangeFunction={changeField}
+                optionsList={fields}
               />
             </div>
           </div>
-          <div className='row mb-3'>
+          {/* <div className='row mb-3'>
             <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
               {t("Profession")}
             </label>
@@ -53,16 +68,16 @@ export default function AdvancedFilters({ model, setModel }) {
                 }
               />
             </div>
-          </div>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+          </div> */}
+          <div className="row mb-3">
+            <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
               {t("ISCO")}:
             </label>
-            <div className=' col-xl-7'>
+            <div className=" col-xl-7">
               <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
+                autoComplete="off"
+                type="text"
+                className="form-control"
                 placeholder={t("ISCO")}
                 onChange={(e) =>
                   setModel((prev) => ({
@@ -75,17 +90,17 @@ export default function AdvancedFilters({ model, setModel }) {
           </div>
         </form>
       </div>
-      <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
-        <form className='form-horizontal'>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+      <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+        <form className="form-horizontal">
+          <div className="row mb-3">
+            <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
               {t("ISCED")}:
             </label>
-            <div className=' col-xl-7'>
+            <div className=" col-xl-7">
               <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
+                autoComplete="off"
+                type="text"
+                className="form-control"
                 placeholder={t("ISCED")}
                 onChange={(e) =>
                   setModel((prev) => ({
@@ -96,15 +111,15 @@ export default function AdvancedFilters({ model, setModel }) {
               />
             </div>
           </div>
-          <div className='row mb-3'>
-            <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+          <div className="row mb-3">
+            <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
               {t("Status")}:
             </label>
-            <div className=' col-xl-7'>
+            <div className=" col-xl-7">
               <input
-                autoComplete='off'
-                type='text'
-                className='form-control'
+                autoComplete="off"
+                type="text"
+                className="form-control"
                 placeholder={t("Status")}
                 onChange={(e) =>
                   setModel((prev) => ({

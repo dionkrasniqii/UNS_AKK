@@ -549,5 +549,8 @@
   "BusinessLicense": "Business license",
   "VATLicense": "VAT certificate",
   "ApplicationsForRegister": "Applications for register",
-  "PleaseWait": "Please wait"
+  "PleaseWait": "Please wait",
+  "Description": "Description",
+  "QualificationStandart": "Qualification standart",
+  "DescriptionAboutRegister": "The national qualifications system in Kosovo is based on the National Qualifications Framework (NQF) established and maintained by the National Qualifications Authority (NQA). The legal basis for regulating the national qualifications system is provided by the Law on National Qualifications (Law No. 03/L-060, approved by the Assembly of the Republic of Kosovo on November 7, 2008). Qualification refers to a formal certification that a person has successfully achieved specific learning outcomes related to identified academic, industry or community requirements. A qualification is a formal document issued by an authorized body in recognition of an individual's educational achievements and/or current competences. This document can be issued in the form of a diploma, certificate or license. The Register of Qualifications of Kosovo is a source that provides public confirmation of the formal, technical relationship between a qualification and the National Qualifications Framework. The level of qualifications in the register corresponds to the eight levels of the KKK, namely the KEK."
 }

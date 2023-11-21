@@ -22,6 +22,7 @@ export default function Decisions() {
       setLoad(false);
     });
   }, []);
+  console.log(data);
   const columns = [
     {
       name: t("UniqueNumber"),
@@ -54,14 +55,14 @@ export default function Decisions() {
           return (
             <a>
               {t("Active")}
-              <i className='text-success ps-1 fas fa-circle-notch' />
+              <i className="text-success ps-1 fas fa-circle-notch" />
             </a>
           );
         } else {
           return (
             <a>
               {t("Inactive")}
-              <i className='text-danger ps-1  fas fa-circle-notch' />
+              <i className="text-danger ps-1  fas fa-circle-notch" />
             </a>
           );
         }
@@ -75,9 +76,9 @@ export default function Decisions() {
         return (
           <Link
             to={`/editdecisions/${record.institutionDecisionDetailsId}`}
-            className='btn btn-info btn-sm rounded-pill waves-effect waves-light'
+            className="btn btn-info btn-sm rounded-pill waves-effect waves-light"
           >
-            <i className='mdi mdi-alert-circle-outline pe-1' />
+            <i className="mdi mdi-alert-circle-outline pe-1" />
             {t("SeeDecision")}
           </Link>
         );
@@ -85,19 +86,19 @@ export default function Decisions() {
     },
   ];
   return (
-    <div className='row'>
-      <div className='col-12 d-flex justify-content-end'>
+    <div className="row">
+      <div className="col-12 d-flex justify-content-end">
         <Link
-          className='btn btn-info waves-effect waves-light'
-          to='/createdecisions'
+          className="btn btn-info waves-effect waves-light"
+          to="/createdecisions"
         >
-          <span className='btn-label'>
-            <i className='fe-plus-circle'></i>
+          <span className="btn-label">
+            <i className="fe-plus-circle"></i>
           </span>
           {t("Add")}
         </Link>
       </div>
-      <div className='p-2 mt-2'>
+      <div className="p-2 mt-2">
         {!load ? (
           <DataTablev2
             columns={columns}
@@ -105,10 +106,10 @@ export default function Decisions() {
             title={t("ListOfAllDecisions")}
           />
         ) : (
-          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
             <div
-              className='spinner-border text-primary m-2 text-center'
-              role='status'
+              className="spinner-border text-primary m-2 text-center"
+              role="status"
             />
           </div>
         )}

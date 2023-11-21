@@ -9,11 +9,8 @@ import CustomFileInput from "../../custom/CustomFileInput";
 
 export default function ApplicationForRegister() {
   const { IsAccreditatedBefore } = useParams();
-  const { t } = useTranslation();
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
-  const navigate = useNavigate();
-  const [load, setLoad] = useState(false);
   const [model, setModel] = useState({
     Docs: [],
     LevelKKKId: "",
@@ -39,6 +36,7 @@ export default function ApplicationForRegister() {
     OccupationalStandartCode: "",
     LangId: "",
     QualificationStandardsId: [],
+    QualificationChilds: [],
     IsAccreditatedBefore: IsAccreditatedBefore,
     QualificationStandarts: {},
     Competences: {},

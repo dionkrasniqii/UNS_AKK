@@ -89,11 +89,11 @@ export default function SuplementDetails() {
                   </label>
                   <span className="ms-2 font-20">{data.subField}</span>
                   <hr />
-                  <label className="text-uppercase text-muted font-13">
+                  {/* <label className="text-uppercase text-muted font-13">
                     {t("Occupation")}:
                   </label>
                   <span className="ms-2 font-20">{data.profession}</span>
-                  <hr />
+                  <hr /> */}
                   <label className="text-uppercase text-muted font-13">
                     {t("QualificationStandarts")}:
                   </label>

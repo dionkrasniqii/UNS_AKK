@@ -66,7 +66,7 @@ export default function Home() {
     );
   }, []);
   const generateColorsByObjectLength = (obj) => {
-    const startColor = [0, 0, 255]; // Blue color (RGB values)
+    const startColor = [0, 0, 255];
     const endColor = [205, 127, 50]; // Bronze color (RGB values)
     const numColors = Object.keys(obj).length;
     const colors = [];
@@ -91,12 +91,11 @@ export default function Home() {
     }
     return colors;
   };
-
   return (
-    <div className='container-fluid'>
+    <div className="container-fluid">
       {!load ? (
-        <div className='row'>
-          <div className='col-xxl-3 col-lg-5 col-md-5  col-sm-12 ps-2'>
+        <div className="row">
+          <div className="col-xxl-3 col-lg-5 col-md-5  col-sm-12 ps-2">
             <DonutChart
               data={Object.values(instituionByYear)}
               labels={Object.keys(instituionByYear)}
@@ -104,7 +103,7 @@ export default function Home() {
               title={t("RegistredInstitutionsInYears")}
             />
           </div>
-          <div className='col-xxl-3 col-lg-5 col-md-5  col-sm-12 ps-2'>
+          <div className="col-xxl-3 col-lg-5 col-md-5  col-sm-12 ps-2">
             <BarApexChart
               data={accreditatedInstitutionsAndUnaccreditated}
               title={t("AccreditatedUnAccreditatedInstitutions")}
@@ -113,7 +112,7 @@ export default function Home() {
               )}
             />
           </div>
-          <div className='col-xxl-3 col-lg-5 col-md-5  col-sm-12 ps-2'>
+          <div className="col-xxl-3 col-lg-5 col-md-5  col-sm-12 ps-2">
             <DonutChart
               data={Object.values(candidatesByYear)}
               labels={Object.keys(candidatesByYear)}
@@ -121,7 +120,7 @@ export default function Home() {
               title={t("CandidatesRegistredInYears")}
             />
           </div>
-          <div className='col-xxl-3 col-lg-5 col-md-5  col-sm-12 ps-2'>
+          <div className="col-xxl-3 col-lg-5 col-md-5  col-sm-12 ps-2">
             <StatisticWidget1
               data={reaccreditatedInstitutions}
               title={t("ReAccreditatedInstitutions")}
@@ -130,26 +129,26 @@ export default function Home() {
               subTitle={t("ReAccreditatedInstitutions")}
             />
           </div>
-          <div className='col-xxl-6 col-lg-6 col-md-6 col-sm-12 ps-2'>
+          <div className="col-xxl-6 col-lg-6 col-md-6 col-sm-12 ps-2">
             <BarApexChart
               data={candidatesByQualifications}
               title={t("CandidatesBasedOnQualification")}
               colors={generateColorsByObjectLength(candidatesByQualifications)}
             />
           </div>
-          <div className='col-xxl-6 col-lg-6 col-md-6 col-sm-12 ps-2'>
+          <div className="col-xxl-6 col-lg-6 col-md-6 col-sm-12 ps-2">
             <RevenueChart
               data={candidatesByMonth}
               title={t("CandidatesRegistredMonths")}
             />
           </div>
-          <div className='col-xxl-6 col-lg-6 col-md-6 col-sm-12 ps-2'></div>
+          <div className="col-xxl-6 col-lg-6 col-md-6 col-sm-12 ps-2"></div>
         </div>
       ) : (
-        <div className='col-xxl-12 col-lg-12 col-sm-12 card card-body d-flex justify-content-center align-items-center'>
+        <div className="col-xxl-12 col-lg-12 col-sm-12 card card-body d-flex justify-content-center align-items-center">
           <div
-            className='spinner-border text-primary m-2 text-center'
-            role='status'
+            className="spinner-border text-primary m-2 text-center"
+            role="status"
           />
         </div>
       )}

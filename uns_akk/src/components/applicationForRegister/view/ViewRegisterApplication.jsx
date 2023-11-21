@@ -47,6 +47,7 @@ export default function ViewRegisterApplication() {
         }
       }
     });
+
     CrudProvider.getAll("GeneralAPI/GetStatuses").then((res) => {
       if (res) {
         switch (res.statusCode) {
@@ -132,10 +133,9 @@ export default function ViewRegisterApplication() {
       });
     }
   };
-
   return !load ? (
     <div className="row">
-      <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2 mb-2">
+      <div className="col-xxl-12 col-lg-12 col-sm-12 mb-2">
         <CustomModal
           docs={data.docs}
           typeToFilter={"RegisterApplicationDocs"}

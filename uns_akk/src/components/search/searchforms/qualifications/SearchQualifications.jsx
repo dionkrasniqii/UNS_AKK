@@ -24,7 +24,7 @@ export default function SearchQualifications() {
     ExpiryDate: "",
     QualificationStatusId: "",
   });
-
+  console.log(data);
   useEffect(() => {
     Promise.all([
       CrudProvider.getAllWithLang(
@@ -119,7 +119,6 @@ export default function SearchQualifications() {
         if (res) {
           if (res.statusCode === 200) {
             const data = res.result;
-            console.log(data);
             setData(data && data);
           } else {
             toast.error(res.errorMessages[0]);

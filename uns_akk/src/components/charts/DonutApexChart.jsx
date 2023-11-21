@@ -50,14 +50,14 @@ export default function DonutChart({ data, labels, colors, title }) {
   const apexData = data;
 
   return (
-    <div className='card card-body'>
-      <h4 className='card-title text-center'>{title}</h4>
+    <div className="card card-body">
+      <h4 className="card-title text-center">{title}</h4>
       <Chart
         options={apexOpts}
         series={apexData}
-        type='donut'
+        type="donut"
         height={302}
-        className='apex-charts mt-2'
+        className="apex-charts mt-2"
       />
     </div>
   );

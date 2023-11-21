@@ -18,6 +18,7 @@ export default function FirstApplyFormRegister({
   const [qualificationStatus, setQualificationStatus] = useState([]);
   const [EQFLevels, setEQFLevels] = useState([]);
   const [showSecondForm, setShowSecondForm] = useState(false);
+  const [dynamicDivs, setDynamicDivs] = useState([]);
   const langId = localStorage.getItem("i18nextLng");
   async function fetchDataWithLang(apiEndpoint, setter) {
     const res = await CrudProvider.getAllWithLang(apiEndpoint);
@@ -38,7 +39,6 @@ export default function FirstApplyFormRegister({
       fetchDataWithLang("EQFLevelAPI/GetAll", setEQFLevels),
     ]);
   }
-
   useEffect(() => {
     fetchData();
   }, [langId]);
@@ -70,15 +70,6 @@ export default function FirstApplyFormRegister({
       return {
         value: obj.levelKKK.levelKKKId,
         label: obj.levelKKKDescription,
-      };
-    });
-  const EQFlevelList =
-    EQFLevels &&
-    EQFLevels.length > 0 &&
-    EQFLevels.map((obj) => {
-      return {
-        value: obj.id,
-        label: obj.value,
       };
     });
 
@@ -117,7 +108,6 @@ export default function FirstApplyFormRegister({
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
   }
-  console.log(EQFLevels);
   function changeExpiryDate(date, dateString) {
     setModel({
       ...model,
@@ -138,7 +128,7 @@ export default function FirstApplyFormRegister({
     EntryRequirements: Yup.string().required(t("FillField")),
     ExpiryDate: Yup.string().required(t("FillField")),
     ExternalQualityAssurance: Yup.string().required(t("FillField")),
-    FurtherInformationOnQualification: Yup.string().required(t("FillField")),
+    // FurtherInformationOnQualification: Yup.string().required(t("FillField")),
     LanguageOfProvision: Yup.string().required(t("FillField")),
     LearningOutcomesKnowledge: Yup.string().required(t("FillField")),
     LinkToRelevantSupplements: Yup.string().required(t("FillField")),
@@ -181,6 +171,54 @@ export default function FirstApplyFormRegister({
       label: t("Serbian"),
     },
   ];
+
+  const addDynamicDiv = () => {
+    const newDynamicDivs = [...dynamicDivs];
+    const dynamicDivContent = [
+      {
+        label: t("Description"),
+        stateKey: "Description",
+        type: "text",
+      },
+      {
+        label: t("Code"),
+        stateKey: "Code",
+        type: "number",
+      },
+      {
+        label: t("Credits"),
+        stateKey: "Credits",
+        type: "number",
+      },
+    ];
+    const dynamicDivData = {};
+
+    dynamicDivContent.forEach(({ label, stateKey, type }) => {
+      newDynamicDivs.push(
+        <div
+          key={newDynamicDivs.length}
+          className="col-xxl-4 col-lg-4 col-sm-12"
+        >
+          <label>{label}</label>
+          <input
+            className="mt-1 form-control"
+            type={type}
+            onChange={(e) => {
+              dynamicDivData[stateKey] = e.target.value;
+              setModel({
+                ...model,
+                QualificationChilds: [
+                  ...model.QualificationChilds,
+                  dynamicDivData,
+                ],
+              });
+            }}
+          />
+        </div>
+      );
+    });
+    setDynamicDivs(newDynamicDivs);
+  };
 
   return (
     <>
@@ -286,7 +324,6 @@ export default function FirstApplyFormRegister({
                 />
                 {formik.errors.LevelKKKId && (
                   <span className="text-danger">
-                    {" "}
                     {formik.errors.LevelKKKId}
                   </span>
                 )}
@@ -295,12 +332,11 @@ export default function FirstApplyFormRegister({
                 <label>{t("Level")} EQF</label>
                 <CustomSelect
                   onChangeFunction={changeLevelEQF}
-                  optionsList={EQFlevelList}
+                  optionsList={EQFLevels}
                   isMulti={false}
                 />
                 {formik.errors.LevelKKKId && (
                   <span className="text-danger">
-                    {" "}
                     {formik.errors.LevelKKKId}
                   </span>
                 )}
@@ -400,29 +436,24 @@ export default function FirstApplyFormRegister({
                 </div>
               </div>
               <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2">
-                <div className="form-group">
+                <div className="row">
                   <label className="form-label">
                     {t("FurtherInformationOnQualification")}
                   </label>
-                  <textarea
-                    rows={5}
-                    className="mt-1"
-                    onChange={(e) => {
-                      setModel({
-                        ...model,
-                        FurtherInformationOnQualification: e.target.value,
-                      });
-                      formik.setFieldValue(
-                        "FurtherInformationOnQualification",
-                        e.target.value
-                      );
-                    }}
-                  />
-                  {formik.errors.FurtherInformationOnQualification && (
-                    <span className="text-danger">
-                      {formik.errors.FurtherInformationOnQualification}
-                    </span>
-                  )}
+                  <div className="col-xxl-2 col-lg-2 col-sm-5">
+                    <button
+                      type="button"
+                      className="btn btn-primary ps-2"
+                      onClick={addDynamicDiv}
+                    >
+                      {t("Add") + " " + t("Modules")}
+                    </button>
+                  </div>
+                </div>
+                <div className="row">
+                  {dynamicDivs.map((obj) => {
+                    return obj;
+                  })}
                 </div>
               </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import AdvancedFilters from "./AdvancedFilters";
 import DataTablev2 from "../../../custom/DataTablev2";
@@ -30,7 +30,7 @@ export default function SearchProfessionalStandards() {
         return (
           <a
             href={`/qualification-standard-details/${row.qualificationStandart?.qualificationStandartId}`}
-            target='_blank'
+            target="_blank"
           >
             {row.name}
           </a>
@@ -64,6 +64,9 @@ export default function SearchProfessionalStandards() {
       filterable: true,
     },
   ];
+
+  useEffect(() => {}, []);
+
   async function checkNullAttributes(model) {
     let count = 0;
     Object.keys(model).forEach((key) => {
@@ -112,21 +115,21 @@ export default function SearchProfessionalStandards() {
   }
 
   return (
-    <div className='container mt-5 bg-light-subtle '>
-      <div className='card '>
-        <div className='card-body'>
-          <div className='row'>
-            <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
-              <form className='form-horizontal'>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+    <div className="container mt-5 bg-light-subtle ">
+      <div className="card ">
+        <div className="card-body">
+          <div className="row">
+            <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+              <form className="form-horizontal">
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("Name")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("Name")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -137,15 +140,15 @@ export default function SearchProfessionalStandards() {
                     />
                   </div>
                 </div>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("FieldOfProfessionalActivity")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("FieldOfProfessionalActivity")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -158,17 +161,17 @@ export default function SearchProfessionalStandards() {
                 </div>
               </form>
             </div>
-            <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
-              <form className='form-horizontal'>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+            <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+              <form className="form-horizontal">
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("Specializations")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("Specializations")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -179,15 +182,15 @@ export default function SearchProfessionalStandards() {
                     />
                   </div>
                 </div>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("PartialInvitations")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("PartialInvitations")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -200,10 +203,10 @@ export default function SearchProfessionalStandards() {
                 </div>
               </form>
             </div>
-            <div className='col-xxl-12 col-lg-12 col-sm-12 animation'>
+            <div className="col-xxl-12 col-lg-12 col-sm-12 animation">
               <button
-                type='button'
-                className='btn btn-bordered-light text-dark shadow-inner'
+                type="button"
+                className="btn btn-bordered-light text-dark shadow-inner"
                 onClick={() => setLessFilters(!lessFilters)}
               >
                 {!lessFilters ? t("ShowMoreFilters") : t("ShowLessFilters")}
@@ -212,18 +215,18 @@ export default function SearchProfessionalStandards() {
             {lessFilters && (
               <AdvancedFilters model={model} setModel={setModel} />
             )}
-            <div className='col-xxl-12 col-lg-12 col-sm-12 text-end animation'>
-              <div className='button-list text-end'>
+            <div className="col-xxl-12 col-lg-12 col-sm-12 text-end animation">
+              <div className="button-list text-end">
                 <button
-                  type='button'
-                  className='btn btn-soft-primary waves-effect waves-light mt-2'
+                  type="button"
+                  className="btn btn-soft-primary waves-effect waves-light mt-2"
                   onClick={searchData}
                 >
                   {t("Search")}
                 </button>
                 <button
-                  type='button'
-                  className='btn btn-soft-secondary waves-effect mt-2'
+                  type="button"
+                  className="btn btn-soft-secondary waves-effect mt-2"
                   onClick={clearInputs}
                 >
                   {t("Clear")}
@@ -234,19 +237,19 @@ export default function SearchProfessionalStandards() {
         </div>
       </div>
       {!load ? (
-        <div className='flip-card-animation'>
+        <div className="flip-card-animation">
           <DataTablev2
             dataSource={data}
-            title={t("ListOfProfessionalStandards")}
+            title={t("QualificationStandarts")}
             columns={columns}
           />
         </div>
       ) : (
-        <div className='card card-body'>
-          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+        <div className="card card-body">
+          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
             <div
-              className='spinner-border text-primary m-2 text-center'
-              role='status'
+              className="spinner-border text-primary m-2 text-center"
+              role="status"
             />
           </div>
         </div>

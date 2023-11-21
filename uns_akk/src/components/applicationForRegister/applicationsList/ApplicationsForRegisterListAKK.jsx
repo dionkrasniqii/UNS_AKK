@@ -13,7 +13,6 @@ export default function ApplicationsForRegisterListAKK() {
   const token = localStorage.getItem("akktoken");
   const decodedToken = token && jwtDecode(token);
   const [load, setLoad] = useState(false);
-  const [statuses, setStatuses] = useState([]);
   const columns = [
     {
       name: t("QualificationName"),
@@ -71,7 +70,6 @@ export default function ApplicationsForRegisterListAKK() {
       },
     },
   ];
-
   useEffect(() => {
     try {
       setLoad(true);

@@ -14,22 +14,42 @@ import {
 export default function Landing() {
   const { t } = useTranslation();
   const [data, setData] = useState({});
-
-  // useEffect(() => {
-  //   document.getElementById("top").scrollIntoView();
-  // }, []);
+  const [levels, setLevels] = useState([]);
+  const [openAccordion, setOpenAccordion] = useState("");
+  const langId = localStorage.getItem("i18nextLng");
 
   useEffect(() => {
-    CrudProvider.getAll("StatisticsAPI/GetStatisticsForLanding").then((res) => {
+    Promise.all([
+      CrudProvider.getAll("StatisticsAPI/GetStatisticsForLanding").then(
+        (res) => {
+          if (res) {
+            switch (res.statusCode) {
+              case 200:
+                setData(res.result);
+                break;
+            }
+          }
+        }
+      ),
+      fetchLevels(),
+    ]);
+  }, []);
+
+  useEffect(() => {
+    fetchLevels();
+  }, [langId]);
+
+  async function fetchLevels() {
+    CrudProvider.getAllWithLang("LevelAPI/GetAll").then((res) => {
       if (res) {
         switch (res.statusCode) {
           case 200:
-            setData(res.result);
+            setLevels(res.result);
             break;
         }
       }
     });
-  }, []);
+  }
 
   const data2 = {
     labels: [],
@@ -56,26 +76,7 @@ export default function Landing() {
           <div className="col-10">
             <div className="card">
               <div className="card-body">
-                <label>
-                  Sistemi kombëtar i kualifikimeve në Kosovë bazohet në Kornizën
-                  Kombëtare të Kualifikimeve (KKK) që është themeluar dhe
-                  mirëmbahet nga Autoriteti Kombëtar i Kualifikimeve (AKK). Baza
-                  ligjore për rregullimin e sistemit kombëtar të kualifikimeve
-                  është paraparë me Ligjin për Kualifikimet Kombëtare (Ligji
-                  Nr.03/L-060, i miratuar nga Kuvendi i Republikës së Kosovës më
-                  7 nëntor 2008). Kualifikimi i referohet një certifikimi formal
-                  që një person ka arritur me sukses rezultate specifike të të
-                  nxënit që lidhen me kërkesat e identifikuara akademike,të
-                  industrisë ose komunitetit. Një kualifikim është një dokument
-                  formal i lëshuar nga një organ i autorizuar në njohje të
-                  arritjeve arsimore të një individi dhe/ose kompetencave
-                  aktuale. Ky dokument mund të lëshohet në formën e diplomës,
-                  certifikatës ose licencës Regjistri i Kualifikimeve të Kosovës
-                  është një burim që siguron konfirmimin publik të marrëdhënies
-                  formale, teknike midis një kualifikimi dhe Kornizës Kombëtare
-                  të Kualifikimeve. Niveli i kualifikimeve në regjistër
-                  korrespondon me tetë nivelet e KKK-së, përkatësisht KEK.
-                </label>
+                <label>{t("DescriptionAboutRegister")}</label>
               </div>
             </div>
           </div>
@@ -176,8 +177,68 @@ export default function Landing() {
           <div className="col-10">
             <div className="card">
               <div className="card-body">
-                Ketu do te vendosen te dhenat e niveleve pasi ti konsumojme nga
-                KKK
+                <div className="row">
+                  <div id="accordion" className="mb-3">
+                    {levels &&
+                      levels.length > 0 &&
+                      levels
+                        .slice()
+                        .sort((a, b) =>
+                          a.levelKKKDescription.localeCompare(
+                            b.levelKKKDescription
+                          )
+                        )
+                        .map((level, index) => {
+                          return (
+                            <div className="card mb-1" key={index}>
+                              <div
+                                type="button"
+                                className="card-header bg-soft-primary"
+                                id={`heading_${index}`}
+                                onClick={(e) =>
+                                  openAccordion == level.levelKKKDescription
+                                    ? setOpenAccordion("")
+                                    : setOpenAccordion(
+                                        level.levelKKKDescription
+                                      )
+                                }
+                              >
+                                <h5 className="m-0">
+                                  <a
+                                    type="button"
+                                    className="text-dark collapsed"
+                                    data-bs-toggle="collapse"
+                                    aria-expanded={
+                                      openAccordion == level.levelKKKDescription
+                                        ? true
+                                        : false
+                                    }
+                                  >
+                                    <i className="mdi mdi-share-variant me-1"></i>
+                                    <span className="text-uppercase">
+                                      {level.levelKKKDescription}
+                                    </span>
+                                  </a>
+                                </h5>
+                              </div>
+                              <div
+                                id={`collapse_${index}`}
+                                className={`collapse ${
+                                  openAccordion == level.levelKKKDescription &&
+                                  "show"
+                                }`}
+                                aria-labelledby={`heading_${index}`}
+                                data-bs-parent="#accordion"
+                              >
+                                <div className="card-body">
+                                  {level.detailedDescription}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

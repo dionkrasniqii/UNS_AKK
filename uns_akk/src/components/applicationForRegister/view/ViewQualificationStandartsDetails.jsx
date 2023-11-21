@@ -34,7 +34,7 @@ export default function ViewQualificationStandartsDetails({ model }) {
                 ).toLocaleDateString("en-GB")}
               />
             </div>
-            <div className="col-xxl-3 col-lg-3 col-sm-12 mb-3">
+            <div className="col-xxl-3 col-lg-5 col-sm-12 mb-3">
               <label className="text-nowrap">
                 {t("DateOfDecisionOfOccupationalQualificationCouncil")}:
               </label>
@@ -49,7 +49,26 @@ export default function ViewQualificationStandartsDetails({ model }) {
                 ).toLocaleDateString("en-GB")}
               />
             </div>
+            <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+              <label>{t("Field")}</label>
+              <input
+                type="text"
+                className="form-control"
+                readOnly
+                defaultValue={model.field}
+              />
+            </div>
+            <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
+              <label>{t("SubField")}</label>
+              <input
+                type="text"
+                className="form-control"
+                readOnly
+                defaultValue={model.subField}
+              />
+            </div>
           </div>
+
           <div className="row">
             <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
               <label>{t("QualificationStandartName")}</label>
@@ -212,7 +231,7 @@ export default function ViewQualificationStandartsDetails({ model }) {
                 defaultValue={model.designationInRegister}
               />
             </div>
-            <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+            {/* <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
               <label>{t("FieldOfOccupational")}</label>
               <textarea
                 type="text"
@@ -221,7 +240,7 @@ export default function ViewQualificationStandartsDetails({ model }) {
                 readOnly
                 defaultValue={model.fieldOfOccupational}
               />
-            </div>
+            </div> */}
             <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
               <label>{t("OccupationalQualificationCouncil")}</label>
               <textarea
@@ -246,27 +265,8 @@ export default function ViewQualificationStandartsDetails({ model }) {
                 }
               />
             </div>
-            <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
-              <label>{t("Field")}</label>
-              <textarea
-                type="text"
-                rows={3}
-                className="form-control"
-                readOnly
-                defaultValue={model.field}
-              />
-            </div>
-            <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
-              <label>{t("SubField")}</label>
-              <textarea
-                type="text"
-                rows={3}
-                className="form-control"
-                readOnly
-                defaultValue={model.subField}
-              />
-            </div>
-            <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
+
+            {/* <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
               <label>{t("Occupation")}</label>
               <textarea
                 type="text"
@@ -275,7 +275,7 @@ export default function ViewQualificationStandartsDetails({ model }) {
                 readOnly
                 defaultValue={model.occupation}
               />
-            </div>
+            </div> */}
             <div className="col-xxl-4 col-lg-4 col-sm-12 mb-3">
               <label>{t("ISCO")}</label>
               <textarea

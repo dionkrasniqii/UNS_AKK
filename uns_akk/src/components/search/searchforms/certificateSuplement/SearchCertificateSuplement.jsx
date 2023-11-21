@@ -13,11 +13,15 @@ export default function SearchCertificateSuplement() {
   const [EQFLevel, setEQFLevels] = useState([]);
   const [load, setLoad] = useState(false);
   const [data, setData] = useState([]);
+  const [fields, setFields] = useState([]);
+  const [subFields, setSubFields] = useState([]);
+
   const [model, setModel] = useState({
     EQFLevel: "",
     OccupationalStandartQualification: "",
     QualificationName: "",
   });
+
   const columns = [
     {
       name: t("Qualification"),
@@ -66,6 +70,15 @@ export default function SearchCertificateSuplement() {
           }
         }
       }),
+      CrudProvider.getAllWithLang(
+        "ProfessionGroupAPI/GetAllMainProfessions"
+      ).then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setFields(res.result);
+          }
+        }
+      }),
     ]);
   }, []);
 
@@ -80,6 +93,33 @@ export default function SearchCertificateSuplement() {
       ...prev,
       OccupationalStandartQualification: e,
     }));
+  }
+  async function changeField(e) {
+    setModel({
+      ...model,
+      Field: e,
+    });
+    await getByProfessionByMainGroup(e);
+  }
+
+  async function changeSubField(e) {
+    setModel({
+      ...model,
+      SubField: e,
+    });
+  }
+
+  async function getByProfessionByMainGroup(id) {
+    await CrudProvider.getItemByIdLang(
+      "ProfessionGroupAPI/GetProfessionByMainGroupId",
+      id
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setSubFields(res.result);
+        }
+      }
+    });
   }
   async function submitForm() {
     try {
@@ -104,6 +144,7 @@ export default function SearchCertificateSuplement() {
       // setLoad(false);
     }
   }
+
   function clearInputs() {
     // setModel({
     //   InstitutionId: "",
@@ -125,7 +166,7 @@ export default function SearchCertificateSuplement() {
             <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
               <div className="col-xxl-12 col-lg-12 mb-3">
                 {/* <label className="">Emri ne anglisht</label> */}
-                <label className="">Emri</label>
+                <label className="">{t("Name")}</label>
                 <input
                   autoComplete="off"
                   type="text"
@@ -139,21 +180,31 @@ export default function SearchCertificateSuplement() {
                 />
               </div>
               <div className="col-xxl-12 col-lg-12 mb-3">
-                <label>Fusha</label>
-                <CustomSelect />
+                <label>{t("Field")}</label>
+                <CustomSelect
+                  hasDefaultValue={false}
+                  isMulti={false}
+                  onChangeFunction={changeField}
+                  optionsList={fields}
+                />
               </div>
               <div className="col-xxl-12 col-lg-12 mb-3">
-                <label>Nen fusha</label>
-                <CustomSelect />
+                <label>{t("SubField")}</label>
+                <CustomSelect
+                  hasDefaultValue={false}
+                  isMulti={false}
+                  onChangeFunction={changeSubField}
+                  optionsList={subFields}
+                />
               </div>
             </div>
             <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
-              <div className="col-xxl-12 col-lg-12 mb-3">
+              {/* <div className="col-xxl-12 col-lg-12 mb-3">
                 <label>Profesioni</label>
                 <CustomSelect />
-              </div>
+              </div> */}
               <div className="col-xxl-12 col-lg-12 mb-3">
-                <label>Standardi i kualifikimit profesional:</label>
+                <label>{t("QualificationStandart")}:</label>
                 <CustomSelect
                   onChangeFunction={changeQualificationStandartId}
                   hasDefaultValue={false}

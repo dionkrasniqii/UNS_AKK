@@ -91,7 +91,7 @@ export const AppRoutes = (props) => {
         props.authState ? "" : "content-page-no-margin "
       }`}
     >
-      <div className="content mt-2">
+      <div className={`content ${props.authState ? "" : "contentLanding"}`}>
         <Routes>
           <Route
             path="*"

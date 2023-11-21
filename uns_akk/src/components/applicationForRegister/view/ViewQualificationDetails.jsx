@@ -1,9 +1,31 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import CustomModal from "../../custom/CustomModal";
+import DataTablev2 from "../../custom/DataTablev2";
 
 export default function ViewQualificationDetails({ model }) {
   const { t } = useTranslation();
+
+  const columns = [
+    {
+      name: t("Description"),
+      sortable: true,
+      filterable: true,
+      selector: (row) => row.description,
+    },
+    {
+      name: t("Code"),
+      sortable: true,
+      filterable: true,
+      selector: (row) => row.code,
+    },
+    {
+      name: t("Credits"),
+      sortable: true,
+      filterable: true,
+      selector: (row) => row.credits,
+    },
+  ];
 
   return (
     <form id="form1" className="animation animation-bot-top">
@@ -120,7 +142,7 @@ export default function ViewQualificationDetails({ model }) {
                 />
               </div>
             </div>
-            <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2">
+            {/* <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2">
               <div className="form-group">
                 <label className="form-label">
                   {t("FurtherInformationOnQualification")}
@@ -132,7 +154,7 @@ export default function ViewQualificationDetails({ model }) {
                   defaultValue={model.furtherInformationOnQualification}
                 />
               </div>
-            </div>
+            </div> */}
 
             <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2">
               <div className="form-group">
@@ -235,6 +257,16 @@ export default function ViewQualificationDetails({ model }) {
                 />
               </div>
             </div>
+            {model?.qualificationChilds &&
+              model.qualificationChilds.length > 0 && (
+                <div className="col-xxl-12 col-lg-12 col-sm-12 mt-2">
+                  <DataTablev2
+                    columns={columns}
+                    dataSource={model.qualificationChilds}
+                    title={"Lista e moduleve"}
+                  />
+                </div>
+              )}
           </div>
         </div>
       </div>

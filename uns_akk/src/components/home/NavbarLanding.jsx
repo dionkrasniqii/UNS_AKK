@@ -27,17 +27,17 @@ export default function NavbarLanding() {
     const hamburger = document.getElementById("hamburger");
     if (
       location.pathname === "/login" ||
-      // location.pathname === "/register" ||
+      location.pathname === "/register" ||
       location.pathname === "/submit-email" ||
       location.pathname.split("/").some((path) => path === "reset-password")
     ) {
       mainNavDiv.classList.add("d-none");
       secondNav.classList.add("d-none");
-      // hamburger.classList.add("d-none");
+      hamburger.classList.add("d-none");
     } else {
       mainNavDiv.classList.remove("d-none");
       secondNav.classList.remove("d-none");
-      // hamburger.classList.remove("d-none");
+      hamburger.classList.remove("d-none");
     }
   }, [location]);
   async function changeLang(e) {
@@ -63,91 +63,6 @@ export default function NavbarLanding() {
 
   return (
     <div className="navbar-custom navbar-costum-padding" id="mainNavLanding">
-      {/* <div className="container-fluid">
-        {" "}
-        <div className="logo-box bg-dark-custom " style={{ height: "67px" }}>
-          <Link to="/" className="logo logo-dark text-center">
-            <span className="logo-lg text-center">
-              <img src={smallLogo} alt="" height={50} loading="lazy" />
-            </span>
-            <span className="logo-sm text-center">
-              <img src={smallLogo} alt="" height={30} loading="lazy" />
-            </span>
-          </Link>
-        </div>
-        <div className="navbar-center navbar-nav ">
-          <div className="nav-item dropdown ">
-            <a
-              className="nav-link dropdown-toggle arrow-none text-white"
-              id="topnav-layout"
-              role="button"
-              onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-            >
-              <i className="mdi mdi-card-bulleted-settings-outline me-1" />
-              {t("Languages")} <div className="arrow-down" />
-            </a>
-            <div
-              className={`dropdown-menu languageDropDownTopNav ${
-                languageDropdownOpen ? "show" : ""
-              }`}
-              style={{ position: "absolute" }}
-              aria-labelledby="topnav-layout"
-            >
-              <a className="dropdown-item " onClick={(e) => changeLang("1")}>
-                <label>AL</label>
-              </a>
-              <a className="dropdown-item " onClick={(e) => changeLang("2")}>
-                <label className="fs-6">ENG</label>
-              </a>
-              <a className="dropdown-item " onClick={(e) => changeLang("3")}>
-                <label className="fs-6">SR</label>
-              </a>
-            </div>
-          </div>
-          <div className="nav-item">
-            <Link
-              className="nav-link arrow-none fs-5"
-              to="/login"
-              id="topnav-dashboard"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i className="fe-log-in me-1" /> {t("Login")}
-            </Link>
-          </div>
-        </div>
-        <ul className="list-unstyled topnav-menu topnav-menu-left onlyMobile mb-0">
-          <li>
-            <a
-              onClick={(e) => {
-                dispatch(showMobileLanding(!show));
-                setShow(!show);
-              }}
-              id="hamburger"
-              className="navbar-toggle nav-link collapsed"
-              data-bs-toggle="collapse"
-              data-bs-target="#topnav-menu-content"
-              aria-expanded="false"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={25}
-                height={25}
-                fill="currentColor"
-                className="bi bi-list"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-                />
-              </svg>
-            </a>
-          </li>
-        </ul>
-        <div className="clearfix" />
-      </div> */}
       <nav
         className="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark"
         id="nav-sticky"
@@ -165,17 +80,32 @@ export default function NavbarLanding() {
               </span>
             </Link>
           </div>
-          <button
-            className="navbar-toggler"
-            type="button"
+
+          <a
+            onClick={(e) => {
+              dispatch(showMobileLanding(!show));
+              setShow(!show);
+            }}
+            id="hamburger"
+            className="navbar-toggle nav-link collapsed"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
+            data-bs-target="#topnav-menu-content"
             aria-expanded="false"
-            aria-label="Toggle navigation"
           >
-            <i className="mdi mdi-menu" />
-          </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={25}
+              height={25}
+              fill="currentColor"
+              className="bi bi-list"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+              />
+            </svg>
+          </a>
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <ul className="navbar-nav ms-auto" id="mySidenav">
               <li className="nav-item">
@@ -228,7 +158,7 @@ export default function NavbarLanding() {
                   <i className="fe-log-in me-1" /> {t("Login")}
                 </Link>
               </li>
-              {/* <li className="nav-item">
+              <li className="nav-item">
                 <a
                   onClick={(e) => {
                     dispatch(showMobileLanding(!show));
@@ -254,13 +184,13 @@ export default function NavbarLanding() {
                     />
                   </svg>
                 </a>
-              </li> */}
+              </li>
             </ul>
           </div>
         </div>
       </nav>
 
-      <div className="topnav navbar-costum-padding" id="secondNav">
+      <div className="topnav navbarLanding" id="secondNav">
         <div className="container-fluid">
           <nav
             className="navbar navbar-light navbar-expand-lg topnav-menu"
@@ -354,7 +284,7 @@ export default function NavbarLanding() {
                       onMouseLeave={() => setQualificationsDropdownOpen(false)}
                       aria-labelledby="topnav-layout"
                     >
-                       <Link
+                      <Link
                         to={"/qualifications-search"}
                         className="nav-link arrow-none fs-5 "
                         id="topnav-dashboard"
@@ -364,16 +294,7 @@ export default function NavbarLanding() {
                       >
                         Kualifikimet
                       </Link>
-                      <Link
-                        to={"/professional-standards-search"}
-                        className="nav-link arrow-none text-nowrap fs-5"
-                        id="topnav-dashboard"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Standardet e profesionit
-                      </Link>
+
                       <Link
                         // to={"/classification-of-professions"}
                         className="nav-link arrow-none fs-5"
@@ -382,7 +303,17 @@ export default function NavbarLanding() {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        Standartet e kualifikimit
+                        Standartet e profesionit
+                      </Link>
+                      <Link
+                        to={"/professional-standards-search"}
+                        className="nav-link arrow-none text-nowrap fs-5"
+                        id="topnav-dashboard"
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Standardet e kualifikimit
                       </Link>
                       <Link
                         to={"/classification-of-professions"}
@@ -392,15 +323,14 @@ export default function NavbarLanding() {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                       Klasifikimi i profesioneve në Kosovë
+                        Klasifikimi i profesioneve në Kosovë
                       </Link>
-                     
                     </div>
                   </div>
                   <li className="nav-item">
                     <Link
                       to={"/certificate-suplement-search"}
-                      className="nav-link arrow-none fs-5 "
+                      className="nav-link arrow-none fs-5 text-nowrap "
                       id="topnav-dashboard"
                       role="button"
                       aria-haspopup="true"
@@ -408,7 +338,6 @@ export default function NavbarLanding() {
                     >
                       {/* <i className="fe-search me-1" /> */}
                       Shtojca e Diplomës/Certifikatës
-                      
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -448,9 +377,13 @@ export default function NavbarLanding() {
                     >
                       Këshillat profesionale/sektoriale
                     </Link>
+                  </li>
+                  <li className="nav-item">
                     <Link
-                      to={"https://arbk.rks-gov.net/desk/inc/media/FA0E6C9D-2422-481E-8047-A2AFB4B9124C.pdf"}
-                      target='_blank'
+                      to={
+                        "https://arbk.rks-gov.net/desk/inc/media/FA0E6C9D-2422-481E-8047-A2AFB4B9124C.pdf"
+                      }
+                      target="_blank"
                       className="nav-link arrow-none fs-5 text-nowrap"
                       id="topnav-dashboard"
                       role="button"
@@ -459,7 +392,6 @@ export default function NavbarLanding() {
                     >
                       NACE Kodi i veprimtarive ekonomike
                     </Link>
-                    
                   </li>
                 </div>
               </ul>
