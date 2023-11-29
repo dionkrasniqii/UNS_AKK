@@ -20,6 +20,8 @@ export default function Landing() {
   const [data, setData] = useState({});
   const [levels, setLevels] = useState([]);
   const [secondStats, setSecondStats] = useState({});
+  const [statsForStudents, setStatsForStudents] = useState({});
+  const [statsForGradutedStudents, setStatsForGradutedStudents] = useState({});
   const [openAccordion, setOpenAccordion] = useState("");
   const langId = localStorage.getItem("i18nextLng");
 
@@ -42,6 +44,28 @@ export default function Landing() {
             switch (res.statusCode) {
               case 200:
                 setSecondStats(res.result);
+                break;
+            }
+          }
+        }
+      ),
+      CrudProvider.getAll("StatisticsAPI/GetStatisticsForLandingv3").then(
+        (res) => {
+          if (res) {
+            switch (res.statusCode) {
+              case 200:
+                setStatsForStudents(res.result);
+                break;
+            }
+          }
+        }
+      ),
+      CrudProvider.getAll("StatisticsAPI/GetStatisticsForLandingv4").then(
+        (res) => {
+          if (res) {
+            switch (res.statusCode) {
+              case 200:
+                setStatsForGradutedStudents(res.result);
                 break;
             }
           }
@@ -99,22 +123,53 @@ export default function Landing() {
         </div>
       </div>
       <div className="content mb-3">
-        <div className="container-fluid d-flex justify-content-center ">
+        <div className="container-fluid d-flex justify-content-center animation ">
           <div className="col-10">
             <div className="card">
-              <div className="card-body" style={{ height: "385px" }}>
-                {/* <BarChart data={data2} /> */}
-                {secondStats && Object.keys(secondStats).length > 0 ? (
-                  <BarChartForLanding
-                    data={secondStats}
-                    description={
-                      "Institucionet e regjistruara ne 3 vitet e fundit "
-                    }
-                  />
+              <div className="row">
+                {secondStats &&
+                statsForStudents &&
+                statsForGradutedStudents &&
+                Object.keys(secondStats).length > 0 &&
+                Object.keys(statsForStudents).length > 0 &&
+                Object.keys(statsForGradutedStudents).length > 0 ? (
+                  <>
+                    <div
+                      className="card-body"
+                      style={{ height: "385px", width: "385px" }}
+                    >
+                      <BarChartForLanding
+                        data={secondStats}
+                        description={
+                          "Institucionet e regjistruara në 3 vitet e fundit "
+                        }
+                      />
+                    </div>
+                    <div
+                      className="card-body"
+                      style={{ height: "385px", width: "385px" }}
+                    >
+                      <BarChartForLanding
+                        data={statsForStudents}
+                        description={
+                          "Personat e regjistruar në 3 vitet e fundit "
+                        }
+                      />
+                    </div>
+                    <div
+                      className="card-body"
+                      style={{ height: "385px", width: "385px" }}
+                    >
+                      <BarChartForLanding
+                        data={statsForGradutedStudents}
+                        description={
+                          "Kualifikimet e dhëna në 3 vitet e fundit "
+                        }
+                      />
+                    </div>
+                  </>
                 ) : (
-                  <div className="d-flex justify-content-center ">
-                    <InfinitySpin width="200" color="blue" />
-                  </div>
+                  <Loading />
                 )}
               </div>
             </div>

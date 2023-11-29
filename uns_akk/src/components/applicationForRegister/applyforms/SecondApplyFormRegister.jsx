@@ -97,44 +97,44 @@ export default function SecondApplyFormRegister({ model, setModel }) {
   }
 
   const CreateQualificationStandartsSchema = Yup.object().shape({
-    ReferenceToEuropanQualificationFramework: Yup.string().required(
-      t("FillField")
-    ),
-    OccupationalQualificationStandartVersion: Yup.string().required(
-      t("FillField")
-    ),
-    ValidFrom: Yup.string().required(t("FillField")),
-    ValidTo: Yup.string().required(t("FillField")),
-    DateOfDecisionOfOccupationalQualificationCouncil: Yup.string().required(
-      t("FillField")
-    ),
-    QualificationStandartName: Yup.string().required(t("FillField")),
-    Specialisation: Yup.string().required(t("FillField")),
-    PartialOccupationalQualifications: Yup.string().required(t("FillField")),
-    DescriptionOfWork: Yup.string().required(t("FillField")),
-    WorkUnits: Yup.string().required(t("FillField")),
-    WorkEnvironmentAndSpecificNatureOfWork: Yup.string().required(
-      t("FillField")
-    ),
-    Tools: Yup.string().required(t("FillField")),
-    PersonalQualities: Yup.string().required(t("FillField")),
-    ProfessionalPreparation: Yup.string().required(t("FillField")),
-    MostCommonOccupationalTitles: Yup.string().required(t("FillField")),
-    RegulationsGoverningProfession: Yup.string().required(t("FillField")),
-    CompetencyRequirements: Yup.string().required(t("FillField")),
-    DesignationInRegister: Yup.string().required(t("FillField")),
-    // FieldOfOccupational: Yup.string().required(t("FillField")),
-    OccupationalQualificationCouncil: Yup.string().required(t("FillField")),
-    NoOfdecisionOfOccupationalQualificationCouncil: Yup.string().required(
-      t("FillField")
-    ),
-    Field: Yup.string().required(t("FillField")),
-    SubField: Yup.string().required(t("FillField")),
-    // Occupation: Yup.string().required(t("FillField")),
-    ISCO: Yup.string().required(t("FillField")),
-    ISCED: Yup.string().required(t("FillField")),
-    NACE: Yup.string().required(t("FillField")),
-    Status: Yup.string().required(t("FillField")),
+    // ReferenceToEuropanQualificationFramework: Yup.string().required(
+    //   t("FillField")
+    // ),
+    // OccupationalQualificationStandartVersion: Yup.string().required(
+    //   t("FillField")
+    // ),
+    // ValidFrom: Yup.string().required(t("FillField")),
+    // ValidTo: Yup.string().required(t("FillField")),
+    // DateOfDecisionOfOccupationalQualificationCouncil: Yup.string().required(
+    //   t("FillField")
+    // ),
+    // QualificationStandartName: Yup.string().required(t("FillField")),
+    // Specialisation: Yup.string().required(t("FillField")),
+    // PartialOccupationalQualifications: Yup.string().required(t("FillField")),
+    // DescriptionOfWork: Yup.string().required(t("FillField")),
+    // WorkUnits: Yup.string().required(t("FillField")),
+    // WorkEnvironmentAndSpecificNatureOfWork: Yup.string().required(
+    //   t("FillField")
+    // ),
+    // Tools: Yup.string().required(t("FillField")),
+    // PersonalQualities: Yup.string().required(t("FillField")),
+    // ProfessionalPreparation: Yup.string().required(t("FillField")),
+    // MostCommonOccupationalTitles: Yup.string().required(t("FillField")),
+    // RegulationsGoverningProfession: Yup.string().required(t("FillField")),
+    // CompetencyRequirements: Yup.string().required(t("FillField")),
+    // DesignationInRegister: Yup.string().required(t("FillField")),
+    // // FieldOfOccupational: Yup.string().required(t("FillField")),
+    // OccupationalQualificationCouncil: Yup.string().required(t("FillField")),
+    // NoOfdecisionOfOccupationalQualificationCouncil: Yup.string().required(
+    //   t("FillField")
+    // ),
+    // Field: Yup.string().required(t("FillField")),
+    // SubField: Yup.string().required(t("FillField")),
+    // // Occupation: Yup.string().required(t("FillField")),
+    // ISCO: Yup.string().required(t("FillField")),
+    // ISCED: Yup.string().required(t("FillField")),
+    // NACE: Yup.string().required(t("FillField")),
+    // Status: Yup.string().required(t("FillField")),
   });
 
   const formik = useFormik({
@@ -194,14 +194,20 @@ export default function SecondApplyFormRegister({ model, setModel }) {
             <div className="row">
               <div className="col-xxl-2 col-lg-2 col-sm-12">
                 <label>{t("ValidFrom")}:</label>
-                <CustomDatePicker onChangeFunction={changeValidFrom} />
+                <CustomDatePicker
+                  disabled={true}
+                  onChangeFunction={changeValidFrom}
+                />
                 {formik.errors.ValidFrom && (
                   <span className="text-danger">{formik.errors.ValidFrom}</span>
                 )}
               </div>
               <div className="col-xxl-2 col-lg-2 col-sm-12 ">
                 <label>{t("ValidTo")}:</label>
-                <CustomDatePicker onChangeFunction={changeValidTo} />
+                <CustomDatePicker
+                  disabled={true}
+                  onChangeFunction={changeValidTo}
+                />
                 {formik.errors.ValidTo && (
                   <span className="text-danger">{formik.errors.ValidTo}</span>
                 )}
@@ -210,7 +216,10 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <label className="text-nowrap">
                   {t("DateOfDecisionOfOccupationalQualificationCouncil")}:
                 </label>
-                <CustomDatePicker onChangeFunction={changeDateOfDecision} />
+                <CustomDatePicker
+                  disabled={true}
+                  onChangeFunction={changeDateOfDecision}
+                />
                 {formik.errors
                   .DateOfDecisionOfOccupationalQualificationCouncil && (
                   <span className="text-danger">
@@ -227,6 +236,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
               <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
                 <label>{t("Field")}</label>
                 <CustomSelect
+                  disabled={true}
                   hasDefaultValue={false}
                   isMulti={false}
                   onChangeFunction={changeField}
@@ -239,6 +249,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
               <div className="col-xxl-6 col-lg-6 col-sm-12 mb-3">
                 <label>{t("SubField")}</label>
                 <CustomSelect
+                  disabled={true}
                   hasDefaultValue={false}
                   isMulti={false}
                   onChangeFunction={changeSubField}
@@ -253,6 +264,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -277,6 +289,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -301,6 +314,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -325,6 +339,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -346,6 +361,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -370,6 +386,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -391,6 +408,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -410,6 +428,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -434,6 +453,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -453,6 +473,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -474,6 +495,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -498,6 +520,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -521,6 +544,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -544,6 +568,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -567,6 +592,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -590,6 +616,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -615,6 +642,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -643,6 +671,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -661,6 +690,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -680,6 +710,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -698,6 +729,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
                 <textarea
                   type="text"
                   rows={3}
+                  readOnly
                   className="form-control"
                   onChange={(e) => {
                     setNewModel({
@@ -725,7 +757,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
           </div>
         </div>
       </form>
-      {!showThirdForm && (
+      {showThirdForm && (
         <ThirdApplyFormRegister model={model} setModel={setModel} />
       )}
     </>

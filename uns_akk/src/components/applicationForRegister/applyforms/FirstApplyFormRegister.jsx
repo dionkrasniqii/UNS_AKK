@@ -66,12 +66,14 @@ export default function FirstApplyFormRegister({
   const levelList =
     levels &&
     levels.length > 0 &&
-    levels.map((obj) => {
-      return {
-        value: obj.levelKKK.levelKKKId,
-        label: obj.levelKKKDescription,
-      };
-    });
+    levels
+      .map((obj) => {
+        return {
+          value: obj.levelKKK.levelKKKId,
+          label: obj.levelKKKDescription,
+        };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label));
 
   function changeLevel(e) {
     setModel({
@@ -328,11 +330,12 @@ export default function FirstApplyFormRegister({
                   </span>
                 )}
               </div>
+              {console.log(EQFLevels)}
               <div className="col-xxl-3 col-lg-4 col-sm-12 mb-3">
                 <label>{t("Level")} KEK</label>
                 <CustomSelect
                   onChangeFunction={changeLevelEQF}
-                  optionsList={EQFLevels}
+                  optionsList={EQFLevels.sort((a, b) => a.label > b.label)}
                   isMulti={false}
                 />
                 {formik.errors.LevelKKKId && (
@@ -671,7 +674,7 @@ export default function FirstApplyFormRegister({
           </div>
         </div>
       </form>
-      {!showSecondForm == true && (
+      {showSecondForm == true && (
         <SecondApplyFormRegister model={model} setModel={setModel} />
       )}
     </>

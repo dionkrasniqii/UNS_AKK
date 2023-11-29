@@ -102,14 +102,14 @@ export default function Login(props) {
         <div className="col-md-8 col-lg-6 col-xl-4">
           <form onSubmit={formik.handleSubmit}>
             <div className="card">
-              {/* <div className='text-center'>
-                    <img
-                      src={logo}
-                      alt=''
-                      height={60}
-                      className='mx-auto mt-2'
-                    />
-                </div> */}
+              <div className="text-center">
+                <img
+                  src={"https://akkks.rks-gov.net/Template/img/2logos.png"}
+                  alt=""
+                  height={60}
+                  className="mx-auto mt-2"
+                />
+              </div>
               <div className="card-body p-4">
                 <div className="text-center mb-4">
                   <h4 className="text-uppercase mt-0">{t("Login")}</h4>

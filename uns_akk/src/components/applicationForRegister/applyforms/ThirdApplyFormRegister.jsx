@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 export default function ThirdApplyFormRegister({ model, setModel }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [load, setLoad] = useState(false);
   const CreateCompetencesSchema = Yup.object().shape({
     CompetenceName: Yup.string().required(t("FillField")),
     TypeOfCompetence: Yup.string().required(t("FillField")),
@@ -44,14 +45,15 @@ export default function ThirdApplyFormRegister({ model, setModel }) {
   });
 
   async function SubmitForm() {
+    setLoad(true);
     const response = await CrudProvider.createItemWithFile(
       "QualificationAPI/CreateQualificationData",
       model
     ).then((res) => {
-      console.log(res);
       if (res) {
         if (res.statusCode === 200) {
           navigate("/register-applications-list");
+          setLoad(false);
           toast.success(t("DataSavedSuccessfully"));
         } else {
           toast.error(res.errorMessages[0]);
@@ -186,12 +188,19 @@ export default function ThirdApplyFormRegister({ model, setModel }) {
               {t("Discard")}
             </Link>
             <li className="next list-inline-item float-end">
-              <button
-                type="submit"
-                className="btn btn-success waves-effect waves-light"
-              >
-                {t("Apply")}
-              </button>
+              {!load ? (
+                <button
+                  type="submit"
+                  className="btn btn btn-primary btn-soft-blue rounded-pill "
+                >
+                  {t("Perfundoni")}
+                </button>
+              ) : (
+                <div
+                  className="spinner-border text-primary m-2 text-center"
+                  role="status"
+                />
+              )}
             </li>
           </ul>
         </div>

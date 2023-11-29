@@ -7,6 +7,7 @@ export default function CustomSelect({
   isMulti,
   hasDefaultValue,
   defaultValue,
+  disabled,
 }) {
   const selectStyle = {
     // borderRadius: '4px',
@@ -28,6 +29,7 @@ export default function CustomSelect({
   // };
   return hasDefaultValue && defaultValue !== null ? (
     <Select
+      disabled={disabled ? true : false}
       key={defaultValue}
       style={selectStyle}
       allowClear
@@ -36,22 +38,23 @@ export default function CustomSelect({
       onChange={onChangeFunction}
       options={optionsList}
       mode={isMulti ? "multiple" : "single"}
-      maxTagCount='responsive'
-      optionFilterProp='children'
+      maxTagCount="responsive"
+      optionFilterProp="children"
       filterOption={(input, option) =>
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
     />
   ) : (
     <Select
+      disabled={disabled ? true : false}
       style={selectStyle}
       allowClear
       showSearch
-      maxTagCount='responsive'
+      maxTagCount="responsive"
       onChange={onChangeFunction}
       options={optionsList}
       mode={isMulti ? "multiple" : "single"}
-      optionFilterProp='children'
+      optionFilterProp="children"
       filterOption={(input, option) =>
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
