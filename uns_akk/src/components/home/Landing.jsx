@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CrudProvider from "../../provider/CrudProvider";
 import BarChart from "../charts/BarChart";
+import Loading from "../loading/Loading";
 import {
   FaPhone,
   FaEnvelope,
@@ -10,11 +11,14 @@ import {
   FaCertificate,
   FaHandPointRight,
 } from "react-icons/fa";
+import BarChartForLanding from "../charts/BarChartForLanding";
+import { InfinitySpin, ThreeCircles } from "react-loader-spinner";
 
 export default function Landing() {
   const { t } = useTranslation();
   const [data, setData] = useState({});
   const [levels, setLevels] = useState([]);
+  const [secondStats, setSecondStats] = useState({});
   const [openAccordion, setOpenAccordion] = useState("");
   const langId = localStorage.getItem("i18nextLng");
 
@@ -26,6 +30,17 @@ export default function Landing() {
             switch (res.statusCode) {
               case 200:
                 setData(res.result);
+                break;
+            }
+          }
+        }
+      ),
+      CrudProvider.getAll("StatisticsAPI/GetStatisticsForLandingv2").then(
+        (res) => {
+          if (res) {
+            switch (res.statusCode) {
+              case 200:
+                setSecondStats(res.result);
                 break;
             }
           }
@@ -87,7 +102,19 @@ export default function Landing() {
           <div className="col-10">
             <div className="card">
               <div className="card-body" style={{ height: "385px" }}>
-                <BarChart data={data2} />
+                {/* <BarChart data={data2} /> */}
+                {secondStats && Object.keys(secondStats).length > 0 ? (
+                  <BarChartForLanding
+                    data={secondStats}
+                    description={
+                      "Institucionet e regjistruara ne 3 vitet e fundit "
+                    }
+                  />
+                ) : (
+                  <div className="d-flex justify-content-center ">
+                    <InfinitySpin width="200" color="blue" />
+                  </div>
+                )}
               </div>
             </div>
           </div>
