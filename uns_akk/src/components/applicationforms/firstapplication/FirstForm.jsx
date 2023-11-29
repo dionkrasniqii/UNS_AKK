@@ -501,7 +501,7 @@ export default function FirstForm({ model, setModel, ...rest }) {
                       {t("InstitutionActivity")}
                     </label>
                     <CustomSelect
-                      isMulti={false}
+                      isMulti={true}
                       onChangeFunction={changeActivity}
                       optionsList={activityList}
                     />

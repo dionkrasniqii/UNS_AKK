@@ -725,7 +725,7 @@ export default function SecondApplyFormRegister({ model, setModel }) {
           </div>
         </div>
       </form>
-      {showThirdForm && (
+      {!showThirdForm && (
         <ThirdApplyFormRegister model={model} setModel={setModel} />
       )}
     </>

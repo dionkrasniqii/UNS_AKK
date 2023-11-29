@@ -4,7 +4,7 @@ import Loading from "../../../loading/Loading";
 import CrudProvider from "../../../../provider/CrudProvider";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-
+import suplement from "../../../../assets/docs/Shtojca.docx";
 export default function SuplementDetails() {
   const { suplementId } = useParams();
   const [loadData, setLoadData] = useState(true);
@@ -39,6 +39,9 @@ export default function SuplementDetails() {
       setLoadPrint(false);
     });
   }
+  function printSumplementV2() {
+    window.open(suplement, "_blank");
+  }
   return (
     <div className="content-page-landing animation">
       <div className="content">
@@ -50,7 +53,10 @@ export default function SuplementDetails() {
               <div className="card-body">
                 <div className="col-md-12 text-end">
                   {!loadPrint ? (
-                    <button className="btn btn-danger" onClick={printSuplement}>
+                    <button
+                      className="btn btn-danger"
+                      onClick={printSumplementV2}
+                    >
                       <span className="btn-label">
                         <i className="fe-printer"></i>
                       </span>

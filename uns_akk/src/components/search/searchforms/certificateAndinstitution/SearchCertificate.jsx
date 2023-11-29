@@ -6,17 +6,20 @@ import img_certification from "../../../../assets/images/certificate.png";
 import { toast } from "react-toastify";
 import DataTablev2 from "../../../custom/DataTablev2";
 import { Checkbox } from "antd";
+import { Link } from "react-router-dom";
 
 export default function SearchCertificate() {
   const { t } = useTranslation();
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
+  const [checked, setChecked] = useState("");
   const [model, setModel] = useState({
     LangId: localStorage.getItem("i18nextLng"),
     PersonalNr: "",
     CertificateNr: "",
     NameSurname: "",
     Keyword: "",
+    CertificateType: "",
   });
 
   const columns = [
@@ -81,6 +84,10 @@ export default function SearchCertificate() {
         toast.info(t("FillOneOfSearchingFields"));
         return;
       }
+      if (!model.CertificateType) {
+        toast.info("Zgjedhni llojin diplomë apo certifikatë");
+        return;
+      }
       await CrudProvider.createItem(
         "CertificatesAPI/GetCertificates",
         model
@@ -112,6 +119,9 @@ export default function SearchCertificate() {
   }
   return (
     <div className="container card mt-5">
+      <div className="col-xxl-12 col-lg-12 col-sm-12 text-end mt-2">
+        <Link to={"/search-partial-certificate"}>Certifikatat të pjesshme</Link>
+      </div>
       <div className="card-body">
         <div className="tab-content">
           <div className="row d-flex">
@@ -124,46 +134,46 @@ export default function SearchCertificate() {
                 />
               </div>
               <div className="col-xxl-6 col-lg-6 text-start order-sm-1 order-lg-1 order-xl-1 order-xxl-1">
-              <div className="col-xxl-12 d-flex justify-content-end mb-3">
+                <div className="col-xxl-12 d-flex justify-content-end mb-3">
                   <Checkbox
-                    name="1"
-                    // checked={checked === "1"}
-                    // onChange={(e) => {
-                    //   if (e.target.checked) {
-                    //     setModel({
-                    //       ...model,
-                    //       GroupOfEducation: 1,
-                    //     });
-                    //     setChecked(e.target.name);
-                    //   } else {
-                    //     setModel({
-                    //       ...model,
-                    //       GroupOfEducation: null,
-                    //     });
-                    //     setChecked("");
-                    //   }
-                    // }}
+                    name="2"
+                    checked={checked === "2"}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setModel({
+                          ...model,
+                          CertificateType: 2,
+                        });
+                        setChecked(e.target.name);
+                      } else {
+                        setModel({
+                          ...model,
+                          CertificateType: null,
+                        });
+                        setChecked("");
+                      }
+                    }}
                   >
                     Diplomë
                   </Checkbox>
                   <Checkbox
-                    name="2"
-                    // checked={checked === "2"}
-                    // onChange={(e) => {
-                    //   if (e.target.checked) {
-                    //     setModel({
-                    //       ...model,
-                    //       GroupOfEducation: 2,
-                    //     });
-                    //     setChecked(e.target.name);
-                    //   } else {
-                    //     setModel({
-                    //       ...model,
-                    //       GroupOfEducation: null,
-                    //     });
-                    //     setChecked("");
-                    //   }
-                    // }}
+                    name="1"
+                    checked={checked === "1"}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setModel({
+                          ...model,
+                          CertificateType: 1,
+                        });
+                        setChecked(e.target.name);
+                      } else {
+                        setModel({
+                          ...model,
+                          CertificateType: null,
+                        });
+                        setChecked("");
+                      }
+                    }}
                   >
                     Certifikatë
                   </Checkbox>

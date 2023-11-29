@@ -11,6 +11,7 @@ export default function SearchCertificateSuplement() {
 
   const [qualificationStandarts, setQualificationStandarts] = useState([]);
   const [EQFLevel, setEQFLevels] = useState([]);
+  const [KKKLevel, setKKKLevels] = useState([]);
   const [load, setLoad] = useState(false);
   const [data, setData] = useState([]);
   const [fields, setFields] = useState([]);
@@ -70,6 +71,13 @@ export default function SearchCertificateSuplement() {
           }
         }
       }),
+      CrudProvider.getAllWithLang("LevelAPI/Get").then((res) => {
+        if (res) {
+          if (res.statusCode === 200) {
+            setKKKLevels(res.result);
+          }
+        }
+      }),
       CrudProvider.getAllWithLang(
         "ProfessionGroupAPI/GetAllMainProfessions"
       ).then((res) => {
@@ -86,6 +94,13 @@ export default function SearchCertificateSuplement() {
     setModel((prev) => ({
       ...prev,
       EQFLevel: e,
+    }));
+  }
+
+  function changeKKKLevelId(e) {
+    setModel((prev) => ({
+      ...prev,
+      KKKLevel: e,
     }));
   }
   function changeQualificationStandartId(e) {
@@ -213,6 +228,15 @@ export default function SearchCertificateSuplement() {
                 />
               </div>
               <div className="col-xxl-12 col-lg-12 mb-3">
+                <label>Niveli i KKK:</label>
+                <CustomSelect
+                  onChangeFunction={changeKKKLevelId}
+                  hasDefaultValue={false}
+                  isMulti={false}
+                  optionsList={KKKLevel}
+                />
+              </div>
+              <div className="col-xxl-12 col-lg-12 mb-3">
                 <label>Niveli i KEK:</label>
                 <CustomSelect
                   onChangeFunction={changeEQFLevelId}
@@ -253,7 +277,7 @@ export default function SearchCertificateSuplement() {
       <div className="col-xxl-12 col-lg-12 col-sm-12 animation">
         <DataTablev2
           dataSource={data}
-          title={"Shtojcat e diplomes"}
+          title={"Shtojcat e diplomës/certifikatës"}
           columns={columns}
         />
       </div>

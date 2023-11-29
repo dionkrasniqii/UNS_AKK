@@ -29,7 +29,7 @@ export default function SearchProfessionalStandards() {
       cell: (row) => {
         return (
           <a
-            href={`/qualification-standard-details/${row.qualificationStandart?.qualificationStandartId}`}
+            href={`/professional-standard-details/${row.qualificationStandart?.qualificationStandartId}`}
             target="_blank"
           >
             {row.name}
@@ -123,7 +123,7 @@ export default function SearchProfessionalStandards() {
               <form className="form-horizontal">
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                    {t("Name")}:
+                    Titulli kualifikimit:
                   </label>
                   <div className=" col-xl-7">
                     <input
@@ -240,7 +240,7 @@ export default function SearchProfessionalStandards() {
         <div className="flip-card-animation">
           <DataTablev2
             dataSource={data}
-            title={t("QualificationStandarts")}
+            title={"Standartet e profesionit"}
             columns={columns}
           />
         </div>

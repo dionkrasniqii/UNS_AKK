@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import BarChartForLanding from "../charts/BarChartForLanding";
 import { InfinitySpin, ThreeCircles } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 export default function Landing() {
   const { t } = useTranslation();
@@ -266,6 +267,29 @@ export default function Landing() {
                         })}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="content mb-3">
+        <div className="container-fluid d-flex justify-content-center">
+          <div className="col-10">
+            <div className="card">
+              <div className="card-body">
+                <Link
+                  to={
+                    "https://arbk.rks-gov.net/desk/inc/media/FA0E6C9D-2422-481E-8047-A2AFB4B9124C.pdf"
+                  }
+                  target="_blank"
+                  className="btn btn-bordered-secondary"
+                  id="topnav-dashboard"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  NACE Kodi i veprimtarive ekonomike
+                </Link>
               </div>
             </div>
           </div>

@@ -49,13 +49,11 @@ import LevelDetails from "../components/search/details/level/LevelDetails";
 import DecisionDetails from "../components/search/details/decision/DecisionDetails";
 import InstitutionDetails from "../components/search/details/institution/InstitutionDetails";
 import PersonDetails from "../components/personinstitutions/PersonDetails";
-import SearchingForms from "../components/search/searchforms/certificateAndinstitution/SearchingForms";
 import SearchProfessionalStandards from "../components/search/searchforms/professionalstandards/SearchProfessionalStandards";
 import SearchCompetencies from "../components/search/searchforms/competencies/SearchCompetencies";
 import QualificationStandart from "../components/qualificationstandarts/QualificationStandart";
 import CreateQualificationStandart from "../components/qualificationstandarts/CreateQualificationStandart";
 import EditQualificationStandart from "../components/qualificationstandarts/EditQualificationStandart";
-import QualificationStandartDetails from "../components/search/details/qualificationStandart/QualificatonStandartDetails";
 import ComptenceDetails from "../components/search/details/competence/CompetenceDetails";
 import SubmitEmail from "../components/forgotpassword/SubmitEmail";
 import ForgotPassword from "../components/forgotpassword/ForgotPassword";
@@ -68,11 +66,15 @@ import SearchCertificate from "../components/search/searchforms/certificateAndin
 import ListOfProfessions from "../components/search/searchforms/professionClassification/ListOfProfessions";
 import ApplicationForRegister from "../components/applicationForRegister/applyforms/ApplicationForRegister";
 import ApplicationsForRegisterListInstitution from "../components/applicationForRegister/applicationsList/ApplicationsForRegisterListInstitution";
-import EditRegisterApplication from "../components/applicationForRegister/view/ViewRegisterApplication";
 import ViewRegisterApplication from "../components/applicationForRegister/view/ViewRegisterApplication";
 import ApplicationsForRegisterListAKK from "../components/applicationForRegister/applicationsList/ApplicationsForRegisterListAKK";
 import SearchQualifications from "../components/search/searchforms/qualifications/SearchQualifications";
 import SuplementDetails from "../components/search/details/suplement/SuplementDetails";
+import SearchQualificationStandart from "../components/search/searchforms/searchQualificationStandards/SearchQualificationStandard";
+import ProfessionalStandartDetails from "../components/search/details/professionalStandards/ProfessionalStandartDetails";
+import QualificationStandardsDetails from "../components/search/details/qualificationStandards/QualificationStandardsDetails";
+import CouncilDetails from "../components/search/details/council/CouncilDetails";
+import SearchPartialCertificate from "../components/search/searchforms/searchPartialCertificate/SearchPartialCertificate";
 
 export const AppRoutes = (props) => {
   const ROLES = {
@@ -169,7 +171,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           <Route
             path="/editinstitutions/:id"
             element={
@@ -414,7 +415,6 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           {/* Certification */}
           <Route
             path="/certificationdetails/:id"
@@ -497,6 +497,18 @@ export const AppRoutes = (props) => {
             element={<SearchProfessionalStandards />}
           />
           <Route
+            path="/qualification-standards-search"
+            element={<SearchQualificationStandart />}
+          />
+          <Route
+            path="/qualification-standards-details/:id"
+            element={<QualificationStandardsDetails />}
+          />
+          <Route
+            path="/search-partial-certificate"
+            element={<SearchPartialCertificate />}
+          />
+          <Route
             path="/compentencies-search"
             element={<SearchCompetencies />}
           />
@@ -504,7 +516,6 @@ export const AppRoutes = (props) => {
             path="/classification-of-professions"
             element={<ListOfProfessions />}
           />
-
           <Route
             path="/qualifications-search"
             element={<SearchQualifications />}
@@ -650,11 +661,11 @@ export const AppRoutes = (props) => {
               />
             }
           />
-
           <Route
             path="/occupational-qualification-councils-search"
             element={<SearchOccupationalQualificationCouncil />}
           />
+          <Route path="/council-details/:id" element={<CouncilDetails />} />
           <Route
             path="/certificate-suplement-search"
             element={<SearchCertificateSuplement />}
@@ -663,7 +674,6 @@ export const AppRoutes = (props) => {
             path="/suplementdetails/:suplementId"
             element={<SuplementDetails />}
           />
-
           <Route path="/institutions-search" element={<SearchInstitution />} />
           {/* Institution User */}
           <Route
@@ -818,14 +828,12 @@ export const AppRoutes = (props) => {
             }
           />
           <Route
-            path="/qualification-standard-details/:id"
-            element={<QualificationStandartDetails />}
+            path="/professional-standard-details/:id"
+            element={<ProfessionalStandartDetails />}
           />
-
           {/*Reset password */}
           <Route path="/submit-email" element={<SubmitEmail />} />
           <Route path="/reset-password/:id" element={<ForgotPassword />} />
-
           {/* Application for user */}
           <Route
             path="/institution-application"

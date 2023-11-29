@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DataTablev2 from "../../../custom/DataTablev2";
 
-export default function QualificationStandartDetails() {
+export default function ProfessionalStandartDetails() {
   const { id } = useParams();
   const [data, setData] = useState({});
   const { t } = useTranslation();
@@ -65,7 +65,7 @@ export default function QualificationStandartDetails() {
               <div className="text-center card-body ">
                 <div>
                   <h3 className="title mb-3">
-                    {t("QualificationStandardDetails")}
+                    Të dhënat e standardit profesionit
                   </h3>
                   <hr />
                   <div className="row">

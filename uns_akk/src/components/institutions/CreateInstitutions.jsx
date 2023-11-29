@@ -141,7 +141,7 @@ export default function CreateInstitutions({ authState }) {
     Name: Yup.string().required(t("PleaseFillInstitutionName")),
     UniqueNumber: Yup.number()
       .test("is-valid", t("UniqueNumberMustContain"), (value) =>
-        /^8\d{8}$/.test(value)
+        /^[0-9]{5}$|^[0-9]{9}$/.test(value)
       )
       .required(t("PleaseFillUniqueNumber")),
     MunicipalityId: Yup.string().required(t("PleaseFillMunicipality")),
@@ -156,7 +156,7 @@ export default function CreateInstitutions({ authState }) {
     Web: Yup.string().required(t("PleaseFillWeb")),
     Documents: Yup.string().required(t("PleaseFillDocument")),
     StatusActivityId: Yup.string().required(t("PleaseChooseStatusActivity")),
-    ActivityId: Yup.string().required(t("PleaseChooseInstitutionActivity")),
+    ActivityId: Yup.mixed().required(t("PleaseChooseInstitutionActivity")),
   });
   const formik = useFormik({
     initialValues: {},
@@ -168,26 +168,26 @@ export default function CreateInstitutions({ authState }) {
 
   return (
     <div className={authState ? "col-xxl-12" : "container mt-5"}>
-      <div className='card'>
-        <div className='card-body'>
-          <h3 className=' mb-3'>
+      <div className="card">
+        <div className="card-body">
+          <h3 className=" mb-3">
             {authState
               ? t("RegisterInstitution")
               : t("InstitutionDetailsModal")}
           </h3>
           <form onSubmit={formik.handleSubmit}>
             <ProgressBar model={model} />
-            <div className='tab-pane active' id='account-2'>
-              <div className='row'>
-                <div className='col-12'>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>
+            <div className="tab-pane active" id="account-2">
+              <div className="row">
+                <div className="col-12">
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">
                       {t("InstitutionName")}
                     </label>
-                    <div className='col-md-9'>
+                    <div className="col-md-9">
                       <input
-                        type='text'
-                        className='form-control'
+                        type="text"
+                        className="form-control"
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -197,53 +197,53 @@ export default function CreateInstitutions({ authState }) {
                         }}
                       />
                       {formik.errors.Name && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.Name}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">
                       {t("InstitutionStatus")}
                     </label>
-                    <div className='col-md-9'>
+                    <div className="col-md-9">
                       <CustomSelect
                         onChangeFunction={changeStatus}
                         optionsList={statusList}
                         isMulti={false}
                       />
                       {formik.errors.StatusActivityId && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.StatusActivityId}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">
                       {t("InstitutionActivity")}
                     </label>
-                    <div className='col-md-9'>
+                    <div className="col-md-9">
                       <CustomSelect
                         onChangeFunction={changeActivity}
                         optionsList={activityList}
-                        isMulti={false}
+                        isMulti={true}
                       />
                       {formik.errors.ActivityId && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.ActivityId}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">
                       {t("UniqueNumber")}
                     </label>
-                    <div className='col-md-9'>
+                    <div className="col-md-9">
                       <input
-                        type='number'
+                        type="number"
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -251,39 +251,39 @@ export default function CreateInstitutions({ authState }) {
                           });
                           formik.setFieldValue("UniqueNumber", e.target.value);
                         }}
-                        className='form-control'
+                        className="form-control"
                       />
                       {formik.errors.UniqueNumber && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.UniqueNumber}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">
                       {t("Municipality")}
                     </label>
-                    <div className='col-md-9'>
+                    <div className="col-md-9">
                       <CustomSelect
                         onChangeFunction={changeCity}
                         optionsList={citiesList}
                         isMulti={false}
                       />
                       {formik.errors.MunicipalityId && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.MunicipalityId}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">
                       {t("Address")}
                     </label>
-                    <div className='col-md-9'>
+                    <div className="col-md-9">
                       <input
-                        type='text'
+                        type="text"
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -291,23 +291,23 @@ export default function CreateInstitutions({ authState }) {
                           });
                           formik.setFieldValue("Address", e.target.value);
                         }}
-                        className='form-control'
+                        className="form-control"
                       />
                       {formik.errors.Address && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.Address}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">
                       {t("PostalCode")}
                     </label>
-                    <div className='col-md-9'>
+                    <div className="col-md-9">
                       <input
-                        type='number'
-                        className='form-control'
+                        type="number"
+                        className="form-control"
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -317,20 +317,20 @@ export default function CreateInstitutions({ authState }) {
                         }}
                       />
                       {formik.errors.PostalCode && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.PostalCode}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">
                       {t("PhoneNumber")}
                     </label>
-                    <div className='col-md-9'>
+                    <div className="col-md-9">
                       <input
-                        type='text'
-                        className='form-control'
+                        type="text"
+                        className="form-control"
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -340,17 +340,17 @@ export default function CreateInstitutions({ authState }) {
                         }}
                       />
                       {formik.errors.PhoneNumber && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.PhoneNumber}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>Email</label>
-                    <div className='col-md-9'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">Email</label>
+                    <div className="col-md-9">
                       <input
-                        type='email'
+                        type="email"
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -358,22 +358,22 @@ export default function CreateInstitutions({ authState }) {
                           });
                           formik.setFieldValue("Email", e.target.value);
                         }}
-                        className='form-control'
+                        className="form-control"
                       />
                       {formik.errors.Email && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.Email}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">
                       {t("Web")}
                     </label>
-                    <div className='col-md-9'>
+                    <div className="col-md-9">
                       <input
-                        type='text'
+                        type="text"
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -381,19 +381,19 @@ export default function CreateInstitutions({ authState }) {
                           });
                           formik.setFieldValue("Web", e.target.value);
                         }}
-                        className='form-control'
+                        className="form-control"
                       />
                       {formik.errors.Web && (
-                        <span className='text-danger'>{formik.errors.Web}</span>
+                        <span className="text-danger">{formik.errors.Web}</span>
                       )}
                     </div>
                   </div>
-                  <div className='row mb-3'>
-                    <label className='col-md-3 col-form-label'>Logo</label>
-                    <div className='col-md-9'>
+                  <div className="row mb-3">
+                    <label className="col-md-3 col-form-label">Logo</label>
+                    <div className="col-md-9">
                       <input
-                        type='file'
-                        accept='image/*'
+                        type="file"
+                        accept="image/*"
                         onChange={(e) => {
                           setModel({
                             ...model,
@@ -401,10 +401,10 @@ export default function CreateInstitutions({ authState }) {
                           });
                           formik.setFieldValue("Documents", e.target.value);
                         }}
-                        className='form-control'
+                        className="form-control"
                       />
                       {formik.errors.Documents && (
-                        <span className='text-danger'>
+                        <span className="text-danger">
                           {formik.errors.Documents}
                         </span>
                       )}
@@ -412,39 +412,39 @@ export default function CreateInstitutions({ authState }) {
                   </div>
                   {!authState && (
                     <>
-                      <div className='row mb-3'>
-                        <label className='col-md-3 col-form-label'>
+                      <div className="row mb-3">
+                        <label className="col-md-3 col-form-label">
                           {t("BusinessLicense")}
                         </label>
-                        <div className='col-md-9'>
+                        <div className="col-md-9">
                           <input
-                            type='file'
-                            accept='.jpg,.png,.jpeg,.pdf'
+                            type="file"
+                            accept=".jpg,.png,.jpeg,.pdf"
                             onChange={(e) => {
                               setModel((prev) => ({
                                 ...prev,
                                 BusinessLicense: e.target.files[0],
                               }));
                             }}
-                            className='form-control'
+                            className="form-control"
                           />
                         </div>
                       </div>
-                      <div className='row mb-3'>
-                        <label className='col-md-3 col-form-label'>
+                      <div className="row mb-3">
+                        <label className="col-md-3 col-form-label">
                           {t("VATLicense")}
                         </label>
-                        <div className='col-md-9'>
+                        <div className="col-md-9">
                           <input
-                            type='file'
-                            accept='.jpg,.png,.jpeg,.pdf'
+                            type="file"
+                            accept=".jpg,.png,.jpeg,.pdf"
                             onChange={(e) => {
                               setModel((prev) => ({
                                 ...prev,
                                 VATLicense: e.target.files[0],
                               }));
                             }}
-                            className='form-control'
+                            className="form-control"
                           />
                         </div>
                       </div>
@@ -453,32 +453,32 @@ export default function CreateInstitutions({ authState }) {
                 </div>
               </div>
             </div>
-            <ul className='list-inline mb-0 wizard'>
+            <ul className="list-inline mb-0 wizard">
               <Link
-                to='/institutions'
-                className='btn btn-danger waves-effect waves-light float-start'
+                to="/institutions"
+                className="btn btn-danger waves-effect waves-light float-start"
               >
-                <span className='btn-label'>
-                  <i className='fe-arrow-left'></i>
+                <span className="btn-label">
+                  <i className="fe-arrow-left"></i>
                 </span>
                 {t("Discard")}
               </Link>
-              <li className='next list-inline-item float-end'>
+              <li className="next list-inline-item float-end">
                 {!load ? (
                   <button
-                    type='submit'
-                    className='btn btn-success waves-effect waves-light'
+                    type="submit"
+                    className="btn btn-success waves-effect waves-light"
                   >
-                    <span className='btn-label'>
-                      <i className='fe-check'></i>
+                    <span className="btn-label">
+                      <i className="fe-check"></i>
                     </span>
                     {t("Save")}
                   </button>
                 ) : (
-                  <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                  <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
                     <div
-                      className='spinner-border text-primary m-2 text-center'
-                      role='status'
+                      className="spinner-border text-primary m-2 text-center"
+                      role="status"
                     />
                   </div>
                 )}

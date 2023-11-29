@@ -45,17 +45,17 @@ export default function CertificateDetails() {
   //   }
   // }
   return (
-    <div className='content-page-landing animation'>
-      <div className='content'>
-        <div className='container d-flex justify-content-center'>
-          <div className='col-xxl-6'>
-            <div className='card'>
+    <div className="content-page-landing animation">
+      <div className="content">
+        <div className="container d-flex justify-content-center">
+          <div className="col-xxl-6">
+            <div className="card">
               {Object.keys(data).length > 0 && !load ? (
-                <div className='text-center card-body '>
+                <div className="text-center card-body ">
                   <div>
-                    <h3 className='title mb-3'>{t("CandidateDetails")}</h3>
+                    <h3 className="title mb-3">{t("CandidateDetails")}</h3>
                     <hr />
-                    <div className='row text-start'>
+                    <div className="row text-start">
                       {/* {data.canPrintCertificate && (
                           <>
                             <span className='ms-2 mb-2 font-20'>
@@ -79,51 +79,51 @@ export default function CertificateDetails() {
                           </>
                         )} */}
 
-                      <label className='text-uppercase text-muted font-13'>
+                      <label className="text-uppercase text-muted font-13">
                         {t("Name") + " " + t("Surname")}:
                       </label>
-                      <span className='ms-2 font-20'>{data.nameSurname}</span>
+                      <span className="ms-2 font-20">{data.nameSurname}</span>
                       <hr />
-                      <label className='text-uppercase text-muted font-13'>
+                      <label className="text-uppercase text-muted font-13">
                         {t("Institution")}:
                       </label>
                       <span
-                        className='ms-2 font-20'
+                        className="ms-2 font-20"
                         href={`/institutiondetails/${data.institution.institutionId}`}
-                        target='_blank'
+                        target="_blank"
                       >
                         <a
                           href={`/institutiondetails/${data.institutionId}`}
-                          target='_blank'
+                          target="_blank"
                         >
                           {data.institution}
                         </a>
                       </span>
                       <hr />
-                      <label className='text-uppercase text-muted font-13'>
+                      <label className="text-uppercase text-muted font-13">
                         {t("BirthDate")}:
                       </label>
-                      <span className='ms-2 font-20'>
+                      <span className="ms-2 font-20">
                         {data.dateOfBirth &&
                           new Date(
                             data.dateOfBirth.split("T")[0]
                           ).toLocaleDateString("en-GB")}
                       </span>
                       <hr />
-                      <label className='text-uppercase text-muted font-13'>
+                      <label className="text-uppercase text-muted font-13">
                         {t("Level Description")}:
                       </label>
-                      <span className='ms-2 font-20'>
+                      <span className="ms-2 font-20">
                         {data.levelDescription}
                       </span>
                       <hr />
-                      <label className='text-uppercase text-muted font-13'>
+                      <label className="text-uppercase text-muted font-13">
                         {t("QualificationName")}:
                       </label>
-                      <span className='ms-2 font-20'>
+                      <span className="ms-2 font-20">
                         <a
-                          href={`/qualificationdetails/${data.qualificationId}/${data.municipalityId}/${data.institutionId}`}
-                          target='_blank'
+                          href={`/qualificationdetails/${data.qualificationId}`}
+                          target="_blank"
                         >
                           {data.qualificationName}
                         </a>
@@ -131,14 +131,14 @@ export default function CertificateDetails() {
                       <hr />
                       {data.qualificationChilds.length > 0 && (
                         <>
-                          <label className='text-uppercase text-muted font-13'>
+                          <label className="text-uppercase text-muted font-13">
                             {t("SubQualifications")}:
                           </label>
-                          <span className=' font-20'>
+                          <span className=" font-20">
                             {data.qualificationChilds.map((obj, index) => {
                               return (
                                 obj.qualificationChildName && (
-                                  <span className='ms-2 font-20 ' key={index}>
+                                  <span className="ms-2 font-20 " key={index}>
                                     {obj.qualificationChildName}
                                     <br />
                                   </span>
@@ -149,10 +149,10 @@ export default function CertificateDetails() {
                           <hr />
                         </>
                       )}
-                      <label className='text-uppercase text-muted font-13'>
+                      <label className="text-uppercase text-muted font-13">
                         {t("ValidFrom")}:
                       </label>
-                      <span className='ms-2 font-20'>
+                      <span className="ms-2 font-20">
                         {data.validFrom && data.validFrom
                           ? new Date(
                               data.validFrom.split("T")[0]
@@ -160,10 +160,10 @@ export default function CertificateDetails() {
                           : ""}
                       </span>
                       <hr />
-                      <label className='text-uppercase text-muted font-13'>
+                      <label className="text-uppercase text-muted font-13">
                         {t("ValidTo")}:
                       </label>
-                      <span className='ms-2 font-20'>
+                      <span className="ms-2 font-20">
                         {data.validTo && data.validTo
                           ? new Date(
                               data.validTo.split("T")[0]
@@ -172,13 +172,13 @@ export default function CertificateDetails() {
                       </span>
                       <hr />
                     </div>
-                    <div className='col-xxl-12 col-lg-12 col-sm-12 text-start'>
+                    <div className="col-xxl-12 col-lg-12 col-sm-12 text-start">
                       <Link
-                        to='/'
-                        className='btn btn-soft-danger waves-effect waves-light float-start'
+                        to="/"
+                        className="btn btn-soft-danger waves-effect waves-light float-start"
                       >
-                        <span className='btn-label'>
-                          <i className='fe-arrow-left'></i>
+                        <span className="btn-label">
+                          <i className="fe-arrow-left"></i>
                         </span>
                         {t("Back")}
                       </Link>
@@ -186,10 +186,10 @@ export default function CertificateDetails() {
                   </div>
                 </div>
               ) : (
-                <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+                <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
                   <div
-                    className='spinner-border text-primary m-2 text-center'
-                    role='status'
+                    className="spinner-border text-primary m-2 text-center"
+                    role="status"
                   />
                 </div>
               )}

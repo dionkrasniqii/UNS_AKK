@@ -1,60 +1,72 @@
 import React, { useEffect, useState } from "react";
 import DataTablev2 from "../../../custom/DataTablev2";
-import { toast } from "react-toastify";
-import CrudProvider from "../../../../provider/CrudProvider";
-import { useTranslation } from "react-i18next";
 import CustomSelect from "../../../custom/CustomSelect";
 import CustomDatePicker from "../../../custom/CustomDatePicker";
+import CrudProvider from "../../../../provider/CrudProvider";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
-export default function SearchQualifications() {
+export default function SearchPartialCertificate() {
   const { t } = useTranslation();
   const [data, setData] = useState([]);
-  const [institutions, setInstitutions] = useState([]);
   const [kkkLevels, setKKKLevels] = useState([]);
   const [eqfLevels, setEQFLevels] = useState([]);
-  const [qualificationsTypes, setQualificationsTypes] = useState([]);
-  const [qualificationsStatuses, setQualificationsStatuses] = useState([]);
+  const [fields, setFields] = useState([]);
+  const [subFields, setSubFields] = useState([]);
+  const [professions, setProfessions] = useState([]);
+  const [institutions, setInstitutions] = useState([]);
+  const [partialQualifications, setPartialQualifications] = useState([]);
   const [load, setLoad] = useState(false);
+
   const [model, setModel] = useState({
-    QualificationName: "",
-    InstitutionId: "",
-    QualificationTypeId: "",
-    EQFLevelId: "",
-    LevelKKKId: "",
-    ExpiryDate: "",
-    QualificationStatusId: "",
+    CertificateNr: "",
+    NameSurname: "",
+    LevelKKK: "",
+    LevelKEK: "",
+    Institution: "",
+    ProfessionMainGroup: "",
+    ProfessionGroup: "",
+    ChildProfessionGroup: "",
+    Qualification: "",
   });
   useEffect(() => {
     Promise.all([
-      CrudProvider.getAllWithLang(
-        "InstitutionAPI/GetAllInstitutionsAsSelect"
+      CrudProvider.getAll(
+        "InstitutionDesicionAPI/GetInstitutionAsSelected"
       ).then((res) => {
         if (res) {
           setInstitutions(res.result);
         }
       }),
+      CrudProvider.getAllWithLang(
+        "QualificationAPI/GetQualificationAsSelected"
+      ).then((res) => {
+        if (res) {
+          setPartialQualifications(res.result);
+        }
+      }),
+
       CrudProvider.getAll("EQFLevelAPI/Get").then((res) => {
         if (res) {
           setEQFLevels(res.result);
         }
       }),
-      CrudProvider.getAll("LevelAPI/Get").then((res) => {
+      CrudProvider.getAllWithLang("LevelAPI/Get").then((res) => {
         if (res) {
           setKKKLevels(res.result);
         }
       }),
-      CrudProvider.getAll("QualificationTypeAPI/Get").then((res) => {
+
+      CrudProvider.getAllWithLang(
+        "ProfessionGroupAPI/GetAllMainProfessions"
+      ).then((res) => {
         if (res) {
-          setQualificationsTypes(res.result);
-        }
-      }),
-      CrudProvider.getAll("QualificationAPI/GetQualificationStatus").then(
-        (res) => {
-          if (res) {
-            setQualificationsStatuses(res.result);
+          if (res.statusCode === 200) {
+            setFields(res.result);
           }
         }
-      ),
+      }),
     ]);
   }, []);
 
@@ -95,16 +107,6 @@ export default function SearchQualifications() {
   ];
 
   function clearInputs() {
-    // setModel({
-    //   InstitutionId: "",
-    //   LevelKKKId: "",
-    //   EQFLevelId: "",
-    //   QualificationTypeId: "",
-    //   QualificationStatusId: "",
-    //   QualificationName: "",
-    //   ExpiryDate: "",
-    // });
-    // setData([]);
     window.location.reload();
   }
   async function searchData(e) {
@@ -112,7 +114,7 @@ export default function SearchQualifications() {
     try {
       setLoad(true);
       await CrudProvider.createItem(
-        "QualificationStandartAPI/FilterQualifications",
+        "CertificatesAPI/GetCertificatesPartial",
         model
       ).then((res) => {
         if (res) {
@@ -128,71 +130,97 @@ export default function SearchQualifications() {
       setLoad(false);
     }
   }
-
+  async function getBySubFieldsByMainGroup(id) {
+    await CrudProvider.getItemByIdLang(
+      "ProfessionGroupAPI/GetProfessionByMainGroupId",
+      id
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setSubFields(res.result);
+        }
+      }
+    });
+  }
+  async function getProfessionsBySubField(id) {
+    await CrudProvider.getItemByIdLang(
+      "ProfessionGroupAPI/GetChildProfessionByGroupId",
+      id
+    ).then((res) => {
+      if (res) {
+        if (res.statusCode === 200) {
+          setProfessions(res.result);
+        }
+      }
+    });
+  }
   async function changeInstitution(e) {
     setModel((prev) => ({
       ...prev,
-      InstitutionId: e,
+      Institution: e,
     }));
   }
   async function changeLevelKKK(e) {
     setModel((prev) => ({
       ...prev,
-      LevelKKKId: e,
+      LevelKKK: e,
     }));
   }
   async function changeLevelEQF(e) {
     setModel((prev) => ({
       ...prev,
-      EQFLevelId: e,
+      LevelKEK: e,
     }));
   }
-  async function changeQualificationType(e) {
+  async function changeField(e) {
     setModel((prev) => ({
       ...prev,
-      QualificationTypeId: e,
+      ProfessionMainGroup: e,
+    }));
+    await getBySubFieldsByMainGroup(e);
+  }
+  async function changeSubField(e) {
+    setModel((prev) => ({
+      ...prev,
+      ProfessionGroup: e,
+    }));
+    await getProfessionsBySubField(e);
+  }
+  async function changeProfession(e) {
+    setModel((prev) => ({
+      ...prev,
+      ChildProfessionGroup: e,
     }));
   }
-  async function changeQualificationStatus(e) {
+  async function changeQualification(e) {
     setModel((prev) => ({
       ...prev,
-      QualificationStatusId: e,
-    }));
-  }
-  async function changeExpiryDate(e) {
-    setModel((prev) => ({
-      ...prev,
-      QualificationStatusId: e,
-    }));
-  }
-  async function changeExpiryDate(date, dateString) {
-    setModel((prev) => ({
-      ...prev,
-      ExpiryDate: dateString,
+      ChildProfessionGroup: e,
     }));
   }
   return (
     <div className="container mt-5 bg-light-subtle ">
       <div className="card ">
+        <div className="col-xxl-12 col-lg-12 col-sm-12 text-end mt-2 pe-2">
+          <Link to={"/search-awardingbody"}>Diploma/Certifikata e ofruar</Link>
+        </div>
         <form id="searchForm">
           <div className="card-body">
             <div className="row">
               <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                    Titulli kualifikimit:
+                    Numri certifikatës:
                   </label>
                   <div className=" col-xl-7">
                     <input
                       autoComplete="off"
                       type="text"
                       className="form-control"
-                      placeholder={t("Name")}
-                      defaultValue={model.QualificationName}
                       onChange={(e) =>
                         setModel((prev) => ({
                           ...prev,
-                          QualificationName: e.target.value,
+                          CertificateNr: e.target.value,
                         }))
                       }
                     />
@@ -200,28 +228,22 @@ export default function SearchQualifications() {
                 </div>
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                    {t("Insitution")}:
+                    Emri Mbiemri:
                   </label>
                   <div className="col-xl-7">
-                    <CustomSelect
-                      isMulti={false}
-                      defaultValue={model.InstitutionId}
-                      optionsList={institutions}
-                      hasDefaultValue={false}
-                      onChangeFunction={changeInstitution}
+                    <input
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
+                      onChange={(e) =>
+                        setModel((prev) => ({
+                          ...prev,
+                          NameSurname: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
-                <div className="row mb-3">
-                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                    {t("ExpiryDate")}:
-                  </label>
-                  <div className="col-xl-7">
-                    <CustomDatePicker onChangeFunction={changeExpiryDate} />
-                  </div>
-                </div>
-              </div>
-              <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("Level")} KKK:
@@ -250,27 +272,69 @@ export default function SearchQualifications() {
                 </div>
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                    {t("QualificationType")}:
+                    Ofruesi i kualifikimeve:
                   </label>
                   <div className="col-xl-7">
                     <CustomSelect
                       isMulti={false}
-                      optionsList={qualificationsTypes}
+                      defaultValue={model.InstitutionId}
+                      optionsList={institutions}
                       hasDefaultValue={false}
-                      onChangeFunction={changeQualificationType}
+                      onChangeFunction={changeInstitution}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
+                    Fusha:
+                  </label>
+                  <div className="col-xl-7">
+                    <CustomSelect
+                      isMulti={false}
+                      optionsList={fields}
+                      hasDefaultValue={false}
+                      onChangeFunction={changeField}
                     />
                   </div>
                 </div>
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-                    {t("QualificationStatus")}:
+                    Nënfusha:
                   </label>
                   <div className="col-xl-7">
                     <CustomSelect
                       isMulti={false}
-                      optionsList={qualificationsStatuses}
+                      optionsList={subFields}
                       hasDefaultValue={false}
-                      onChangeFunction={changeQualificationStatus}
+                      onChangeFunction={changeSubField}
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
+                    Profesioni:
+                  </label>
+                  <div className="col-xl-7">
+                    <CustomSelect
+                      isMulti={false}
+                      optionsList={professions}
+                      hasDefaultValue={false}
+                      onChangeFunction={changeProfession}
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
+                    Kualifikimi i pjesshëm:
+                  </label>
+                  <div className="col-xl-7">
+                    <CustomSelect
+                      isMulti={false}
+                      optionsList={partialQualifications}
+                      hasDefaultValue={false}
+                      onChangeFunction={changeQualification}
                     />
                   </div>
                 </div>

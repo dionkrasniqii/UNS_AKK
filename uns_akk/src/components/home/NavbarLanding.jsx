@@ -14,6 +14,10 @@ export default function NavbarLanding() {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [qualificationsDropdownOpen, setQualificationsDropdownOpen] =
     useState(false);
+  const [
+    awardedqwualificationsDropdownOpen,
+    setAwardedQualificationsDropdownOpen,
+  ] = useState(false);
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
   const showMobile = useSelector(
@@ -229,32 +233,55 @@ export default function NavbarLanding() {
                       <i className="ti-pencil me-1" /> {t("ApplyForm")}
                     </Link>
                   </li> */}
-                  <li className="nav-item">
-                    <Link
-                      to={"/search-awardingbody"}
-                      className="nav-link arrow-none text-nowrap fs-5"
-                      id="topnav-dashboard"
+                  <div className="nav-item dropdown">
+                    <a
+                      className="nav-link dropdown-toggle arrow-none text-nowrap fs-5"
+                      id="topnav-layout"
                       role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
+                      // data-bs-toggle="dropdown"
+                      // aria-haspopup="true"
+                      // aria-expanded="true"
+                      onClick={() =>
+                        setAwardedQualificationsDropdownOpen(
+                          !qualificationsDropdownOpen
+                        )
+                      }
                     >
-                      {/* <i className="fe-search me-1" /> */}
-                      {/* {t("SearchForms")} */}
-                      Perfituesit
-                    </Link>
-                  </li>
-                  {/* <li className="nav-item">
-                    <Link
-                      to={"/professional-standards-search"}
-                      className="nav-link arrow-none text-nowrap fs-5"
-                      id="topnav-dashboard"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
+                      Kualifikimi i ofruar
+                      <div className="arrow-down" />
+                    </a>
+
+                    <div
+                      className={`dropdown-menu ${
+                        awardedqwualificationsDropdownOpen ? "show" : ""
+                      }`}
+                      onMouseLeave={() =>
+                        setAwardedQualificationsDropdownOpen(false)
+                      }
+                      aria-labelledby="topnav-layout"
                     >
-                      {t("ProfessionalStandards")}
-                    </Link>
-                  </li> */}
+                      <Link
+                        to={"/search-awardingbody"}
+                        className="nav-link arrow-none text-center text-nowrap fs-5"
+                        id="topnav-dashboard"
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Diploma/Certifikata e ofruar
+                      </Link>
+                      <Link
+                        to={"/search-partial-certificate"}
+                        className="nav-link arrow-none text-center text-nowrap fs-5"
+                        id="topnav-dashboard"
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Certifikata të pjesshme
+                      </Link>
+                    </div>
+                  </div>
                   <div className="nav-item dropdown">
                     <a
                       className="nav-link dropdown-toggle arrow-none text-nowrap fs-5"
@@ -269,14 +296,10 @@ export default function NavbarLanding() {
                         )
                       }
                     >
-                      {/* <i className="fe-search me-1" /> */}
                       Standardet dhe klasifikimi
                       <div className="arrow-down" />
                     </a>
-                    {/* <div
-                      className="dropdown-menu active"
-                      aria-labelledby="topnav-layout"
-                    > */}
+
                     <div
                       className={`dropdown-menu ${
                         qualificationsDropdownOpen ? "show" : ""
@@ -294,19 +317,18 @@ export default function NavbarLanding() {
                       >
                         Kualifikimet
                       </Link>
-
                       <Link
-                        // to={"/classification-of-professions"}
+                        to={"/professional-standards-search"}
                         className="nav-link arrow-none fs-5"
                         id="topnav-dashboard"
                         role="button"
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        Standartet e profesionit
+                        Standardet e profesionit
                       </Link>
                       <Link
-                        to={"/professional-standards-search"}
+                        to={"/qualification-standards-search"}
                         className="nav-link arrow-none text-nowrap fs-5"
                         id="topnav-dashboard"
                         role="button"
@@ -363,7 +385,7 @@ export default function NavbarLanding() {
                       aria-expanded="false"
                     >
                       {/* <i className="fe-search me-1" /> */}
-                      Ofruesit
+                      Ofruesit e kualifikimeve
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -378,7 +400,7 @@ export default function NavbarLanding() {
                       Këshillat profesionale/sektoriale
                     </Link>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <Link
                       to={
                         "https://arbk.rks-gov.net/desk/inc/media/FA0E6C9D-2422-481E-8047-A2AFB4B9124C.pdf"
@@ -392,7 +414,7 @@ export default function NavbarLanding() {
                     >
                       NACE Kodi i veprimtarive ekonomike
                     </Link>
-                  </li>
+                  </li> */}
                 </div>
               </ul>
             </div>

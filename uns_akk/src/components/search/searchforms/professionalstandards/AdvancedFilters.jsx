@@ -71,7 +71,7 @@ export default function AdvancedFilters({ model, setModel }) {
           </div> */}
           <div className="row mb-3">
             <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
-              {t("ISCO")}:
+              {"KPK/" + t("ISCO")}:
             </label>
             <div className=" col-xl-7">
               <input

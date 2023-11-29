@@ -329,7 +329,7 @@ export default function FirstApplyFormRegister({
                 )}
               </div>
               <div className="col-xxl-3 col-lg-4 col-sm-12 mb-3">
-                <label>{t("Level")} EQF</label>
+                <label>{t("Level")} KEK</label>
                 <CustomSelect
                   onChangeFunction={changeLevelEQF}
                   optionsList={EQFLevels}
@@ -671,7 +671,7 @@ export default function FirstApplyFormRegister({
           </div>
         </div>
       </form>
-      {showSecondForm == true && (
+      {!showSecondForm == true && (
         <SecondApplyFormRegister model={model} setModel={setModel} />
       )}
     </>

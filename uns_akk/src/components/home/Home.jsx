@@ -42,9 +42,8 @@ export default function Home() {
         qualificationsRes,
         candidatesByMonthRes,
       ]) => {
-        // Process each response directly
-        if (institutionsRes && institutionsRes.statusCode === 200) {
-          setInstitutionByYear(Array.from(institutionsRes.result));
+        if (institutionsRes?.statusCode === 200) {
+          setInstitutionByYear(institutionsRes.result);
         }
         if (candidatesRes && candidatesRes.statusCode === 200) {
           setCandidatesByYear(Array.from(candidatesRes.result));
@@ -91,6 +90,13 @@ export default function Home() {
     }
     return colors;
   };
+
+  let test = instituionByYear.forEach((obj) => {
+    Object.entries(obj).forEach((test) => {
+      return obj[0];
+    });
+  });
+  console.log(test);
   return (
     <div className="container-fluid">
       {!load ? (

@@ -179,7 +179,7 @@ export default function SearchInstitution() {
                       }
                     }}
                   >
-                    Arsim i lartë
+                    Arsim i lartë (AL)
                   </Checkbox>
                   <Checkbox
                     name="2"
@@ -200,7 +200,7 @@ export default function SearchInstitution() {
                       }
                     }}
                   >
-                    Arsim i profesional
+                    Aftësimi dhe arsimi profesional (AAP)
                   </Checkbox>
                 </div>
                 <div className="col-xxl-12">

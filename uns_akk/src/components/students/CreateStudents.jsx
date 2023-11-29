@@ -288,7 +288,7 @@ export default function CreateStudents() {
       .matches(/^\d{10}$/, t("PersonalNumberLimit")),
     BirthDate: Yup.string().required(t("FillBirthDate")),
     Municipality: Yup.string().required(t("ChooseMunicipality")),
-    Residence: Yup.string().required(t("ChooseResidence")),
+    // Residence: Yup.string().required(t("ChooseResidence")),
     Address: Yup.string().required(t("PleaseFillAddress")),
     Phonenumber: Yup.string().required(t("PleaseFillPhoneNumber")),
     Email: Yup.string().required(t("PleaseFillEmail")),
