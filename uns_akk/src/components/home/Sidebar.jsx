@@ -61,7 +61,7 @@ export default function Sidebar() {
       icon: "mdi mdi-book-edit",
       submenu: [
         {
-          label: t("Level"),
+          label:"Nivelet KKK",
           roles: ["Admin", "Zyrtar AKK"],
           path: "/level",
           hasMenu: false,

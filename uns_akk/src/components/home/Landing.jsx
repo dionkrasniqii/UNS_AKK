@@ -163,7 +163,7 @@ export default function Landing() {
                       <BarChartForLanding
                         data={statsForGradutedStudents}
                         description={
-                          "Kualifikimet e dhëna në 3 vitet e fundit "
+                          "Kualifikimet e ofruara në 3 vitet e fundit "
                         }
                       />
                     </div>

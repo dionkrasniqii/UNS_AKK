@@ -15831,7 +15831,9 @@ body[data-layout-mode="horizontal"][data-layout-color="light"][data-topbar-color
 .topnav .navbar-nav .nav-item.dropdown.active > a.dropdown-toggle {
   color: var(--ct-menu-item-active);
 }
-
+.navbarCollapse{
+  display: block !important;
+}
 @media (min-width: 992px) {
   .topnav {
     height: 58px;
