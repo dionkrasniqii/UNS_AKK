@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import Home from "../components/home/Home";
 import Login from "../components/login/Login";
 import PrivateRoute from "../auth/PrivateRoute";
@@ -75,8 +75,10 @@ import ProfessionalStandartDetails from "../components/search/details/profession
 import QualificationStandardsDetails from "../components/search/details/qualificationStandards/QualificationStandardsDetails";
 import CouncilDetails from "../components/search/details/council/CouncilDetails";
 import SearchPartialCertificate from "../components/search/searchforms/searchPartialCertificate/SearchPartialCertificate";
+import { useEffect } from "react";
 
 export const AppRoutes = (props) => {
+  const location = useLocation();
   const ROLES = {
     ADMIN: "Admin",
     INSTITUTION: "Institution",
@@ -87,12 +89,30 @@ export const AppRoutes = (props) => {
     Bord: "Bord",
     EKSPERT: "Ekspert",
   };
+
+  useEffect(() => {
+    let divToAddBlurImage = document.getElementById("divToAddBlurImage");
+
+    if (location.pathname === "/") {
+      divToAddBlurImage.classList.remove("bg-search-forms");
+      let elementToRemoveClasses = document.querySelector(
+        ".content.contentLanding"
+      );
+      if (elementToRemoveClasses) {
+        elementToRemoveClasses.classList.remove("content", "contentLanding");
+      }
+    } else {
+      divToAddBlurImage.classList.add("bg-search-forms");
+    }
+  }, [location.pathname]);
   return (
     <div
+    id="divToAddBlurImage"
       className={`content-page ${
         props.authState ? "" : "content-page-no-margin "
       }`}
     >
+      {/* <div className={`content ${props.authState ? "" : "contentLanding"}`}> */}
       <div className={`content ${props.authState ? "" : "contentLanding"}`}>
         <Routes>
           <Route

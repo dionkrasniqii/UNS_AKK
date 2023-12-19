@@ -82,12 +82,12 @@ export default function Students() {
         return row.graduated === true ? (
           <a>
             {t("Yes")}
-            <i className='text-success ps-1 fas fa-circle-notch' />
+            <i className="text-success ps-1 fas fa-circle-notch" />
           </a>
         ) : (
           <a>
             {t("No")}
-            <i className='text-danger ps-1  fas fa-circle-notch' />
+            <i className="text-danger ps-1  fas fa-circle-notch" />
           </a>
         );
       },
@@ -97,32 +97,35 @@ export default function Students() {
       width: "200px",
       cell: (record) => {
         return (
-          <div className='button-list'>
+          <div className="button-list">
             <Link
-              type='button'
-              className='btn btn-secondary btn-sm'
+              type="button"
+              className="btn btn-secondary btn-sm"
               to={`/editstudent/${record.personInstitutionId}`}
             >
-              <i className='fe-edit' />
+              <i className="fe-edit" />
             </Link>
-            <a
-              type='button'
-              className='btn btn-sm btn-danger '
-              style={{ marginLeft: "5px" }}
-              onClick={(e) => handleDelete(record.person.personId)}
-            >
-              <i className='fe-trash-2' />
-            </a>
+            {!record.graduated && (
+              <a
+                type="button"
+                className="btn btn-sm btn-danger "
+                style={{ marginLeft: "5px" }}
+                onClick={(e) => handleDelete(record.person.personId)}
+              >
+                <i className="fe-trash-2" />
+              </a>
+            )}
+
             {loadPrint !== record.certificateNumber ? (
               <button
                 style={{ marginLeft: "5px" }}
                 onClick={(e) => printCertificate(record.certificateNumber)}
-                className='btn btn-sm btn-dark waves-effect waves-light '
+                className="btn btn-sm btn-dark waves-effect waves-light "
               >
-                <i itemType='button' className='fe-printer' />
+                <i itemType="button" className="fe-printer" />
               </button>
             ) : (
-              <div className='spinner-border text-dark m-2' role='status' />
+              <div className="spinner-border text-dark m-2" role="status" />
             )}
           </div>
         );
@@ -159,19 +162,19 @@ export default function Students() {
   }
 
   return (
-    <div className='row'>
-      <div className='col-12 d-flex justify-content-end'>
+    <div className="row">
+      <div className="col-12 d-flex justify-content-end">
         <Link
-          className='btn btn-info waves-effect waves-light'
-          to='/createstudents'
+          className="btn btn-info waves-effect waves-light"
+          to="/createstudents"
         >
-          <span className='btn-label'>
-            <i className='fe-plus-circle'></i>
+          <span className="btn-label">
+            <i className="fe-plus-circle"></i>
           </span>
           {t("Add")}
         </Link>
       </div>
-      <div className='p-2 mt-2'>
+      <div className="p-2 mt-2">
         {!load ? (
           <DataTablev2
             columns={columns}
@@ -179,10 +182,10 @@ export default function Students() {
             title={t("CandidatesList")}
           />
         ) : (
-          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
             <div
-              className='spinner-border text-primary m-2 text-center'
-              role='status'
+              className="spinner-border text-primary m-2 text-center"
+              role="status"
             />
           </div>
         )}

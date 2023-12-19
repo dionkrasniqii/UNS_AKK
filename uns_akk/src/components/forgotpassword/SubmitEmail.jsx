@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import * as Yup from "yup";
 import CrudProvider from "../../provider/CrudProvider";
 import { toast } from "react-toastify";
+
 export default function SubmitEmail() {
   const [load, setLoad] = useState(false);
   const [email, setEmail] = useState("");
@@ -18,9 +19,9 @@ export default function SubmitEmail() {
       .required(t("Fill") + " " + t("Email").toLowerCase()),
   });
   async function submitEmail() {
-try {
-    setLoad(true)
-    await CrudProvider.getItemById(
+    try {
+      setLoad(true);
+      await CrudProvider.getItemById(
         "AccountController/get-user-by-email",
         email
       ).then((res) => {
@@ -32,10 +33,9 @@ try {
           }
         }
       });
-} finally {
-    setLoad(false)
-}
-  
+    } finally {
+      setLoad(false);
+    }
   }
   const formik = useFormik({
     initialValues: {},

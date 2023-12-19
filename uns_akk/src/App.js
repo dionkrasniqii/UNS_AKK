@@ -61,7 +61,7 @@ function App() {
   return (
     <>
       <ToastContainer
-        position='top-right'
+        position="top-right"
         autoClose={1000}
         hideProgressBar={false}
         newestOnTop
@@ -70,7 +70,7 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme='light'
+        theme="light"
         style={{ fontSize: "14px" }}
       />
 

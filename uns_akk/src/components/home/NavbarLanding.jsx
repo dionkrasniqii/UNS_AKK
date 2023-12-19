@@ -1,33 +1,110 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import smallLogo from "./../../assets/images/sm.png";
-import logoAKK from "../../assets/images/logo_akk.png";
-import { useDispatch, useSelector } from "react-redux";
-import { showMobileLanding } from "../../store/actions";
+import logoAKK from "../../assets/images/mainLogo.png";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
-
 export default function NavbarLanding() {
-  const dispatch = useDispatch();
   const location = useLocation();
-  const [invitationsDropdownOpen, setInvitationsDropdownOpen] = useState(false);
-  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
-  const [qualificationsDropdownOpen, setQualificationsDropdownOpen] =
-    useState(false);
-  const [
-    awardedqwualificationsDropdownOpen,
-    setAwardedQualificationsDropdownOpen,
-  ] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
+  const [IsActive, setIsActive] = useState("");
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
-  const showMobile = useSelector(
-    ({ mobileList }) => mobileList.showmobile_landing
-  );
-  const navRef = useRef(null);
+
+  const navItems = [
+    {
+      Name: t("Home"),
+      Path: "/",
+      IsList: false,
+      SubItems: [],
+    },
+    {
+      Name: "Kualifikimi i ofruar",
+      Path: "/uniquePath",
+      IsList: true,
+      SubItems: [
+        {
+          Name: "Diploma/Certifikata e ofruar",
+          Path: "search-awardingbody",
+        },
+        {
+          Name: "Certifikata të pjesshme",
+          Path: "search-partial-certificate",
+        },
+      ],
+    },
+    {
+      Name: "Standardet dhe klasifikimi",
+      Path: "/uniquePath2",
+      IsList: true,
+      SubItems: [
+        {
+          Name: "Kualifikimet",
+          Path: "qualifications-search",
+        },
+        {
+          Name: "Standardet e profesionit",
+          Path: "qualification-standards-search",
+        },
+        {
+          Name: "Klasifikimi i profesioneve në Kosovë",
+          Path: "classification-of-professions",
+        },
+      ],
+    },
+    {
+      Name: "Ofruesit e kualifikimeve",
+      Path: "/institutions-search",
+      IsList: false,
+      SubItems: [],
+    },
+    {
+      Name: "Shtojca e Diplomës/Certifikatës",
+      Path: "/certificate-suplement-search",
+      IsList: false,
+      SubItems: [],
+    },
+    {
+      Name: t("Competencies"),
+      Path: "/compentencies-search",
+      IsList: false,
+      SubItems: [],
+    },
+    {
+      Name: "Këshillat profesionale/sektoriale",
+      Path: "/occupational-qualification-councils-search",
+      IsList: false,
+      SubItems: [],
+    },
+  ];
+  useEffect(() => {
+    if (location.pathname === "/") {
+      const handleScroll = () => {
+        const scrollTop = window.scrollY;
+        setScrolling(scrollTop > 30);
+      };
+
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
-    const mainNavDiv = document.getElementById("mainNavLanding");
-    const secondNav = document.getElementById("secondNav");
+    let nav = document.getElementById("nav-sticky");
+    if (location.pathname != "/") {
+      nav.classList.remove("bg-none");
+      nav.classList.remove("bg-blur");
+      nav.classList.add("bg-dark");
+    } else {
+      nav.classList.add("bg-none");
+      nav.classList.add("bg-blur");
+      nav.classList.remove("bg-dark");
+    }
+  }, [location.pathname]);
+  useEffect(() => {
+    const mainNavDiv = document.getElementById("nav-sticky");
     const hamburger = document.getElementById("hamburger");
     if (
       location.pathname === "/login" ||
@@ -36,391 +113,130 @@ export default function NavbarLanding() {
       location.pathname.split("/").some((path) => path === "reset-password")
     ) {
       mainNavDiv.classList.add("d-none");
-      secondNav.classList.add("d-none");
       hamburger.classList.add("d-none");
     } else {
       mainNavDiv.classList.remove("d-none");
-      secondNav.classList.remove("d-none");
       hamburger.classList.remove("d-none");
     }
   }, [location]);
+
   async function changeLang(e) {
     i18next.changeLanguage(e);
     localStorage.setItem("Language", e);
   }
-  useEffect(() => {
-    const mainNavDiv = document.getElementById("mainNavLanding");
-    const handleClickOutside = (event) => {
-      if (
-        navRef.current &&
-        !navRef.current.contains(event.target) &&
-        !mainNavDiv.contains(event.target)
-      ) {
-        dispatch(showMobileLanding(false));
-      }
-    };
-    document.body.addEventListener("click", handleClickOutside);
-    return () => {
-      document.body.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
 
   return (
-    <div className="navbar-custom navbar-costum-padding" id="mainNavLanding">
-      <nav
-        className="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark"
-        id="nav-sticky"
-      >
-        <div className="container-fluid">
-          {/* LOGO */}
-          <div className="logo-box bg-dark-custom " style={{ height: "67px" }}>
-            <Link to="/" className="logo logo-dark text-center">
-              <span className="logo-lg text-center">
-                {/* <img src={smallLogo} alt="" height={50} loading="lazy" /> */}
-                <img src={logoAKK} alt="" height={50} loading="lazy" />
-              </span>
-              <span className="logo-sm text-center">
-                <img src={smallLogo} alt="" height={30} loading="lazy" />
-              </span>
-            </Link>
-          </div>
+    <nav
+      className={`navbar navbar-expand-lg navbarForLanding navbar-custom ${
+        scrolling ? "bg-dark" : "bg-none bg-blur"
+      }`}
+      id="nav-sticky"
+    >
+      <div className="container-fluid ">
+        <a className="logo ps-5 logoNavMainDiv">
+          <img
+            src={logoAKK}
+            alt=""
+            className="logo-dark logoNav"
+            height={110}
+          />
+        </a>
 
-          <a
-            onClick={(e) => {
-              dispatch(showMobileLanding(!show));
-              setShow(!show);
-            }}
-            id="hamburger"
-            className="navbar-toggle nav-link collapsed"
-            data-bs-toggle="collapse"
-            data-bs-target="#topnav-menu-content"
-            aria-expanded="false"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={25}
-              height={25}
-              fill="currentColor"
-              className="bi bi-list"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fillRule="evenodd"
-                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-              />
-            </svg>
-          </a>
-          <div className="collapse navbar-collapse" id="navbarCollapse">
-            <ul className="navbar-nav ms-auto" id="mySidenav">
-              <li className="nav-item">
-                <a
-                  className="nav-link dropdown-toggle arrow-none text-white"
-                  id="topnav-layout"
-                  role="button"
-                  onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-                >
-                  <i className="mdi mdi-card-bulleted-settings-outline me-1" />
-                  {t("Languages")} <div className="arrow-down" />
-                </a>
-                <div
-                  className={`dropdown-menu  ${
-                    languageDropdownOpen ? "show" : ""
-                  }`}
-                  style={{ position: "absolute" }}
-                  aria-labelledby="topnav-layout"
-                  onMouseLeave={() => setLanguageDropdownOpen(false)}
-                >
-                  <a
-                    className="dropdown-item "
-                    onClick={(e) => changeLang("1")}
+        <button
+          className="navbar-toggler"
+          id="hamburger"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          onClick={() => setShow(!show)}
+        >
+          <i className="mdi mdi-menu" />
+        </button>
+        <div
+          className={`collapse navbar-collapse ${show && "show"} pe-5`}
+          id="navbarCollapse"
+        >
+          <ul className="navbar-nav ms-auto" id="mySidenav">
+            {navItems.map((obj, index) => {
+              return (
+                <li className="nav-item" key={index}>
+                  <Link
+                    onMouseEnter={(e) => setIsActive(obj.Name)}
+                    to={!obj.IsList && obj.Path}
+                    className={`nav-link text-uppercase dropdown-toggle arrow-none ${
+                      location.pathname === obj.Path ? "activeNav" : ""
+                    }`}
+                    href="#"
+                    id={`topnav-layout-${index}`}
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded={obj.IsList ? "true" : "false"}
                   >
-                    <label>AL</label>
-                  </a>
-                  <a
-                    className="dropdown-item "
-                    onClick={(e) => changeLang("2")}
-                  >
-                    <label className="fs-6">ENG</label>
-                  </a>
-                  <a
-                    className="dropdown-item "
-                    onClick={(e) => changeLang("3")}
-                  >
-                    <label className="fs-6">SR</label>
-                  </a>
-                </div>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link arrow-none fs-5 text-white"
-                  to="/login"
-                  id="topnav-dashboard"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i className="fe-log-in me-1" /> {t("Login")}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a
-                  onClick={(e) => {
-                    dispatch(showMobileLanding(!show));
-                    setShow(!show);
-                  }}
-                  id="hamburger"
-                  className="navbar-toggle nav-link collapsed"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#topnav-menu-content"
-                  aria-expanded="false"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={25}
-                    height={25}
-                    fill="currentColor"
-                    className="bi bi-list"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-                    />
-                  </svg>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      <div className="topnav navbarLanding" id="secondNav">
-        <div className="container-fluid">
-          <nav
-            className="navbar navbar-light navbar-expand-lg topnav-menu"
-            ref={navRef}
-          >
-            <div
-              className={`collapse navbar-collapse ${
-                showMobile ? "show animate" : ""
-              }`}
-              id="topnav-menu-content"
-            >
-              <ul className="top-navbar-costume">
-                <div className="navbar-nav nav-items-container nav-item-end ">
-                  <li className="nav-item">
-                    <Link
-                      to={"/"}
-                      className="nav-link arrow-none text-nowrap fs-5"
-                      id="topnav-dashboard"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i className="mdi mdi-view-dashboard me-1" />
-                      {t("Home")}
-                    </Link>
-                  </li>
-                  {/* <li className="nav-item">
-                    <Link
-                      className="nav-link arrow-none"
-                      to="/application-form"
-                      id="topnav-dashboard"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i className="ti-pencil me-1" /> {t("ApplyForm")}
-                    </Link>
-                  </li> */}
-                  <div className="nav-item dropdown">
-                    <a
-                      className="nav-link dropdown-toggle arrow-none text-nowrap fs-5"
-                      id="topnav-layout"
-                      role="button"
-                      // data-bs-toggle="dropdown"
-                      // aria-haspopup="true"
-                      // aria-expanded="true"
-                      onClick={() =>
-                        setAwardedQualificationsDropdownOpen(
-                          !qualificationsDropdownOpen
-                        )
-                      }
-                    >
-                      Kualifikimi i ofruar
-                      <div className="arrow-down" />
-                    </a>
-
+                    {obj.Name}
+                  </Link>
+                  {obj.IsList && (
                     <div
+                      onMouseLeave={(e) => setIsActive("")}
                       className={`dropdown-menu ${
-                        awardedqwualificationsDropdownOpen ? "show" : ""
+                        IsActive === obj.Name ? "active show" : ""
                       }`}
-                      onMouseLeave={() =>
-                        setAwardedQualificationsDropdownOpen(false)
-                      }
-                      aria-labelledby="topnav-layout"
+                      aria-labelledby={`topnav-layout-${index}`}
                     >
-                      <Link
-                        to={"/search-awardingbody"}
-                        className="nav-link arrow-none text-center text-nowrap fs-5"
-                        id="topnav-dashboard"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Diploma/Certifikata e ofruar
-                      </Link>
-                      <Link
-                        to={"/search-partial-certificate"}
-                        className="nav-link arrow-none text-center text-nowrap fs-5"
-                        id="topnav-dashboard"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Certifikata të pjesshme
-                      </Link>
+                      {obj.SubItems.map((item, index1) => {
+                        return (
+                          <Link
+                            to={item.Path}
+                            className="dropdown-item text-uppercase"
+                            key={index1}
+                          >
+                            {item.Name}
+                          </Link>
+                        );
+                      })}
                     </div>
-                  </div>
-                  <div className="nav-item dropdown">
-                    <a
-                      className="nav-link dropdown-toggle arrow-none text-nowrap fs-5"
-                      id="topnav-layout"
-                      role="button"
-                      // data-bs-toggle="dropdown"
-                      // aria-haspopup="true"
-                      // aria-expanded="true"
-                      onClick={() =>
-                        setQualificationsDropdownOpen(
-                          !qualificationsDropdownOpen
-                        )
-                      }
-                    >
-                      Standardet dhe klasifikimi
-                      <div className="arrow-down" />
-                    </a>
+                  )}
+                </li>
+              );
+            })}
 
-                    <div
-                      className={`dropdown-menu ${
-                        qualificationsDropdownOpen ? "show" : ""
-                      }`}
-                      onMouseLeave={() => setQualificationsDropdownOpen(false)}
-                      aria-labelledby="topnav-layout"
-                    >
-                      <Link
-                        to={"/qualifications-search"}
-                        className="nav-link arrow-none fs-5 "
-                        id="topnav-dashboard"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Kualifikimet
-                      </Link>
-                      <Link
-                        to={"/professional-standards-search"}
-                        className="nav-link arrow-none fs-5"
-                        id="topnav-dashboard"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Standardet e profesionit
-                      </Link>
-                      <Link
-                        to={"/qualification-standards-search"}
-                        className="nav-link arrow-none text-nowrap fs-5"
-                        id="topnav-dashboard"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Standardet e kualifikimit
-                      </Link>
-                      <Link
-                        to={"/classification-of-professions"}
-                        className="nav-link arrow-none fs-5"
-                        id="topnav-dashboard"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Klasifikimi i profesioneve në Kosovë
-                      </Link>
-                    </div>
-                  </div>
-                  <li className="nav-item">
-                    <Link
-                      to={"/certificate-suplement-search"}
-                      className="nav-link arrow-none fs-5 text-nowrap "
-                      id="topnav-dashboard"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      {/* <i className="fe-search me-1" /> */}
-                      Shtojca e Diplomës/Certifikatës
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to={"/compentencies-search"}
-                      className="nav-link arrow-none fs-5 text-nowrap"
-                      id="topnav-dashboard"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      {/* <i className="fe-search me-1" /> */}
-                      {t("Competencies")}
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to={"/institutions-search"}
-                      className="nav-link arrow-none fs-5 text-nowrap"
-                      id="topnav-dashboard"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      {/* <i className="fe-search me-1" /> */}
-                      Ofruesit e kualifikimeve
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      to={"/occupational-qualification-councils-search"}
-                      className="nav-link arrow-none fs-5 text-nowrap"
-                      id="topnav-dashboard"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Këshillat profesionale/sektoriale
-                    </Link>
-                  </li>
-                  {/* <li className="nav-item">
-                    <Link
-                      to={
-                        "https://arbk.rks-gov.net/desk/inc/media/FA0E6C9D-2422-481E-8047-A2AFB4B9124C.pdf"
-                      }
-                      target="_blank"
-                      className="nav-link arrow-none fs-5 text-nowrap"
-                      id="topnav-dashboard"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      NACE Kodi i veprimtarive ekonomike
-                    </Link>
-                  </li> */}
-                </div>
-              </ul>
-            </div>
-          </nav>
+            <li className="nav-item ps-3 hiddeonlaptop">
+              <Link
+                className="nav-link text-uppercase "
+                onMouseEnter={() => setIsActive("lang")}
+              >
+                <i className="fas fa-language fs-4"></i>
+              </Link>
+              <div
+                className={`dropdown-menu active ${
+                  IsActive === "lang" ? "show" : ""
+                }`}
+                style={{ position: "absolute" }}
+                aria-labelledby="topnav-layout"
+                onMouseLeave={() => setIsActive("")}
+              >
+                <a className="dropdown-item " onClick={(e) => changeLang("1")}>
+                  <label>AL</label>
+                </a>
+                <a className="dropdown-item " onClick={(e) => changeLang("2")}>
+                  <label className="fs-6">ENG</label>
+                </a>
+                <a className="dropdown-item " onClick={(e) => changeLang("3")}>
+                  <label className="fs-6">SR</label>
+                </a>
+              </div>
+            </li>
+            <li className="nav-item hiddeonlaptop">
+              <Link className="nav-link text-uppercase" to={"/login"}>
+                Qasja
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }

@@ -226,7 +226,7 @@ export default function SearchCertificate() {
                     </div>
                   </div>
                 </div>
-                <div className="col-xxl-12">
+                {/* <div className="col-xxl-12">
                   <div className="row">
                     <label
                       id="personalNr"
@@ -249,7 +249,7 @@ export default function SearchCertificate() {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="col-xxl-12">
                   <div className="row">
                     <label
