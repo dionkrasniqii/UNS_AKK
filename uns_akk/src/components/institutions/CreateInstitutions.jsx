@@ -124,6 +124,7 @@ export default function CreateInstitutions({ authState }) {
         "InstitutionAPI/CreateInstitution",
         model
       ).then((res) => {
+        console.log(res)
         if (res) {
           if (res.statusCode === 200) {
             navigate(authState ? "/institutions" : "/");

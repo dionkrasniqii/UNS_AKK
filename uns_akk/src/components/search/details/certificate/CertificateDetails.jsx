@@ -160,7 +160,7 @@ export default function CertificateDetails() {
                           : ""}
                       </span>
                       <hr />
-                      <label className="text-uppercase text-muted font-13">
+                      {/* <label className="text-uppercase text-muted font-13">
                         {t("ValidTo")}:
                       </label>
                       <span className="ms-2 font-20">
@@ -170,7 +170,7 @@ export default function CertificateDetails() {
                             ).toLocaleDateString("en-GB")
                           : t("NoLimit")}
                       </span>
-                      <hr />
+                      <hr /> */}
                     </div>
                     <div className="col-xxl-12 col-lg-12 col-sm-12 text-start">
                       <Link

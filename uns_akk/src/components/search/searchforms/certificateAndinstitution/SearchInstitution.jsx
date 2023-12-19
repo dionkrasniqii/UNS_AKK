@@ -298,7 +298,7 @@ export default function SearchInstitution() {
                 <DataTablev2
                   dataSource={data}
                   columns={columns}
-                  title={t("Institutions")}
+                  title={"Lista e ofruesëve"}
                 />
               ) : (
                 <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">

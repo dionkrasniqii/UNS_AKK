@@ -72,14 +72,11 @@ export default function SearchPartialCertificate() {
 
   const columns = [
     {
-      name: t("Name"),
+      name: t("NumberOfCertificate"),
       cell: (row) => {
         return (
-          <a
-            href={`/qualificationdetails/${row.qualificationId}`}
-            target="_blank"
-          >
-            {row.qualificationName}
+          <a href={`certificationdetails/${row.certificateNr}`} target="_blank">
+            {row.certificateNr}
           </a>
         );
       },
@@ -87,22 +84,31 @@ export default function SearchPartialCertificate() {
       filterable: true,
     },
     {
-      name: t("Level") + " " + "KKK",
-      selector: (row) => row.kkkLevelName,
+      name: "Niveli KKK",
+      selector: (row) => row.levelDescription,
       sortable: true,
       filterable: true,
     },
     {
-      name: t("Level") + " " + "KEK",
-      selector: (row) => row.eqfLevelName,
+      name: "Niveli KEK",
+      selector: (row) => row.eqfLevelDescription,
       sortable: true,
       filterable: true,
     },
     {
-      name: t("Credits"),
-      selector: (row) => row.credits,
+      name: t("QualificationName"),
+      selector: (row) => row.qualificationName,
       sortable: true,
       filterable: true,
+    },
+    {
+      name: t("ValidFrom"),
+      sortable: true,
+      filterable: true,
+      cell: (row) =>
+        row.validFrom
+          ? new Date(row.validFrom?.split("T")[0]).toLocaleDateString("en-GB")
+          : "",
     },
   ];
 
@@ -365,7 +371,7 @@ export default function SearchPartialCertificate() {
         <div className="flip-card-animation">
           <DataTablev2
             dataSource={data}
-            title={"Lista e kualifikmeve"}
+            title={"Lista e certifikatave të pjesshme"}
             columns={columns}
           />
         </div>

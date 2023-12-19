@@ -23,11 +23,11 @@ const BarChartForLanding = ({ data, description }) => {
       data: years.map((year) => data[year][label]),
     })),
   };
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (barRef.current) {
       setBarWidth(barRef.current.clientWidth);
     }
-  }, [chartData]);
+  }, [chartData,barRef.current]);
 
   const options = {
     responsive: true,

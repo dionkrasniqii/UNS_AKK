@@ -26,7 +26,6 @@ export default function ProfessionalStandartDetails() {
       setLoad(false);
     }
   }, [id]);
-
   const colCompetencies = [
     {
       name: t("Name"),

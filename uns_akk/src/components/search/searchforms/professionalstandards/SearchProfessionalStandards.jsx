@@ -102,6 +102,7 @@ export default function SearchProfessionalStandards() {
         model
       ).then((res) => {
         if (res) {
+          console.log(res)
           if (res.statusCode === 200) {
             setData(res.result);
           } else {

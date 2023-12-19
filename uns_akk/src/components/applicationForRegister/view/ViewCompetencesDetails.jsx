@@ -16,7 +16,7 @@ export default function ViewCompetencesDetails({ model }) {
                 rows={3}
                 className="form-control"
                 readOnly
-                defaultValue={model.competenceName}
+                defaultValue={model?.competenceName}
               />
             </div>
 
@@ -27,7 +27,7 @@ export default function ViewCompetencesDetails({ model }) {
                 rows={3}
                 className="form-control"
                 readOnly
-                defaultValue={model.typeOfCompetence}
+                defaultValue={model?.typeOfCompetence}
               />
             </div>
 
@@ -38,7 +38,7 @@ export default function ViewCompetencesDetails({ model }) {
                 rows={3}
                 className="form-control"
                 readOnly
-                defaultValue={model.performanceIndicators}
+                defaultValue={model?.performanceIndicators}
               />
             </div>
 
@@ -49,7 +49,7 @@ export default function ViewCompetencesDetails({ model }) {
                 rows={3}
                 className="form-control"
                 readOnly
-                defaultValue={model.suppoirtingKnowledge}
+                defaultValue={model?.suppoirtingKnowledge}
               />
             </div>
 
@@ -60,7 +60,7 @@ export default function ViewCompetencesDetails({ model }) {
                 rows={3}
                 className="form-control"
                 readOnly
-                defaultValue={model.assessmentMethods}
+                defaultValue={model?.assessmentMethods}
               />
             </div>
           </div>

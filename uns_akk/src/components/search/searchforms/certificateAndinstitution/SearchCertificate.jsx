@@ -36,8 +36,14 @@ export default function SearchCertificate() {
       filterable: true,
     },
     {
-      name: t("Level Description"),
+      name: "Niveli KKK",
       selector: (row) => row.levelDescription,
+      sortable: true,
+      filterable: true,
+    },
+    {
+      name: "Niveli KEK",
+      selector: (row) => row.eqfLevelDescription,
       sortable: true,
       filterable: true,
     },
@@ -56,16 +62,8 @@ export default function SearchCertificate() {
           ? new Date(row.validFrom?.split("T")[0]).toLocaleDateString("en-GB")
           : "",
     },
-    {
-      name: t("ValidTo"),
-      sortable: true,
-      filterable: true,
-      cell: (row) =>
-        row.validFrom
-          ? new Date(row.validTo?.split("T")[0]).toLocaleDateString("en-GB")
-          : "",
-    },
   ];
+  console.log (data)
   async function checkNullAttributes(model) {
     let count = 0;
     Object.keys(model).forEach((key) => {
