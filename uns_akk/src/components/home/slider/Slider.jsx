@@ -74,7 +74,15 @@ export default function Slider() {
   ];
 
   return (
-    <>
+    <React.Fragment>
+      <div className="mainDescription bg-dark-blue-slider">
+        Regjistri i Kualifikimeve të Kosovës (RKK) është sistem
+        gjithëpërfshirës, i integruar, që përfshinë të gjitha nivelet e Kornizës
+        Kombëtare të Kualifikimeve (KKK). RKK është zhvilluar me qëllim që të
+        jetë i përdorshëm për nxënësit/kandidatët, punëdhënësit, ofruesit e
+        trajnimeve, shkollat, kolegjet, agjencitë përkatëse, ministritë dhe
+        partnerët e tjerë përkatës të brendshëm dhe të jashtëm.
+      </div>
       <ul className="slider">
         {photos.map((obj, index) => {
           return (
@@ -86,8 +94,7 @@ export default function Slider() {
               }}
             >
               <div className="content-main bg-blur-slider">
-                <p className="description fs-5">•	Regjistri i Kualifikimeve të Kosovës (RKK)  është sistem gjithëpërfshirës, i integruar, që përfshinë të gjitha nivelet e Kornizës Kombëtare të Kualifikimeve (KKK). RKK është zhvilluar me qëllim që të jetë i përdorshëm për nxënësit/kandidatët, punëdhënësit, ofruesit e trajnimeve, shkollat, kolegjet, agjencitë përkatëse, ministritë dhe partnerët e tjerë përkatës të brendshëm dhe të jashtëm.</p>
-                <p className="description fs-5">{obj.Description}</p>
+                <p className="description fs-5 mt-2">{obj.Description}</p>
               </div>
             </li>
           );
@@ -100,6 +107,6 @@ export default function Slider() {
           name="arrow-forward-outline"
         ></i>
       </nav>
-    </>
+    </React.Fragment>
   );
 }

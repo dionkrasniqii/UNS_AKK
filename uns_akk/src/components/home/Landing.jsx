@@ -101,7 +101,7 @@ export default function Landing() {
       }
     });
   }
-
+  console.log(levels);
   return (
     <>
       <Slider />
@@ -120,7 +120,7 @@ export default function Landing() {
                         <h2 className="counter_value mb-3 text-white animation animation-reverse ">
                           {obj.value}
                         </h2>
-                        <h5 className="counter-name text-white animation animation-reverse ">
+                        <h5 className="counter-name text-white animation animation-reverse  ">
                           {t(obj.key)}
                         </h5>
                       </div>
@@ -287,7 +287,11 @@ export default function Landing() {
                               <React.Fragment key={index}>
                                 <div
                                   type="button"
-                                  className="card-header bg-soft-primary"
+                                  style={{
+                                    backgroundColor: level.color,
+                                  }}
+                                  data-color={level.color}
+                                  className="card-header "
                                   id={`heading_${index}`}
                                   onClick={(e) =>
                                     openAccordion == level.levelKKKDescription
@@ -309,8 +313,8 @@ export default function Landing() {
                                           : false
                                       }
                                     >
-                                      <i className="mdi mdi-share-variant me-1"></i>
-                                      <span className="text-uppercase">
+                                      <i className="mdi mdi-share-variant me-1 text-white"></i>
+                                      <span className="text-uppercase text-white">
                                         {level.levelKKKDescription}
                                       </span>
                                     </a>

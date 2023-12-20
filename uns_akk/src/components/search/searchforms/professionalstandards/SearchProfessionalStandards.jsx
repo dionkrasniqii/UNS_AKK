@@ -102,7 +102,7 @@ export default function SearchProfessionalStandards() {
         model
       ).then((res) => {
         if (res) {
-          console.log(res)
+          console.log(res);
           if (res.statusCode === 200) {
             setData(res.result);
           } else {
@@ -116,11 +116,11 @@ export default function SearchProfessionalStandards() {
   }
 
   return (
-    <div className="container mt-5 bg-light-subtle ">
+    <div className="container mt-5 bg-light-subtle animation">
       <div className="card ">
         <div className="card-body">
           <div className="row">
-            <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+            <div className="col-xxl-6 col-lg-6 col-sm-12 ">
               <form className="form-horizontal">
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
@@ -162,7 +162,7 @@ export default function SearchProfessionalStandards() {
                 </div>
               </form>
             </div>
-            <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+            <div className="col-xxl-6 col-lg-6 col-sm-12 ">
               <form className="form-horizontal">
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
@@ -204,7 +204,7 @@ export default function SearchProfessionalStandards() {
                 </div>
               </form>
             </div>
-            <div className="col-xxl-12 col-lg-12 col-sm-12 animation">
+            <div className="col-xxl-12 col-lg-12 col-sm-12 ">
               <button
                 type="button"
                 className="btn btn-bordered-light text-dark shadow-inner"
@@ -216,7 +216,7 @@ export default function SearchProfessionalStandards() {
             {lessFilters && (
               <AdvancedFilters model={model} setModel={setModel} />
             )}
-            <div className="col-xxl-12 col-lg-12 col-sm-12 text-end animation">
+            <div className="col-xxl-12 col-lg-12 col-sm-12 text-end ">
               <div className="button-list text-end">
                 <button
                   type="button"
@@ -238,13 +238,11 @@ export default function SearchProfessionalStandards() {
         </div>
       </div>
       {!load ? (
-        <div className="flip-card-animation">
-          <DataTablev2
-            dataSource={data}
-            title={"Standartet e profesionit"}
-            columns={columns}
-          />
-        </div>
+        <DataTablev2
+          dataSource={data}
+          title={"Standartet e profesionit"}
+          columns={columns}
+        />
       ) : (
         <div className="card card-body">
           <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">

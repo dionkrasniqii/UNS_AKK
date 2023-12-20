@@ -9576,7 +9576,7 @@ fieldset:disabled .btn {
 
 .bg-dark {
   --ct-bg-opacity: 1;
-  background-color: #00008B !important;
+  background-color: #00008b !important;
 }
 
 .bg-black {
@@ -14983,10 +14983,7 @@ body[data-layout-color="dark"] .user-pro-dropdown {
 }
 
 .navbar-custom {
-  /* background-color: var(--ct-body-bg); */
-  background-color: var(--ct-bg-topbar-dark);
-
-  padding: 0 calc(5rem / 2) 0;
+  /* padding: 0 calc(5rem / 2) 0; */
   position: fixed;
   left: 0;
   right: 0;
@@ -15831,7 +15828,7 @@ body[data-layout-mode="horizontal"][data-layout-color="light"][data-topbar-color
 .topnav .navbar-nav .nav-item.dropdown.active > a.dropdown-toggle {
   color: var(--ct-menu-item-active);
 }
-.navbarCollapse{
+.navbarCollapse {
   display: block !important;
 }
 @media (min-width: 992px) {
@@ -26222,7 +26219,7 @@ iframe {
   color: #fff;
 }
 .nav-link:hover {
-  color: #FFC300 !important;
+  color: #ffc300;
   text-decoration: underline;
 }
 .bg-none {
@@ -26245,10 +26242,10 @@ iframe {
   padding: 25px 25px 25px;
 }
 .navbarForLanding {
-  height: 110px;
+  height: 120px;
 }
 .activeNav {
-  color: #2487ce !important;
+  color: #ffc300 !important;
 }
 .paddingUnderSlider {
   padding-top: 45%;
@@ -26261,9 +26258,9 @@ iframe {
 
 /* Media query for screens 576px and below */
 @media screen and (max-width: 576px) {
-  .paddingUnderSlider {
-    padding-top: 400% !important;
-  }
+  /* .paddingUnderSlider {
+    padding-top:  2%!important;
+  } */
 }
 @media screen and (max-width: 1300px) {
   .paddingUnderSlider {
@@ -26277,6 +26274,9 @@ iframe {
   .navbar-expand-lg .navbar-collapse {
     padding-right: 10% !important;
     /* margin-top: 3% !important; */
+  }
+  .content-exclude-landing {
+    margin-top: 70px;
   }
   .navbar-expand-lg {
     flex-wrap: wrap;
@@ -26295,7 +26295,11 @@ iframe {
     padding-right: 0.5rem;
     padding-left: 0;
   }
+  .content-page-landing {
+    margin-top: 300px;
+  }
 }
+
 .bg-gradient-landing {
   overflow: hidden;
   background: radial-gradient(
@@ -26318,4 +26322,17 @@ iframe {
   background-image: url("./../images/1.png");
   filter: blur(20px);
   z-index: -1;
+}
+.bg-dark-blue {
+  background-color: #00008b !important;
+}
+.content-exclude-landing {
+  margin-top: 120px;
+}
+.bg-login {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 139, 1));
+}
+.btn-darkblue {
+  background-color: rgba(0, 0, 139, 1);
+  color: white;
 }

@@ -24,7 +24,7 @@ export default function SearchCompetencies() {
         return (
           <a
             href={`/competence-details/${row.competences?.competencesId}`}
-            target='_blank'
+            target="_blank"
           >
             {row.competenceName}
           </a>
@@ -92,21 +92,21 @@ export default function SearchCompetencies() {
     }
   }
   return (
-    <div className='container mt-5 bg-light-subtle '>
-      <div className='card '>
-        <div className='card-body'>
-          <div className='row'>
-            <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
-              <form className='form-horizontal'>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+    <div className="container mt-5 animation bg-light-subtle ">
+      <div className="card ">
+        <div className="card-body">
+          <div className="row">
+            <div className="col-xxl-6 col-lg-6 col-sm-12 ">
+              <form className="form-horizontal">
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("EstQFLevel")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("EstQFLevel")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -117,15 +117,15 @@ export default function SearchCompetencies() {
                     />
                   </div>
                 </div>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("CompetenceName")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("CompetenceName")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -136,15 +136,15 @@ export default function SearchCompetencies() {
                     />
                   </div>
                 </div>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("TypeOfCompetence")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("TypeOfCompetence")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -157,17 +157,17 @@ export default function SearchCompetencies() {
                 </div>
               </form>
             </div>
-            <div className='col-xxl-6 col-lg-6 col-sm-12 animation'>
-              <form className='form-horizontal'>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+            <div className="col-xxl-6 col-lg-6 col-sm-12 ">
+              <form className="form-horizontal">
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("PerformanceIndicators")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("PerformanceIndicators")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -178,15 +178,15 @@ export default function SearchCompetencies() {
                     />
                   </div>
                 </div>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("SuppoirtingKnowledge")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("SuppoirtingKnowledge")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -197,15 +197,15 @@ export default function SearchCompetencies() {
                     />
                   </div>
                 </div>
-                <div className='row mb-3'>
-                  <label className=' col-xl-5 col-form-label text-xl-end text-md-start text-start-sm'>
+                <div className="row mb-3">
+                  <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     {t("AssessmentMethods")}:
                   </label>
-                  <div className=' col-xl-7'>
+                  <div className=" col-xl-7">
                     <input
-                      autoComplete='off'
-                      type='text'
-                      className='form-control'
+                      autoComplete="off"
+                      type="text"
+                      className="form-control"
                       placeholder={t("AssessmentMethods")}
                       onChange={(e) =>
                         setModel((prev) => ({
@@ -218,18 +218,18 @@ export default function SearchCompetencies() {
                 </div>
               </form>
             </div>
-            <div className='col-xxl-12 col-lg-12 col-sm-12 text-end animation'>
-              <div className='button-list text-end'>
+            <div className="col-xxl-12 col-lg-12 col-sm-12 text-end ">
+              <div className="button-list text-end">
                 <button
-                  type='button'
-                  className='btn btn-soft-primary waves-effect waves-light mt-2'
+                  type="button"
+                  className="btn btn-soft-primary waves-effect waves-light mt-2"
                   onClick={searchData}
                 >
                   {t("Search")}
                 </button>
                 <button
-                  type='button'
-                  className='btn btn-soft-secondary waves-effect mt-2'
+                  type="button"
+                  className="btn btn-soft-secondary waves-effect mt-2"
                   onClick={clearInputs}
                 >
                   {t("Clear")}
@@ -240,19 +240,17 @@ export default function SearchCompetencies() {
         </div>
       </div>
       {!load ? (
-        <div className='flip-card-animation'>
-          <DataTablev2
-            dataSource={data}
-            title={t("Competencies")}
-            columns={competenciesColumns}
-          />
-        </div>
+        <DataTablev2
+          dataSource={data}
+          title={t("Competencies")}
+          columns={competenciesColumns}
+        />
       ) : (
-        <div className='card card-body'>
-          <div className='col-xxl-12 col-lg-12 col-sm-12 text-center'>
+        <div className="card card-body">
+          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
             <div
-              className='spinner-border text-primary m-2 text-center'
-              role='status'
+              className="spinner-border text-primary m-2 text-center"
+              role="status"
             />
           </div>
         </div>

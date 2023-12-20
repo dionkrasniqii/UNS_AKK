@@ -66,12 +66,12 @@ export default function SearchQualificationStandard() {
     window.location.reload();
   }
   return (
-    <div className="container mt-5 bg-light-subtle ">
+    <div className="container mt-5 bg-light-subtle animation">
       <div className="card ">
         <form id="searchForm">
           <div className="card-body">
             <div className="row">
-              <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+              <div className="col-xxl-6 col-lg-6 col-sm-12 ">
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     Titulli kualifikimit:
@@ -147,7 +147,7 @@ export default function SearchQualificationStandard() {
                   </div>
                 </div>
               </div>
-              <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+              <div className="col-xxl-6 col-lg-6 col-sm-12 ">
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     Kërkesat fizike :
@@ -241,7 +241,7 @@ export default function SearchQualificationStandard() {
               </div>
             </div>
 
-            <div className="col-xxl-12 col-lg-12 col-sm-12 text-end animation">
+            <div className="col-xxl-12 col-lg-12 col-sm-12 text-end ">
               <div className="button-list text-end">
                 <button
                   type="button"
@@ -263,13 +263,11 @@ export default function SearchQualificationStandard() {
         </form>
       </div>
       {!load ? (
-        <div className="flip-card-animation">
-          <DataTablev2
-            dataSource={data}
-            title={"Lista e standardeve të kualifikimeve"}
-            columns={columns}
-          />
-        </div>
+        <DataTablev2
+          dataSource={data}
+          title={"Lista e standardeve të kualifikimeve"}
+          columns={columns}
+        />
       ) : (
         <div className="card card-body">
           <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">

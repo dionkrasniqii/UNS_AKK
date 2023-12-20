@@ -90,30 +90,18 @@ export const AppRoutes = (props) => {
     EKSPERT: "Ekspert",
   };
 
-  useEffect(() => {
-    let divToAddBlurImage = document.getElementById("divToAddBlurImage");
-
-    if (location.pathname === "/") {
-      divToAddBlurImage.classList.remove("bg-search-forms");
-      let elementToRemoveClasses = document.querySelector(
-        ".content.contentLanding"
-      );
-      if (elementToRemoveClasses) {
-        elementToRemoveClasses.classList.remove("content", "contentLanding");
-      }
-    } else {
-      divToAddBlurImage.classList.add("bg-search-forms");
-    }
-  }, [location.pathname]);
   return (
     <div
-    id="divToAddBlurImage"
       className={`content-page mt-2 ${
         props.authState ? "" : "content-page-no-margin "
       }`}
     >
       {/* <div className={`content ${props.authState ? "" : "contentLanding"}`}> */}
-      <div className={`content ${props.authState ? "" : "contentLanding"} `}>
+      <div
+        className={`content content-exclude-landing ${
+          props.authState ? "" : "contentLanding"
+        } `}
+      >
         <Routes>
           <Route
             path="*"

@@ -2,16 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router";
 import CrudProvider from "../../provider/CrudProvider";
-
 import { toast } from "react-toastify";
 import MultiRoles from "./MultiRoles";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../store/actions";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import FirstTimeLogin from "./FirstTimeLogin";
+import logoAKK from "../../assets/images/mainLogo.png";
 
 export default function Login(props) {
   const { t } = useTranslation();
@@ -94,21 +93,15 @@ export default function Login(props) {
   ) : firstTimeLogin ? (
     <FirstTimeLogin UserId={userId} setFirstTimeLogin={setFirstTimeLogin} />
   ) : (
-    <div
-      className="account-pages pt-5 animation "
-      style={{ marginTop: "100px" }}
-    >
+    <div className="account-pages animation ">
       <div className="container d-flex justify-content-center">
         <div className="col-md-8 col-lg-6 col-xl-4">
           <form onSubmit={formik.handleSubmit}>
             <div className="card">
-              <div className="text-center">
-                <img
-                  src={"https://akkks.rks-gov.net/Template/img/2logos.png"}
-                  alt=""
-                  height={60}
-                  className="mx-auto mt-2"
-                />
+              <div className="card-header bg-login">
+                <div className="text-center">
+                  <img src={logoAKK} alt="" height={100} className="mx-auto " />
+                </div>
               </div>
               <div className="card-body p-4">
                 <div className="text-center mb-4">
@@ -193,7 +186,7 @@ export default function Login(props) {
                   </div> */}
                 <div className="mb-3 d-grid text-center">
                   {!load ? (
-                    <button className="btn btn-primary" type="submit">
+                    <button className="btn btn-darkblue" type="submit">
                       {t("Log-In")}
                     </button>
                   ) : (
@@ -206,18 +199,18 @@ export default function Login(props) {
                   )}
                 </div>
               </div>
+              <div className="row mt-3">
+                <div className="col-12 text-center">
+                  <p className="text-muted">
+                    <Link to="/" className="text-dark ms-1">
+                      <i className="fe-arrow-left" />
+                      <b> {t("Back")}</b>
+                    </Link>
+                  </p>
+                </div>
+              </div>
             </div>
           </form>
-          <div className="row mt-3">
-            <div className="col-12 text-center">
-              <p className="text-muted">
-                <Link to="/" className="text-dark ms-1">
-                  <i className="fe-arrow-left" />
-                  <b> {t("Back")}</b>
-                </Link>
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

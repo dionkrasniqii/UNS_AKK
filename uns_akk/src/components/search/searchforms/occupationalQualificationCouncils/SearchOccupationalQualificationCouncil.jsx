@@ -71,7 +71,7 @@ export default function SearchOccupationalQualificationCouncil() {
     window.location.reload();
   }
   return (
-    <div className="container mt-5 bg-light-subtle ">
+    <div className="container mt-5 bg-light-subtle animation ">
       <div className="card ">
         <div className="card-body">
           <div className="row">
@@ -96,7 +96,7 @@ export default function SearchOccupationalQualificationCouncil() {
                 onChangeFunction={changeStatus}
               />
             </div>
-            <div className="col-xxl-12 col-lg-12 col-sm-12 text-end animation">
+            <div className="col-xxl-12 col-lg-12 col-sm-12 text-end ">
               <div className="button-list text-end">
                 <button
                   type="button"
@@ -118,13 +118,11 @@ export default function SearchOccupationalQualificationCouncil() {
         </div>
       </div>
       {!load ? (
-        <div className="flip-card-animation">
-          <DataTablev2
-            dataSource={data}
-            title={"Lista e keshillave profesionale/sektoriale"}
-            columns={columns}
-          />
-        </div>
+        <DataTablev2
+          dataSource={data}
+          title={"Lista e keshillave profesionale/sektoriale"}
+          columns={columns}
+        />
       ) : (
         <div className="card card-body">
           <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">

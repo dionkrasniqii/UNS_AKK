@@ -174,11 +174,11 @@ export default function SearchCertificateSuplement() {
     window.location.reload();
   }
   return (
-    <div className="container mt-5 bg-light-subtle ">
+    <div className="container mt-5 bg-light-subtle animation">
       <div className="card ">
         <div className="card-body">
           <div className="row">
-            <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+            <div className="col-xxl-6 col-lg-6 col-sm-12 ">
               <div className="col-xxl-12 col-lg-12 mb-3">
                 {/* <label className="">Emri ne anglisht</label> */}
                 <label className="">{t("Name")}</label>
@@ -213,7 +213,7 @@ export default function SearchCertificateSuplement() {
                 />
               </div>
             </div>
-            <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+            <div className="col-xxl-6 col-lg-6 col-sm-12 ">
               {/* <div className="col-xxl-12 col-lg-12 mb-3">
                 <label>Profesioni</label>
                 <CustomSelect />
@@ -274,7 +274,7 @@ export default function SearchCertificateSuplement() {
           </div>
         </div>
       </div>
-      <div className="col-xxl-12 col-lg-12 col-sm-12 animation">
+      <div className="col-xxl-12 col-lg-12 col-sm-12 ">
         <DataTablev2
           dataSource={data}
           title={"Shtojcat e diplomës/certifikatës"}

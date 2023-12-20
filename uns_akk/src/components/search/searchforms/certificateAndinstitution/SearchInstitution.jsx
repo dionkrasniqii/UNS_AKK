@@ -150,167 +150,167 @@ export default function SearchInstitution() {
     setData([]);
   }
   return (
-    <div className="container card mt-5">
-      <div className="card-body">
-        <div className="tab-content">
-          <div className="row ">
-            <div className="row align-items-center">
-              <div className="col-lg-6 ">
-                <img className="w-100" src={img_bus} loading="lazy" />
-              </div>
-              <div className="col-lg-6">
-                <div className="col-xxl-12 d-flex justify-content-end mb-3">
-                  <Checkbox
-                    name="1"
-                    checked={checked === "1"}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setModel({
-                          ...model,
-                          GroupOfEducation: 1,
-                        });
-                        setChecked(e.target.name);
-                      } else {
-                        setModel({
-                          ...model,
-                          GroupOfEducation: null,
-                        });
-                        setChecked("");
-                      }
-                    }}
-                  >
-                    Arsim i lartë (AL)
-                  </Checkbox>
-                  <Checkbox
-                    name="2"
-                    checked={checked === "2"}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setModel({
-                          ...model,
-                          GroupOfEducation: 2,
-                        });
-                        setChecked(e.target.name);
-                      } else {
-                        setModel({
-                          ...model,
-                          GroupOfEducation: null,
-                        });
-                        setChecked("");
-                      }
-                    }}
-                  >
-                    Aftësimi dhe arsimi profesional (AAP)
-                  </Checkbox>
+    <div className="container animation  mt-5">
+      <div className="card">
+        <div className="card-body">
+          <div className="tab-content">
+            <div className="row ">
+              <div className="row align-items-center">
+                <div className="col-lg-6 ">
+                  <img className="w-100" src={img_bus} loading="lazy" />
                 </div>
-                <div className="col-xxl-12">
-                  <div className="row justify-content-end">
-                    <label className="col-md-4 col-form-label text-md-end text-start-sm mb-2">
-                      {t("UniqueNumber")}:
-                    </label>
-                    <div className="col-md-8">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={model.UniqueNumber || ""}
-                        onChange={(e) =>
+                <div className="col-lg-6">
+                  <div className="col-xxl-12 d-flex justify-content-end mb-3">
+                    <Checkbox
+                      name="1"
+                      checked={checked === "1"}
+                      onChange={(e) => {
+                        if (e.target.checked) {
                           setModel({
                             ...model,
-                            LangId: localStorage.getItem("i18nextLng"),
-                            UniqueNumber: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-12">
-                  <div className="row justify-content-end">
-                    <label className="col-md-4 col-form-label text-md-end text-start-sm mb-2">
-                      {t("NameOfInstitution")}:
-                    </label>
-                    <div className="col-md-8">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={model.InstitutionName || ""}
-                        onChange={(e) =>
+                            GroupOfEducation: 1,
+                          });
+                          setChecked(e.target.name);
+                        } else {
                           setModel({
                             ...model,
-                            LangId: localStorage.getItem("i18nextLng"),
-                            InstitutionName: e.target.value,
-                          })
+                            GroupOfEducation: null,
+                          });
+                          setChecked("");
                         }
-                      />
+                      }}
+                    >
+                      Arsim i lartë (AL)
+                    </Checkbox>
+                    <Checkbox
+                      name="2"
+                      checked={checked === "2"}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setModel({
+                            ...model,
+                            GroupOfEducation: 2,
+                          });
+                          setChecked(e.target.name);
+                        } else {
+                          setModel({
+                            ...model,
+                            GroupOfEducation: null,
+                          });
+                          setChecked("");
+                        }
+                      }}
+                    >
+                      Aftësimi dhe arsimi profesional (AAP)
+                    </Checkbox>
+                  </div>
+                  <div className="col-xxl-12">
+                    <div className="row justify-content-end">
+                      <label className="col-md-4 col-form-label text-md-end text-start-sm mb-2">
+                        {t("UniqueNumber")}:
+                      </label>
+                      <div className="col-md-8">
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={model.UniqueNumber || ""}
+                          onChange={(e) =>
+                            setModel({
+                              ...model,
+                              LangId: localStorage.getItem("i18nextLng"),
+                              UniqueNumber: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-xxl-12">
-                  <div className="row justify-content-end">
-                    <label className="col-md-4 col-form-label text-md-end text-start-sm mb-2  labelForSearch">
-                      {t("Municipality")}:
-                    </label>
-                    <div className="col-md-8">
-                      <CustomSelect
-                        optionsList={citiesList}
-                        hasDefaultValue={true}
-                        defaultValue={model.MunicipalityName}
-                        onChangeFunction={changeCity}
-                        isMulti={false}
-                      />
+                  <div className="col-xxl-12">
+                    <div className="row justify-content-end">
+                      <label className="col-md-4 col-form-label text-md-end text-start-sm mb-2">
+                        {t("NameOfInstitution")}:
+                      </label>
+                      <div className="col-md-8">
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={model.InstitutionName || ""}
+                          onChange={(e) =>
+                            setModel({
+                              ...model,
+                              LangId: localStorage.getItem("i18nextLng"),
+                              InstitutionName: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+                  <div className="col-xxl-12">
+                    <div className="row justify-content-end">
+                      <label className="col-md-4 col-form-label text-md-end text-start-sm mb-2  labelForSearch">
+                        {t("Municipality")}:
+                      </label>
+                      <div className="col-md-8">
+                        <CustomSelect
+                          optionsList={citiesList}
+                          hasDefaultValue={true}
+                          defaultValue={model.MunicipalityName}
+                          onChangeFunction={changeCity}
+                          isMulti={false}
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="col-xxl-12 col-lg-12 text-end d-flex justify-content-end">
-                  {!load ? (
-                    <div className="button-list">
-                      <button
-                        type="button"
-                        onClick={submitForm}
-                        className="btn btn-soft-primary waves-effect waves-light mt-2"
-                      >
-                        {t("Search")}
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-soft-secondary waves-effect mt-2"
-                        onClick={clearInputs}
-                      >
-                        {t("Clear")}
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="col-xxl-12 col-lg-12 col-sm-12 text-end">
-                      <div
-                        className="spinner-border text-primary m-2"
-                        role="status"
-                      />
-                    </div>
-                  )}
+                  <div className="col-xxl-12 col-lg-12 text-end d-flex justify-content-end">
+                    {!load ? (
+                      <div className="button-list">
+                        <button
+                          type="button"
+                          onClick={submitForm}
+                          className="btn btn-soft-primary waves-effect waves-light mt-2"
+                        >
+                          {t("Search")}
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-soft-secondary waves-effect mt-2"
+                          onClick={clearInputs}
+                        >
+                          {t("Clear")}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="col-xxl-12 col-lg-12 col-sm-12 text-end">
+                        <div
+                          className="spinner-border text-primary m-2"
+                          role="status"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="col-xxl-12">
-              <hr />
-              {!load ? (
-                <DataTablev2
-                  dataSource={data}
-                  columns={columns}
-                  title={"Lista e ofruesëve"}
-                />
-              ) : (
-                <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
-                  <div
-                    className="spinner-border text-primary m-2 text-center"
-                    role="status"
-                  />
-                </div>
-              )}
             </div>
           </div>
         </div>
+      </div>
+      <div className="col-xxl-12">
+        {!load ? (
+          <DataTablev2
+            dataSource={data}
+            columns={columns}
+            title={"Lista e ofruesëve"}
+          />
+        ) : (
+          <div className="col-xxl-12 col-lg-12 col-sm-12 text-center">
+            <div
+              className="spinner-border text-primary m-2 text-center"
+              role="status"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -298,7 +298,7 @@ export default function SearchQualifications() {
         </form>
       </div>
       {!load ? (
-        <div className="flip-card-animation">
+        <div className="animation">
           <DataTablev2
             dataSource={data}
             title={"Lista e kualifikmeve"}

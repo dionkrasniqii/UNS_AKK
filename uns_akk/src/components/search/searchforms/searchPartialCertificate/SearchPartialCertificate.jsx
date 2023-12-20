@@ -205,7 +205,7 @@ export default function SearchPartialCertificate() {
     }));
   }
   return (
-    <div className="container mt-5 bg-light-subtle ">
+    <div className="container mt-5 bg-light-subtle animation">
       <div className="card ">
         <div className="col-xxl-12 col-lg-12 col-sm-12 text-end mt-2 pe-2">
           <Link to={"/search-awardingbody"}>Diploma/Certifikata e ofruar</Link>
@@ -213,7 +213,7 @@ export default function SearchPartialCertificate() {
         <form id="searchForm">
           <div className="card-body">
             <div className="row">
-              <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+              <div className="col-xxl-6 col-lg-6 col-sm-12 ">
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     Numri certifikatës:
@@ -291,7 +291,7 @@ export default function SearchPartialCertificate() {
                   </div>
                 </div>
               </div>
-              <div className="col-xxl-6 col-lg-6 col-sm-12 animation">
+              <div className="col-xxl-6 col-lg-6 col-sm-12 ">
                 <div className="row mb-3">
                   <label className=" col-xl-5 col-form-label text-xl-end text-md-start text-start-sm">
                     Fusha:
@@ -345,7 +345,7 @@ export default function SearchPartialCertificate() {
                   </div>
                 </div>
               </div>
-              <div className="col-xxl-12 col-lg-12 col-sm-12 text-end animation">
+              <div className="col-xxl-12 col-lg-12 col-sm-12 text-end ">
                 <div className="button-list text-end">
                   <button
                     type="button"
@@ -368,7 +368,7 @@ export default function SearchPartialCertificate() {
         </form>
       </div>
       {!load ? (
-        <div className="flip-card-animation">
+        <div className="flip-card-">
           <DataTablev2
             dataSource={data}
             title={"Lista e certifikatave të pjesshme"}

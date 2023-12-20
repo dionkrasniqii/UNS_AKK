@@ -44,7 +44,7 @@ export default function NavbarLanding() {
       SubItems: [
         {
           Name: "Standardet e profesionit",
-          Path: "qualification-standards-search",
+          Path: "professional-standards-search",
         },
         {
           Name: "Standardet e kualifikimit",
@@ -96,18 +96,6 @@ export default function NavbarLanding() {
   }, [location.pathname]);
 
   useEffect(() => {
-    let nav = document.getElementById("nav-sticky");
-    if (location.pathname != "/") {
-      nav.classList.remove("bg-none");
-      nav.classList.remove("bg-blur");
-      nav.classList.add("bg-dark");
-    } else {
-      nav.classList.add("bg-none");
-      nav.classList.add("bg-blur");
-      nav.classList.remove("bg-dark");
-    }
-  }, [location.pathname]);
-  useEffect(() => {
     const mainNavDiv = document.getElementById("nav-sticky");
     const hamburger = document.getElementById("hamburger");
     if (
@@ -132,12 +120,12 @@ export default function NavbarLanding() {
   return (
     <nav
       className={`navbar navbar-expand-lg navbarForLanding navbar-custom ${
-        scrolling ? "bg-dark" : "bg-none bg-blur"
+        scrolling ? "bg-dark-blue" : "bg-none bg-blur"
       }`}
       id="nav-sticky"
     >
       <div className="container-fluid ">
-        <a className="logo ps-5 logoNavMainDiv">
+        <a className="logo ps-2  logoNavMainDiv">
           <img
             src={logoAKK}
             alt=""
@@ -207,10 +195,10 @@ export default function NavbarLanding() {
               );
             })}
 
-            <li className="nav-item ps-3 hiddeonlaptop">
+            <li className="nav-item ps-3 ">
               <Link
                 className="nav-link text-uppercase "
-                onMouseEnter={() => setIsActive("lang")}
+                onClick={() => setIsActive("lang")}
               >
                 <i className="fas fa-language fs-4"></i>
               </Link>
@@ -239,7 +227,10 @@ export default function NavbarLanding() {
               </Link>
             </li>
             <li className="nav-item hiddeonlaptop ps-3">
-              <Link className="nav-link text-uppercase" to={"/login"}>
+              <Link
+                className="nav-link text-uppercase"
+                to={"/institutions-search"}
+              >
                 Kërko
                 <span className="ps-2">
                   <i class="ti-search fs-5"></i>
