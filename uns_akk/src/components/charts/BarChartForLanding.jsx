@@ -8,9 +8,9 @@ const BarChartForLanding = ({ data, description }) => {
 
   const years = Object.keys(data);
   const colors = [
-    "	rgba(2, 48, 71,0.5)",
-    "rgba(33, 158, 188,0.3)",
-    "rgba(142, 202, 230,0.3)",
+    "	rgba(59, 96, 198,1)",
+    "rgba(95, 133, 117,1)",
+    "rgba(125, 249, 255,1)",
   ];
 
   const chartData = {

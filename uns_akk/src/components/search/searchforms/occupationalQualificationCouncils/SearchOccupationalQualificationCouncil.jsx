@@ -121,7 +121,7 @@ export default function SearchOccupationalQualificationCouncil() {
         <div className="flip-card-animation">
           <DataTablev2
             dataSource={data}
-            title={"Lista e keshillave"}
+            title={"Lista e keshillave profesionale/sektoriale"}
             columns={columns}
           />
         </div>

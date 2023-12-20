@@ -24,6 +24,10 @@ export default function NavbarLanding() {
       IsList: true,
       SubItems: [
         {
+          Name: "Kualifikimet",
+          Path: "qualifications-search",
+        },
+        {
           Name: "Diploma/Certifikata e ofruar",
           Path: "search-awardingbody",
         },
@@ -34,16 +38,16 @@ export default function NavbarLanding() {
       ],
     },
     {
-      Name: "Standardet dhe klasifikimi",
+      Name: "Standardet",
       Path: "/uniquePath2",
       IsList: true,
       SubItems: [
         {
-          Name: "Kualifikimet",
-          Path: "qualifications-search",
+          Name: "Standardet e profesionit",
+          Path: "qualification-standards-search",
         },
         {
-          Name: "Standardet e profesionit",
+          Name: "Standardet e kualifikimit",
           Path: "qualification-standards-search",
         },
         {
@@ -53,7 +57,7 @@ export default function NavbarLanding() {
       ],
     },
     {
-      Name: "Ofruesit e kualifikimeve",
+      Name: "Ofruesit",
       Path: "/institutions-search",
       IsList: false,
       SubItems: [],
@@ -71,7 +75,7 @@ export default function NavbarLanding() {
       SubItems: [],
     },
     {
-      Name: "Këshillat profesionale/sektoriale",
+      Name: "Këshillat profesionale",
       Path: "/occupational-qualification-councils-search",
       IsList: false,
       SubItems: [],
@@ -232,6 +236,14 @@ export default function NavbarLanding() {
             <li className="nav-item hiddeonlaptop">
               <Link className="nav-link text-uppercase" to={"/login"}>
                 Qasja
+              </Link>
+            </li>
+            <li className="nav-item hiddeonlaptop ps-3">
+              <Link className="nav-link text-uppercase" to={"/login"}>
+                Kërko
+                <span className="ps-2">
+                  <i class="ti-search fs-5"></i>
+                </span>
               </Link>
             </li>
           </ul>

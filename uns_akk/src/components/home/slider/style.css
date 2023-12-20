@@ -26,15 +26,23 @@
 
   &:nth-child(3) {
     left: 50%;
+  border:1px solid blue;
+
   }
   &:nth-child(4) {
     left: calc(50% + 220px);
+  border:1px solid blue;
+
   }
   &:nth-child(5) {
     left: calc(50% + 440px);
+  border:1px solid blue;
+
   }
   &:nth-child(6) {
     left: calc(50% + 660px);
+  border:1px solid blue;
+
     opacity: 0;
   }
 }
@@ -60,6 +68,7 @@
     line-height: 1.7;
     margin: 1rem 0 1.5rem;
     font-size: 0.8rem;
+    font-weight: bold;
   }
 
   & button {
@@ -182,6 +191,7 @@
 }
 .bg-blur-slider {
   border-radius: 10px;
+  background-color:#1434A4 !important  ;
   backdrop-filter: blur(50px);
   padding: 20px;
 }

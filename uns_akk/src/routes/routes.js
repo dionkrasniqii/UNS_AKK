@@ -108,12 +108,12 @@ export const AppRoutes = (props) => {
   return (
     <div
     id="divToAddBlurImage"
-      className={`content-page ${
+      className={`content-page mt-2 ${
         props.authState ? "" : "content-page-no-margin "
       }`}
     >
       {/* <div className={`content ${props.authState ? "" : "contentLanding"}`}> */}
-      <div className={`content ${props.authState ? "" : "contentLanding"}`}>
+      <div className={`content ${props.authState ? "" : "contentLanding"} `}>
         <Routes>
           <Route
             path="*"

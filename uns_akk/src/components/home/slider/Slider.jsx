@@ -86,7 +86,7 @@ export default function Slider() {
               }}
             >
               <div className="content-main bg-blur-slider">
-                {/* <h2 className="title">{obj.Title}</h2> */}
+                <p className="description fs-5">•	Regjistri i Kualifikimeve të Kosovës (RKK)  është sistem gjithëpërfshirës, i integruar, që përfshinë të gjitha nivelet e Kornizës Kombëtare të Kualifikimeve (KKK). RKK është zhvilluar me qëllim që të jetë i përdorshëm për nxënësit/kandidatët, punëdhënësit, ofruesit e trajnimeve, shkollat, kolegjet, agjencitë përkatëse, ministritë dhe partnerët e tjerë përkatës të brendshëm dhe të jashtëm.</p>
                 <p className="description fs-5">{obj.Description}</p>
               </div>
             </li>
